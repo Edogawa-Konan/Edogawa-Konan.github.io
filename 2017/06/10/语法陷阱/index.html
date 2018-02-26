@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="PAT," />
+
+
+<meta name="description" content="在刷PAT的过程中发现，由于不常用c/c++，以及python和java的习惯，导致对c++风格代码细节的遗忘，特此总结。">
+<meta name="keywords" content="PAT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="语法陷阱">
+<meta property="og:url" content="https://www.prime666.com/2017/06/10/语法陷阱/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="在刷PAT的过程中发现，由于不常用c/c++，以及python和java的习惯，导致对c++风格代码细节的遗忘，特此总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-05T12:02:57.937Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="语法陷阱">
+<meta name="twitter:description" content="在刷PAT的过程中发现，由于不常用c/c++，以及python和java的习惯，导致对c++风格代码细节的遗忘，特此总结。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/06/10/语法陷阱/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>语法陷阱 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/10/语法陷阱/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">语法陷阱</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-10T21:42:42+08:00">2017-06-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在刷PAT的过程中发现，由于不常用c/c++，以及python和java的习惯，导致对c++风格代码细节的遗忘，特此总结。</p>
+<a id="more"></a>
+<h1 id="语法陷阱"><a href="#语法陷阱" class="headerlink" title="语法陷阱"></a>语法陷阱</h1><h2 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h2><p>c++11提供的范围for循环本质上要求序列能有<code>begin</code>和<code>end</code>成员，也就是可以迭代的。所以<code>set</code>、<code>map</code>也是可以的。</p>
+<h2 id="cin的读取"><a href="#cin的读取" class="headerlink" title="cin的读取"></a>cin的读取</h2><p>看下面的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> G[<span class="number">2</span>][<span class="number">2</span>];</div><div class="line">    <span class="keyword">int</span> i,j;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;i&gt;&gt;j&gt;&gt;G[i][j];</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"\n"</span>&lt;&lt;G[i][j];</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看着似乎没什么问题，但是运行就崩溃。</p>
+<p>这种输入是不可以的，必须先赋值好再使用。</p>
+<h2 id="memset"><a href="#memset" class="headerlink" title="memset"></a>memset</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> * <span class="title">memset</span> <span class="params">( <span class="keyword">void</span> * ptr, <span class="keyword">int</span> value, <span class="keyword">size_t</span> num )</span></span>;</div></pre></td></tr></table></figure>
+<p>Sets the first <em>num</em> bytes of the block of memory pointed by <em>ptr</em> to the specified <em>value</em> (interpreted as an <code>unsigned char</code>).</p>
+<p>由于是以<strong>字节</strong>为单位进行批量赋值，所以效率极高。其本身是对char类型使用的，因为char是一个字节。如果用于其它的比如int，只能填充0和-1，因为它们的补码分别是00000000 11111111</p>
+<p>但是注意上面那一段英文，一般只有清零的时候才用这个函数，否则用下面的 。</p>
+<h2 id="fill"><a href="#fill" class="headerlink" title="fill"></a>fill</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> ForwardIterator, <span class="keyword">class</span> T&gt;</div><div class="line"> <span class="function"><span class="keyword">void</span> <span class="title">fill</span> <span class="params">(ForwardIterator first, ForwardIterator last, <span class="keyword">const</span> T&amp; val)</span></span>;</div></pre></td></tr></table></figure>
+<p>Assigns val to all the elements in the range <code>[first,last)</code>.</p>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder3</span><span class="params">(Node*root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root== <span class="literal">nullptr</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    <span class="built_in">deque</span>&lt;Node&gt; <span class="built_in">stack</span>;</div><div class="line">    <span class="built_in">stack</span>.push_back(*root);</div><div class="line">    <span class="keyword">while</span>(!<span class="built_in">stack</span>.empty())</div><div class="line">    &#123;</div><div class="line">        Node *t=&amp;<span class="built_in">stack</span>.back();</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;t-&gt;val&lt;&lt;<span class="string">" "</span>;</div><div class="line">        <span class="built_in">stack</span>.pop_back();</div><div class="line">        <span class="keyword">if</span>(t-&gt;right)</div><div class="line">            <span class="built_in">stack</span>.push_back(*t-&gt;right);</div><div class="line">        <span class="keyword">if</span>(t-&gt;left)</div><div class="line">            <span class="built_in">stack</span>.push_back(*t-&gt;left);</div><div class="line">        <span class="comment">/*先右孩子进栈，再左孩子进栈，才能满足先序。*/</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>表面上，这里实现了先序遍历。实际不对！</p>
+<p><strong>注意，当执行完右孩子分支后，栈中新加入了t的右孩子，此时t不再指向原来的最后一个，而是现在的最后一个即t的右孩子！换成stack也一样。原因在于它们都是返回的引用！！！所以，这里正确的方法是不用指针，如下：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder3</span><span class="params">(Node*root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root== <span class="literal">nullptr</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    <span class="built_in">deque</span>&lt;Node&gt; <span class="built_in">stack</span>;</div><div class="line">    <span class="built_in">stack</span>.push_back(*root);</div><div class="line">    <span class="keyword">while</span>(!<span class="built_in">stack</span>.empty())</div><div class="line">    &#123;</div><div class="line">        Node t=<span class="built_in">stack</span>.back();</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;t.val&lt;&lt;<span class="string">" "</span>;</div><div class="line">        <span class="built_in">stack</span>.pop_back();</div><div class="line">        <span class="keyword">if</span>(t.right)</div><div class="line">            <span class="built_in">stack</span>.push_back(*t.right);</div><div class="line">        <span class="keyword">if</span>(t.left)</div><div class="line">            <span class="built_in">stack</span>.push_back(*t.left);</div><div class="line">        <span class="comment">/*先右孩子进栈，再左孩子进栈，才能满足先序。*/</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另外，<em>老实说deque完全可以替代queue和stack两个函数适配器啊</em>。</p>
+<h2 id="字符数组"><a href="#字符数组" class="headerlink" title="字符数组"></a>字符数组</h2><p>永远记住，多留一个位置给<code>\0</code>。也许在本机上没区别，oj不这么认为！</p>
+<h2 id="流加速"><a href="#流加速" class="headerlink" title="流加速"></a>流加速</h2><p>默认<code>cin</code>多做了以下两个额外的工作：</p>
+<ul>
+<li>与 <code>std::cout</code> 绑定，每次 <code>std::cin</code> 从缓冲区读入内容之前，确保已经执行过 <code>std::cout.flush()</code>；</li>
+<li>与 <code>stdio</code> 同步（synchronize），确保混搭使用 C 风格的 I/O 操作不会引发问题。</li>
+</ul>
+<p>以下代码可以解决这些问题。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="number">0</span>);<span class="comment">//可以通过tie(0)（0表示NULL）来解除cin与cout的绑定，进一步加快执行效率。</span></div><div class="line"><span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);<span class="comment">//这个函数是一个“是否兼容stdio”的开关，C++为了兼容C，保证程序在使用了std::printf和std::cout的时候不发生混乱，将输出流绑到了一起。</span></div></pre></td></tr></table></figure>
+<h2 id="strcmp"><a href="#strcmp" class="headerlink" title="strcmp"></a>strcmp</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">strcmp</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span> *lhs, <span class="keyword">const</span> <span class="keyword">char</span> *rhs )</span></span>;</div></pre></td></tr></table></figure>
+<p>以字典序比较两个以<code>&#39;\0&#39;</code>结尾的字符串，如果第一个大于第二个返回正数，小于则返回负数，否则返回0。</p>
+<p><em>为什么我记成了返回1表示大于，返回-1表示小于？/(ㄒoㄒ)/~~</em></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">strncmp</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span>* lhs, <span class="keyword">const</span> <span class="keyword">char</span>* rhs, <span class="keyword">size_t</span> count )</span></span>;</div></pre></td></tr></table></figure>
+<p>这个和上面的几乎一样，除了<code>count</code>表示最多比较多少个字符。</p>
+<h2 id="push-back"><a href="#push-back" class="headerlink" title="push_back"></a>push_back</h2><p>以vector为例，原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>::<span class="function">push_back</span></div><div class="line"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">( <span class="keyword">const</span> T&amp; value )</span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">( T&amp;&amp; value )</span></span>;</div></pre></td></tr></table></figure>
+<p>第一个函数是添加一个新元素，<strong>其是value的拷贝</strong>。第二个是移动操作 ，属于c++11引入的，其是直接移动到新元素的位置。第二种算法题几乎用不到。。</p>
+<h2 id="连"><a href="#连" class="headerlink" title="连=="></a>连==</h2><p>c++不能用连续<code>==</code>判断，但是可以用连续<code>=</code>赋值（非定义初始化时）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> a,b,c;<span class="comment">//不能定义的时候直接a=b=c=5</span></div><div class="line">    a=b=c=<span class="number">5</span>;</div><div class="line">    <span class="keyword">if</span>(a==b==c)</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"YES"</span>;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"NO"</span>;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;(a==b);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>例如上面的程序，可以看到<code>a==b</code>结果是1，所以不会和c相等的。如果把c改成1就输出<code>YES</code>了。</p>
+<h2 id="头文件cctype中工具函数"><a href="#头文件cctype中工具函数" class="headerlink" title="头文件cctype中工具函数"></a>头文件cctype中工具函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">toupper</span><span class="params">( <span class="keyword">int</span> ch )</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">tolower</span><span class="params">( <span class="keyword">int</span> ch )</span></span>;</div></pre></td></tr></table></figure>
+<p>这两个转换函数用的时候不必判断，直接用，如果不是可以转换的字符，就会原样返回。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">islower</span><span class="params">( <span class="keyword">int</span> ch )</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">isupper</span><span class="params">( <span class="keyword">int</span> ch )</span></span>;</div></pre></td></tr></table></figure>
+<p>返回非0表示满足，0表示不是。</p>
+<h2 id="string-substr"><a href="#string-substr" class="headerlink" title="string.substr"></a>string.substr</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">basic_string <span class="title">substr</span><span class="params">( size_type pos = <span class="number">0</span>,size_type count = npos )</span> <span class="keyword">const</span></span>;</div></pre></td></tr></table></figure>
+<p>很常用的求子串的函数。返回子串<code>[pos, pos+count)</code>，第二个参数省略的话，直接返回<code>[pos,size())</code></p>
+<h2 id="map的插入"><a href="#map的插入" class="headerlink" title="map的插入"></a>map的插入</h2><p>习惯上，都是直接用<code>[]</code>运算符执行插入操作，不知在java里习惯了<code>put</code>还是怎么着，我每次用的时候都先用<code>find</code>判断是不是有这个值，其实完全多此一举。即使对应的值不存在，c++会建立一个新的键值对，且<strong>值进行默认初始化（类调用其默认构造函数，数字初始化0）</strong>！</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">map</span>&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt; s;</div><div class="line">    s[<span class="string">"hehe"</span>]=<span class="number">1</span>;</div><div class="line">    s[<span class="string">"a"</span>]++;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp;e:s)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;e.first&lt;&lt;<span class="string">" "</span>&lt;&lt;e.second&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如上两个输出都是1</p>
+<h2 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a>reverse</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> BidirIt &gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">( BidirIt first, BidirIt last )</span></span>;</div></pre></td></tr></table></figure>
+<p>在<code>algorithm</code>头文件中有很多好的工具函数，比如上面的翻转。它是原地翻转，参数要求是双向迭代器即可。<strong>不过记得越界检查！</strong></p>
+<h2 id="自定义比较函数"><a href="#自定义比较函数" class="headerlink" title="自定义比较函数"></a>自定义比较函数</h2><p>写自定义比较函数时只需要定义&gt;或&lt;即可，不满足就返回false。不要啥都考虑。<strong>另外，不要用&gt;=这类，不大于也不小于就是等于喽（尤其是set等的find函数，就是根据不等定义的等于）。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Defined in header &lt;algorithm&gt;</span></div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> RandomIt &gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">stable_sort</span><span class="params">( RandomIt first, RandomIt last )</span></span>;</div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> RandomIt, <span class="keyword">class</span> Compare &gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">stable_sort</span><span class="params">( RandomIt first, RandomIt last, Compare comp )</span></span>;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Defined in header &lt;algorithm&gt;</span></div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> RandomIt &gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">( RandomIt first, RandomIt last )</span></span>;</div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> RandomIt, <span class="keyword">class</span> Compare &gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">( RandomIt first, RandomIt last, Compare comp )</span></span>;</div><div class="line"><span class="comment">/*comp:</span></div><div class="line">returns true if the first argument is less than (i.e. is ordered before) the second. </div><div class="line">The signature of the comparison function should be equivalent to the following:</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">const</span> Type1 &amp;a, <span class="keyword">const</span> Type2 &amp;b)</span></span>;</div></pre></td></tr></table></figure>
+<h2 id="二分查找（要求有序）"><a href="#二分查找（要求有序）" class="headerlink" title="二分查找（要求有序）"></a>二分查找（要求有序）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Defined in header &lt;algorithm&gt;</span></div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> ForwardIt, <span class="keyword">class</span> T &gt;</div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">binary_search</span><span class="params">( ForwardIt first, ForwardIt last, <span class="keyword">const</span> T&amp; value )</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> ForwardIt, <span class="keyword">class</span> T, <span class="keyword">class</span> Compare &gt;</div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">binary_search</span><span class="params">( ForwardIt first, ForwardIt last, <span class="keyword">const</span> T&amp; value, Compare comp )</span></span>;</div></pre></td></tr></table></figure>
+<p>在[first,last)内查找是否有元素等于value</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Defined in header &lt;algorithm&gt;</span></div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> ForwardIt, <span class="keyword">class</span> T &gt;</div><div class="line"><span class="function">ForwardIt <span class="title">lower_bound</span><span class="params">( ForwardIt first, ForwardIt last, <span class="keyword">const</span> T&amp; value )</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> ForwardIt, <span class="keyword">class</span> T, <span class="keyword">class</span> Compare &gt;</div><div class="line"><span class="function">ForwardIt <span class="title">lower_bound</span><span class="params">( ForwardIt first, ForwardIt last, <span class="keyword">const</span> T&amp; value, Compare comp )</span></span>;</div></pre></td></tr></table></figure>
+<p>在[first,last)范围内找一个<strong>大于等于</strong>value的元素，找到就返回迭代器，否则返回last</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Defined in header &lt;algorithm&gt;</span></div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> ForwardIt, <span class="keyword">class</span> T &gt;</div><div class="line"><span class="function">ForwardIt <span class="title">upper_bound</span><span class="params">( ForwardIt first, ForwardIt last, <span class="keyword">const</span> T&amp; value )</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> ForwardIt, <span class="keyword">class</span> T, <span class="keyword">class</span> Compare &gt;</div><div class="line"><span class="function">ForwardIt <span class="title">upper_bound</span><span class="params">( ForwardIt first, ForwardIt last, <span class="keyword">const</span> T&amp; value, Compare comp )</span></span>;</div></pre></td></tr></table></figure>
+<p>在[first,last)范围内找第一个<strong>大于</strong>value的元素，找到就返回其迭代器，否则返回last</p>
+<h2 id="左值和右值"><a href="#左值和右值" class="headerlink" title="左值和右值"></a>左值和右值</h2><p><del>按理说，不应该在pat这种算法题里用oop的，但是，偶尔有些题用一下显得思路清晰。</del></p>
+<p>简单说，<strong>左值</strong>指的是既能够出现在等号左边也能出现在等号右边的变量(或表达式)，<strong>右值</strong>指的则是只能出现在等号右边的变量(或表达式)。也就是说，左值就是在程序中能够寻值的东西，右值就是没法取到它的地址的东西。</p>
+<p>右值有两个特性：</p>
+<ol>
+<li>可以调用成员函数。</li>
+<li>只能被const引用。</li>
+</ol>
+<p>所以，在pat 1088中，输出运算符重载时，遇到了问题，详情移步。</p>
+<h2 id="getline和getchar"><a href="#getline和getchar" class="headerlink" title="getline和getchar"></a>getline和getchar</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> CharT, <span class="keyword">class</span> Traits, <span class="keyword">class</span> Allocator &gt;</div><div class="line">  <span class="built_in">std</span>::basic_istream&lt;CharT,Traits&gt;&amp; getline( <span class="built_in">std</span>::basic_istream&lt;CharT,Traits&gt;&amp;&amp; input,</div><div class="line">                                           <span class="built_in">std</span>::basic_string&lt;CharT,Traits,Allocator&gt;&amp; str,</div><div class="line">                                           CharT delim );</div><div class="line"><span class="keyword">template</span>&lt; <span class="keyword">class</span> CharT, <span class="keyword">class</span> Traits, <span class="keyword">class</span> Allocator &gt;</div><div class="line"><span class="built_in">std</span>::basic_istream&lt;CharT,Traits&gt;&amp; getline( <span class="built_in">std</span>::basic_istream&lt;CharT,Traits&gt;&amp;&amp; input,</div><div class="line">                                           <span class="built_in">std</span>::basic_string&lt;CharT,Traits,Allocator&gt;&amp; str );</div></pre></td></tr></table></figure>
+<p>函数的功能就是从输入流input里读取数据，放到字符串str里，默认分隔符是<code>\n</code>。其每执行一次，首先会把str先清空再写入。<strong>遇到分隔符时，它会把它从输入流中拿出来但是不会追加进str里</strong>。使用时需要<strong>注意</strong>，可能下一个字符正好是<code>\n</code>，所以，可以先用<code>getchar()</code>读取掉换行符。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getchar</span><span class="params">()</span></span>;<span class="comment">//从标准输入流中读取字符</span></div></pre></td></tr></table></figure>
+<h2 id="sscanf和sprintf"><a href="#sscanf和sprintf" class="headerlink" title="sscanf和sprintf"></a>sscanf和sprintf</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sscanf</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span>* buffer, <span class="keyword">const</span> <span class="keyword">char</span>* format, ... )</span></span>;</div><div class="line"><span class="comment">//Reads the data from null-terminated character string buffer and stores the results into given locations.</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sprintf</span><span class="params">( <span class="keyword">char</span>* buffer, <span class="keyword">const</span> <span class="keyword">char</span>* format, ... )</span></span>;</div><div class="line"><span class="comment">//Loads the data from the given locations, converts them to character string equivalents and writes the results to a character string buffer.</span></div></pre></td></tr></table></figure>
+<h2 id="格式化输出-d和-f"><a href="#格式化输出-d和-f" class="headerlink" title="格式化输出%d和%f"></a>格式化输出%d和%f</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line"><span class="comment">//    freopen("test.in","w",stdout);</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d %.0f %.0f %.0f"</span>,(<span class="keyword">int</span>)<span class="number">1.5</span>,<span class="number">1.5</span>,<span class="number">4.5</span>,round(<span class="number">4.5</span>));</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第一个是强制类型转换，默认截断小数部分（不能直接用%d输出浮点数！），而第二个表面看指定小数不输出，实则比较复杂！建议<strong>四舍五入一定用round！</strong></p>
+<p>上述程序输出<code>1 2 4 5</code></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PAT/" rel="tag"># PAT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/09/pat（一）/" rel="next" title="pat（一）">
+                <i class="fa fa-chevron-left"></i> pat（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/11/pat（二）/" rel="prev" title="pat（二）">
+                pat（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#语法陷阱"><span class="nav-number">1.</span> <span class="nav-text">语法陷阱</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于范围的for循环"><span class="nav-number">1.1.</span> <span class="nav-text">基于范围的for循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cin的读取"><span class="nav-number">1.2.</span> <span class="nav-text">cin的读取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#memset"><span class="nav-number">1.3.</span> <span class="nav-text">memset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fill"><span class="nav-number">1.4.</span> <span class="nav-text">fill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈"><span class="nav-number">1.5.</span> <span class="nav-text">栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符数组"><span class="nav-number">1.6.</span> <span class="nav-text">字符数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流加速"><span class="nav-number">1.7.</span> <span class="nav-text">流加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strcmp"><span class="nav-number">1.8.</span> <span class="nav-text">strcmp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#push-back"><span class="nav-number">1.9.</span> <span class="nav-text">push_back</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连"><span class="nav-number">1.10.</span> <span class="nav-text">连==</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#头文件cctype中工具函数"><span class="nav-number">1.11.</span> <span class="nav-text">头文件cctype中工具函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string-substr"><span class="nav-number">1.12.</span> <span class="nav-text">string.substr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map的插入"><span class="nav-number">1.13.</span> <span class="nav-text">map的插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reverse"><span class="nav-number">1.14.</span> <span class="nav-text">reverse</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义比较函数"><span class="nav-number">1.15.</span> <span class="nav-text">自定义比较函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找（要求有序）"><span class="nav-number">1.16.</span> <span class="nav-text">二分查找（要求有序）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#左值和右值"><span class="nav-number">1.17.</span> <span class="nav-text">左值和右值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getline和getchar"><span class="nav-number">1.18.</span> <span class="nav-text">getline和getchar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sscanf和sprintf"><span class="nav-number">1.19.</span> <span class="nav-text">sscanf和sprintf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#格式化输出-d和-f"><span class="nav-number">1.20.</span> <span class="nav-text">格式化输出%d和%f</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

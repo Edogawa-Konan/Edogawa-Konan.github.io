@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Linux," />
+
+
+<meta name="description" content="嵌入式常用知识总结。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式review">
+<meta property="og:url" content="https://www.prime666.com/2017/06/29/嵌入式review/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="嵌入式常用知识总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_084323.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-03_084459.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/%E5%9B%BE%E7%89%872.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_090457.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_090516.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/407610-20151014095555022-881385577.jpg">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_093232.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_094117.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-03_093437.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-03_093455.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-03_093506.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_093618.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_095049.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_095448.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_101451.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_102332.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_145123.png">
+<meta property="og:updated_time" content="2017-07-03T03:17:04.791Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="嵌入式review">
+<meta name="twitter:description" content="嵌入式常用知识总结。">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_084323.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/06/29/嵌入式review/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>嵌入式review | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/29/嵌入式review/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">嵌入式review</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-29T08:40:35+08:00">2017-06-29</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>嵌入式常用知识总结。</p>
+<a id="more"></a>
+<h1 id="嵌入式总结"><a href="#嵌入式总结" class="headerlink" title="嵌入式总结"></a>嵌入式总结</h1><p>谨以此文献给我那sb室友，俗称“咸鱼王”。</p>
+<h2 id="嵌入式系统设计概述"><a href="#嵌入式系统设计概述" class="headerlink" title="嵌入式系统设计概述"></a>嵌入式系统设计概述</h2><p>嵌入式系统组成如下图：</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_084323.png" alt=""></p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-03_084459.png" alt=""></p>
+<font color="C0FF3E"><br><br>存储器：存储器按存储信息的功能可分为只读存储器ROM（Read Only Memory）和随机存储器RAM（Random Access Memory） 。<br><br>处理器：中央处理器是嵌入式系统的核心，负责控制整个系统的执行。包括微处理器、微控制器、DSP处理器、专用处理器、SOC(System on Chip) 。<br><br>输入设备：嵌入式系统中的输入形式一般包括触摸屏、语音输入、按键和虚拟键盘等 。<br><br>输出设备：输出设备则主要有LCD 显示和语音输出 。<br><br>外围接口：外围接口主要有GPIO、串口、I2C总线、USB总线和IEEE 1394总线等等 。<br><br></font>
+
+<p>架构如下：</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/%E5%9B%BE%E7%89%872.png" alt=""></p>
+<p>嵌入式系统设计步骤：</p>
+<ul>
+<li>详细分析嵌入式系统的需求</li>
+<li>从需求引出系统设计思路</li>
+<li>给出硬件设计和软件设计方法<br>结构设计、接口设计、程序设计（驱动设计、软件设计等）</li>
+</ul>
+<h2 id="嵌入式处理器结构及技术"><a href="#嵌入式处理器结构及技术" class="headerlink" title="嵌入式处理器结构及技术"></a>嵌入式处理器结构及技术</h2><h3 id="微处理器集成度"><a href="#微处理器集成度" class="headerlink" title="微处理器集成度"></a>微处理器集成度</h3><ul>
+<li>用于桌面和服务器的微处理器的芯片内部通常只包括<strong>CPU核心、Cache、MMU、总线接口</strong>等部分，其他附加的功能如外部接口、系统总线、外部总线和外部设备独立在其他芯片和电路内。 </li>
+<li>嵌入式微处理器<strong>除了集成CPU核心、Cache、MMU、总线</strong>等部分外，还集成了各种外部接口和设备，如<strong>中断控制器、DMA、定时器、UART</strong>等。(符合嵌入式系统的低成本和低功耗需求，一块单一的集成了大多数需要的功能块的芯片价格更低，功耗更少)</li>
+</ul>
+<p>也就是说，嵌入式微处理器是<strong>面向应用的，其片内所包含的组件的数目和种类是由它的市场定位决定的</strong>。</p>
+<h3 id="外围设备"><a href="#外围设备" class="headerlink" title="外围设备"></a>外围设备</h3><p>嵌入式外围设备：在嵌入式系统硬件构成中，除核心控制部件以外的各种存储器、输入/输出接口、作为人机接口的显示器/键盘、串行通信接口等。</p>
+<h3 id="冯诺依曼"><a href="#冯诺依曼" class="headerlink" title="冯诺依曼"></a>冯诺依曼</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_090457.png" alt=""></p>
+<p>缺点：<strong>取指令和存取数据要从同一个存储空间存取，经由同一总线传输，因而它们无法重叠执行</strong></p>
+<h3 id="哈佛结构"><a href="#哈佛结构" class="headerlink" title="哈佛结构"></a>哈佛结构</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_090516.png" alt=""></p>
+<p>哈佛体系结构的特点：</p>
+<ul>
+<li><strong>程序与数据在不同存储空间</strong>；每个存储器独立编址、独立访问</li>
+<li>使用程序和数据总线，使数据吞吐率提高一倍</li>
+<li>适合于数字信号处理</li>
+</ul>
+<p>大多数DSP都是哈佛结构，ARM9、ARM10和ARM11是哈佛结构。</p>
+<p>优点：由于取指令和存取数据分别经由不同的存储空间和不同的总线，使得各条指令可以重叠执行，这样，也就克服了数据流传输的瓶颈，提高了运算速度。</p>
+<p>缺点：总线资源占用过多 。</p>
+<hr>
+<ol>
+<li>哈佛结构中数据存储器与程序存储器分开，需要<strong>CPU提供大量的数据总线</strong>，因而很少使用哈佛结构作为CPU外部构架。</li>
+<li>对于CPU内部，通过使用不同的数据和指令Cache，可以有效的提高指令执行的效率。</li>
+<li>因而目前大部分计算机体系都是在CPU内部的使用哈佛结构，在CPU外部使用冯·诺依曼结构。</li>
+</ol>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/407610-20151014095555022-881385577.jpg" alt=""></p>
+<h3 id="复杂指令集（Complex-Instruction-Set-Computer）"><a href="#复杂指令集（Complex-Instruction-Set-Computer）" class="headerlink" title="复杂指令集（Complex Instruction Set Computer）"></a>复杂指令集（Complex Instruction Set Computer）</h3><p>指令系统丰富，有专用指令来完成特定功能，处理特殊任务效率高。<br>8/2原则：80%的程序只使用20%的指令，大多数程序只使用少量的指令就能够运行。</p>
+<h3 id="精简指令集（Reduced-Instruction-Set-Computer"><a href="#精简指令集（Reduced-Instruction-Set-Computer" class="headerlink" title="精简指令集（Reduced Instruction Set Computer)"></a>精简指令集（Reduced Instruction Set Computer)</h3><p>由常用指令组成，使其简单高效。对不常用功能采用组合指令来实现。实现特殊功能采用流水线和超标量技术来弥补效率的劣势。</p>
+<p>体现为以下几点：</p>
+<ol>
+<li>指令规整、对称、简单，指令小于100条，基本寻址方式只有2～3种</li>
+<li>单周期指令，便于流水操作</li>
+<li>大量的寄存器（不少于32个）</li>
+</ol>
+<hr>
+<p>尽管RISC架构有不少优点，但决不能认为RISC架构就可以取代CISC架构，事实上，RISC和CISC各有优势，而且界限并不那么明显。<br>现代的CPU往往采用CISC的外围，内部加入了RISC的特性。</p>
+<h3 id="流水线技术"><a href="#流水线技术" class="headerlink" title="流水线技术"></a>流水线技术</h3><p>几个指令可以并行执行（使指令的执行速度或数据的处理速度更快，克服早期计算机指令执行和数据处理串行进行产生的处理器闲置时间的弊端）。</p>
+<p>流水线：在CPU中把一条指令分解成多个可单独处理的操作，使每个操作在一个专门的硬件站（stage）上执行，这样一条指令需要顺序地经过流水线中多个站的处理才能完成，但是前后相连的几条指令可以依次流入流水线中，在多个站间重叠执行，因此可以实现指令的并行处理。</p>
+<hr>
+<p>流水线能够正常工作的条件：任意时刻，每一级所使用的硬件必须能独立操作，不能多级同时占用同一硬件资源。</p>
+<h3 id="超标量"><a href="#超标量" class="headerlink" title="超标量"></a>超标量</h3><p>配置多个执行部件和指令译码电路，能同时执行多条指令。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_093232.png" alt=""></p>
+<h3 id="cache"><a href="#cache" class="headerlink" title="cache"></a>cache</h3><font color="C0FF3E">设计思想：把在一段时间内、一定地址范围中被频繁访问的信息集合，成批地从主存中读到一个能高速存取的小容量存储器中存放起来,供程序在这段时间内随时使用，从而减少或不再去访问速度较慢的主存，以加快程序的运行速度。</font>
+
+<p>依据：程序和数据访问的局部性原理。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-06-29_094117.png" alt=""></p>
+<p>针对cache不一致问题：在CPU访问异步事件控制的数据前一定要强行刷新Cache中的内容；反之，从内存到外部设备搬移数据前一定要回写内存。</p>
+<p>（以CPU为核心看，将CPU直接参与的事件称为同步事件，CPU未直接参与的称为异步事件，比如DMA）。</p>
+<h3 id="总线"><a href="#总线" class="headerlink" title="总线"></a>总线</h3><p>总线是CPU与存储器和设备通信的机制，是计算机各部件之间传送数据、地址和控制信息的公共通道。总线的特点在于其<strong>公用性</strong>(即它可以同时挂接多个模块或设备，作为所有挂接模块或设备公用的信号载体)。总线<strong>在同一时刻，只能允许一对模块或设备进行信息交换</strong>。当有多个模块或设备需要同时使用总线进行信息传输时，只能<strong>采用分时方式，并且要对总线使用的优先权进行仲裁管理</strong>。<br>总线结构包括：传输信息的传输线路和总线控制逻辑。</p>
+<p>三大参数：</p>
+<ol>
+<li>总线位宽：又称总线位宽，指的是总线能同时传送数据的位数。</li>
+<li>总线频率：总线工作速度的一个重要参数，工作频率越高，速度越快。通常用MHz表示。</li>
+<li>总线带宽：又称总线的数据传送率，是指在一定时间内总线上可传送的数据总量，用每秒最大传送数据量来衡量。</li>
+</ol>
+<p><strong>总线带宽(单位:MB/s)  =（总线宽度/8）× 总线频率</strong></p>
+<h2 id="嵌入式系统设备驱动"><a href="#嵌入式系统设备驱动" class="headerlink" title="嵌入式系统设备驱动"></a>嵌入式系统设备驱动</h2><p>见<a href="http://www.prime666.com/2017/06/08/%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%97%E7%AC%A6%E9%A9%B1%E5%8A%A8/">简单字符设备驱动</a>以及<a href="http://www.prime666.com/2017/06/01/proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">proc文件系统</a></p>
+<h2 id="嵌入式中断驱动程序"><a href="#嵌入式中断驱动程序" class="headerlink" title="嵌入式中断驱动程序"></a>嵌入式中断驱动程序</h2><h3 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h3><ul>
+<li><font color="BF3EFF">中断处理函数是一个普通的函数，没有什么特别的地方。但由于是在中断期间运行，不与任何进程上下文相关，因而受到一些限制：<br><br><em> <strong>不能向用户空间发送和接收数据</strong>
+</em> <strong>不能做任何可能发生睡眠的操作</strong>等<br><br>为了实时性考虑，不能在中断中处理过多任务，耗时不能太长。</font>
+
+
+</li>
+</ul>
+<ul>
+<li>负责对硬件做出迅速响应并完成时间要求很严格的操作<ul>
+<li>异步方式执行，可能会打断其他重要代码的执行</li>
+<li>中断处理程序<strong>不在进程上下文中运行</strong>，<strong>不能被阻塞</strong></li>
+<li>中断处理程序执行过程中<ul>
+<li>最好情形下，同级中断被屏蔽</li>
+<li>最坏情形下，当前处理器上所有其他中断都会被屏蔽</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>中断处理流程</p>
+<ul>
+<li><p><strong>上半部</strong>：中断处理程序</p>
+<p>简单快速，执行时禁止部分或全部中断</p>
+</li>
+<li><p><strong>下半部：</strong><br>执行与中断处理密切相关但中断处理程序本身不执行的工作，执行期间可以响应中断</p>
+</li>
+</ul>
+<hr>
+<p>​</p>
+<ul>
+<li>没有严格的划分规则<ul>
+<li>如果任务对时间非常敏感，放在中断处理程序中执行</li>
+<li>如果任务与硬件相关，放在中断处理程序中执行</li>
+<li>如果任务需确保不被其他中断（同级中断）打断，放在中断处理程序中执行</li>
+<li>其他任务，考虑放置在下半部执行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="下半部"><a href="#下半部" class="headerlink" title="下半部"></a>下半部</h3><p>见<a href="http://www.prime666.com/2017/06/03/%E5%AE%9A%E6%97%B6%E5%99%A8/">tasklet和工作队列</a></p>
+<h2 id="并发与竞争"><a href="#并发与竞争" class="headerlink" title="并发与竞争"></a>并发与竞争</h2><p>Linux设备驱动中可采用的互斥途径：</p>
+<ul>
+<li>中断屏蔽</li>
+<li>原子操作</li>
+<li>自旋锁</li>
+<li>信号量</li>
+<li>completion </li>
+</ul>
+<h3 id="中断屏蔽"><a href="#中断屏蔽" class="headerlink" title="中断屏蔽"></a>中断屏蔽</h3><p>可解决中断与进程之间的并发；也可解决内核抢占进程之间的并发。</p>
+<p><strong>不要长时间屏蔽中断</strong>，由于Linux系统的异步I/O、进程调度等很多重要操作都依赖于中断，在屏蔽中断期间所有的中断都无法得到处理，因此长时间屏蔽中断是很危险的，有可能造成数据丢失甚至系统崩溃。</p>
+<h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><p>信号量本质上是一个整数值，一对操作函数通常称为P和V。</p>
+<ul>
+<li>进入临界区<ul>
+<li>相关信号量上调用P；</li>
+<li>如果信号量&gt;零，则该值会减小1，而进程可以继续。</li>
+<li>如果信号量的值=零(或更小)，进程必须等待直到其他人释放该信号量。</li>
+</ul>
+</li>
+<li>退出临界区<ul>
+<li>信号量的解锁通过调用V完成；</li>
+<li>该函数增加信号量的值，</li>
+<li>并在必要时唤醒在这个信号量等待的其它进程。</li>
+</ul>
+</li>
+</ul>
+<p>当信号量仅仅用于互斥时（避免多个进程同时在一个临界区中运行）， 信号量的值应初始化为1。</p>
+<ul>
+<li>只能由单个进程或线程拥有。</li>
+<li>一个信号量有时也称为一个“互斥体(mutex)”，它是互斥(mutual exclusion)的简称。</li>
+<li>Linux内核中<strong>几乎所有的信号量均用于互斥</strong>。</li>
+</ul>
+<h3 id="completion"><a href="#completion" class="headerlink" title="completion"></a>completion</h3><p>一种轻量级的机制，它允许一个线程告诉另一线程某个工作已经完成。 </p>
+<h3 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h3><p>一个自旋锁是一个互斥设备，只有两个值：“锁定”和“解锁”。即：</p>
+<ul>
+<li>实现为某个整数值中的单个位。希望获得某特定锁的代码测试相关的位。</li>
+<li>锁可用，则“锁定”位被设置，而代码继续进入临界区</li>
+<li>如果锁被其他人获得，则代码进入<strong>循环并重复检查这个锁，直到该锁可用为止。这个循环就是自旋锁的“自旋”</strong></li>
+</ul>
+<h3 id="自旋锁和信号量对比"><a href="#自旋锁和信号量对比" class="headerlink" title="自旋锁和信号量对比"></a>自旋锁和信号量对比</h3><h4 id="成本"><a href="#成本" class="headerlink" title="成本"></a>成本</h4><ul>
+<li>使用信号量的开销是进程上下文切换时间</li>
+<li>自旋锁的开销是忙等待获取自旋锁</li>
+</ul>
+<h4 id="等待机制不同"><a href="#等待机制不同" class="headerlink" title="等待机制不同"></a>等待机制不同</h4><ul>
+<li>信号量可能导致阻塞，所以在不允许阻塞的代码中不能用可能引起阻塞的信号量处理方式，比如，中断处理程序</li>
+<li>自旋锁是忙等待</li>
+</ul>
+<h3 id="避免自旋锁死锁的方法"><a href="#避免自旋锁死锁的方法" class="headerlink" title="避免自旋锁死锁的方法"></a>避免自旋锁死锁的方法</h3><ol>
+<li>自旋锁的使用规则<ul>
+<li>任何拥有自旋锁的代码都必须是原子的； </li>
+<li>如果中断处理函数中也要获得自选锁，那么驱动程序需要在拥有自旋锁时禁止中断；</li>
+<li>自旋锁必须在可能的最短时间内拥有；</li>
+<li>避免某个获得锁的函数调用其他同样试图获取这个锁的函数，否则代码就会死锁；</li>
+<li>不论是信号量还是自旋锁，都不允许锁拥有者第二次获得这个锁，如果试图这么做，系统将挂起；</li>
+</ul>
+</li>
+<li>锁的顺序规则 <ul>
+<li>按同样的顺序获得锁</li>
+<li>如果必须获得一个局部锁和一个属于内核更中心位置的锁，则应该首先获取自己的局部锁 </li>
+<li>如果<strong>我们拥有信号量和自旋锁的组合，则必须首先获得信号量；在拥有自旋锁时调用down(可导致休眠)是个严重的错误 。</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h3><p>顾名思义不多说。</p>
+<h2 id="内存分配与映射"><a href="#内存分配与映射" class="headerlink" title="内存分配与映射"></a>内存分配与映射</h2><p>见<a href="http://www.prime666.com/2017/06/15/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%98%A0%E5%B0%84/">内存分配与映射</a>一文。</p>
+<h2 id="DMA-Direct-Memory-Access"><a href="#DMA-Direct-Memory-Access" class="headerlink" title="DMA(Direct Memory Access)"></a>DMA(Direct Memory Access)</h2><ol>
+<li><p>为何使用DMA？</p>
+<ul>
+<li><p>轮训方式</p>
+<p>CPU必须在传输下一个字节之前，反复检测外部设备的状态，直到外部设备完成操作(由“忙”态转为“闲”态)，才能传输下一个数据。因此CPU在大量时间处于检查和等待状态，整个计算机系统的效率十分低下。</p>
+</li>
+<li><p>中断方式</p>
+<p>仍然占用了CPU相当多的时问。这里因为I/O设备每传输一个数据字节都要向CPU发出一次中断请求，也就要中断一次CPU的当前工作。而且CPU在每次响应中断之后还要作保护现场操作(把当前各个寄存器中的内容送入内存保存起来)，再调用中断处理程序，执行完毕中断处理程序之后，还要恢复现场(把刚才送入内存保存的内容再重新装入各个寄存器中)，以便继续执行中断之前的工作。这样，在连续传输一个数据块的过程中，CPU要反复多次被中断，并且花费很多时间去处理中断，使得CPU的效率仍然不能得到很好地发挥。整个系统效率的提高仍然受到限制。所以，在传输的数据量很大时，中断方式也不能满足要求。</p>
+</li>
+<li><p>DMA方式</p>
+<p>DMA是Direct Memory Access的缩写。其意思是“存储器直接访问”。它是指一种高速的数据传输操作，允许在外部设备和存储器之间直接读写数据，即不通过CPU，也不需要CPU干预。整个数据传输操作在一个称为“DMA控制器”的控制下进行的。CPU除了在数据传输开始和结束时作一点处理外，在传输过程中CPU可以进行其它的工作。这样，在大部分时间里，CPU和输入输出都处在并行操作。因此，使整个计算机系统的效率大大提高。</p>
+</li>
+</ul>
+</li>
+<li><p>三种结构</p>
+<ul>
+<li><p>单总线、I/O分离的DMA结构</p>
+<p>存储器和I/O模块之间经过DMA数据交换的路径是：MEMORY (I/O MODULE) —- SYSTEM BUS —-DMA —-SYSTEMBUS —-I/O(MEMORY)</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-03_093437.png" alt=""></p>
+</li>
+<li><p>单总线、I/O集成的DMA结构</p>
+<p>DMA逻辑集成为I/O模块的一部分，存储器和I/O模块之间经DMA数据交换路径简化为，MEMORY(I/O)—-SYSTEMBUS —I/O(MEMORY) </p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-03_093455.png" alt=""></p>
+</li>
+<li><p>I/O总线的DMA结构</p>
+<p>这种结构将单总线、I/O集成的DMA结构中的I/O模块和DMA模<br>块的连接改为I/O总线，使集成DMA逻辑的概念向前迈进了一步。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-03_093506.png" alt=""></p>
+<p>​</p>
+</li>
+</ul>
+</li>
+<li><p>三种传输方式</p>
+<ul>
+<li><p>周期挪用方式</p>
+<p>指DMA每传输完一个单位的数据后，将撤销总线申请，一个周期后再提出总线申请；DMA控制器周而复始地进行“总线请求——总线应答——总线传输——总线释放”的循环。由于周期挪用方式在相邻总线申请之间只传输一个字的数据，故也称为单字传输方式。</p>
+</li>
+<li><p>请求方式</p>
+<p>请求传输方式指在DMA传输过程中(非意外情况下总线仲裁逻辑将不会收回总线控制权)，如果外部请求有效DMA将保持总线申请，数据得以连续传输；如果外部请求无效DMA将撤销总线申请，交还总线控制。</p>
+</li>
+<li><p>块传输方式</p>
+<p>块传输方式与请求传输方式不同之处在于DMA在数据传输过程中，将<strong>不理会外部请求是否有效而保持总线申请</strong>，直到数据传送完毕才撤销总线申请，交还总线控制权。请求对象发出一次有效的DMA请求以后，在DMA传输过程中不必再保持请求有效，因此请求对象无法中断DMA传输过程。在块传输方式下不能轻易地中断DMA传输过程。在块传输方式下，值得注意的是总线仲裁器必须防止一路DMA长期占用总线导致其它DMA任务阻塞的问题。</p>
+</li>
+</ul>
+</li>
+<li><p>DMAC结构</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_093618.png" alt=""></p>
+<p>DMA控制器可以像CPU那样获得总线的控制权，完成外设与存储器之间的数据高速交换。<strong>DMA控制器不但要与外设连接，以接受外设发出的DMA操作请求和在DMA期间对外设进行控制，还要与CPU连接，以请求总线的控制权</strong>；同时，它还需要与三大总线连接，以便进行总线的控制。</p>
+<ul>
+<li><strong>地址寄存器：包括源地址和目的地址寄存器。</strong><ul>
+<li>在进行DMA操作之前，在CPU控制下将源地址和目的地址分别装入DMAC的源地址和目的地址寄存器；</li>
+<li>在进入DMA操作后，由这些地址寄存器提供出源地址和目的地址，并在传送数据的同时，由硬件以加1或减1来修改地址寄存器的值。</li>
+</ul>
+</li>
+<li><strong>控制/状态寄存器:控制寄存器用于选择DMAC的操作类型、工作方式、传送方向和有关参数。</strong><ul>
+<li>这种选择是通过CPU在DMA操作之前向控制寄存器写入相应的控制字来实现的。</li>
+<li>状态寄存器用于寄存DMA传送前后的状态。</li>
+<li>DMA传送结束后，CPU通过对该寄存器执行输入指令即可读入状态字，了解所需的状态和结果</li>
+</ul>
+</li>
+<li><strong>字节计数器:用于控制传送数据块的长度。</strong><ul>
+<li>在进入DMA操作之前，CPU将数据块长度(字节数)装入字节计数器中。</li>
+<li>进入DMA操作后，每传送一个字节数据，由硬件自动修改计数器的值(减)；当计数器溢出时，便使DMA方式的数据传送结束。</li>
+</ul>
+</li>
+<li><strong>总线接口和总线控制逻辑</strong><ul>
+<li>这部分电路主要用于在DMA传送之前接受来自CPU的控制字和根据外部/内部DMA请求向CPU转发总线请求；</li>
+<li>DMA操作期间进行定时和发出读写控制信号；DMA操作结束后向CPU发出中断申请和状态信息。</li>
+</ul>
+</li>
+</ul>
+<p>DMA的基本操作流程如下：</p>
+<ol>
+<li>接收到相应外设发出的就绪态信号后，向CPU发出DMA请求；</li>
+<li>CPU响应请求，将总线控制权移交DMAC；</li>
+<li>DMAC对内存寻址，执行数据传送；</li>
+<li>能发出读/写控制信号；</li>
+<li>能决定传送的字节数，判断DMA传送是否结束；</li>
+<li>发DMA操作结束信号给CPU，释放总线，使CPU重新获得总线控制权；</li>
+</ol>
+</li>
+</ol>
+<h2 id="嵌入式文件系统"><a href="#嵌入式文件系统" class="headerlink" title="嵌入式文件系统"></a>嵌入式文件系统</h2><ol>
+<li>文件系统简介</li>
+</ol>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_095049.png" alt=""></p>
+<p>为了对各类文件系统进行统一管理，Linux引入了虚拟文件系统VFS(Virtual File System)，为各类文件系统提供一个统一的操作界面和应用编程接口。例如用户可以在不同的文件系统上创建文件，但所使用的函数或命令都是相同的（有点oop的味道）。 </p>
+<p>在嵌入式Linux应用中，主要的存储设备为RAM(通常是SDRAM——Synchronous dynamic random-access memory)和ROM(常采用FLASH存储器)，常用的基于存储设备的文件系统类型包括：jffs2, yaffs, cramfs, romfs, ramdisk, ramfs/tmpfs等。 </p>
+<ol>
+<li>Linux根文件系统</li>
+</ol>
+<p>Linux根文件系统包括<strong>Linux启动时所必须的目录和关键性的文件</strong>，例如Linux启动时都需要有init目录下的相关文件，在Linux挂载分区时Linux一定会找/etc/fstab这个挂载文件等，根文件系统中还包括了许多的应用程序bin目录等，任何包括这些Linux系统启动所必须的文件都可以成为根文件系统。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_095448.png" alt=""></p>
+<ol>
+<li><p>嵌入式文件系统</p>
+<ul>
+<li><p>基于FLASH的文件系统 </p>
+<ul>
+<li><p>Jffs2 </p>
+<p>Jffs2: 日志闪存文件系统版本2，主要用于<strong>NOR型闪存</strong>，基于<strong>MTD</strong>（Memory Technology Device，一种设备文件，与flash内存交互，提供了一层抽象在硬件专用驱动和更高层的应用之间）驱动层。</p>
+</li>
+<li><p>Yaffs/Yaffs2 </p>
+<p>yaffs/yaffs2是专为嵌入式系统使用<strong>NAND型闪存</strong>而设计的一种日志型文件系统。与jffs2相比，它减少了一些功能(例如不支持数据压缩)，所以速度更快，挂载时间很短，对内存的占用较小。另外，它还是跨平台的文件系统。</p>
+</li>
+<li><p>Cramfs </p>
+<p>Cramfs，<strong>只读的</strong>压缩文件系统。它也<strong>基于MTD驱动程序</strong></p>
+</li>
+<li><p>Romfs </p>
+<p>简单的、紧凑的、只读的文件系统，不支持动态擦写保存，按顺序存放数据</p>
+</li>
+</ul>
+</li>
+<li><p>基于RAM的文件系统 </p>
+<ul>
+<li><p>Ramdisk </p>
+<p>Ramdisk是将一部分<strong>固定大小的内存当作分区来使用</strong>。它并非一个实际的文件系统，而是一种将实际的文件系统装入内存的机制，并且可以作为根文件系统。将一些经常被访问而又不会更改的文件(如只读的根文件系统)通过Ramdisk放在内存中，可以明显地提高系统的性能。</p>
+</li>
+<li><p>ramfs/tmpfs  </p>
+<p>基于<strong>内存</strong>的文件系统，工作于<strong>虚拟文件系统(VFS)层</strong>，不能格式化，可以创建多个，在创建时可以指定其最大能使用的内存大小。 相对于传统的Ramdisk的不同之处主要在于：不能格式化，文件系统大小可随所含文件内容大小变化。Tmpfs的一个缺点是当系统重新引导时会丢失所有数据。</p>
+</li>
+</ul>
+</li>
+<li><p>NFS</p>
+<p>网络文件系统（Network File System, NFS）采用<strong>客户/服务器工作模式</strong>。NFS协议本身并没有网络传输功能，而是基于<strong>远程过程调用</strong>（Remote Procedure Call，RPC）协议实现的；RPC提供了一个面向过程的远程服务的接口。RPC可以通过网络从远程主机程序上请求服务，而不需要了解底层网络技术的协议。RPC工作在OSI模型的会话层，它可以为遵从RPC协议应用层协议提供端口注册功能。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_101451.png" alt=""></p>
+</li>
+</ul>
+<p>​</p>
+</li>
+<li><p>FLASH存储</p>
+<p>(ppt资料不全，建议读读<a href="https://en.wikipedia.org/wiki/Flash_memory#NOR_memories" target="_blank" rel="noopener">wiki</a>，总结一下就是nor就像RAM一样，可以随机访问，也正因为这个，可以 execute in place。而nand更像一个硬盘，相对于前者，牺牲了 random-access和execute-in-place，但是它定位就是大容量存储，所以擦除、顺序读写都很快。)</p>
+<p>Flash属于<strong>EEPROM（电可擦除可编程只读存储器）</strong>，是一种<strong>非易失存储器</strong>，Flash可以在<strong>断电的情况下长期保存信息</strong>，因此被广泛的应用在PC机的BIOS和嵌入式系统的存储设备。根据结构的不同可以将其分成<strong>NOR Flash和NAND Flash两种</strong>。</p>
+<p>NOR Flash把整个存储区分成若干个扇区（Sector），而NAND Flash把整个存储区分成若干个块（Block），可以对以块或扇区为单位的内存单元进行擦写和再编程。</p>
+<p>在NOR Flash上运行代码不需要任何的软件支持。在<strong>NAND Flash上进行同样操作</strong>时，通常<strong>需要</strong>驱动程序，也就是内存技术驱动程序<strong>（MTD ）</strong>。NAND Flash和NOR Flash在进行写入和擦除操作时都需要MTD。</p>
+<p>PS：</p>
+<p>NAND Flash的<strong>读、写操作以页为单位</strong>，而擦除操作则是以<strong>块为单位</strong>进行；NAND Flash只能从1写为0,不能从0写为1（意思是说只能写一次，然后擦了才能重新写）;</p>
+<p>Nor Flash的擦除也是以块为单位，也是只能写一次，擦了才能写。</p>
+</li>
+<li><p>MTD</p>
+<p>MTD 的主要目的是为了使新的Memory 设备的驱动更加简单，为此它在硬件和上层之间提供了一个抽象的接口。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_102332.png" alt=""></p>
+<p>​</p>
+</li>
+</ol>
+<h2 id="QT"><a href="#QT" class="headerlink" title="QT"></a>QT</h2><ol>
+<li><p>低端嵌入式GUI：</p>
+<p> μC/GUI、RT-Thread/GUI</p>
+<pre><code>适用平台：
+ 单片机、ARM7、ARM Cortex-M
+开发语言：
+ C语言
+操作系统：
+  μC/OS、RT-Thread
+</code></pre></li>
+<li><p>中端嵌入式GUI：</p>
+<p> miniGUI、OpenGUI、 Microwindows</p>
+<pre><code>适用平台：
+  ARM7、ARM9、ARM11、 ARM Cortex-R
+开发语言：
+ C语言
+操作系统：
+ 嵌入式Linux、μC/Linux
+</code></pre></li>
+<li><p>高端嵌入式GUI：</p>
+<p> Qt/Embedded( Qtopia )、Android、MFC</p>
+<pre><code>适用平台：
+ ARM9、ARM11、ARM Cortex-A
+开发语言：
+ C++语言、JAVA语言
+操作系统：
+ 嵌入式Linux、Win CE/Win Phone
+</code></pre></li>
+</ol>
+<p>也就一个信号与槽机制，不过很好理解。</p>
+<p>在Qt程序中，利用信号（signal）和插槽（slot）机制进行对象间的通信</p>
+<ul>
+<li>事件处理的方式也是回调</li>
+<li>当对象状态发生改变的时候，发出signal通知所有的slot接收signal，尽管它并不知道哪些函数定义了slot，而slot也同样不知道要接收怎样的signal</li>
+</ul>
+<h2 id="IPC问题"><a href="#IPC问题" class="headerlink" title="IPC问题"></a>IPC问题</h2><h3 id="休眠与唤醒"><a href="#休眠与唤醒" class="headerlink" title="休眠与唤醒"></a>休眠与唤醒</h3><p>安全休眠：</p>
+<ol>
+<li>不能在原子上下文进行休眠:</li>
+<li>休眠时对外界一无所知，进程必须重新检测等待条件</li>
+<li>进程只有确保会被其他进程唤醒，才能进入休眠</li>
+</ol>
+<h3 id="poll和select"><a href="#poll和select" class="headerlink" title="poll和select"></a>poll和select</h3><p>Poll、select都允许进程决定是否可以对一个或多个打开的文件做非阻塞的读取或写入；这些调用也会阻塞进程，直到给定的文件描述符集合中的任何一个可读取或写入；常常<strong>用于那些要使用多个输入或输出流而又不会阻塞于其中任何一个流的应用程序中</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;poll.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span><span class="params">(<span class="keyword">struct</span> pollfd *fds, <span class="keyword">nfds_t</span> nfds, <span class="keyword">int</span> timeout)</span></span>;</div></pre></td></tr></table></figure>
+<p>和<code>select</code>一样，等待文件描述符集合中有一个就绪，不然一直阻塞。</p>
+<p>第一个参数就是给定的“集合”了，其是一个结构体数组;第二个参数就是数组大小了；第三个参数是等待时间，单位ms</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> pollfd &#123;</div><div class="line">  <span class="keyword">int</span>   fd;         <span class="comment">/* file descriptor */</span></div><div class="line">  <span class="keyword">short</span> events;     <span class="comment">/* requested events */</span></div><div class="line">  <span class="keyword">short</span> revents;    <span class="comment">/* returned events */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>成功时，返回整数，表示结构的个数；返回0表示超时了，且没有描述符就绪；返回-1表示出错。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/select.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span> nfds, fd_set *readfds, fd_set *writefds,fd_set *exceptfds, <span class="keyword">struct</span> timeval *timeout)</span></span>;</div></pre></td></tr></table></figure>
+<p><code>nfds</code>是其它三个文件描述符集合中最大个数+1。</p>
+<p>成功返回正数，表示文件描述符个数；超时返回0；错误返回-1</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> timeval &#123;</div><div class="line">  <span class="keyword">long</span>    tv_sec;         <span class="comment">/* seconds */</span></div><div class="line">  <span class="keyword">long</span>    tv_usec;        <span class="comment">/* microseconds */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>其它的见<a href="http://www.prime666.com/2017/06/20/Linux%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89/">我</a></p>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>具体过程</p>
+<ol>
+<li><p><strong>编译预处理</strong></p>
+<p>在预处理阶段，输入的是C语言的源文件，主要处理源文件中的#ifdef、#include和#define等命令，生成中间文件*.i。</p>
+</li>
+<li><p><strong>编译</strong><br>在编译阶段，输入的是中间文件.i，编译后生成汇编语言文件.s。</p>
+</li>
+<li><p><strong>汇编</strong><br>在汇编阶段，将输入的汇编文件.s转换成机器语言.o。</p>
+</li>
+<li><p><strong>链接</strong><br>在链接阶段，将.o文件及其它库文件汇集成一个可执行的二进制文件。</p>
+</li>
+</ol>
+<p>目标文件中的内容至少有<strong>编译后的机器指令代码、数据</strong>。还包括了<strong>链接时所须要的一些信息</strong>，比如<strong>符号表、调试信息、字符串</strong>等。</p>
+<p>ELF（Executable and Linking Format，执行时链接文件格式，属于目标文件的一种）文件的三种类型：</p>
+<ul>
+<li><p><strong>重定位</strong></p>
+<p>编译器和汇编器创建<br>运行前需要被链接器处理</p>
+</li>
+<li><p><strong>可执行</strong></p>
+<p>完成了所有重定位工作和符号解析<br>除了运行时解析的共享库符号</p>
+</li>
+<li><p><strong>共享库</strong></p>
+<p>链接器需要的符号信息<br>运行时可以直接执行的代码</p>
+</li>
+</ul>
+<p>main函数是第一个执行的吗？</p>
+<ol>
+<li>操作系统在创建进程后，把控制权交到了程序的入口，这个入口往往是运行库中的某个入口函数。</li>
+<li>入口函数对运行库和程序运行环境进行初始化，包括堆、I/O、线程、全局变量构造，等等。</li>
+<li>入口函数在完成初始化之后，调用main函数，正式开始执行程序主体部分。</li>
+<li>main函数执行完毕之后，返回到入口函数，入口函数进行清理工作，包括全局变量析构、堆销毁、关闭I/O等，然后进行系统调用结束进程。</li>
+</ol>
+<p>ELF文件的加载与执行</p>
+<ol>
+<li>首先，shell进程通过fork系统调用，创建出一个新进程用来执行这个程序。</li>
+<li>接着，新进程通过execve系统调用来加载可执行文件。execve进行一系列操作后结束，此时，新进程的上下文及内存已经初始化完毕，当CPU从该系统调用返回到用户空间时，就开始运行可执行文件中的代码。<ol>
+<li>最终，用户程序执行完毕，shell进程被切换上台。</li>
+</ol>
+</li>
+</ol>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E4%B8%89%E4%B8%8Blinux%E9%A9%B1%E5%8A%A8/2017-07-02_145123.png" alt=""></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/27/树状数组/" rel="next" title="树状数组">
+                <i class="fa fa-chevron-left"></i> 树状数组
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/29/Linux技巧/" rel="prev" title="Linux技巧">
+                Linux技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#嵌入式总结"><span class="nav-number">1.</span> <span class="nav-text">嵌入式总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入式系统设计概述"><span class="nav-number">1.1.</span> <span class="nav-text">嵌入式系统设计概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入式处理器结构及技术"><span class="nav-number">1.2.</span> <span class="nav-text">嵌入式处理器结构及技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#微处理器集成度"><span class="nav-number">1.2.1.</span> <span class="nav-text">微处理器集成度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外围设备"><span class="nav-number">1.2.2.</span> <span class="nav-text">外围设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冯诺依曼"><span class="nav-number">1.2.3.</span> <span class="nav-text">冯诺依曼</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈佛结构"><span class="nav-number">1.2.4.</span> <span class="nav-text">哈佛结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂指令集（Complex-Instruction-Set-Computer）"><span class="nav-number">1.2.5.</span> <span class="nav-text">复杂指令集（Complex Instruction Set Computer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#精简指令集（Reduced-Instruction-Set-Computer"><span class="nav-number">1.2.6.</span> <span class="nav-text">精简指令集（Reduced Instruction Set Computer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流水线技术"><span class="nav-number">1.2.7.</span> <span class="nav-text">流水线技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超标量"><span class="nav-number">1.2.8.</span> <span class="nav-text">超标量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache"><span class="nav-number">1.2.9.</span> <span class="nav-text">cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总线"><span class="nav-number">1.2.10.</span> <span class="nav-text">总线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入式系统设备驱动"><span class="nav-number">1.3.</span> <span class="nav-text">嵌入式系统设备驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入式中断驱动程序"><span class="nav-number">1.4.</span> <span class="nav-text">嵌入式中断驱动程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中断"><span class="nav-number">1.4.1.</span> <span class="nav-text">中断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下半部"><span class="nav-number">1.4.2.</span> <span class="nav-text">下半部</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发与竞争"><span class="nav-number">1.5.</span> <span class="nav-text">并发与竞争</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中断屏蔽"><span class="nav-number">1.5.1.</span> <span class="nav-text">中断屏蔽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量"><span class="nav-number">1.5.2.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#completion"><span class="nav-number">1.5.3.</span> <span class="nav-text">completion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自旋锁"><span class="nav-number">1.5.4.</span> <span class="nav-text">自旋锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自旋锁和信号量对比"><span class="nav-number">1.5.5.</span> <span class="nav-text">自旋锁和信号量对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#成本"><span class="nav-number">1.5.5.1.</span> <span class="nav-text">成本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#等待机制不同"><span class="nav-number">1.5.5.2.</span> <span class="nav-text">等待机制不同</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免自旋锁死锁的方法"><span class="nav-number">1.5.6.</span> <span class="nav-text">避免自旋锁死锁的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原子操作"><span class="nav-number">1.5.7.</span> <span class="nav-text">原子操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配与映射"><span class="nav-number">1.6.</span> <span class="nav-text">内存分配与映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DMA-Direct-Memory-Access"><span class="nav-number">1.7.</span> <span class="nav-text">DMA(Direct Memory Access)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入式文件系统"><span class="nav-number">1.8.</span> <span class="nav-text">嵌入式文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QT"><span class="nav-number">1.9.</span> <span class="nav-text">QT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC问题"><span class="nav-number">1.10.</span> <span class="nav-text">IPC问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#休眠与唤醒"><span class="nav-number">1.10.1.</span> <span class="nav-text">休眠与唤醒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poll和select"><span class="nav-number">1.10.2.</span> <span class="nav-text">poll和select</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译"><span class="nav-number">1.11.</span> <span class="nav-text">编译</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

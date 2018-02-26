@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Python," />
+
+
+<meta name="description" content="python一些语法总结。">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python语法">
+<meta property="og:url" content="https://www.prime666.com/2018/01/16/python语法/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="python一些语法总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-16T03:09:22.207Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python语法">
+<meta name="twitter:description" content="python一些语法总结。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2018/01/16/python语法/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>python语法 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2018/01/16/python语法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python语法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-16T10:56:24+08:00">2018-01-16</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>python一些语法总结。</p>
+<a id="more"></a>
+<h1 id="Python语法"><a href="#Python语法" class="headerlink" title="Python语法"></a>Python语法</h1><h2 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h2><p>既然变量可以指向函数，函数的参数能接收变量，那么<strong>一个函数就可以接收另一个函数作为参数，这种函数就称之为高阶函数</strong>。</p>
+<ol>
+<li><p><strong>匿名函数lambda</strong></p>
+<p>关键字lambda表示匿名函数，冒号前面的x表示函数参数。<br>匿名函数有个限制，就是只能有一个表达式，不用写return，返回值就是该表达式的结果。<br>用匿名函数有个好处，因为函数没有名字，不必担心函数名冲突。此外，匿名函数也是一个函数对象.</p>
+</li>
+<li><p><strong>map有两个参数，第一个是函数对象，第二个是一个可迭代对象。map将函数依次作用于序列的每一个元素。返回一个迭代器（不能直接用print输出）。</strong></p>
+</li>
+<li><p><strong>reduce函数位于<code>functools</code>模块中，同样接受两个参数，一个函数对象一个可迭代序列，和map不同之处在于reduce处理完一个元素会将结果累计至下一个元素。</strong></p>
+<p>from functools import reduce</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fn</span><span class="params">(x,y)</span>:</span></div><div class="line">	<span class="keyword">return</span> <span class="number">10</span>*x+y</div><div class="line">L=[i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)]</div><div class="line">res1=reduce(fn,L)</div></pre></td></tr></table></figure>
+<p>上述代码计算了1~9的累加。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fn</span><span class="params">(x,y)</span>:</span></div><div class="line">	<span class="keyword">return</span> <span class="number">10</span>*x+y</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">char_to_num</span><span class="params">(s)</span>:</span></div><div class="line">    <span class="keyword">return</span> &#123;<span class="string">'0'</span>:<span class="number">0</span>,<span class="string">'1'</span>:<span class="number">1</span>,<span class="string">'2'</span>:<span class="number">2</span>,<span class="string">'3'</span>:<span class="number">3</span>,<span class="string">'4'</span>:<span class="number">4</span>,<span class="string">'5'</span>:<span class="number">5</span>,<span class="string">'6'</span>:<span class="number">6</span>,<span class="string">'7'</span>:<span class="number">7</span>,<span class="string">'8'</span>:<span class="number">8</span>,<span class="string">'9'</span>:<span class="number">9</span>&#125;[s]</div><div class="line">print(reduce(fn,map(char_to_num,<span class="string">'123456'</span>)))</div></pre></td></tr></table></figure>
+<p>上述代码实现了字符串转化为整数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">CHAR_TO_FLOAT = &#123;</div><div class="line">    <span class="string">'0'</span>: <span class="number">0</span>,</div><div class="line">    <span class="string">'1'</span>: <span class="number">1</span>,</div><div class="line">    <span class="string">'2'</span>: <span class="number">2</span>,</div><div class="line">    <span class="string">'3'</span>: <span class="number">3</span>,</div><div class="line">    <span class="string">'4'</span>: <span class="number">4</span>,</div><div class="line">    <span class="string">'5'</span>: <span class="number">5</span>,</div><div class="line">    <span class="string">'6'</span>: <span class="number">6</span>,</div><div class="line">    <span class="string">'7'</span>: <span class="number">7</span>,</div><div class="line">    <span class="string">'8'</span>: <span class="number">8</span>,</div><div class="line">    <span class="string">'9'</span>: <span class="number">9</span>,</div><div class="line">    <span class="string">'.'</span>: <span class="number">-1</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">char_to_float</span><span class="params">(s)</span>:</span></div><div class="line">    nums=map(<span class="keyword">lambda</span> ch:CHAR_TO_FLOAT[ch],s)</div><div class="line">    point=<span class="number">0</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to_float</span><span class="params">(x,y)</span>:</span></div><div class="line">        <span class="keyword">nonlocal</span> point</div><div class="line">        <span class="keyword">if</span> y==<span class="number">-1</span>:</div><div class="line">            point=<span class="number">1</span></div><div class="line">            <span class="keyword">return</span> x</div><div class="line">        <span class="keyword">if</span> point==<span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">10</span>*x+y</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            point*=<span class="number">10</span></div><div class="line">            <span class="keyword">return</span> x+y/point</div><div class="line">    <span class="keyword">return</span> reduce(to_float,nums,<span class="number">0.0</span>)</div></pre></td></tr></table></figure>
+<p>字符串转化为float，reduce有第三个可选参数，作为初始的默认值，从这个默认值开始计算。如果没给且序列只有一个元素，reduce返回第一个元素。</p>
+</li>
+<li><p><strong><code>filter()</code>函数用于过滤序列，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素。返回的也是一个迭代器。</strong></p>
+<p>下面用<a href="http://baike.baidu.com/view/3784258.htm" target="_blank" rel="noopener">埃氏筛法</a>求素数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">odd_iter</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment">#生成一个奇数序列</span></div><div class="line">    n=<span class="number">1</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        n+=<span class="number">2</span></div><div class="line">        <span class="keyword">yield</span> n</div><div class="line"></div><div class="line"><span class="comment">#过滤函数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">not_divisible</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">lambda</span> x:x%n&gt;<span class="number">0</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">primes</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">yield</span> <span class="number">2</span></div><div class="line">    it=odd_iter()<span class="comment">#初始化为奇数序列</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        n=next(it)</div><div class="line">        <span class="keyword">yield</span> n</div><div class="line">        it=filter(not_divisible(n),it)<span class="comment">#每次过滤掉n的倍数</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><strong><code>sorted()</code>函数可以对序列进行排序，若要定制个性化操作，可以传入关键字参数key和reverse等</strong></p>
+<p>例如key=abs就是按绝对值排序，key=str.lower就是把原始序列变成小写再排序即忽略大小写</p>
+</li>
+<li><p><strong>高阶函数除了可以接受函数作为参数外，还可以把函数作为结果值返回。返回一个函数时，牢记该函数并未执行，返回函数中不要引用任何可能会变化的变量。相关参数和变量都保存在返回的函数中——闭包（Closure）的程序结构，返回闭包时牢记的一点就是：返回函数不要引用任何循环变量，或者后续会发生变化的变量。</strong></p>
+</li>
+</ol>
+<h2 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h2><p>在代码运行过程中不改变函数定义而动态增加函数功能的特性，称为<code>装饰器</code>（Decorator）。</p>
+<p>函数对象有个<strong>name</strong>属性可以得到函数对象的名字。</p>
+<p><strong>本质上，decorator就是一个返回函数的高阶函数。</strong></p>
+<p>看以下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(func)</span>:</span></div><div class="line"><span class="meta">	@functools.wraps(func)</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args,**kargs)</span>:</span></div><div class="line">        print(<span class="string">'call %s'</span> % func.__name__)</div><div class="line">        <span class="keyword">return</span> func(*args,**kargs)</div><div class="line">    <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"><span class="meta">@log</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'2017-2-18'</span>)</div></pre></td></tr></table></figure>
+<p>加上<code>@log</code>之后，相当于执行了<code>now = log(now)</code>，now不再指向原来的函数，而是log函数中返回的wrapper函数。<code>wrapper()</code>函数的参数定义是<code>(*args, **kwargs)</code>，因此，wrapper()函数可以接受任意参数的调用。</p>
+<p>如果装饰器本身就需要参数，那就得套三层了。也就是说第一个函数返回装饰器，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(text)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decorator</span><span class="params">(func)</span>:</span></div><div class="line"><span class="meta">		@functools.wraps(func)</span></div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></div><div class="line">            print(<span class="string">'%s %s():'</span> % (text, func.__name__))</div><div class="line">            <span class="keyword">return</span> func(*args, **kw)</div><div class="line">        <span class="keyword">return</span> wrapper</div><div class="line">    <span class="keyword">return</span> decorator</div><div class="line"></div><div class="line"><span class="meta">@log('execute')</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'2017-2-18'</span>)</div></pre></td></tr></table></figure>
+<p>经过装饰之后的函数属性会变化，如<strong>name</strong>，<code>@functools.wraps(func)</code>语句用于修正。</p>
+<p>在面向对象（OOP）的设计模式中，decorator被称为装饰模式。OOP的装饰模式需要通过继承和组合来实现，而Python除了能支持OOP的decorator外，直接从语法层次支持decorator。Python的decorator可以用函数实现，也可以用类实现。        </p>
+<h2 id="slots以及运算符重载"><a href="#slots以及运算符重载" class="headerlink" title="slots以及运算符重载"></a>slots以及运算符重载</h2><p><strong>python中当创建一个类或者实例之后，均可以再给它添加方法或者属性</strong><br>给类添加方法和属性只需要用<code>类名.属性或方法名=属性或方法</code>即可，给实例添加属性也类似，只是给实例添加方法时麻烦点：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">s=student()</div><div class="line"><span class="keyword">from</span> types <span class="keyword">import</span> MethodType</div><div class="line"></div><div class="line">s.age=MethodType(age,s)</div><div class="line">s.age(<span class="number">25</span>)</div></pre></td></tr></table></figure>
+<p>可以在定义类时利用<strong>slots</strong>属性设置可以添加的属性。比如，上述student类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span><span class="params">(object)</span>:</span></div><div class="line">    __slots__=(<span class="string">'name'</span>,<span class="string">'age'</span>)</div></pre></td></tr></table></figure>
+<p>这样的话就不能添加别的属性了。</p>
+<p><strong>使用<strong>slots</strong>要注意，<strong>slots</strong>定义的属性仅对当前类实例起作用，对继承的子类是不起作用的。</strong></p>
+<p><strong>除非在子类中也定义<strong>slots</strong>，这样，子类实例允许定义的属性就是自身的<strong>slots</strong>加上父类的<strong>slots</strong>。</strong></p>
+<hr>
+<p>看到类似<strong>slots</strong>这种形如<strong>xxx</strong>的变量或者函数名就要注意，这些在Python中是有特殊用途的。<br><strong>slots</strong>我们已经知道怎么用了，还有好多方法。</p>
+<ol>
+<li><p><strong>str</strong>和<strong>repr</strong></p>
+<p>两者的区别是<strong>str</strong>()返回用户看到的字符串，而<strong>repr</strong>()返回程序开发者看到的字符串（print调用<strong>str</strong>，直接在交互式解释器输出调用的是<strong>repr</strong>），也就是说，<strong>repr</strong>()是为调试服务的。<br>但是通常<strong>str</strong>()和<strong>repr</strong>()代码都是一样的，所以，有个偷懒的写法：<br><code>__repr__ = __str__</code></p>
+</li>
+<li><p>如果一个类想被用于for … in循环，类似list或tuple那样，就必须实现一个<strong>iter</strong>()方法，该方法返回一个迭代对象，然后，Python的for循环就会不断调用该迭代对象的<strong>next</strong>()方法拿到循环的下一个值，直到遇到StopIteration错误时退出循环。</p>
+<p><strong>要达到多个迭代器的效果，<strong>iter</strong>只需返回新的对象而不是本身</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Iterator</span>:</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,data)</span>:</span></div><div class="line">    self.data=data</div><div class="line">    self.index=<span class="number">-1</span></div><div class="line">    self.end=len(data)</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    if iter(self.data) is iter(self.data):</div><div class="line">        print('ha')#返回的并不是对象本身，所以可以使用多个迭代器</div><div class="line">    return iter(self.data)#iter针对容器会返回迭代器，针对迭代器会返回它本身</div><div class="line">    """</div><div class="line">    <span class="keyword">return</span> self.data <span class="comment">#一次性的迭代器</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__next__</span><span class="params">(self)</span>:</span></div><div class="line">    self.index += <span class="number">1</span></div><div class="line">    <span class="keyword">if</span> self.index==self.end:</div><div class="line">        <span class="keyword">raise</span> StopIteration</div><div class="line">    <span class="keyword">return</span> self.data[self.index]</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__back__</span><span class="params">(self)</span>:</span></div><div class="line">    self.index-=<span class="number">1</span></div><div class="line">    <span class="keyword">if</span> self.index==<span class="number">-1</span>:</div><div class="line">        <span class="keyword">raise</span> StopIteration</div><div class="line">    <span class="keyword">return</span> self.data[self.index]</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">container</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,data)</span>:</span></div><div class="line">        self.data=data</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> Iterator(data)</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>getitem</strong>用于索引、分片，<strong>setitem</strong>索引赋值，<strong>delitem</strong>索引和分片删除</p>
+</li>
+<li><p><code>__getattr__</code></p>
+<p>当调用不存在的属性时，Python解释器会试图调用<strong>getattr</strong>(self, ‘score’)来尝试获得属性score</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(object)</span>:</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    self.name = <span class="string">'Michael'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span><span class="params">(self, attr)</span>:</span></div><div class="line">    <span class="keyword">if</span> attr==<span class="string">'score'</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">99</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>__call__</code></p>
+<p>__call__()还可以定义参数。对实例进行直接调用就好比对一个函数进行调用一样，所以你完全可以把对象看成函数，把函数看成对象，因为这两者之间本来就没啥根本的区别。</p>
+<p>通过callable()函数，我们就可以判断一个对象是否是“可调用”对象。</p>
+</li>
+</ol>
+<h2 id="继承、-property和super"><a href="#继承、-property和super" class="headerlink" title="继承、@property和super"></a>继承、@property和super</h2><p>还记得装饰器（decorator）可以给函数动态加上功能吗？对于类的方法，装饰器一样起作用。Python内置的@property装饰器就是负责把一个方法变成属性调用的.</p>
+<p>###@property</p>
+<p>把一个getter方法变成属性，只需要加上<code>@property</code>就可以了。如果还要求属性可写，就再设置setter方法。如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,_score)</span>:</span></div><div class="line">        self.score=_score</div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">score</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self._score</div><div class="line"></div><div class="line"><span class="meta">    @score.setter</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">score</span><span class="params">(self, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(value, int):</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'score must be an integer!'</span>)</div><div class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span> <span class="keyword">or</span> value &gt; <span class="number">100</span>:</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'score must between 0 ~ 100!'</span>)</div><div class="line">        self._score = value</div><div class="line"><span class="meta">    @score.deleter</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">score</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">raise</span> AttributeError(<span class="string">"can't delete attribute"</span>)</div></pre></td></tr></table></figure>
+<p>其实，完全可以定义两个函数，set和get来处理，这样操作时调用相应方法即可。装饰器的重要特性就是它看起来像一个普通的属性，但是根据访问它的不同方式会触发不同方法，这<strong>使得实例的接口变得非常单一。</strong></p>
+<p>这里可以看到，三个相互关联的方法有着<strong>相同的名称<code>score</code></strong>，这个表示的就是<code>属性</code>（构造函数里的属性赋值也会触发检查），其它两个方法将可选的setter和deleter函数附加到了score属性上。</p>
+<p>###一个oop的例子</p>
+<p>python的继承、封装很好理解，和其它语言如出一辙，对于多态而言，由于python是动态类型的语言，看如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,x)</span>:</span></div><div class="line">        self.x=x</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">method</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'In base'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sub</span><span class="params">(Base)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,x,y)</span>:</span></div><div class="line">        super().__init__(x)</div><div class="line">        self.y=y</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">method</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'start sub'</span>)</div><div class="line">        Base.method(self)</div><div class="line">        print(<span class="string">'end sub'</span>)</div><div class="line"></div><div class="line"></div><div class="line">x=Base(<span class="number">5</span>)</div><div class="line">y=Sub(<span class="number">5</span>,<span class="number">10</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(obj)</span>:</span></div><div class="line">    obj.method()</div><div class="line"></div><div class="line">test(x)</div><div class="line">test(y)</div><div class="line">print(x.x)</div><div class="line">print(y.x,y.y)</div></pre></td></tr></table></figure>
+<p>输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">In base</div><div class="line">start sub</div><div class="line">In base</div><div class="line">end sub</div><div class="line">5</div><div class="line">5 10</div></pre></td></tr></table></figure>
+<p>对于静态语言（例如Java）来说，如果需要传入Base类型，则传入的对象必须是Base类型或者它的子类，否则，将无法调用method()方法。</p>
+<p>对于Python这样的动态语言来说，则不一定需要传入Base类型。我们只需要保证传入的对象有一个method()方法就可以了，这就是动态语言的“鸭子类型”，它并不要求严格的继承体系，一个对象只要“看起来像鸭子，走起路来像鸭子”，那它就可以被看做是鸭子。<strong>python变量可以引用一切对象，所以多态性更灵活！</strong></p>
+<p><em>注意，这里推荐使用<code>super()</code>函数调用父类方法而不是直接用父类名（虽然在这个地方效果一样），但是多继承时会有点问题。</em></p>
+<p>###super()函数</p>
+<p>看以下多继承的例子（python支持多重继承，java只有单继承，c++也是可以多重继承）：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">class Root(object):</div><div class="line">    def __init__(self):</div><div class="line">        print('this is root!')</div><div class="line"></div><div class="line">class A(Root):</div><div class="line">    def __init__(self):</div><div class="line">        print('enter A')</div><div class="line">        super().__init__()</div><div class="line">        print('exit A')</div><div class="line"></div><div class="line">class B(Root):</div><div class="line">    def __init__(self):</div><div class="line">        print('enter B')</div><div class="line">        super().__init__()</div><div class="line">        print('exit B')</div><div class="line"></div><div class="line">class C(A,B):</div><div class="line">    def __init__(self):</div><div class="line">        print('enter C')</div><div class="line">        super().__init__()</div><div class="line">        print('exit C')</div><div class="line"></div><div class="line">c=C()</div><div class="line"></div><div class="line">print(c.__class__.mro())</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">上述代码的输出如下：</div><div class="line">enter C</div><div class="line">enter A</div><div class="line">enter B</div><div class="line">this is root!</div><div class="line">exit B</div><div class="line">exit A</div><div class="line">exit C</div><div class="line">[&lt;class '__main__.C'&gt;, &lt;class '__main__.A'&gt;, &lt;class '__main__.B'&gt;, &lt;class '__main__.Root'&gt;, &lt;class 'object'&gt;]</div></pre></td></tr></table></figure>
+<p><code>super</code>使用了<code>方法解析顺序</code>（Method Resolution Order，或MRO）,会对这个元组进行依次搜索，这个元组用于确定一个方法是在当前类还是父类即扫描顺序。用类的<code>__mro__属性</code>或者<code>mro()方法</code>都可获得这个元组。至于这个元组怎么得到的可以看下面的链接，介绍c3算法：<br><a href="http://hanjianwei.com/2013/07/25/python-mro/" target="_blank" rel="noopener">了解更多mro以及c3算法</a></p>
+<p>####下面分析一下上面的代码</p>
+<p>由解析顺序可以看到，首先初始化C类，然后由<code>super调用</code>会调用A类的构造函数，A类又继续调用B类的构造函数，B类最后调用Root类的构造函数。总之，super干的事可以总结为下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def super(cls,inst):</div><div class="line">    mro=inst.__class__.mro()</div><div class="line">    return mro[mro.index(cls)+1]</div><div class="line">第一个参数是确定当前类的位置，第二个参数用于得到mro元组。</div></pre></td></tr></table></figure>
+<p>也就是<strong>返回mro元组的下一个类</strong>。这里，super有两个参数，上述代码没添加参数，文档中说了一点：</p>
+<blockquote>
+<p>The zero argument form only works inside a class definition, as the compiler fills in the necessary details to correctly retrieve the class being defined, as well as accessing the current instance for ordinary methods.</p>
+</blockquote>
+<p>大意是说零参数形式仅在类定义中工作，编译器会填充必要的细节。这里也可以加上参数。如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Root</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'this is root!'</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(Root)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'enter A'</span>)</div><div class="line">        super(A,self).__init__()</div><div class="line">        print(<span class="string">'exit A'</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(Root)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'enter B'</span>)</div><div class="line">        super(B,self).__init__()</div><div class="line">        print(<span class="string">'exit B'</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(A,B)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'enter C'</span>)</div><div class="line">        super(C,self).__init__()</div><div class="line">        print(<span class="string">'exit C'</span>)</div></pre></td></tr></table></figure>
+<p>结果完全一样的。</p>
+<p>其实，super有两个典型的用例。</p>
+<ul>
+<li>在具有单继承的类层次结构中，super可以用于引用父类而不明确命名它们，从而使代码更易于维护。这种使用与其他编程语言中super的使用非常相似。</li>
+<li>第二种用例是在动态执行环境中支持协作多重继承。此用例是Python独有的，在静态编译语言或只支持单继承的语言中找不到。这使得可以实现“菱形图”，其中多个基类实现相同的方法。 （如上示例，如果全部不用super而用类名，会发现Root类的构造函数被调用了两次）</li>
+</ul>
+<p>现在水平有限，容日后再更吧<del>~/(ㄒoㄒ)/</del></p>
+<p>最后一点，不论是c3还是mro啦都是新式类（new-style class）的特性，如果不是那就( ^_^ )/~~拜拜。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/08/pat（十四）/" rel="next" title="pat（十四）">
+                <i class="fa fa-chevron-left"></i> pat（十四）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/16/python第三方库用法/" rel="prev" title="python第三方库用法">
+                python第三方库用法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python语法"><span class="nav-number">1.</span> <span class="nav-text">Python语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#高阶函数"><span class="nav-number">1.1.</span> <span class="nav-text">高阶函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰器"><span class="nav-number">1.2.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slots以及运算符重载"><span class="nav-number">1.3.</span> <span class="nav-text">slots以及运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承、-property和super"><span class="nav-number">1.4.</span> <span class="nav-text">继承、@property和super</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

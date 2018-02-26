@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Java," />
+
+
+<meta name="description" content="谈谈java的反射机制，深入底层了解一波。">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反射">
+<meta property="og:url" content="https://www.prime666.com/2017/03/23/反射/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="谈谈java的反射机制，深入底层了解一波。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/1.JPG">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/3.JPG">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/4.JPG">
+<meta property="og:updated_time" content="2017-03-23T14:04:30.107Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="反射">
+<meta name="twitter:description" content="谈谈java的反射机制，深入底层了解一波。">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com/1.JPG">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/03/23/反射/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>反射 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/03/23/反射/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">反射</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-23T19:26:16+08:00">2017-03-23</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>谈谈java的反射机制，深入底层了解一波。</p>
+<a id="more"></a>
+<h2 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h2><p>用java命令运行程序时，会启动jvm进程，无论程序多么复杂，始终在jvm的进程之中。</p>
+<p>当程序主动使用某个类时，如果该类还未在内存中，会发生<strong>加载、连接和初始化</strong>三个阶段。</p>
+<h3 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h3><p>加载是将类的class文件读入内存，并为之创建一个<code>java.lang.Class</code>对象。加载由类加载器负责，可以通过继承<code>ClassLoader</code>来创建自己的类加载器。</p>
+<p>一旦一个类被载入JVM中，那么同一个类就不会被再次载入了。JVM用<strong>包名、类名和类加载器作为标识</strong>。（Java里只有前两者唯一去标识）</p>
+<p>类加载器有3种：</p>
+<ul>
+<li>Bootstrap ClassLoader</li>
+<li>Extension ClassLoader</li>
+<li>System ClassLoader</li>
+</ul>
+<p>第一个是根加载器，负责加载java核心类。可以用<code>-Xbootclasspath</code>或<code>-D</code>来指定<code>sun.boot.class.path</code>系统属性指定加载附加的类。它不是<code>java.lang.ClassLoader</code>的子类，由JVM自身实现。</p>
+<p>第二个负责加载JRE的拓展目录（/jre/lib/ext或由<code>java.ext.dirs</code>系统属性指定的目录）中JAR包的类。</p>
+<p>第三个负责加载来自<code>-classpath</code>,<code>java.class.path系统属性</code>或<code>CLASSPATH环境变量指定的jar包和类路径</code></p>
+<h3 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h3><p>连接负责把类的二进制数据整合到JRE中。</p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>在这个阶段，JVM负责对类进行初始化，主要是对类变量进行初始化。</p>
+<p>主要有三个步骤：</p>
+<ol>
+<li>假如这个类没被加载和连接，先加载并连接。</li>
+<li>假如父类没有初始化，父类初始化，以此类推。</li>
+<li>假如类中有初始化语句（声明类 变量时指定初始值或静态初始化块），依次执行它们。</li>
+</ol>
+<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>程序需要在运行时得知类和对象的真实信息，可以有两种方法：</p>
+<ol>
+<li>instanceof运算符</li>
+<li>反射</li>
+</ol>
+<h3 id="Class对象"><a href="#Class对象" class="headerlink" title="Class对象"></a>Class对象</h3><p>获得Class对象有三种方法：</p>
+<ol>
+<li><p><code>Class.forName(String name)</code></p>
+<p>name必须是添加完整包名的字符串。</p>
+</li>
+<li><p>调用某个类的<code>class</code>属性</p>
+</li>
+<li><p>调用对象的<code>getClass()</code>方法，它是<code>java.lang.Object</code>中的方法。故而所有对象都可以调用。</p>
+</li>
+</ol>
+<p>常用方法如下图：</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/1.JPG" alt="1"></p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/3.JPG" alt="2"></p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/4.JPG" alt="3"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.*;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.*;</div><div class="line"></div><div class="line"><span class="comment">// 定义可重复注解</span></div><div class="line"><span class="meta">@Repeatable</span>(Annos.class)</div><div class="line"><span class="meta">@interface</span> Anno &#123;&#125;</div><div class="line"><span class="meta">@Retention</span>(value=RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@interface</span> Annos &#123;</div><div class="line">    Anno[] value();</div><div class="line">&#125;</div><div class="line"><span class="comment">// 使用4个注解修饰该类</span></div><div class="line"><span class="meta">@SuppressWarnings</span>(value=<span class="string">"unchecked"</span>)</div><div class="line"><span class="meta">@Deprecated</span></div><div class="line"><span class="comment">// 使用重复注解修饰该类</span></div><div class="line"><span class="meta">@Anno</span></div><div class="line"><span class="meta">@Anno</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassTest</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">// 为该类定义一个私有的构造器</span></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="title">ClassTest</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">// 定义一个有参数的构造器</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ClassTest</span><span class="params">(String name)</span></span></div><div class="line">	&#123;</div><div class="line">		System.out.println(<span class="string">"执行有参数的构造器"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">// 定义一个无参数的info方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">info</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		System.out.println(<span class="string">"执行无参数的info方法"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">// 定义一个有参数的info方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">info</span><span class="params">(String str)</span></span></div><div class="line">	&#123;</div><div class="line">		System.out.println(<span class="string">"执行有参数的info方法"</span></div><div class="line">			+ <span class="string">"，其str参数值："</span> + str);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">// 定义一个测试用的内部类</span></div><div class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Inner</span></span></div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">		<span class="keyword">throws</span> Exception</div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 下面代码可以获取ClassTest对应的Class</span></div><div class="line">		Class&lt;ClassTest&gt; clazz = ClassTest.class;</div><div class="line">		<span class="comment">// 获取该Class对象所对应类的全部构造器</span></div><div class="line">		Constructor[] ctors = clazz.getDeclaredConstructors();</div><div class="line">		System.out.println(<span class="string">"ClassTest的全部构造器如下："</span>);</div><div class="line">		<span class="keyword">for</span> (Constructor c : ctors)</div><div class="line">		&#123;</div><div class="line">			System.out.println(c);</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 获取该Class对象所对应类的全部public构造器</span></div><div class="line">		Constructor[] publicCtors = clazz.getConstructors();</div><div class="line">		System.out.println(<span class="string">"ClassTest的全部public构造器如下："</span>);</div><div class="line">		<span class="keyword">for</span> (Constructor c : publicCtors)</div><div class="line">		&#123;</div><div class="line">			System.out.println(c);</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 获取该Class对象所对应类的全部public方法</span></div><div class="line">		Method[] mtds = clazz.getMethods();</div><div class="line">		System.out.println(<span class="string">"ClassTest的全部public方法如下："</span>);</div><div class="line">		<span class="keyword">for</span> (Method md : mtds)</div><div class="line">		&#123;</div><div class="line">			System.out.println(md);</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 获取该Class对象所对应类的指定方法</span></div><div class="line">		System.out.println(<span class="string">"ClassTest里带一个字符串参数的info()方法为："</span></div><div class="line">			+ clazz.getMethod(<span class="string">"info"</span> , String.class));<span class="comment">//注意这里，第二个参数。</span></div><div class="line">		<span class="comment">// 获取该Class对象所对应类的上的全部注解</span></div><div class="line">		Annotation[] anns = clazz.getAnnotations();</div><div class="line">		System.out.println(<span class="string">"ClassTest的全部Annotation如下："</span>);</div><div class="line">		<span class="keyword">for</span> (Annotation an : anns)</div><div class="line">		&#123;</div><div class="line">			System.out.println(an);</div><div class="line">		&#125;</div><div class="line">		System.out.println(<span class="string">"该Class元素上的@SuppressWarnings注解为："</span></div><div class="line">			+ Arrays.toString(clazz.getAnnotationsByType(SuppressWarnings.class)));</div><div class="line">		System.out.println(<span class="string">"该Class元素上的@Anno注解为："</span></div><div class="line">			+ Arrays.toString(clazz.getAnnotationsByType(Anno.class)));</div><div class="line">		<span class="comment">// 获取该Class对象所对应类的全部内部类</span></div><div class="line">		Class&lt;?&gt;[] inners = clazz.getDeclaredClasses();</div><div class="line">		System.out.println(<span class="string">"ClassTest的全部内部类如下："</span>);</div><div class="line">		<span class="keyword">for</span> (Class c : inners)</div><div class="line">		&#123;</div><div class="line">			System.out.println(c);</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 使用Class.forName方法加载ClassTest的Inner内部类</span></div><div class="line">		Class inClazz = Class.forName(<span class="string">"ClassTest$Inner"</span>);</div><div class="line">		<span class="comment">// 通过getDeclaringClass()访问该类所在的外部类</span></div><div class="line">		System.out.println(<span class="string">"inClazz对应类的外部类为："</span> +</div><div class="line">			inClazz.getDeclaringClass());</div><div class="line">		System.out.println(<span class="string">"ClassTest的包为："</span> + clazz.getPackage());</div><div class="line">		System.out.println(<span class="string">"ClassTest的父类为："</span> + clazz.getSuperclass());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>由Class对象可以得到该类的方法(Method对象)，构造器（Constructor对象）和成员变量（Field对象）。它们都位于java.lang.reflect包下。</p>
+<h3 id="通过反射创建对象"><a href="#通过反射创建对象" class="headerlink" title="通过反射创建对象"></a>通过反射创建对象</h3><p>一般程序需要动态创建类的对象时才考虑反射，比较性能局限。（原来java也可以动态创建o(╯□╰)o）</p>
+<h4 id="通过Class对象的newInstance（）方法创建实例"><a href="#通过Class对象的newInstance（）方法创建实例" class="headerlink" title="通过Class对象的newInstance（）方法创建实例"></a>通过Class对象的newInstance（）方法创建实例</h4><p>利用默认构造器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjectPoolFactory</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">// 定义一个对象池,前面是对象名，后面是实际对象</span></div><div class="line">	<span class="keyword">private</span> Map&lt;String ,Object&gt; objectPool = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">	<span class="comment">// 定义一个创建对象的方法，</span></div><div class="line">	<span class="comment">// 该方法只要传入一个字符串类名，程序可以根据该类名生成Java对象</span></div><div class="line">	<span class="function"><span class="keyword">private</span> Object <span class="title">createObject</span><span class="params">(String clazzName)</span></span></div><div class="line">		<span class="keyword">throws</span> InstantiationException</div><div class="line">		, IllegalAccessException , ClassNotFoundException</div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 根据字符串来获取对应的Class对象</span></div><div class="line">		Class&lt;?&gt; clazz = Class.forName(clazzName);</div><div class="line">		<span class="comment">// 使用clazz对应类的默认构造器创建实例</span></div><div class="line">		<span class="keyword">return</span> clazz.newInstance();</div><div class="line">	&#125;</div><div class="line">	<span class="comment">// 该方法根据指定文件来初始化对象池，</span></div><div class="line">	<span class="comment">// 它会根据配置文件来创建对象</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initPool</span><span class="params">(String fileName)</span></span></div><div class="line">		<span class="keyword">throws</span> InstantiationException</div><div class="line">		, IllegalAccessException ,ClassNotFoundException</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">try</span>(</div><div class="line">			FileInputStream fis = <span class="keyword">new</span> FileInputStream(fileName))</div><div class="line">		&#123;</div><div class="line">			Properties props = <span class="keyword">new</span> Properties();</div><div class="line">			props.load(fis);</div><div class="line">			<span class="keyword">for</span> (String name : props.stringPropertyNames())</div><div class="line">			&#123;</div><div class="line">				<span class="comment">// 每取出一对key-value对，就根据value创建一个对象</span></div><div class="line">				<span class="comment">// 调用createObject()创建对象，并将对象添加到对象池中</span></div><div class="line">				objectPool.put(name ,</div><div class="line">					createObject(props.getProperty(name)));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (IOException ex)</div><div class="line">		&#123;</div><div class="line">			System.out.println(<span class="string">"读取"</span> + fileName + <span class="string">"异常"</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">getObject</span><span class="params">(String name)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 从objectPool中取出指定name对应的对象。</span></div><div class="line">		<span class="keyword">return</span> objectPool.get(name);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">		<span class="keyword">throws</span> Exception</div><div class="line">	&#123;</div><div class="line">		ObjectPoolFactory pf = <span class="keyword">new</span> ObjectPoolFactory();</div><div class="line">		pf.initPool(<span class="string">"obj.txt"</span>);</div><div class="line">		System.out.println(pf.getObject(<span class="string">"a"</span>));      <span class="comment">// ①</span></div><div class="line">		System.out.println(pf.getObject(<span class="string">"b"</span>));      <span class="comment">// ②</span></div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">/*obj.txt文件中：</span></div><div class="line">a=java.util.Date</div><div class="line">b=javax.swing.JFrame</div><div class="line">*/</div></pre></td></tr></table></figure>
+<h4 id="通过Constructor的newInstance-方法"><a href="#通过Constructor的newInstance-方法" class="headerlink" title="通过Constructor的newInstance()方法"></a>通过Constructor的newInstance()方法</h4><p>这样可以选择构造器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateJFrame</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">		<span class="keyword">throws</span> Exception</div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 获取JFrame对应的Class对象</span></div><div class="line">		Class&lt;?&gt; jframeClazz = Class.forName(<span class="string">"javax.swing.JFrame"</span>);</div><div class="line">		<span class="comment">// 获取JFrame中带一个字符串参数的构造器</span></div><div class="line">		Constructor ctor = jframeClazz</div><div class="line">			.getConstructor(String.class);</div><div class="line">		<span class="comment">// 调用Constructor的newInstance方法创建对象</span></div><div class="line">		Object obj = ctor.newInstance(<span class="string">"测试窗口"</span>);</div><div class="line">		<span class="comment">// 输出JFrame对象</span></div><div class="line">		System.out.println(obj);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/21/多线程and多进程/" rel="next" title="多线程and多进程">
+                <i class="fa fa-chevron-left"></i> 多线程and多进程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/25/位运算/" rel="prev" title="位运算">
+                位运算 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载机制"><span class="nav-number">1.</span> <span class="nav-text">类加载机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加载"><span class="nav-number">1.1.</span> <span class="nav-text">加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接"><span class="nav-number">1.2.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">1.3.</span> <span class="nav-text">初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射"><span class="nav-number">2.</span> <span class="nav-text">反射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Class对象"><span class="nav-number">2.1.</span> <span class="nav-text">Class对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过反射创建对象"><span class="nav-number">2.2.</span> <span class="nav-text">通过反射创建对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过Class对象的newInstance（）方法创建实例"><span class="nav-number">2.2.1.</span> <span class="nav-text">通过Class对象的newInstance（）方法创建实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过Constructor的newInstance-方法"><span class="nav-number">2.2.2.</span> <span class="nav-text">通过Constructor的newInstance()方法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Java," />
+
+
+<meta name="description" content="关于java多线程机制的总结">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java多线程">
+<meta property="og:url" content="https://www.prime666.com/2017/05/28/java多线程/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="关于java多线程机制的总结">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-05-28_221948.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-05-28_222147.png">
+<meta property="og:updated_time" content="2017-05-30T13:46:21.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java多线程">
+<meta name="twitter:description" content="关于java多线程机制的总结">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-05-28_221948.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/05/28/java多线程/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>java多线程 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/05/28/java多线程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java多线程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-28T21:57:07+08:00">2017-05-28</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/多线程/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关于java多线程机制的总结</p>
+<a id="more"></a>
+<h1 id="java多线程"><a href="#java多线程" class="headerlink" title="java多线程"></a>java多线程</h1><h2 id="创建多线程的方式"><a href="#创建多线程的方式" class="headerlink" title="创建多线程的方式"></a>创建多线程的方式</h2><h3 id="继承Thread类"><a href="#继承Thread类" class="headerlink" title="继承Thread类"></a>继承Thread类</h3><p>​    第一种是最简单的，只需要继承Thread类，并重写<code>run</code>方法即可，这个方法即时线程执行体。然后，创建实例调用<code>start</code>方法来让线程处于就绪状态。</p>
+<p>这种方式<strong>主要问题在于，多个线程之间不能共享线程类的实例变量，因为它们是不同的实例。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 通过继承Thread类来创建线程类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> i ;</div><div class="line">	<span class="comment">// 重写run方法，run方法的方法体就是线程执行体</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> ( ; i &lt; <span class="number">100</span> ; i++ )</div><div class="line">		&#123;</div><div class="line">			<span class="comment">// 当线程类继承Thread类时，直接使用this即可获取当前线程</span></div><div class="line">			<span class="comment">// Thread对象的实例方法getName()返回当前该线程的名字</span></div><div class="line">			<span class="comment">// 因此可以直接调用getName()方法返回当前线程的名</span></div><div class="line">			System.out.println(getName() +  <span class="string">" "</span> + i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>;  i++)</div><div class="line">		&#123;</div><div class="line">			<span class="comment">// 调用Thread的currentThread方法获取当前线程</span></div><div class="line">			System.out.println(Thread.currentThread().getName()</div><div class="line">				+  <span class="string">" "</span> + i);</div><div class="line">			<span class="keyword">if</span> (i == <span class="number">20</span>)</div><div class="line">			&#123;</div><div class="line">				<span class="comment">// 创建、并启动第一条线程</span></div><div class="line">				<span class="keyword">new</span> FirstThread().start();</div><div class="line">				<span class="comment">// 创建、并启动第二条线程</span></div><div class="line">				<span class="keyword">new</span> FirstThread().start();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>getName</code>可以得到线程的名字，<code>setName</code>可以自己给线程命名。</p>
+<p><strong>这里需要说明一下，java中main方法也是一个单独的线程，或者说叫主线程。所以这里实际上是三个线程。另外，线程必须用<code>start</code>调用使其处于就绪状态，如果直接调用<code>run</code>方法，那就会当做普通方法了。</strong></p>
+<h3 id="实现Runnable接口"><a href="#实现Runnable接口" class="headerlink" title="实现Runnable接口"></a>实现Runnable接口</h3><p>​    第二种方式就麻烦一些了，需要定义<code>Runnable</code>接口的实现类，然后重写该接口的<code>run</code>方法，该接口是函数式接口。同样，<code>run</code>方法的方法体就是线程执行的方法体。然后，创建实例，作为<code>Thread</code>的构造器参数，即由<code>Thread</code>执行。最后调用<code>Thread</code>实例的<code>start</code>方法即可。</p>
+<p><strong>这种方式最大好处在于可以多个线程共享数据。</strong></p>
+<p>比如下面的代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Scanner;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleArray</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> List&lt;Integer&gt; list=<span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> t=(<span class="keyword">int</span>)Thread.currentThread().getId()%<span class="number">100</span>;</div><div class="line">        list.add(t);</div><div class="line">        System.out.printf(<span class="string">"线程%s执行完成\n"</span>,Thread.currentThread().getName());</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        System.out.println(list);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">    &#123;</div><div class="line">        SimpleArray target=<span class="keyword">new</span> SimpleArray();</div><div class="line">        Thread t1=<span class="keyword">new</span> Thread(target,<span class="string">"1号"</span>);</div><div class="line">        Thread t2=<span class="keyword">new</span> Thread(target,<span class="string">"2号"</span>);</div><div class="line">        t1.start();</div><div class="line">        t2.start();</div><div class="line">        <span class="keyword">try</span></div><div class="line">        &#123;</div><div class="line">            t1.join();</div><div class="line">            t2.join();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (InterruptedException e)</div><div class="line">        &#123;</div><div class="line">            System.out.println(e.getMessage());</div><div class="line">        &#125;</div><div class="line">        target.show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码让两个线程分别把自己的id号后两位加入集合<code>list</code>中，即共享<code>list</code>这一数据。这里<code>join</code>方法会让调用的线程阻塞，直到被调用的线程执行完即必须等到<code>t1``t2</code>执行完，<code>main线程</code>才会继续执行。</p>
+<h3 id="使用Callable和Future接口"><a href="#使用Callable和Future接口" class="headerlink" title="使用Callable和Future接口"></a>使用Callable和Future接口</h3><p>​    接口<code>Callable</code>提供了比接口<code>Runnable</code>更强大的功能，其也是函数式接口，有一个方法<code>call</code>,其强大之处在于可以有<strong>返回值和抛出异常</strong>。</p>
+<p>这里创建线程的思路和上面大体相同，不过，查阅一下文档就会发现，<code>Thread</code>的构造器并不能接受<code>Callable</code>接口的实例，只能接受<code>Runnable</code>接口的实例，所以需要一个同时实现<code>Runnable</code>和<code>Callable</code>接口的实现类。这里用了<code>Future</code>接口，其代表执行的结果，这里就是线程返回值了。它包含一系列方法如下：</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-05-28_221948.png" alt=""></p>
+<p>这里，选择了<code>Futuretask</code>实现类，其构造器可以接受<code>Callable</code>接口，而且其又实现了<code>Runnable</code>和<code>Future</code>接口。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-05-28_222147.png" alt=""></p>
+<p>示例代码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> 马源 14130110069 email:1977786930@qq.com on 2017/5/28.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.concurrent.FutureTask;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">future</span></span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">    &#123;</div><div class="line">        future target=<span class="keyword">new</span> future();</div><div class="line">        FutureTask&lt;Integer&gt; task =<span class="keyword">new</span> FutureTask&lt;Integer&gt;(()-&gt;&#123;</div><div class="line">            <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">            <span class="keyword">while</span> (i++&lt;<span class="number">50</span>)</div><div class="line">                System.out.println(Thread.currentThread().getName()+<span class="string">"变量i的值是"</span>+i);</div><div class="line">            <span class="keyword">return</span> i;</div><div class="line">        &#125;);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">50</span>;i++)</div><div class="line">        &#123;</div><div class="line">            System.out.println(Thread.currentThread().getName()+<span class="string">"变量i的值是"</span>+i);</div><div class="line">            <span class="keyword">if</span> (i==<span class="number">20</span>)</div><div class="line">            &#123;</div><div class="line">                Thread t=<span class="keyword">new</span> Thread(task,<span class="string">"子线程"</span>);</div><div class="line">                t.start();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            System.out.println(<span class="string">"子线程的返回值是"</span>+task.get());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (Exception e)</div><div class="line">        &#123;</div><div class="line">            System.out.println(e.getMessage());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里有两个线程，<code>main</code>线程和自己创建的线程。</p>
+<h2 id="后台线程"><a href="#后台线程" class="headerlink" title="后台线程"></a>后台线程</h2><p>​    前面讨论的都是普通的线程，还有一种线程主要是为其它线程提供服务，称作<strong>守护线程</strong>。</p>
+<p>其特点在于，前台线程全部死亡时，后台线程自动死亡，JVM的垃圾回收器就是典型的守护线程。</p>
+<p>通过<code>Thread</code>的<code>setDaemon(true)</code>可以设置，但必须在<code>start</code>之前调用。</p>
+<h2 id="join、sleep和yield"><a href="#join、sleep和yield" class="headerlink" title="join、sleep和yield"></a>join、sleep和yield</h2><p><code>join</code>让一个线程等待另一个线程，通常有以下两种形式：</p>
+<ol>
+<li><code>join()</code>等待被join的线程执行完</li>
+<li><code>join(long millis)</code>等待被join的线程执行millis毫秒，如果还没有结束，就不再等待</li>
+</ol>
+<p><code>sleep(long millis)</code>让当前正在执行的线程暂停一段时间，并进入<strong>阻塞状态</strong>，它是<code>Thread</code>中的静态方法。调用这个方法之后，线程会进入休眠，在此期间不会得到执行的机会，常常用于暂停程序执行。</p>
+<p><code>yield()</code>方法也是<code>Thread</code>中的一个静态方法，它会让调用它的线程重新转入就绪状态，即让<strong>线程调度器再次调度一次</strong>，也就是说让优先级比它更高或者同级的线程有执行机会。当然，完全有可能还是执行当前线程。在多cpu的情况下，效果可能不明显。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">YieldTest</span> <span class="keyword">extends</span> <span class="title">Thread</span></span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">YieldTest</span><span class="params">(String name)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">super</span>(name);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 定义run方法作为线程执行体</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">50</span> ; i++ )</div><div class="line">        &#123;</div><div class="line">            System.out.println(getName() + <span class="string">"  "</span> + i);</div><div class="line">            <span class="comment">// 当i等于20时，使用yield方法让当前线程让步</span></div><div class="line">            <span class="keyword">if</span> (i == <span class="number">20</span>)</div><div class="line">            &#123;</div><div class="line">                Thread.yield();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span><span class="keyword">throws</span> Exception</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// 启动两条并发线程</span></div><div class="line">        YieldTest yt1 = <span class="keyword">new</span> YieldTest(<span class="string">"高级"</span>);</div><div class="line">        <span class="comment">// 将ty1线程设置成最高优先级</span></div><div class="line">        yt1.setPriority(Thread.MAX_PRIORITY);</div><div class="line">        yt1.start();</div><div class="line">        YieldTest yt2 = <span class="keyword">new</span> YieldTest(<span class="string">"低级"</span>);</div><div class="line">        <span class="comment">// 将yt2线程设置成最低优先级</span></div><div class="line">        yt2.setPriority(Thread.MIN_PRIORITY);</div><div class="line">        yt2.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意：<code>sleep</code>抛出了<code>InterruptedException</code>，而<code>yield</code>没有抛出任何异常。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/18/最短路径/" rel="next" title="最短路径">
+                <i class="fa fa-chevron-left"></i> 最短路径
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/30/Java基本语法/" rel="prev" title="Java基本语法">
+                Java基本语法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java多线程"><span class="nav-number">1.</span> <span class="nav-text">java多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建多线程的方式"><span class="nav-number">1.1.</span> <span class="nav-text">创建多线程的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#继承Thread类"><span class="nav-number">1.1.1.</span> <span class="nav-text">继承Thread类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现Runnable接口"><span class="nav-number">1.1.2.</span> <span class="nav-text">实现Runnable接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Callable和Future接口"><span class="nav-number">1.1.3.</span> <span class="nav-text">使用Callable和Future接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后台线程"><span class="nav-number">1.2.</span> <span class="nav-text">后台线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#join、sleep和yield"><span class="nav-number">1.3.</span> <span class="nav-text">join、sleep和yield</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

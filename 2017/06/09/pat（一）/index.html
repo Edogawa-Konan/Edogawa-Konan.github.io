@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="PAT," />
+
+
+<meta name="description" content="pat甲级做题笔记：1001——1010">
+<meta name="keywords" content="PAT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pat（一）">
+<meta property="og:url" content="https://www.prime666.com/2017/06/09/pat（一）/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="pat甲级做题笔记：1001——1010">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-06T11:15:04.235Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pat（一）">
+<meta name="twitter:description" content="pat甲级做题笔记：1001——1010">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/06/09/pat（一）/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>pat（一） | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/09/pat（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pat（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-09T16:25:15+08:00">2017-06-09</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>pat甲级做题笔记：1001——1010</p>
+<a id="more"></a>
+<h1 id="pat（一）"><a href="#pat（一）" class="headerlink" title="pat（一）"></a>pat（一）</h1><h2 id="1001-找规律"><a href="#1001-找规律" class="headerlink" title="1001[找规律]"></a>1001[找规律]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1001" target="_blank" rel="noopener">A+B Format </a></p>
+<p>思路：<strong>字符串处理</strong></p>
+<p><strong>如果可以得到<code>(i+1)%3==len%3</code>就输出一个<code>,</code>，利用这种公式就很简单了。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/6/9.</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> a,b;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;a,&amp;b);</div><div class="line">    a+=b;</div><div class="line">    <span class="built_in">string</span> out=to_string(a);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;out.size();++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>,out[i]);</div><div class="line">        <span class="keyword">if</span>(out[i]==<span class="string">'-'</span>)</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        <span class="keyword">if</span>((i+<span class="number">1</span>)%<span class="number">3</span>==out.size()%<span class="number">3</span>&amp;&amp;i!=out.size()<span class="number">-1</span>)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">","</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1002-多项式求和"><a href="#1002-多项式求和" class="headerlink" title="1002[多项式求和]"></a>1002[多项式求和]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1002" target="_blank" rel="noopener">A+B for Polynomials</a></p>
+<p><strong>思路：直接用两个数组保存，下标表示指数，元素代表系数。累加即可。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/6/5.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">float</span> input[<span class="number">1001</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> k1,k2;</div><div class="line">    <span class="keyword">float</span> coefficient;</div><div class="line">    <span class="keyword">int</span> exponent;</div><div class="line">    <span class="keyword">int</span> total=<span class="number">0</span>;</div><div class="line">    <span class="built_in">memset</span>(input,<span class="number">0</span>, <span class="keyword">sizeof</span>(input));</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k1);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k1;i++)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %f"</span>,&amp;exponent,&amp;coefficient);</div><div class="line">        input[exponent]=coefficient;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k2);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k2;i++)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %f"</span>,&amp;exponent,&amp;coefficient);</div><div class="line">        input[exponent]+=coefficient;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; e:input)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(e!=<span class="number">0</span>)</div><div class="line">            total++;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,total);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1000</span>;i&gt;=<span class="number">0</span>;--i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(total==<span class="number">0</span>)</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">if</span>(input[i]!=<span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">" %d %.1f"</span>,i,input[i]);</div><div class="line">            total--;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1003-Dijkstra"><a href="#1003-Dijkstra" class="headerlink" title="1003[Dijkstra]"></a>1003[Dijkstra]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1003" target="_blank" rel="noopener">Emergency</a></p>
+<p>思路：这道题要求最短路径有几条，同时还要求经过节点的权值尽可能大。用Dijkstra算法即可，只不过再附加一点特殊的处理。</p>
+<p><strong>本道题很经典，需要多看看，包括定义的数据保存的数据等等。特别注意，松弛那一块必须是else if。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/6/9.</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> N,M,C1,C2;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;N&gt;&gt;M&gt;&gt;C1&gt;&gt;C2;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> <span class="keyword">int</span> inf=<span class="number">99999999</span>;</div><div class="line">    <span class="keyword">int</span> G[N][N];</div><div class="line">    <span class="keyword">int</span> rescue[N];</div><div class="line">    <span class="keyword">int</span> dist[N];</div><div class="line">    <span class="keyword">bool</span> visited[N];</div><div class="line">    <span class="keyword">int</span> path_count[N];<span class="comment">//到每个结点的最短路径条数</span></div><div class="line">    <span class="keyword">int</span> rescue_total[N];<span class="comment">//到每个结点的救援队总数</span></div><div class="line"></div><div class="line">    fill(visited,visited+N, <span class="literal">false</span>);</div><div class="line">    fill(G[<span class="number">0</span>],G[<span class="number">0</span>]+N*N,inf);</div><div class="line">    fill(dist,dist+N,inf);</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;i++)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">cin</span>&gt;&gt;rescue[i];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>,u,v;i&lt;M;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">cin</span>&gt;&gt;u&gt;&gt;v;</div><div class="line">        <span class="built_in">cin</span>&gt;&gt;G[u][v];</div><div class="line">        G[v][u]=G[u][v];</div><div class="line">    &#125;</div><div class="line">    dist[C1]=<span class="number">0</span>;<span class="comment">//起点</span></div><div class="line">    rescue_total[C1]=rescue[C1];</div><div class="line">    path_count[C1]=<span class="number">1</span>;<span class="comment">//初始化到起点的路径就1条</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> min_d=inf,u=<span class="number">-1</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;N;++j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(!visited[j]&amp;&amp;dist[j]&lt;min_d)</div><div class="line">            &#123;</div><div class="line">                min_d=dist[j];</div><div class="line">                u=j;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(u==<span class="number">-1</span>)</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        visited[u]=<span class="literal">true</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> v=<span class="number">0</span>;v&lt;N;++v)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(!visited[v]&amp;&amp;G[u][v]!=inf)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(G[u][v]+dist[u]&lt;dist[v])</div><div class="line">                &#123;</div><div class="line">                    dist[v]=G[u][v]+dist[u];</div><div class="line"></div><div class="line">                    path_count[v]=path_count[u];</div><div class="line">                    rescue_total[v]=rescue[v]+rescue_total[u];</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(G[u][v]+dist[u]==dist[v])</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">if</span>(rescue[v]+rescue_total[u]&gt;rescue_total[v])</div><div class="line">                    &#123;</div><div class="line">                        rescue_total[v]=rescue[v]+rescue_total[u];</div><div class="line">                    &#125;</div><div class="line">                    path_count[v]=path_count[u]+path_count[v];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;path_count[C2]&lt;&lt;<span class="string">" "</span>&lt;&lt;rescue_total[C2];</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1004-树的遍历DFS-BFS"><a href="#1004-树的遍历DFS-BFS" class="headerlink" title="1004[树的遍历DFS/BFS]"></a>1004[树的遍历DFS/BFS]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1004" target="_blank" rel="noopener"> Counting Leaves</a></p>
+<p>简单说来，题目要求输入所有的父节点和其孩子节点，求这棵树每一层有几个叶子节点。</p>
+<p>思路：DFS或者BFS</p>
+<p><strong>注意这里的DFS，之所以求最大深度，是因为要在输出的时候用于确定输出的结果 范围。很经典的DFS，边界条件也很美观，值得好好学习。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/6/1.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tree[<span class="number">100</span>];<span class="comment">//tree[i]存储编号为i的结点的孩子们的编号</span></div><div class="line"><span class="keyword">int</span> res[<span class="number">100</span>];<span class="comment">//某一层的叶子节点数</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> depth)</span></span>;</div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> total_depth=<span class="number">-1</span>;<span class="comment">//最多有几层？从1开始</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> m,n;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;n,&amp;m);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;m ; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> id,k;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;id,&amp;k);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=k;++j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> tmp;</div><div class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;tmp);</div><div class="line">            tree[id].push_back(tmp);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">  <span class="comment">//以上是输入，不必看</span></div><div class="line">    dfs(<span class="number">1</span>,<span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;total_depth; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>,res[i]);</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,res[total_depth]);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> index,<span class="keyword">int</span> depth)</span></span></div><div class="line">&#123;<span class="comment">//index表示结点编号,经典的dfs</span></div><div class="line">    <span class="keyword">if</span>(tree[index].size()==<span class="number">0</span>)</div><div class="line">    &#123;<span class="comment">//如果没有孩子，那么这一层叶子结点数+1</span></div><div class="line">        res[depth]++;</div><div class="line">        total_depth=max(total_depth,depth);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;<span class="comment">//有孩子就递归调用</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j&lt;tree[index].size(); ++j) &#123;</div><div class="line">            dfs(tree[index][j],depth+<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<p><strong>至于BFS就简单一些了，或者说更容易想到吧。最早期的代码是用-1这个特殊值作为层与层的分割，但是还是打表更方便，即level数组。注意更新total_depth为了最后的输出。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/9/6.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;deque&gt;</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tree[<span class="number">100</span>];</div><div class="line"><span class="keyword">int</span> level[<span class="number">100</span>];<span class="comment">//打表记录每个id所在层数</span></div><div class="line"><span class="keyword">int</span> res[<span class="number">100</span>];<span class="comment">//记录每一层的叶子结点个数</span></div><div class="line"><span class="keyword">int</span> total_depth=<span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> N,M;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;N,&amp;M);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;M;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> id,k,child_id;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;id,&amp;k);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;k;++j)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;child_id);</div><div class="line">            tree[id].push_back(child_id);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; q;</div><div class="line">    q.push_back(<span class="number">1</span>);</div><div class="line">    level[<span class="number">1</span>]=<span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span> (!q.empty())</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> t=q[<span class="number">0</span>];</div><div class="line">        q.pop_front();</div><div class="line">        total_depth=max(level[t],total_depth);<span class="comment">//更新最大深度为了后面输出！且位置必须在这里，不然如就一层就错误了。</span></div><div class="line">        <span class="keyword">if</span>(tree[t].size()==<span class="number">0</span>)</div><div class="line">            res[level[t]]++;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span>&amp;child:tree[t])</div><div class="line">            &#123;</div><div class="line">                q.push_back(child);</div><div class="line">                level[child]=level[t]+<span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=total_depth;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%d"</span>,res[i]);</div><div class="line">        <span class="keyword">if</span>(i!=total_depth)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">" "</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1005-简单字符串处理"><a href="#1005-简单字符串处理" class="headerlink" title="1005[简单字符串处理]"></a>1005[简单字符串处理]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1005" target="_blank" rel="noopener">Spell It Right</a></p>
+<p>题目要求：输入一个非负整数，求出各位和，用英语输出结果。</p>
+<p>思路：读取时不要把它当整数了，直接<strong>读取一个字符串</strong>，这样更好求和。然后打个表，根据值是多少输出即可。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">string</span> s[<span class="number">10</span>] = &#123;<span class="string">"zero"</span>, <span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>, <span class="string">"four"</span>, <span class="string">"five"</span>, <span class="string">"six"</span>, <span class="string">"seven"</span>, <span class="string">"eight"</span>, <span class="string">"nine"</span>&#125;;</div><div class="line">    <span class="built_in">string</span> input;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;input;</div><div class="line">    <span class="keyword">int</span> sum=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;input.length(); ++i)</div><div class="line">    &#123;</div><div class="line">        sum+=input[i]-<span class="string">'0'</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; output;</div><div class="line">    <span class="keyword">while</span>(sum&gt;<span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        output.push_back(sum%<span class="number">10</span>);</div><div class="line">        sum/=<span class="number">10</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(output.size()&gt;<span class="number">0</span>)</div><div class="line">    &#123;<span class="comment">//特殊情况判断</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = output.size()<span class="number">-1</span>; j&gt;<span class="number">0</span> ; --j)</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;s[output[j]]&lt;&lt;<span class="string">" "</span>;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;s[output[<span class="number">0</span>]];</div><div class="line">    &#125; <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;s[<span class="number">0</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1006-简单比较"><a href="#1006-简单比较" class="headerlink" title="1006[简单比较]"></a>1006[简单比较]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1006" target="_blank" rel="noopener">Sign In and Sign Out </a></p>
+<p>题目要求:找出最早和最晚的人。</p>
+<p>思路：可以直接利用string的已经重载过的比较运算符，求出最早最晚即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/6/3.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> m;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;m;</div><div class="line">    <span class="built_in">string</span> first_in_id,last_out_id,first=<span class="string">"24:00:00"</span>,last=<span class="string">"00:00:00"</span>;</div><div class="line">    <span class="built_in">string</span> id,in,out;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;m; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">cin</span>&gt;&gt;id&gt;&gt;in&gt;&gt;out;</div><div class="line">        <span class="keyword">if</span>(in&lt;first)</div><div class="line">        &#123;</div><div class="line">            first_in_id=id;</div><div class="line">            first=in;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(out&gt;last)</div><div class="line">        &#123;</div><div class="line">            last_out_id=id;</div><div class="line">            last=out;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;first_in_id&lt;&lt;<span class="string">" "</span>&lt;&lt;last_out_id;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1007-DP"><a href="#1007-DP" class="headerlink" title="1007[DP]"></a>1007[DP]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1007" target="_blank" rel="noopener">Maximum Subsequence Sum</a></p>
+<p>题目要求：经典DP问题，就不废话了。</p>
+<p>思路：这道题我原本正常思路是根据以下递推公式。<code>b[j]</code>就是表示以<code>a[j]</code>结尾的最大连续和。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">b[j]=max(a[i]+b[j<span class="number">-1</span>],a[j]);</div></pre></td></tr></table></figure>
+<p>这个公司表达的意思倒是很清楚，但是翻译到程序上，我一开始就直接定义了个数组b[j]，然后为了记录下标，又弄了个数组<code>c[j]</code>表示以<code>a[j]</code>结尾的最大和的起始下标（结束下标就是j）。然后各种不能通过，后来发现是<strong>数组循环的时候没有能更新到初始值，也就是边界没弄好</strong>。<strong>其实，根本用不到这么麻烦，因为这里b数组的值只用了一次，也就是说，就要最大的就好了，就不必用一个数组记录全部了，用一个变量就好了啊。同理，c数组也是。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/6/3.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> n;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;n;</div><div class="line">    <span class="keyword">int</span> a[n];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;n ; ++i) &#123;</div><div class="line">        <span class="built_in">cin</span>&gt;&gt;a[i];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> max_sum=<span class="number">-1</span>,left=<span class="number">0</span>,right=<span class="number">0</span>,tmp=<span class="number">0</span>,tmp_left=<span class="number">0</span>;<span class="comment">//tmp临时最大和，tmp_left临时起点下标</span></div><div class="line">    <span class="keyword">bool</span> all_negative= <span class="literal">true</span>;<span class="comment">//全是负数时特殊处理</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(a[i]&gt;=<span class="number">0</span>)</div><div class="line">            all_negative= <span class="literal">false</span>;</div><div class="line">        tmp+=a[i];</div><div class="line">        <span class="keyword">if</span>(tmp&gt;max_sum)</div><div class="line">        &#123;<span class="comment">//及时更新</span></div><div class="line">            max_sum=tmp;</div><div class="line">            left=tmp_left;</div><div class="line">            right=i;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(tmp&lt;=<span class="number">0</span>)</div><div class="line">        &#123;<span class="comment">/*只要不为负数，就默认加a[j]，也就是说，只要大于0，说明前面的还是对后续结果有贡献的*/</span></div><div class="line">            tmp=<span class="number">0</span>;</div><div class="line">            tmp_left=i+<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">  <span class="comment">//注意本题的输出，一开始理解错了</span></div><div class="line">    <span class="keyword">if</span>(all_negative)</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="number">0</span>&lt;&lt;<span class="string">" "</span>&lt;&lt;a[<span class="number">0</span>]&lt;&lt;<span class="string">" "</span>&lt;&lt;a[n<span class="number">-1</span>];</div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="built_in">cout</span>&lt;&lt;max_sum&lt;&lt;<span class="string">" "</span>&lt;&lt;a[left]&lt;&lt;<span class="string">" "</span>&lt;&lt;a[right];</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1008-模拟"><a href="#1008-模拟" class="headerlink" title="1008[模拟]"></a>1008[模拟]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1008" target="_blank" rel="noopener">Elevator</a></p>
+<p>思路：模拟一下电梯即可。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/6/4.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> n;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;n;</div><div class="line">    <span class="keyword">int</span> sum=<span class="number">0</span>,now=<span class="number">0</span>,in;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</div><div class="line">    &#123;   <span class="built_in">cin</span>&gt;&gt;in;</div><div class="line">        <span class="keyword">if</span>(in&gt;now)</div><div class="line">            sum+=<span class="number">6</span>*(in-now);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            sum+=<span class="number">4</span>*(now-in);</div><div class="line">        now=in;</div><div class="line">        sum+=<span class="number">5</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;sum;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1009-多项式乘积"><a href="#1009-多项式乘积" class="headerlink" title="1009[多项式乘积]"></a>1009[多项式乘积]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1009" target="_blank" rel="noopener">Product of Polynomials</a></p>
+<p>题目要求：对1002的拓展，让求多项式的乘积了。</p>
+<p><strong>思路：还是用数组。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/6/4.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> k1,k2;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k1);</div><div class="line">    <span class="keyword">float</span> ans[<span class="number">2001</span>],input[<span class="number">1001</span>];<span class="comment">//ans数组要足够大，毕竟1000项*1000项最多需要二倍空间保存。</span></div><div class="line">    <span class="keyword">int</span> exponent;<span class="comment">//指数</span></div><div class="line">    <span class="keyword">float</span> coefficient;<span class="comment">//系数</span></div><div class="line">    <span class="keyword">int</span> total=<span class="number">0</span>;</div><div class="line">    <span class="built_in">memset</span>(ans,<span class="number">0</span>, <span class="keyword">sizeof</span>(ans));</div><div class="line">    <span class="built_in">memset</span>(input,<span class="number">0</span>, <span class="keyword">sizeof</span>(input));</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k1;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %f"</span>,&amp;exponent,&amp;coefficient);</div><div class="line">        input[exponent]=coefficient;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k2);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k2;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %f"</span>,&amp;exponent,&amp;coefficient);</div><div class="line">        <span class="keyword">if</span>(coefficient!=<span class="number">0</span>)</div><div class="line">        &#123;<span class="comment">//核心代码 </span></div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=<span class="number">1000</span>;j++)</div><div class="line">            &#123;<span class="comment">//每当输入一项，就和上面的多项式每一项相乘，把结果加入ans数组</span></div><div class="line">                ans[j+exponent]+=input[j]*coefficient;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=<span class="number">2000</span>;i++)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(ans[i]!=<span class="number">0</span>)</div><div class="line">            total++;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,total);<span class="comment">//统计有几项</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2000</span>;i&gt;=<span class="number">0</span>;--i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(total==<span class="number">0</span>)</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">if</span>(ans[i]!=<span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">" %d %.1f"</span>,i,ans[i]);</div><div class="line">            total--;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1010-进制转换-字符串处理"><a href="#1010-进制转换-字符串处理" class="headerlink" title="1010[进制转换+字符串处理]"></a>1010[进制转换+字符串处理]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1010" target="_blank" rel="noopener">Radix</a></p>
+<p>题目要求：进制转化，输入两个整数，求是否能找出一个基数使得在该进制下两个数相等。</p>
+<p>思路：<strong>字符串处理，标准的按部就班，分函数处理。注意，此题二分法曾经卡了好几个月，由于我没考虑一点，就是溢出！！！</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/6/5.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">sum</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp;number,<span class="keyword">long</span> <span class="keyword">long</span> radix)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(<span class="built_in">string</span> &amp; input)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">binarysearch</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> a,<span class="keyword">const</span> <span class="built_in">string</span> &amp;b)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> a,<span class="keyword">const</span> <span class="built_in">string</span> &amp; b)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">find_largest</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; b)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">string</span> n1,n2;</div><div class="line">    <span class="keyword">int</span> tag,radix;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;n1&gt;&gt;n2;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;tag,&amp;radix);</div><div class="line">    process(n1);</div><div class="line">    process(n2);</div><div class="line">    <span class="keyword">long</span> <span class="keyword">long</span> a;</div><div class="line">    <span class="built_in">string</span> b;</div><div class="line">    <span class="keyword">if</span>(tag==<span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        a=sum(n1,radix);</div><div class="line">        b=n2;</div><div class="line">    &#125; <span class="keyword">else</span>&#123;</div><div class="line">        a=sum(n2,radix);</div><div class="line">        b=n1;</div><div class="line">    &#125;</div><div class="line">    binarysearch(a,b);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">binarysearch</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> a,<span class="keyword">const</span> <span class="built_in">string</span> &amp; b)</span></span></div><div class="line">&#123;<span class="comment">//二分法</span></div><div class="line">    <span class="keyword">long</span> <span class="keyword">long</span> low=find_largest(b),mid,tmp;</div><div class="line">    <span class="keyword">long</span> <span class="keyword">long</span> high=max(low,a)+<span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(low&lt;=high)</div><div class="line">    &#123;</div><div class="line">        mid=(low+high)/<span class="number">2</span>;</div><div class="line">        tmp=sum(b,mid);</div><div class="line">        <span class="keyword">if</span>(tmp&lt;<span class="number">0</span>)</div><div class="line">        &#123;<span class="comment">//溢出了，，及其重要！！！</span></div><div class="line">            high=mid<span class="number">-1</span>;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(tmp&lt;a)</div><div class="line">        &#123;</div><div class="line">            low=mid+<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(tmp&gt;a)</div><div class="line">        &#123;</div><div class="line">            high=mid<span class="number">-1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%lld"</span>,mid);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Impossible"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> a,<span class="keyword">const</span> <span class="built_in">string</span> &amp; b)</span></span></div><div class="line">&#123;<span class="comment">//暴力搜索</span></div><div class="line">    <span class="keyword">long</span> <span class="keyword">long</span> tmp=<span class="number">-1</span>,r=find_largest(b);</div><div class="line">    <span class="keyword">while</span>(tmp!=a)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(tmp&gt;a)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"Impossible"</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        tmp=sum(b,r);</div><div class="line">        r++;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%lld"</span>,r<span class="number">-1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">sum</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;number,<span class="keyword">long</span> <span class="keyword">long</span> radix)</span></span></div><div class="line">&#123;<span class="comment">//给定数字和基数求其值</span></div><div class="line">    <span class="keyword">long</span> <span class="keyword">long</span> res=<span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> bit=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> <span class="keyword">long</span> i=number.size()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)</div><div class="line">    &#123;</div><div class="line">        res+=<span class="built_in">pow</span>(<span class="keyword">double</span>(radix),<span class="keyword">double</span>(bit))*number[i];</div><div class="line">        bit++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(<span class="built_in">string</span> &amp; input)</span></span></div><div class="line">&#123;<span class="comment">//对输入的字符串进行预处理</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> <span class="keyword">long</span> i =input.size()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(input[i]&gt;=<span class="string">'0'</span>&amp;&amp;input[i]&lt;=<span class="string">'9'</span>)</div><div class="line">        &#123;</div><div class="line">            input[i]-=<span class="string">'0'</span>;</div><div class="line">        &#125; <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            input[i]=input[i]-<span class="string">'a'</span>+(<span class="keyword">char</span>)<span class="number">10</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">find_largest</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; b)</span></span></div><div class="line">&#123;<span class="comment">//找出最小进制</span></div><div class="line">    <span class="keyword">int</span> largest=<span class="number">-1</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> it=b.cbegin();it!=b.cend();it++)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(*it&gt;largest)</div><div class="line">            largest=*it;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> largest+<span class="number">1</span>;<span class="comment">//最大数为largest，最小进制为largest+1.比如110，进制最小是2</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PAT/" rel="tag"># PAT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/08/简单的字符驱动/" rel="next" title="简单的字符驱动">
+                <i class="fa fa-chevron-left"></i> 简单的字符驱动
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/10/语法陷阱/" rel="prev" title="语法陷阱">
+                语法陷阱 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pat（一）"><span class="nav-number">1.</span> <span class="nav-text">pat（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1001-找规律"><span class="nav-number">1.1.</span> <span class="nav-text">1001[找规律]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1002-多项式求和"><span class="nav-number">1.2.</span> <span class="nav-text">1002[多项式求和]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1003-Dijkstra"><span class="nav-number">1.3.</span> <span class="nav-text">1003[Dijkstra]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1004-树的遍历DFS-BFS"><span class="nav-number">1.4.</span> <span class="nav-text">1004[树的遍历DFS/BFS]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1005-简单字符串处理"><span class="nav-number">1.5.</span> <span class="nav-text">1005[简单字符串处理]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1006-简单比较"><span class="nav-number">1.6.</span> <span class="nav-text">1006[简单比较]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1007-DP"><span class="nav-number">1.7.</span> <span class="nav-text">1007[DP]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1008-模拟"><span class="nav-number">1.8.</span> <span class="nav-text">1008[模拟]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1009-多项式乘积"><span class="nav-number">1.9.</span> <span class="nav-text">1009[多项式乘积]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1010-进制转换-字符串处理"><span class="nav-number">1.10.</span> <span class="nav-text">1010[进制转换+字符串处理]</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

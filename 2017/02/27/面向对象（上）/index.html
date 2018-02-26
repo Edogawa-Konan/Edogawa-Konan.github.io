@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Java," />
+
+
+<meta name="description" content="读疯狂java讲义第三版的读书笔记。重拾oop，本篇包括基本oop：封装、多态、继承。">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象（上）">
+<meta property="og:url" content="https://www.prime666.com/2017/02/27/面向对象（上）/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="读疯狂java讲义第三版的读书笔记。重拾oop，本篇包括基本oop：封装、多态、继承。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-05-31T11:21:09.922Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面向对象（上）">
+<meta name="twitter:description" content="读疯狂java讲义第三版的读书笔记。重拾oop，本篇包括基本oop：封装、多态、继承。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/02/27/面向对象（上）/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>面向对象（上） | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/02/27/面向对象（上）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">面向对象（上）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T20:57:06+08:00">2017-02-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>读疯狂java讲义第三版的读书笔记。<br>重拾oop，本篇包括基本oop：封装、多态、继承。<br><a id="more"></a></p>
+<h2 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h2><p>对于一个类，最常见的三种成员：构造器、成员变量和方法。各成员之间定义顺序没有任何影响。java语言通过new关键字来调用构造器，如果没有定义构造器系统会提供一个默认构造器。定义成员变量可以有一个默认值。</p>
+<h2 id="static"><a href="#static" class="headerlink" title="static"></a>static</h2><p>附加static参数实质上是为了区分一个成员是属于一个实例还是一个类，一个实例可以调用static方法或者访问static成员，因为它们属于类。static方法却不能访问实例的成员，没有this指针啊。<strong>建议用类名访问static成员，用实例访问非static成员。</strong></p>
+<h2 id="对象引用"><a href="#对象引用" class="headerlink" title="对象引用"></a>对象引用</h2><p>java一切都是引用，这和python很像。垃圾回收机制通过判断一个对象是否被引用来决定是否回收它，如果堆内存的对象没有任何变量引用它，该对象占用的内存会被释放。</p>
+<p>java和c++一样提供了this关键字，几乎完全一样。既可以在构造器中引用构造器正在初始化的对象，又可以在方法中引用调用该方法的对象。java中运行对象的一个成员可以直接调用另一个成员而不必明确加上this前缀。有时候如果方法里有个局部变量和成员变量同名，但程序又要访问这个成员变量，那就得用this了。this作为返回值，就可以连续调用了。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>java作为一名静态语言，类完成定义后只要不重新编译类文件，该类和该类的对象所拥有的方法是固定的，永远无法改变。这一点倒不如python灵活了。</p>
+<p>同一个类的方法调用另外一个方法时，如果被调用的是普通方法，this作为调用者；如果是static方法，则类作为调用者。方法永远只能依托类存在，完全面向对象就是这样吧。</p>
+<p>方法的参数清一色<code>值传递</code>，这个和python一样。对于内置类型很容易分辨，但对于对象而言，值传递的是对象的引用，所以修改可能会对原对象造成影响。</p>
+<p>方法的形参数量可变，用<code>...</code>即可，但是只能放在最后，实质上是一个数组类型的形参。方法可以重载，和c++区别方法一样，通过参数列表，不要重载参数可变的方法（没必要且难理解）。</p>
+<h2 id="封装和隐藏"><a href="#封装和隐藏" class="headerlink" title="封装和隐藏"></a>封装和隐藏</h2><ul>
+<li>private</li>
+<li>default（不加任何修饰符）</li>
+<li>protected</li>
+<li>public</li>
+</ul>
+<p>java提供了4个访问控制级别，private表示这个成语只能在当前类的内部访问；default表示可以被同一个包下的其它类访问；protected表示可以被子类和同一个包中的类访问；public就是全局范围都可以了。</p>
+<p>这四种用于控制一个类的成员是否可以被其它类访问，不是对于局部变量的。</p>
+<p>对于类，有public和default两种修饰符，前者表示可以被所有类使用，后者表示只能被用一个包中其它类使用。</p>
+<blockquote>
+<p>如果一个java源文件里的所有类都没有使用public修饰，那这个源文件的文件名可以是一切合法的文件名；<br>但如果一个java源文件中定义了一个public修饰的类，则这个源文件的文件名必须与public修饰的类名相同。</p>
+</blockquote>
+<p>对于访问控制符的使用，有几条基本规则：</p>
+<ul>
+<li>类中绝大多数成员应该用private修饰，只有一些static修饰的、类似全局变量的成员变量才考虑public。辅助方法也应该用private。</li>
+<li>如果某个类主要用作其它类的父类，该类的大部分方法可能仅仅希望被其子类重写，而不想被外界直接使用，应该用protected修饰。</li>
+<li>希望暴露出来自由调用的方法应该使用public修饰，比如构造器。</li>
+</ul>
+<h2 id="package、import和import-static"><a href="#package、import和import-static" class="headerlink" title="package、import和import static"></a>package、import和import static</h2><p>如果想定义包，必须在java第一个非注释行，java通过将一组功能相关的类放在同一个package下从而组成逻辑上的类库单元。java规定：位于包中的类在文件系统中也必须有与包名层次相同的目录结构（反之不在源文件加package语句只靠目录是不行的）。package语句一个源文件只能有一条，如若没有则处于默认包下。</p>
+<p>import可以向某个java文件中导入指定包层次下某个类或全部类（*），作用类似python，可以不同写包前缀了。但是注意冲突的话只能用包名指定了。</p>
+<blockquote>
+<p>java默认为所有源文件导入java.lang包下的所有类。</p>
+</blockquote>
+<p>同理，import static位置和import语句一样，放在package之后类定义之前。用于导入指定类的<code>单个静态成员变量或方法</code>或<code>全部静态成员变量或方法</code>。说的通俗一点：<em>import让你可以省略包名，import static让你省略包名类名。</em></p>
+<h2 id="构造器和初始化块"><a href="#构造器和初始化块" class="headerlink" title="构造器和初始化块"></a>构造器和初始化块</h2><p>创建一个对象时，系统为这个对象进行默认初始化。构造器是在对象创建后调用的，且和普通方法一样可以被重载。如果在一个构造器中直接使用另一个构造器的代码，可以直接用<code>this(参数列表)</code>的形式，但这条语句只能在构造器中使用且必须作为第一条语句。</p>
+<p>一个类里可以有多个初始化块，初始化块分为两种:</p>
+<ul>
+<li>普通初始化块</li>
+<li>静态初始化块（static修饰）</li>
+</ul>
+<p>初始化块是用花括号括起来的代码段，在构造器之前被调用。<strong>注意，初始化块执行顺序和类中变量的直接初始化顺序取决于<code>源代码中排列顺序</code>。</strong>普通初始化块负责对对象进行初始化，而类初始化块则负责对类进行初始化。静态初始化块是类相关的，系统将在类初始化阶段执行静态初始化块，而不是在创建对象时才执行，因此静态初始化块总是比普通初始化块先执行。</p>
+<p>不论是构造器还是初始化块，创建类或者对象时都会从源头依次调用它们。对于对象而言，每个类先初始化块后构造器（从object开始）。对于类而言，每个类都执行静态初始化块（也是从object开始）。</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>java的继承通过<code>extends</code>关键字，且只有<code>单继承</code>。继承意为子类拓展了父类，拥有了父类的全部成员变量和方法。但是构造器并不能继承，也就是说需要自己定义子类的构造器，可以通过<code>super</code>关键字调用父类的方法或者变量，和<code>this</code>一样，使用<code>super</code>调用父类构造器也必须在第一行，所以这两者不会同时出现。</p>
+<p>子类包含与父类同名的方法时构成<code>override</code>。覆盖方法和被覆盖方法要么都是类方法要么都是实例方法，不能一个是类方法一个是实例方法。覆盖之后也不是完全无法访问了，还有<code>super</code>嘛！如果发生子类变量和父类变量同名时，也可以通过这样来访问被隐藏的变量。<strong><code>super</code>用于限定该对象调用它从父类继承得到的实例变量或方法，和this一样针对的是实例，如果是类本身用类名好了。</strong>如果父类方法具有private访问权限，则该方法对其子类是隐藏的，子类不仅无法访问该方法，也不能<code>override</code>它，即使定义了一个同名方法，也只是在子类中定义了一个新方法而已。</p>
+<blockquote>
+<p>重载是<code>overload</code>,重写是<code>override</code>。</p>
+</blockquote>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>引用变量有两个类型：</p>
+<ul>
+<li>编译时类型</li>
+<li>运行时类型</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">baseclass p=new subclass()</div><div class="line">这里p编译时类型为baseclass,运行时类型为subclass。</div></pre></td></tr></table></figure>
+<p>因为子类可以理解为特殊的父类，可以把子类对象赋给一个父类的引用变量，无需任何强制变换。（upcasting）</p>
+<p>如果编译时类型和运行时类型不一致就会发生<code>多态</code>。只有方法有多态性，实例变量没有。注意，<em>引用变量在编译阶段只能调用编译时类型所具有的方法，如果发生多态，运行时可能执行运行时类型所具有的方法。</em></p>
+<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><ul>
+<li>基本类型的强制类型转换只能在数值类型间进行，包括整型、字符型和浮点型。数值类型和布尔类型不可以！！！</li>
+<li>引用变量的类型转换只能在具有继承关系的两个类型之间进行，否则编译出错。如果试图把一个父类实例转换成子类的类型，那么父类实例的编译时类型为父类类型，运行时类型必须是子类类型才可，否则引发<code>ClassCastException</code>异常。</li>
+</ul>
+<p><code>instanceof</code>运算符的前一个操作数通常是引用变量，后一个操作数通常是一个类（或接口）。主要用于判断前面的对象是否是后面的类、或者其子类、实现类的实例，返回boolean值。</p>
+<p>注意，instanceof运算符前面操作数的编译时类型要么与后面的类相同，要么与后面的类具有父子继承关系，否则编译出错。</p>
+<p><strong>其实这个运算符主要配合强制类型转换使用，如果是true表示可以转换，否则就容易出事。</strong></p>
+<h2 id="继承和组合"><a href="#继承和组合" class="headerlink" title="继承和组合"></a>继承和组合</h2><p>继承容易破坏封装，组合对此更好。组合就是一个类的对象中成员是另一个类的对象。</p>
+<p><strong>组合对应has-a关系，继承对应is-a关系</strong></p>
+<p>示例代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">class Base</div><div class="line">&#123;</div><div class="line">    public int n=6;</div><div class="line">    public void base()</div><div class="line">    &#123;</div><div class="line">        System.out.println(&quot;base class!!!&quot;);</div><div class="line">    &#125;</div><div class="line">    public void test()</div><div class="line">    &#123;</div><div class="line">        System.out.println(&quot;in base class&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Sub extends Base</div><div class="line">&#123;</div><div class="line">    public int n=1;</div><div class="line">    public void sub()</div><div class="line">    &#123;</div><div class="line">        System.out.println(&quot;sub class!!!&quot;);</div><div class="line">    &#125;</div><div class="line">    public void test()</div><div class="line">    &#123;</div><div class="line">        System.out.println(&quot;in sub class&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class study</div><div class="line">&#123;</div><div class="line">    public static void main(String[] args)</div><div class="line">    &#123;</div><div class="line">        Base p=new Sub();</div><div class="line">        p.base();</div><div class="line">        p.test();</div><div class="line">        Base q=new Base();</div><div class="line"></div><div class="line">        System.out.println(q instanceof Sub);</div><div class="line">        System.out.println(p instanceof Sub);</div><div class="line"></div><div class="line">        Sub r=(Sub)p;</div><div class="line">        r.base();</div><div class="line">        r.test();</div><div class="line">        r.sub();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码的结果是:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">base class!!!</div><div class="line">in sub class</div><div class="line">false</div><div class="line">true</div><div class="line">base class!!!</div><div class="line">in sub class</div><div class="line">sub class!!!</div></pre></td></tr></table></figure>
+<p>可见，instanceof运算符判断左操作数时，针对的是运行时类型！！！</p>
+<p>这里发现直接把Base类型的q强制转换成Sub类型会出错，而p不会！完全根据instanceof判断呐。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/22/git记录/" rel="next" title="git记录">
+                <i class="fa fa-chevron-left"></i> git记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/02/面向对象(下)/" rel="prev" title="面向对象(下)">
+                面向对象(下) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类和对象"><span class="nav-number">1.</span> <span class="nav-text">类和对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static"><span class="nav-number">2.</span> <span class="nav-text">static</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象引用"><span class="nav-number">3.</span> <span class="nav-text">对象引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">4.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封装和隐藏"><span class="nav-number">5.</span> <span class="nav-text">封装和隐藏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#package、import和import-static"><span class="nav-number">6.</span> <span class="nav-text">package、import和import static</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造器和初始化块"><span class="nav-number">7.</span> <span class="nav-text">构造器和初始化块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承"><span class="nav-number">8.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态"><span class="nav-number">9.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强制类型转换"><span class="nav-number">10.</span> <span class="nav-text">强制类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承和组合"><span class="nav-number">11.</span> <span class="nav-text">继承和组合</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

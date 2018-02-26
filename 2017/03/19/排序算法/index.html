@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="算法," />
+
+
+<meta name="description" content="结合算法导论第三版和算法第四版笔记">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法">
+<meta property="og:url" content="https://www.prime666.com/2017/03/19/排序算法/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="结合算法导论第三版和算法第四版笔记">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-19T15:06:25.294Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="排序算法">
+<meta name="twitter:description" content="结合算法导论第三版和算法第四版笔记">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/03/19/排序算法/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>排序算法 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/03/19/排序算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">排序算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-19T22:47:00+08:00">2017-03-19</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>结合算法导论第三版和算法第四版笔记</p>
+<a id="more"></a>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">insertion_sort</span><span class="params">(array)</span>:</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(array)):</div><div class="line">        key=array[i]</div><div class="line">        j=i<span class="number">-1</span></div><div class="line">        <span class="keyword">while</span> j&gt;=<span class="number">0</span> <span class="keyword">and</span> array[j]&gt;key:</div><div class="line">            array[j+<span class="number">1</span>]=array[j]</div><div class="line">            j-=<span class="number">1</span></div><div class="line">        array[j+<span class="number">1</span>]=key</div></pre></td></tr></table></figure>
+<p>插入排序只要记得就想扑克牌一样就好了，没什么大的问题。这里用了比较经典的思路，就是“移动”，而不是相邻间两两交换。</p>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__merge</span><span class="params">(arr,low,mid,high)</span>:</span></div><div class="line">    buff=arr[:]</div><div class="line">    i=low</div><div class="line">    j=mid+<span class="number">1</span></div><div class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(low,high+<span class="number">1</span>):</div><div class="line">        <span class="keyword">if</span> i&gt;mid:</div><div class="line">            arr[k]=buff[j]</div><div class="line">            j+=<span class="number">1</span></div><div class="line">        <span class="keyword">elif</span> j&gt;high:</div><div class="line">            arr[k]=buff[i]</div><div class="line">            i+=<span class="number">1</span></div><div class="line">        <span class="keyword">elif</span> buff[i]&lt;buff[j]:</div><div class="line">            arr[k]=buff[i]</div><div class="line">            i+=<span class="number">1</span></div><div class="line">        <span class="keyword">elif</span> buff[i]&gt;=buff[j]:</div><div class="line">            arr[k]=buff[j]</div><div class="line">            j+=<span class="number">1</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            print(<span class="string">'神一般的错误'</span>)</div><div class="line">            sys.exit(<span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span><span class="params">(array,low,high)</span>:</span></div><div class="line">    <span class="keyword">if</span> low&lt;high:</div><div class="line">        mid=(low+high)//<span class="number">2</span></div><div class="line">        merge_sort(array,low,mid)</div><div class="line">        merge_sort(array,mid+<span class="number">1</span>,high)</div><div class="line">        __merge(array,low,mid,high)</div></pre></td></tr></table></figure>
+<p>作为分治算法的一种应用，主要大头在于合并而不在于分（区别于另一个分治算法快排）。合并时需要额外数组空间，可惜不是原地排序。</p>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__partition</span><span class="params">(array,start,end)</span>:</span></div><div class="line">    x=array[end]<span class="comment">#末尾元素做主元</span></div><div class="line">    i=start<span class="number">-1</span></div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(start,end):</div><div class="line">        <span class="keyword">if</span> array[j]&lt;x:</div><div class="line">            i+=<span class="number">1</span></div><div class="line">            array[i],array[j]=array[j],array[i]</div><div class="line">    array[i+<span class="number">1</span>],array[end]=array[end],array[i+<span class="number">1</span>]</div><div class="line">    <span class="keyword">return</span> i+<span class="number">1</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_partition</span><span class="params">(a,low,high)</span>:</span></div><div class="line">    <span class="comment">#供quick_sort调用</span></div><div class="line">    i=low+<span class="number">1</span></div><div class="line">    j=high</div><div class="line">    v=a[low]</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">while</span> a[i]&lt;v:</div><div class="line">            i+=<span class="number">1</span></div><div class="line">            <span class="keyword">if</span> i&gt;high:</div><div class="line">                <span class="keyword">break</span></div><div class="line">        <span class="keyword">while</span> a[j]&gt;v:</div><div class="line">            j-=<span class="number">1</span></div><div class="line">            <span class="keyword">if</span> j&lt;low:</div><div class="line">                <span class="keyword">break</span></div><div class="line">        <span class="keyword">if</span> i&gt;=j:</div><div class="line">            <span class="keyword">break</span></div><div class="line">        a[i],a[j]=a[j],a[i]</div><div class="line">    a[low],a[j]=a[j],a[low]</div><div class="line">    <span class="keyword">return</span> j</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort</span><span class="params">(array,start,end)</span>:</span></div><div class="line">    <span class="keyword">if</span> start&lt;end:</div><div class="line">        mid=__partition(array,start,end)</div><div class="line">        print(array)</div><div class="line">        quick_sort(array,start,mid<span class="number">-1</span>)</div><div class="line">        quick_sort(array,mid+<span class="number">1</span>,end)</div></pre></td></tr></table></figure>
+<p>应用最多的了，注意这里用了两种分法，一个是两边到中间，一个是从左到右（算法导论的新颖啊）。</p>
+<h2 id="堆排序-amp-amp-优先级队列"><a href="#堆排序-amp-amp-优先级队列" class="headerlink" title="堆排序&amp;&amp;优先级队列"></a>堆排序&amp;&amp;优先级队列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Priority_Queue</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">        length从1到最后一个元素，0空出来没用</div><div class="line">    '''</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.pq = [<span class="number">0</span>] * <span class="number">101</span></div><div class="line">        self.length = <span class="number">0</span>  <span class="comment"># 优先队列</span></div><div class="line">        self.real_len = <span class="number">0</span>  <span class="comment"># 堆排序</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, a)</span>:</span></div><div class="line">        <span class="keyword">if</span> isinstance(a, list):  <span class="comment"># isinstance和java中instanceof一样，用type就对子类无效了</span></div><div class="line">            self.pq = a[:]</div><div class="line">            self.real_len = self.length = len(a)</div><div class="line">            self.pq[self.length:] = [<span class="number">0</span>]</div><div class="line">            self.pq[<span class="number">1</span>:] = self.pq[:]  <span class="comment"># 空出第一个元素</span></div><div class="line">            <span class="comment"># for index,value in enumerate(self.pq):</span></div><div class="line">            <span class="comment">#     self.__swim(index)</span></div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,self.length+<span class="number">1</span>):</div><div class="line">                self.__swim(i)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">size</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.length</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isempty</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.length == <span class="number">0</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert</span><span class="params">(self, v)</span>:</span></div><div class="line">        self.length += <span class="number">1</span></div><div class="line">        self.real_len += <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> self.length &gt; <span class="number">100</span>:</div><div class="line">            self.pq.extend([<span class="number">0</span>] * <span class="number">100</span>)</div><div class="line">        self.pq[self.length] = v</div><div class="line">        self.__swim(self.length)  <span class="comment"># 每当加入一个元素，都应该从它开始上浮到它该待的地方</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__swim</span><span class="params">(self,k)</span>:</span></div><div class="line">        <span class="comment">##大顶堆，大的上浮</span></div><div class="line">        <span class="keyword">while</span> k&gt;<span class="number">1</span> <span class="keyword">and</span> self.pq[k//<span class="number">2</span>]&lt;self.pq[k]:</div><div class="line">            self.pq[k],self.pq[k//<span class="number">2</span>]=self.pq[k//<span class="number">2</span>],self.pq[k]</div><div class="line">            k=k//<span class="number">2</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__sink</span><span class="params">(self,k)</span>:</span></div><div class="line">        <span class="comment">#j是儿子，k是爹</span></div><div class="line">        j=<span class="number">2</span>*k</div><div class="line">        <span class="keyword">while</span> j&lt;=self.length :</div><div class="line">            <span class="comment">#让j指向较大的儿子</span></div><div class="line">            <span class="keyword">if</span> j&lt; self.length <span class="keyword">and</span> self.pq[j]&lt;self.pq[j+<span class="number">1</span>]:</div><div class="line">            <span class="comment"># j&lt;self.length一定要有，防止2*k是最后一个元素了</span></div><div class="line">                j+=<span class="number">1</span></div><div class="line">            <span class="comment">#如果爹不比儿子们小，那就下沉结束了</span></div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> self.pq[k]&lt;self.pq[j]:</div><div class="line">                <span class="keyword">break</span></div><div class="line">            self.pq[k],self.pq[j]=self.pq[j],self.pq[k]</div><div class="line">            k=j</div><div class="line">            j=<span class="number">2</span>*k</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delmax</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="comment">#最大的放最后面了</span></div><div class="line">        self.pq[<span class="number">1</span>],self.pq[self.length]=self.pq[self.length],self.pq[<span class="number">1</span>]</div><div class="line">        self.length -= <span class="number">1</span></div><div class="line">        self.__sink(<span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> self.pq[self.length+<span class="number">1</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(self)</span>:</span></div><div class="line">        print(self.pq[<span class="number">1</span>:self.real_len+<span class="number">1</span>])</div><div class="line">        print(<span class="string">'length=='</span>,self.length)</div><div class="line">        print(<span class="string">'real_length='</span>,self.real_len)</div><div class="line">        print(<span class="string">'-'</span>*<span class="number">100</span>)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sort</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(self.length,<span class="number">1</span>,<span class="number">-1</span>):</div><div class="line">            self.delmax()</div></pre></td></tr></table></figure>
+<p>上浮和下沉中的k都是对应下标，插入时由于从末尾插入需要k为length，需要上浮。而删除最大元素后，下标1需要下沉。</p>
+<h2 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">count_sort</span><span class="params">(array)</span>:</span></div><div class="line">    buff=array[:]</div><div class="line">    c=[<span class="number">0</span>]*(max(array)+<span class="number">1</span>)</div><div class="line">    <span class="comment">#c数组对应下标记录等于该下标的元素个数</span></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> array:</div><div class="line">        c[x]=c[x]+<span class="number">1</span></div><div class="line">    <span class="comment">#现在，c数组对应下标记录小于等于该下标的元素个数</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(c)):</div><div class="line">        c[i]=c[i<span class="number">-1</span>]+c[i]</div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> array:</div><div class="line">        buff[c[x]<span class="number">-1</span>]=x</div><div class="line">        c[x]=c[x]<span class="number">-1</span></div><div class="line">    <span class="keyword">return</span> buff</div></pre></td></tr></table></figure>
+<p>新奇的思路，需要用数组记录每个元素的“位置”。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/13/异常/" rel="next" title="异常">
+                <i class="fa fa-chevron-left"></i> 异常
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/21/多线程and多进程/" rel="prev" title="多线程and多进程">
+                多线程and多进程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">1.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序"><span class="nav-number">2.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序"><span class="nav-number">3.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序-amp-amp-优先级队列"><span class="nav-number">4.</span> <span class="nav-text">堆排序&amp;&amp;优先级队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计数排序"><span class="nav-number">5.</span> <span class="nav-text">计数排序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

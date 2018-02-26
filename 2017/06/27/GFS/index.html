@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="大数据," />
+
+
+<meta name="description" content="读GFS论文，笔记">
+<meta name="keywords" content="大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GFS">
+<meta property="og:url" content="https://www.prime666.com/2017/06/27/GFS/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="读GFS论文，笔记">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E6%95%B0%E6%8D%AE/2017-06-27_102307.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E6%95%B0%E6%8D%AE/2017-06-28_211939.png">
+<meta property="og:updated_time" content="2017-06-28T14:52:57.909Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GFS">
+<meta name="twitter:description" content="读GFS论文，笔记">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E6%95%B0%E6%8D%AE/2017-06-27_102307.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/06/27/GFS/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>GFS | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/27/GFS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">GFS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-27T09:25:57+08:00">2017-06-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>读GFS论文，笔记</p>
+<a id="more"></a>
+<h1 id="GFS"><a href="#GFS" class="headerlink" title="GFS"></a>GFS</h1><p>本文翻译自<a href="http://www.cse.buffalo.edu/faculty/tkosar/cse710_spring14/papers/gpfs.pdf" target="_blank" rel="noopener">谷歌学术的一篇文章</a>，未逐字逐句翻译，很多细节忽略了，只是把大体框架记录了下来，如果对某一点实现细节感兴趣，请读原文。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>组件失效是常态而不是异常。</li>
+<li>和传统标准比文件都很大，多个GB的文件很常见。</li>
+<li>大多数文件更新的操作都是追加数据而不是覆盖已有的数据。随机读写几乎不存在，一旦写入一般只是读且常常是顺序读。追加数据需要考量性能优化和原子性。</li>
+<li>应用程序和文件系统 API  的协同设计提高了整个系统的灵活性。比如，放松了一致性模型的要求，引入原子追加操作而不需要额外的同步。</li>
+</ul>
+<h2 id="设计概述"><a href="#设计概述" class="headerlink" title="设计概述"></a>设计概述</h2><h3 id="假设"><a href="#假设" class="headerlink" title="假设"></a>假设</h3><ul>
+<li>组件都是廉价的，必须持续监测并修复错误。</li>
+<li>系统会存储一定数量的大文件。针对大文件必须有效的管理，小文件就不用了。</li>
+<li>工作负载主要是大规模的流式读取和小规模的随机读取。性能要求高的应用可以把小的随机读取排序，这样可以减少指针前后移动。</li>
+<li>工作负载还包括大规模的顺序追加式写文件，一旦写入很少修改。对于小规模随机写也是支持的，但是性能不高。</li>
+<li>系统必须高效的、行为定义明确的实现多客户端并行追加数据到同一个文件里的语意。文件常采用“生产者——消费者”队列或多路文件合并操作。通常有数百个生产者，分别运行在每一台机器上，同时对一个文件进行追加操作。<strong>具有最小同步开销的原子性至关重要。</strong>文件可能被稍后读也可能被消费者同时读。</li>
+<li>高度稳定的带宽比低延迟更重要。我们的目标程序绝大部分要求能够高速率的、大批量的处理数据，极少有程序对单一的读写操作有严格的响应时间要求。</li>
+</ul>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>尽管GFS没有实现POSIX的标准，但是提供了相似的接口。除了常见的操作外，额外提供了<strong>快照和记录追加</strong>操作。“快照”以低代价创建一个文件或者一个目录树的副本，而“记录追加”可以允许多个客户端并发追加一个文件，同时保证每个客户端的追加操作都是原子性的。</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E6%95%B0%E6%8D%AE/2017-06-27_102307.png" alt=""></p>
+<p>一个GFS集群包括一个master结点和多个chunkserver结点，它被多个client访问。所有的这些都是商业的linux系统，运行着用户级的服务进程。文件被分为固定的块(chunk)，当每个块被创建时，master分配一个不可变的、全局唯一的64位块句柄（chunk handle）。chunkserver以linux文件的形式在本地存储这些chunk，通过chunk handle和byte range来读写它们。为了可靠性，默认每个chunk被备份在了多个chunkserver上，通常是3份。不过用户也可以自己制定备份 的级别。</p>
+<p>Master 节点管理所有的文件系统元数据。这些元数据包括名字空间、访问控制信息、文件和 Chunk 的映射信息、以及当前 Chunk 的位置信息。Master 节点还管理着系统范围内的活动，比如，Chunk 租用管理 4 、孤儿 Chunk 5 的回收、以及 Chunk 在 Chunk 服务器之间的迁移。Master 节点使用心跳信息（HeartBeat）周期地和每个 Chunk服务器通讯，发送指令到各个 Chunk 服务器并接收 Chunk 服务器的状态信息。</p>
+<p>客户端从master那里获取元数据，真正的数据是直接去和chunkserver交互的。无论是client还是chunkserver都不进行缓存，对于前者一般要么以流的形式读取一个大文件，要么工作集太大不能被缓存（不过缓存了元数据）；后者不需要是因为linux文件系统会负责缓存经常访问的文件的。</p>
+<h3 id="单一主结点"><a href="#单一主结点" class="headerlink" title="单一主结点"></a>单一主结点</h3><p>我们必须减少对 Master 节点的读写，避免 Master 节点成为系统的瓶颈。客户端并不通过 Master 节点读写文件数据。反之，客户端向 Master 节点询问它应该联系的 Chunk 服务器。客户端将这些元数据信息缓存一段时间，后续的操作将直接和 Chunk 服务器进行数据读写操作。</p>
+<p>首先，客户端把文件名和程序指定的字节偏移，根据固定的 Chunk 大小，转换成文件的 Chunk 索引。然后，它把文件名和 Chunk 索引发送给 Master 节点。Master 节点将相应的 Chunk 标识和副本的位置信息发还给客户端。客户端用文件名和 Chunk 索引作为 key 缓存这些信息。<br>之后客户端发送请求到其中的一个副本处，一般会选择最近的。请求信息包含了 Chunk 的标识和字节范围。在对这个 Chunk 的后续读取操作中，客户端不必再和 Master 节点通讯了，除非缓存的元数据信息过期或者文件被重新打开。实际上，客户端通常会在一次请求中查询多个 Chunk 信息，Master 节点的回应也可能包<br>含了紧跟着这些被请求的 Chunk 后面的 Chunk 的信息。在实际应用中，这些额外的信息在没有任何代价的情况下，避免了客户端和 Master 节点未来可能会发生的几次通讯。</p>
+<h3 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h3><p>块大小的选择是一个关键，我们选择64MB。</p>
+<ul>
+<li><p>优点</p>
+<ul>
+<li>减少了client和master通信的次数。</li>
+<li>采取较大的块，client可以对该块进行多次操作。这样就可以通过与 Chunk 服务器保持较长时间的 TCP 连接来减少网络负载。</li>
+<li>减少了master结点需要保存的元数据的数量。</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li><p>一个小文件可能占据了一个chunk</p>
+</li>
+<li><p>热点文件所在chunk可能会被多次访问，这个chunkserver会成为“热点 ”。但是一般应用程序顺序读取占据多个chunk的大文件，所以这不是主要问题。</p>
+<p>解决方法：增加chunk的备份，错开对该文件有需求的服务的启动时间。更长远的是让一个client从别的client获得该文件。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="元数据"><a href="#元数据" class="headerlink" title="元数据"></a>元数据</h3><p>master主要存储以下三类元数据：</p>
+<ol>
+<li>文件和chunk的命名空间</li>
+<li>文件和chunk的映射关系</li>
+<li>chunk的备份的位置</li>
+</ol>
+<p>以上三种数据都保存在master的内存中，但是前两种也被以记录变更日志的方式保存在master的本地磁盘和远程机器上，最后一个没有被永久保存，因为master在它启动时或者任何chunkserver加入这个cluster时向chunkserver轮询其chunk信息。</p>
+<p>因为元数据保存在内存中，所以 Master 服务器的操作速度非常快。并且，Master 服务器可以在后台简单而高效的周期性扫描自己保存的全部状态信息。这种周期性的状态扫描也用于实现 Chunk 垃圾收集、在 Chunk服务器失效的时重新复制数据、通过 Chunk 的迁移实现跨 Chunk 服务器的负载均衡以及磁盘使用状况统计等功能。</p>
+<p>操作日志包含了关键的元数据变更历史记录。这对 GFS 非常重要。这不仅仅是因为操作日志是元数据<strong>唯一的持久化存储记录</strong>，它也作为判断同步操作顺序的逻辑时间基线。文件和 Chunk，连同它们的版本，都由它们创建的逻辑时间唯一的、永久的标识。正是由于日志如此重要，我们会把日志复制到多台远程机器，并且只有把相应的日志记录写入到本地以及远程机器的硬盘后，才会响应客户端的操作请求。Master 服务器在灾难恢复时，通过重演操作日志把文件系统恢复到最近的状态。为了加速恢复的过程，通常在日志增长到一定程度后就对系统做一次checkpoint，将所有的状态数据写入一个 Checkpoint 文件。</p>
+<h3 id="一致性模型"><a href="#一致性模型" class="headerlink" title="一致性模型"></a>一致性模型</h3><p>GFS 支持一个宽松的一致性模型，这个模型能够很好的支撑我们的高度分布的应用，同时还保持了相对简单且容易实现的优点。</p>
+<h2 id="系统交互"><a href="#系统交互" class="headerlink" title="系统交互"></a>系统交互</h2><h3 id="租约Leases机制"><a href="#租约Leases机制" class="headerlink" title="租约Leases机制"></a>租约Leases机制</h3><p>使用租约（lease）机制来保持多个副本间变更顺序的一致性，Master 节点为 Chunk的一个副本建立一个租约，我们把这个副本叫做主 Chunk。设计租约机制的目的是为了最小化 Master 节点的管理负担。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E6%95%B0%E6%8D%AE/2017-06-28_211939.png" alt=""></p>
+<p>由上图可知，租约机制实现了数据流和控制流的解耦（decouple）。副本在主chunk的控制下，保证和主chunk操作顺序一致。</p>
+<h3 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h3><p>为了提高网络效率，我们采取了把数据流和控制流分开的措施。为了尽可能的避免出现网络瓶颈和高延迟的链接，每台机器都尽量的在网络拓扑中选择一台还没有接收到数据的、离自己最近的机器作为目标推送数据。（如上图粗线所示，数据流动不是client直接发给主chunk，而是按距离排序，为了最大化利用网络 ，数据被放入缓存区中，然后client发送命令再写入。）</p>
+<h3 id="原子的记录追加"><a href="#原子的记录追加" class="headerlink" title="原子的记录追加"></a>原子的记录追加</h3><p>GFS 提供了一种原子的数据追加操作–记录追加（record append），传统的写是指定偏移量写入数据，但是如果并发写的话，会产生来自多个客户端的数据片段，它们不是顺序的。而追加操作不需要客户端提供偏移量，只要数据给我，GFS会给出偏移量，这类似于在 Unix 操作系统编程环境中，对以 O_APPEND 模式打开的文件。</p>
+<h3 id="快照"><a href="#快照" class="headerlink" title="快照"></a>快照</h3><p>快照操作几乎可以瞬间完成对一个文件或者目录树做一个拷贝，并且几乎不会对正在进行的其它操作造成任何干扰。</p>
+<h2 id="master结点的操作"><a href="#master结点的操作" class="headerlink" title="master结点的操作"></a>master结点的操作</h2><p>Master 节点执行所有的名称空间操作。此外，它还管理着整个系统里所有 Chunk 的副本：它决定 Chunk的存储位置，创建新 Chunk 和它的副本，协调各种各样的系统活动以保证 Chunk 被完全复制，在所有的 Chunk服务器之间的进行负载均衡，回收不再使用的存储空间。</p>
+<h3 id="名称空间管理和锁"><a href="#名称空间管理和锁" class="headerlink" title="名称空间管理和锁"></a>名称空间管理和锁</h3><p>在逻辑上，GFS 的名称空间就是一个全路径和元数据映射关系的查找表。利用前缀压缩，这个表可以高效的存储在内存中。在存储名称空间的树型结构上，每个节点（绝对路径的文件名或绝对路径的目录名）都有一个关联的读写锁。通过这些读写锁，可以保证名称空间操作的正确性。</p>
+<h3 id="副本的位置"><a href="#副本的位置" class="headerlink" title="副本的位置"></a>副本的位置</h3><p>Chunk 副本位置选择的策略服务两大目标：最大化数据可靠性和可用性，最大化网络带宽利用率。于是，不仅要在多个机器上存储，还应该在多个机架上进行存储。</p>
+<h3 id="创建、复制、负载均衡"><a href="#创建、复制、负载均衡" class="headerlink" title="创建、复制、负载均衡"></a>创建、复制、负载均衡</h3><p>当 Chunk 的有效副本数量少于用户指定的复制因数的时候，Master 节点会重新复制它。Master 节点选择优先级最高的 Chunk，然后命令某个 Chunk 服务器直接从可用的副本”克隆”一个副本。最后，Master 服务器周期性地对副本进行重新负载均衡：它检查当前的副本分布情况，然后移动副本以便更好的利用硬盘空间、更有效的进行负载均衡。<br>创建一个chunk时master考虑因素如下:</p>
+<ul>
+<li>我们希望在低于平均硬盘使用率的 Chunk 服务器上存储新的副本。这样的做法最终能够平衡 Chunk服务器之间的硬盘使用率。</li>
+<li>我们希望限制在每个 Chunk 服务器上“最近”的 Chunk 创建操作的次数。虽然创建操作本身是廉价的，但是创建操作也意味着随之会有大量的写入数据的操作。</li>
+<li>我们希望把 Chunk 的副本分布在多个机架之间。</li>
+</ul>
+<h3 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h3><p>当一个文件被应用程序删除时，Master 节点象对待其它修改操作一样，立刻把删除操作以日志的方式记录下来。但是不立即删除，而是把文件名改为一个包含删除时间戳的、隐藏的名字。Master 节点对文件系统命名空间做常规扫描的时候，它会删除所有三天前的隐藏文件（这个时间间隔是可以设置的）。直到文件被真正删除，它们仍旧可以用新的特殊的名字读取，也可以通过把隐藏文件改名为正常显示的文件名的方式“反删除”。</p>
+<h3 id="版本检测"><a href="#版本检测" class="headerlink" title="版本检测"></a>版本检测</h3><p>无论何时，只要 Master 节点和 Chunk 签订一个新的租约，它就增加 Chunk 的版本号，然后通知最新的副本。Master 节点和这些副本都把新的版本号记录在它们持久化存储的状态信息中。Master 节点在例行的垃圾回收过程中移除所有的过期失效副本。</p>
+<h2 id="容错和诊断"><a href="#容错和诊断" class="headerlink" title="容错和诊断"></a>容错和诊断</h2><h3 id="高可用性"><a href="#高可用性" class="headerlink" title="高可用性"></a>高可用性</h3><p>我们使用两条简单但是有效的策略保证整个系统的高可用性：快速恢复和复制。具体体现为不管 Master 服务器和 Chunk 服务器是如何关闭的，它们都被设计为可以在数秒钟内恢复它们的状态并重新启动；每个 Chunk 都被复制到不同机架上的不同的 Chunk 服务器上；为了保证 Master 服务器的可靠性，Master 服务器的状态也要复制。Master 服务器所有的操作日志和checkpoint 文件都被复制到多台机器上。</p>
+<h3 id="数据完整性"><a href="#数据完整性" class="headerlink" title="数据完整性"></a>数据完整性</h3><p>每个 Chunk 服务器都使用 Checksum 来检查保存的数据是否损坏。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>根据我们的设计思路，我们认为组件失效是常态而不是异常，针对采用追加方式（有可能是并发追加）写入、然后再读取（通常序列化读取）的大文<br>件进行优化，以及扩展标准文件系统接口、放松接口限制来改进整个系统。</p>
+<p>我们系统通过持续监控，复制关键数据，快速和自动恢复提供灾难冗余。Chunk 复制使得我们可以对Chunk 服务器的失效进行容错。高频率的组件失效要求系统具备在线修复机制，能够周期性的、透明的修复损坏的数据，也能够第一时间重新建立丢失的副本。此外，我们使用 Checksum 在磁盘或者 IDE 子系统级别检测数据损坏，在这样磁盘数量惊人的大系统中，损坏率是相当高的。</p>
+<p>我们的设计保证了在有大量的并发读写操作时能够提供很高的合计吞吐量。我们通过分离控制流和数据流来实现这个目标，控制流在 Master 服务器处理，而数据流在 Chunk 服务器和客户端处理。当一般的操作涉及到 Master 服务器时，由于 GFS 选择的 Chunk 尺寸较大(alex 注：从而减小了元数据的大小)，以及通过 Chunk Lease 将控制权限移交给主副本，这些措施将 Master 服务器的负担降到最低。这使得一个简单、中心的 Master不会成为成为瓶颈。我们相信我们对网络协议栈的优化可以提升当前对于每客户端的写入吞吐量限制。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/大数据/" rel="tag"># 大数据</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/26/pat（六）/" rel="next" title="pat（六）">
+                <i class="fa fa-chevron-left"></i> pat（六）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/27/树状数组/" rel="prev" title="树状数组">
+                树状数组 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GFS"><span class="nav-number">1.</span> <span class="nav-text">GFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计概述"><span class="nav-number">1.2.</span> <span class="nav-text">设计概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#假设"><span class="nav-number">1.2.1.</span> <span class="nav-text">假设</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口"><span class="nav-number">1.2.2.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构"><span class="nav-number">1.2.3.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单一主结点"><span class="nav-number">1.2.4.</span> <span class="nav-text">单一主结点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#块大小"><span class="nav-number">1.2.5.</span> <span class="nav-text">块大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元数据"><span class="nav-number">1.2.6.</span> <span class="nav-text">元数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性模型"><span class="nav-number">1.2.7.</span> <span class="nav-text">一致性模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统交互"><span class="nav-number">1.3.</span> <span class="nav-text">系统交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#租约Leases机制"><span class="nav-number">1.3.1.</span> <span class="nav-text">租约Leases机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据流"><span class="nav-number">1.3.2.</span> <span class="nav-text">数据流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原子的记录追加"><span class="nav-number">1.3.3.</span> <span class="nav-text">原子的记录追加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快照"><span class="nav-number">1.3.4.</span> <span class="nav-text">快照</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#master结点的操作"><span class="nav-number">1.4.</span> <span class="nav-text">master结点的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名称空间管理和锁"><span class="nav-number">1.4.1.</span> <span class="nav-text">名称空间管理和锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#副本的位置"><span class="nav-number">1.4.2.</span> <span class="nav-text">副本的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建、复制、负载均衡"><span class="nav-number">1.4.3.</span> <span class="nav-text">创建、复制、负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾回收"><span class="nav-number">1.4.4.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本检测"><span class="nav-number">1.4.5.</span> <span class="nav-text">版本检测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容错和诊断"><span class="nav-number">1.5.</span> <span class="nav-text">容错和诊断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高可用性"><span class="nav-number">1.5.1.</span> <span class="nav-text">高可用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据完整性"><span class="nav-number">1.5.2.</span> <span class="nav-text">数据完整性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

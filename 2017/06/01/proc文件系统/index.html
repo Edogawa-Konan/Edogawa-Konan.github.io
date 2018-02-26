@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Linux," />
+
+
+<meta name="description" content="关于/proc文件系统的读写和创建操作。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="proc文件系统">
+<meta property="og:url" content="https://www.prime666.com/2017/06/01/proc文件系统/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="关于/proc文件系统的读写和创建操作。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-06-01_184557.png">
+<meta property="og:updated_time" content="2017-07-04T01:24:20.179Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="proc文件系统">
+<meta name="twitter:description" content="关于/proc文件系统的读写和创建操作。">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-06-01_184557.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/06/01/proc文件系统/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>proc文件系统 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/01/proc文件系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">proc文件系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-01T18:26:53+08:00">2017-06-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关于/proc文件系统的读写和创建操作。</p>
+<a id="more"></a>
+<h1 id="proc文件系统"><a href="#proc文件系统" class="headerlink" title="proc文件系统"></a>proc文件系统</h1><p><strong>/proc</strong>文件系统是一个虚拟文件系统，每个文件都绑定于一个内核函数，用户读取其中的文件时，该函数动态生成文件内容。例如，<code>/proc/modules</code>列出的就是当前载入模块的列表。所有使用<strong>/proc</strong>的模块必须包含<code>&lt;linux/proc_fs.h&gt;</code>。</p>
+<p>/proc 文件系统并不是 GNU/Linux 系统中的惟一一个虚拟文件系统。在这种系统上，sysfs 是一个与 /proc 类似的文件系统，但是它的组织更好（从 /proc 中学习了很多教训）。不过 /proc 已经确立了自己的地位，因此即使 sysfs 与 /proc 相比有一些优点，/proc 也依然会存在。还有一个 debugfs 文件系统，不过（顾名思义）它提供的更多是调试接口。debugfs 的一个优点是它将一个值导出给用户空间非常简单（实际上这不过是一个调用而已）。</p>
+<h2 id="proc目录概述"><a href="#proc目录概述" class="headerlink" title="proc目录概述"></a>proc目录概述</h2><p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-06-01_184557.png" alt=""></p>
+<p>如上所示是该文件夹下的一个快照。其文件解释如下：</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">cmdline：系统启动时输入给内核命令行参数 </div><div class="line">cpuinfo：CPU的硬件信息 (型号, 家族, 缓存大小等)  </div><div class="line">devices：主设备号及设备组的列表，当前加载的各种设备（块设备/字符设备） </div><div class="line">dma：使用的DMA通道 </div><div class="line">filesystems：当前内核支持的文件系统，当没有给 mount(1) 指明哪个文件系统的时候， mount(1) 就依靠该文件遍历不同的文件系统</div><div class="line">interrupts ：中断的使用及触发次数，调试中断时很有用 </div><div class="line">ioports I/O：当前在用的已注册 I/O 端口范围 </div><div class="line">kcore：该伪文件以 core 文件格式给出了系统的物理内存映象(比较有用)，可以用 GDB 查探当前内核的任意数据结构。该文件的总长度是物理内存 (RAM) 的大小再加上 4KB</div><div class="line">kmsg：可以用该文件取代系统调用 syslog(2) 来记录内核日志信息，对应dmesg命令</div><div class="line">kallsym：内核符号表，该文件保存了内核输出的符号定义, modules(X)使用该文件动态地连接和捆绑可装载的模块</div><div class="line">loadavg：负载均衡，平均负载数给出了在过去的 1、 5,、15 分钟里在运行队列里的任务数、总作业数以及正在运行的作业总数。</div><div class="line">locks：内核锁 。</div><div class="line">meminfo物理内存、交换空间等的信息，系统内存占用情况，对应df命令。</div><div class="line">misc：杂项 。</div><div class="line">modules：已经加载的模块列表，对应lsmod命令 。</div><div class="line">mounts：已加载的文件系统的列表，对应mount命令，无参数。</div><div class="line">partitions：系统识别的分区表 。</div><div class="line">slabinfo：sla池信息。</div><div class="line">stat：全面统计状态表，CPU内存的利用率等都是从这里提取数据。对应ps命令。</div><div class="line">swaps：对换空间的利用情况。 </div><div class="line">version：指明了当前正在运行的内核版本。</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="常用基本函数介绍"><a href="#常用基本函数介绍" class="headerlink" title="常用基本函数介绍"></a>常用基本函数介绍</h2><p>  proc文件系统属性文件和驱动中创建的设备属性文件很相识，它们都可以达到同样的目的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> proc_dir_entry &#123;</div><div class="line">	<span class="keyword">const</span> <span class="keyword">char</span> *name;			<span class="comment">// virtual file name</span></div><div class="line">	<span class="keyword">mode_t</span> mode;				<span class="comment">// mode permissions</span></div><div class="line">	<span class="keyword">uid_t</span> uid;				<span class="comment">// File's user id</span></div><div class="line">	<span class="keyword">gid_t</span> gid;				<span class="comment">// File's group id</span></div><div class="line">	<span class="keyword">struct</span> inode_operations *proc_iops;	<span class="comment">// Inode operations functions</span></div><div class="line">	<span class="keyword">struct</span> file_operations *proc_fops;	<span class="comment">// File operations functions</span></div><div class="line">	<span class="keyword">struct</span> proc_dir_entry *parent;		<span class="comment">// Parent directory</span></div><div class="line">	...</div><div class="line">	<span class="keyword">read_proc_t</span> *read_proc;			<span class="comment">// /proc read function</span></div><div class="line">	<span class="keyword">write_proc_t</span> *write_proc;		<span class="comment">// /proc write function</span></div><div class="line">	<span class="keyword">void</span> *data;				<span class="comment">// Pointer to private data</span></div><div class="line">	<span class="keyword">atomic_t</span> count;				<span class="comment">// use count</span></div><div class="line">	...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>创建目录</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">struct</span> proc_dir_entry *<span class="title">proc_mkdir</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name,<span class="keyword">struct</span> proc_dir_entry *parent)</span></span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>创建proc文件</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">struct</span> proc_dir_entry *<span class="title">create_proc_entry</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name,<span class="keyword">mode_t</span> mode,<span class="keyword">struct</span> proc_dir_entry *parent)</span></span>;</div></pre></td></tr></table></figure>
+<p>create_proc_entry函数用于创建一个一般的proc文件，其中<strong>name是文件名</strong>，比如“hello”，<strong>mode是文件权限</strong>，比如<code>0666</code>就是<code>rwrwrw</code>，<strong>parent是要创建的proc文件的父目录。</strong></p>
+<p>parent 参数可以为 NULL（表示 /proc 根目录），也可以是很多其他值，这取决于我们希望将这个文件放到什么地方。下面列出了可以使用的其他一些父 <code>proc_dir_entry</code>，以及它们在这个文件系统中的位置。</p>
+<table>
+<thead>
+<tr>
+<th>proc_dir_entry</th>
+<th>在文件系统中的位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>proc_root_fs</td>
+<td>/proc</td>
+</tr>
+<tr>
+<td>proc_net</td>
+<td>/proc/net</td>
+</tr>
+<tr>
+<td>proc_bus</td>
+<td>/proc/bus</td>
+</tr>
+<tr>
+<td>proc_root_driver</td>
+<td>/proc/driver</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>删除文件/目录</li>
+<li>​</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">remove_dir_entry</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name, <span class="keyword">struct</span> proc_dir_entry *parent)</span></span>;</div></pre></td></tr></table></figure>
+<p><strong>proc文件实际上是一个叫做proc_dir entry的struct(定义在proc_fs.h)，该struct中有int read_proc和int write_proc两个元素，要实现proc的文件的读写就要给这两个元素赋值。但这里不是简单地将一个整数赋值过去就行了，需要实现两个回调函数。在用户或应用程序访问该proc文件时，就会调用这个函数，实现这个函数时只需将想要让用户看到的内容放入page即可。</strong></p>
+<ol>
+<li><p>写回调函数原型</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> (*proc_write)( <span class="keyword">struct</span> file *filp, <span class="keyword">const</span> <span class="keyword">char</span> __user *buff, <span class="keyword">unsigned</span> <span class="keyword">long</span> len, <span class="keyword">void</span> *data );</div></pre></td></tr></table></figure>
+<p>filp 参数实际上是一个打开文件结构（我们可以忽略这个参数）。<strong>buff 参数是传递给您的字符串数据</strong>。缓冲区地址实际上是一个用户空间的缓冲区，因此我们不能直接读取它( 得用<code>copy_from_user</code> 函数)。<strong>len 参数定义了在 buff 中有多少数据要被写入</strong>。data 参数是一个指向私有数据的指针。</p>
+</li>
+<li><p>读回调函数原型</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> (*proc_read)(<span class="keyword">char</span> *page, <span class="keyword">char</span> **start,  <span class="keyword">off_t</span> off, <span class="keyword">int</span> count,  <span class="keyword">int</span> *eof, <span class="keyword">void</span> *data)；</div></pre></td></tr></table></figure>
+<p><strong><code>page</code> 参数是这些数据写入到的位置</strong>，其中 <code>count</code> 定义了可以写入的最大字符数。在返回多页数据（通常一页是 4KB）时，我们需要使用 <code>start</code> 和 <code>off</code> 参数。当所有数据全部写入之后，就需要设置 <code>eof</code>（文件结束参数）。与 <code>write</code> 类似，<code>data</code> 表示的也是私有数据。<strong>此处提供的 <code>page</code> 缓冲区在内核空间中。因此，我们可以直接写入，而不用调用 <code>copy_to_user</code>。</strong></p>
+</li>
+<li><p>其它可能用到的函数原型</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* Create a directory in the proc filesystem */</span></div><div class="line"><span class="function"><span class="keyword">struct</span> proc_dir_entry *<span class="title">proc_mkdir</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span> *name,<span class="keyword">struct</span> proc_dir_entry *parent )</span></span>;</div><div class="line"><span class="comment">/* Create a symlink in the proc filesystem */</span></div><div class="line"><span class="function"><span class="keyword">struct</span> proc_dir_entry *<span class="title">proc_symlink</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span> *name,<span class="keyword">struct</span> proc_dir_entry *parent,<span class="keyword">const</span> <span class="keyword">char</span> *dest )</span></span>;</div><div class="line"><span class="comment">/* Create a proc_dir_entry with a read_proc_t in one call */</span></div><div class="line"><span class="function"><span class="keyword">struct</span> proc_dir_entry *<span class="title">create_proc_read_entry</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span> *name,<span class="keyword">mode_t</span> mode,</span></span></div><div class="line">                                                  <span class="keyword">struct</span> proc_dir_entry *base,</div><div class="line">                                                  <span class="keyword">read_proc_t</span> *read_proc,</div><div class="line">                                                  <span class="keyword">void</span> *data );</div><div class="line"><span class="comment">/* Copy buffer to user-space from kernel-space */</span></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">copy_to_user</span><span class="params">( <span class="keyword">void</span> __user *to,</span></span></div><div class="line">                              <span class="keyword">const</span> <span class="keyword">void</span> *from,</div><div class="line">                              <span class="keyword">unsigned</span> <span class="keyword">long</span> n );</div><div class="line"><span class="comment">/* Copy buffer to kernel-space from user-space */</span></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">copy_from_user</span><span class="params">( <span class="keyword">void</span> *to,</span></span></div><div class="line">                                <span class="keyword">const</span> <span class="keyword">void</span> __user *from,</div><div class="line">                                <span class="keyword">unsigned</span> <span class="keyword">long</span> n );</div><div class="line"><span class="comment">/* Allocate a 'virtually' contiguous block of memory */</span></div><div class="line"><span class="function"><span class="keyword">void</span> *<span class="title">vmalloc</span><span class="params">( <span class="keyword">unsigned</span> <span class="keyword">long</span> size )</span></span>;</div><div class="line"><span class="comment">/* Free a vmalloc'd block of memory */</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">vfree</span><span class="params">( <span class="keyword">void</span> *addr )</span></span>;</div><div class="line"><span class="comment">/* Export a symbol to the kernel (make it visible to the kernel) */</span></div><div class="line">EXPORT_SYMBOL( symbol );</div><div class="line"><span class="comment">/* Export all symbols in a file to the kernel (declare before module.h) */</span></div><div class="line">EXPORT_SYMTAB</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/module.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/kernel.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/proc_fs.h&gt;</span> <span class="comment">//proc相关</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/vmalloc.h&gt;</span><span class="comment">//vmalloc需要</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;asm/uaccess.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/moduleparam.h&gt;</span> <span class="comment">//模块参数</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/stat.h&gt;</span> <span class="comment">//关于模块参数权限问题</span></span></div><div class="line"></div><div class="line">MODULE_LICENSE(<span class="string">"GPL"</span>);</div><div class="line">MODULE_DESCRIPTION(<span class="string">"A poor program."</span>);</div><div class="line">MODULE_AUTHOR(<span class="string">"prime"</span>);</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> BUFFER_SIZE;</div><div class="line"></div><div class="line">module_param(BUFFER_SIZE,uint,S_IRUGO);</div><div class="line"></div><div class="line"><span class="keyword">struct</span> proc_dir_entry *proc_entry;</div><div class="line"></div><div class="line"><span class="comment">/*proc文件系统的重要结构体。</span></div><div class="line">name： 节点的名称，也就是该proc文件的名称</div><div class="line">mode： 文件的类型和权限</div><div class="line">nlink：    该文件的链接数</div><div class="line">read_proc： 读操作函数</div><div class="line">write_proc：写操作函数</div><div class="line">owner：  该文件的拥有者模块 </div><div class="line">parent：  创建节点的父目录</div><div class="line">*/</div><div class="line"><span class="keyword">static</span> <span class="keyword">char</span>* cookie;<span class="comment">//指向分配的空间。</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> next_read;<span class="comment">//下一个可以读的字节</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> next_write;<span class="comment">//下一个可以写的字节</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">ssize_t</span> my_write( <span class="keyword">struct</span> file *filp, <span class="keyword">const</span> <span class="keyword">char</span> __user *buff,<span class="keyword">unsigned</span> <span class="keyword">long</span> len, <span class="keyword">void</span> *data)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> space_available = (BUFFER_SIZE-next_write)+<span class="number">1</span>;<span class="comment">//还可以使用的空间大小</span></div><div class="line">    <span class="keyword">if</span> (len &gt; space_available) &#123;</div><div class="line">      printk(KERN_INFO <span class="string">"prime: cookie is full!\n"</span>);</div><div class="line">      len=space_available;<span class="comment">//超出就截断</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (copy_from_user(&amp;cookie[next_write], buff, len)) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    next_write+= len;</div><div class="line">    cookie[next_write<span class="number">-1</span>] = <span class="number">0</span>; <span class="comment">//添加换行?</span></div><div class="line">    printk(KERN_INFO <span class="string">"write%ldbytes"</span>,len);</div><div class="line">    <span class="keyword">return</span> len;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_read</span><span class="params">( <span class="keyword">char</span> *page, <span class="keyword">char</span> **start, <span class="keyword">off_t</span> off,<span class="keyword">int</span> count, <span class="keyword">int</span> *eof, <span class="keyword">void</span> *data )</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">int</span> len;</div><div class="line">  <span class="keyword">if</span> (off &gt; <span class="number">0</span>) &#123;</div><div class="line">    *eof = <span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (next_read &gt;= next_write) next_read = <span class="number">0</span>;<span class="comment">//读的指针超过写的，读指针归零</span></div><div class="line">  len = <span class="built_in">sprintf</span>(page, <span class="string">"%s\n"</span>, &amp;cookie[next_read]);<span class="comment">//sprintf的返回值就是写了多少字节</span></div><div class="line">  next_read += len;</div><div class="line">  printk(KERN_INFO <span class="string">"read%dbytes"</span>,len);</div><div class="line">  <span class="keyword">return</span> len;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> __<span class="function">init <span class="title">init_my_module</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	cookie=(<span class="keyword">char</span>*)vmalloc(<span class="keyword">sizeof</span>(<span class="keyword">char</span>)*BUFFER_SIZE);</div><div class="line">	<span class="keyword">if</span> (!cookie)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span></div><div class="line">	&#123;</div><div class="line">		<span class="built_in">memset</span>(cookie,<span class="number">0</span>,BUFFER_SIZE*<span class="keyword">sizeof</span>(<span class="keyword">char</span>));<span class="comment">//清空数据</span></div><div class="line">		proc_entry=create_proc_entry(<span class="string">"prime"</span>,<span class="number">0666</span>,<span class="literal">NULL</span>);<span class="comment">//创建文件</span></div><div class="line">		<span class="comment">/*原型struct proc_dir_entry *create_proc_entry( const char *name,  mode_t mode,  </span></div><div class="line">                struct proc_dir_entry *parent );</div><div class="line">		*/</div><div class="line">		<span class="keyword">if</span> (proc_entry==<span class="literal">NULL</span>)</div><div class="line">		&#123;</div><div class="line">			printk(KERN_INFO <span class="string">"prime: Couldn't create proc entry\n"</span>);</div><div class="line">			vfree(cookie);</div><div class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			<span class="comment">//proc_entry-&gt;owner=THIS_MODULE;</span></div><div class="line">			proc_entry-&gt;read_proc=my_read;<span class="comment">//回调接口</span></div><div class="line">			proc_entry-&gt;write_proc=my_write;</div><div class="line">			next_read=<span class="number">0</span>;</div><div class="line">			next_write=<span class="number">0</span>;</div><div class="line">			printk(KERN_INFO <span class="string">"prime: Module loaded successful.\n"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> __<span class="function"><span class="built_in">exit</span> <span class="title">exit_my_module</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	remove_proc_entry(<span class="string">"prime"</span>,<span class="literal">NULL</span>);</div><div class="line">	printk(KERN_INFO <span class="string">"prime: Module unloaded.\n"</span>);</div><div class="line">&#125;</div><div class="line">module_init(init_my_module);</div><div class="line">module_exit(exit_my_module);</div></pre></td></tr></table></figure>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>随着对/proc代码的整理，现在出现了<code>seq_file</code>接口，在新版本内核中，上述创建文件的方法也已被舍弃。引入了<strong>proc_create() </strong>方法。</p>
+<p>以下是额外两篇博文，第二篇尤其要看看。</p>
+<ol>
+<li><a href="http://blog.csdn.net/hunanchenxingyu/article/details/8102956#" target="_blank" rel="noopener">部分</a></li>
+<li><a href="http://blog.csdn.net/armwind/article/details/52261262" target="_blank" rel="noopener">点我</a></li>
+</ol>
+<h1 id="模块参数"><a href="#模块参数" class="headerlink" title="模块参数"></a>模块参数</h1><p>在加载模块时可以添加参数，它主要使用module_param宏定义来实现这一功能。</p>
+<p>module_param的定义可以在<code>include/Linux/moduleparam.h</code>文件里面查看到。</p>
+<h2 id="单个参数"><a href="#单个参数" class="headerlink" title="单个参数"></a>单个参数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">module_param(name, type, perm);</div></pre></td></tr></table></figure>
+<p>其中module_param是用来传递<strong>变量</strong>参数的，name是在模块中定义的变量名称，type是变量的类型，module_param支持传递的参数类型有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">bool：布尔型</div><div class="line"></div><div class="line">invbool：布尔型  invbool 类型颠倒了值, 所以真值变成 false, 反之亦然.</div><div class="line"></div><div class="line">charp ：字符指针值</div><div class="line"></div><div class="line">int：整形</div><div class="line"></div><div class="line">long：长整形</div><div class="line"></div><div class="line">short：短整形</div><div class="line"></div><div class="line">uint：无符号整形</div><div class="line"></div><div class="line">ulong：无符号长整形</div><div class="line"></div><div class="line">ushort：无符号短整形</div><div class="line"></div><div class="line">基本的变长整型值. 以 u 开头的是无符号值.</div></pre></td></tr></table></figure>
+<p>perm 指定了在sysfs中相应文件的访问权限。访问权限与linux文件访问权限相同的方式管理，如0644。应当使用 <code>&lt;linux/stat.h&gt;</code> 中定义的值，它指定了在sysfs中相应文件的访问权限。当perm为0时，表示此参数不存在 sysfs文件系统下对应的文件节点。 否则, 模块被加载后，在/sys/module/ 目录下将出现以此模块名命名的目录, 带有给定的权限.。</p>
+<p>下面是用法示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> int_var = <span class="number">0</span>;</div><div class="line">module_param(int_var, uint, S_IRUGO);</div><div class="line">insmod xxxx.ko int_var=x</div></pre></td></tr></table></figure>
+<h2 id="多个参数"><a href="#多个参数" class="headerlink" title="多个参数"></a>多个参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">module_param_array(para , type , nump , perm)</div></pre></td></tr></table></figure>
+<p>前面参数同上，指针nump指向一个整数，其值表示有多少个参数存放在数组para中（只要perm数组大小够大,在插入模块的时候,输入的参数个数会改变nump的值）。 para:参数数组; 数组的大小才是决定能输入多少个参数的决定因素。</p>
+<p>典型用法:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> para[MAX_FISH];</div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> n_para;</div><div class="line">module_param_array(para , <span class="keyword">int</span> , &amp;n_para , S_IRUGO); </div><div class="line">insmod xxxx.ko para=<span class="number">5</span>,<span class="number">1</span>,<span class="number">3.</span>..</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/30/Java-IO/" rel="next" title="Java IO">
+                <i class="fa fa-chevron-left"></i> Java IO
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/02/用python进行网络编程/" rel="prev" title="用python进行网络编程">
+                用python进行网络编程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#proc文件系统"><span class="nav-number">1.</span> <span class="nav-text">proc文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#proc目录概述"><span class="nav-number">1.1.</span> <span class="nav-text">proc目录概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用基本函数介绍"><span class="nav-number">1.2.</span> <span class="nav-text">常用基本函数介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">1.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充"><span class="nav-number">1.4.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块参数"><span class="nav-number">2.</span> <span class="nav-text">模块参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单个参数"><span class="nav-number">2.1.</span> <span class="nav-text">单个参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个参数"><span class="nav-number">2.2.</span> <span class="nav-text">多个参数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

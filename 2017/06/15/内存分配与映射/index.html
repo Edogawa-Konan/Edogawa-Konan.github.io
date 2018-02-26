@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Linux," />
+
+
+<meta name="description" content="内存分配与映射的一些知识总结。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内存分配与映射">
+<meta property="og:url" content="https://www.prime666.com/2017/06/15/内存分配与映射/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="内存分配与映射的一些知识总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-04T03:41:08.759Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内存分配与映射">
+<meta name="twitter:description" content="内存分配与映射的一些知识总结。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/06/15/内存分配与映射/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>内存分配与映射 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/15/内存分配与映射/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">内存分配与映射</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-15T08:30:08+08:00">2017-06-15</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>内存分配与映射的一些知识总结。</p>
+<a id="more"></a>
+<h1 id="内存分配与映射"><a href="#内存分配与映射" class="headerlink" title="内存分配与映射"></a>内存分配与映射</h1><h2 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h2><p>在<a href="http://www.prime666.com/2017/06/08/%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%97%E7%AC%A6%E9%A9%B1%E5%8A%A8/">简单的字符设备</a>一文的知识点补充中，已经总结了<code>kmalloc</code>和<code>vmalloc</code>的原型和基本用法，下面深入的总结一下。</p>
+<h3 id="用户态内存分配"><a href="#用户态内存分配" class="headerlink" title="用户态内存分配"></a>用户态内存分配</h3><p><code>malloc/free</code></p>
+<ul>
+<li>虚拟地址空间</li>
+<li>返回的是线性地址</li>
+<li>在驱动程序中不能使用</li>
+</ul>
+<h3 id="内核态内存分配"><a href="#内核态内存分配" class="headerlink" title="内核态内存分配"></a>内核态内存分配</h3><p>包括以下三种：</p>
+<ul>
+<li><code>kmalloc</code></li>
+<li><code>vmalloc</code></li>
+<li><code>__get_free_page</code>及<code>__get_free_pages</code></li>
+<li><code>alloc_page</code>及<code>alloc_pages</code></li>
+</ul>
+<hr>
+<p><strong>特别说明，后两类函数返回的是struct page结构体，其它函数一般返回分配内存的首地址（虚拟地址）。</strong></p>
+<h4 id="Kmalloc"><a href="#Kmalloc" class="headerlink" title="Kmalloc"></a>Kmalloc</h4><p>原型已经总结过，见原来的博文。</p>
+<p>下面再介绍一下参数：</p>
+<h5 id="size参数"><a href="#size参数" class="headerlink" title="size参数"></a><code>size</code>参数</h5><p>内核负责管理物理内存，物理内存只能按页面进行分配；<br>Linux处理内存分配的方法是，创建一系列内存对象池，每个池中的内存块大小是固定一致的。处理分配请求时就直接在包含有足够大的内存池中传递一整块给请求者；<br>size的大小一般是2的n次方，kmalloc能分配的最小内存块是32或64；<br>kmalloc能分配的内存块大小存在一个上限，为了保证代码的可移植性，不应利用kmalloc分配超过128KB的内存。</p>
+<h5 id="flags参数"><a href="#flags参数" class="headerlink" title="flags参数"></a><code>flags</code>参数</h5><p>最常用的flags参数是GFP<em>KERNEL，表示内存分配是运行在内核空间的进程执行的；GFP</em>前缀意味着调用get_free_pages来实现实际的内存分配。</p>
+<p><code>flags</code>标志主要有三类：（GFP 标志都在 <code>&lt;linux/gfp.h&gt;</code> 中定义 。）</p>
+<ol>
+<li><p>行为标志 ：控制分配内存时，分配器的一些行为</p>
+</li>
+<li><p>区标志   ：控制内存分配在那个区(ZONE_DMA, ZONE_NORMAL, ZONE_HIGHMEM 之类)</p>
+</li>
+<li><p>类型标志 ：由上面2种标志组合而成的一些常用的场景</p>
+</li>
+</ol>
+<p>类型标志是最常用的，比如GFP_ATOMIC用于在中断处理例程或其它运行于进程上下文之外的代码中分配内存，不会休眠。GFP_KERNEL是内核内存的通常分配方法，可能会休眠。<em>kmalloc允许空闲内存不足时进程进入休眠状态，因此使用GFP_KERNEL的函数必须是可重入的，GFP_KERNEL标志不能在中断处理例程中调用。</em></p>
+<p>行为标志也有很多，都以<code>__GFP</code>开头，详情看源码，不在赘述。</p>
+<p>区标志总结如下表：</p>
+<table>
+<thead>
+<tr>
+<th>__GFP_DMA</th>
+<th style="text-align:center">该标志请求分配发生在可进行DMA的内存区段中</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>区标志</td>
+<td style="text-align:center">描述</td>
+</tr>
+<tr>
+<td>__GFP_HIGHMEM</td>
+<td style="text-align:center">该标志表明要分配的内存可位于高端内存</td>
+</tr>
+<tr>
+<td>__GFP_DMA32</td>
+<td style="text-align:center">与1类似，只是只能被32位设备访问</td>
+</tr>
+</tbody>
+</table>
+<p><em>Linux内核把内存分为三个区段：可用于DMA的内存、常规内存、高端内存。</em></p>
+<p><strong>针对常用情形总结如下~</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th style="text-align:center">相应标志</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>进程上下文，可以睡眠</td>
+<td style="text-align:center">使用 GFP_KERNEL</td>
+</tr>
+<tr>
+<td>进程上下文，不可以睡眠</td>
+<td style="text-align:center">使用 GFP_ATOMIC，在睡眠之前或之后以 GFP_KERNEL 执行内存分配</td>
+</tr>
+<tr>
+<td>中断处理程序</td>
+<td style="text-align:center">使用 GFP_ATOMIC</td>
+</tr>
+<tr>
+<td>软中断</td>
+<td style="text-align:center">使用 GFP_ATOMIC</td>
+</tr>
+<tr>
+<td>tasklet</td>
+<td style="text-align:center">使用 GFP_ATOMIC</td>
+</tr>
+<tr>
+<td>需要用于DMA的内存，可以睡眠</td>
+<td style="text-align:center">使用 (GFP_DMA｜GFP_KERNEL)</td>
+</tr>
+<tr>
+<td>需要用于DMA的内存，不可以睡眠</td>
+<td style="text-align:center">使用 (GFP_DMA｜GFP_ATOMIC)，或者在睡眠之前执行内存分配</td>
+</tr>
+</tbody>
+</table>
+<h4 id="vmalloc"><a href="#vmalloc" class="headerlink" title="vmalloc"></a>vmalloc</h4><p>vmalloc分配虚拟地址空间的连续区域，但不保证物理地址空间的连续性；</p>
+<p>vmalloc分配的地址空间在<code>VMALLOC_START</code>到<code>VMALLOC_END</code>的范围中；</p>
+<p>vmalloc不能在原子上下文中使用，可能会引起休眠；</p>
+<p>vmalloc申请的地址空间由vfree进行释放。</p>
+<hr>
+<p><strong>以下的内存分配函数都是宏定义。</strong>见<code>&lt;linux/gfp.h&gt;</code>头文件。</p>
+<h4 id="get-free-page"><a href="#get-free-page" class="headerlink" title="__get_free_page"></a>__get_free_page</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">get_zeroed_page(<span class="keyword">unsigned</span> <span class="keyword">int</span> flags);</div><div class="line"><span class="comment">//只分配一页，让其内容填充为0，返回指向其逻辑地址的指针</span></div><div class="line">__get_free_page(<span class="keyword">unsigned</span> <span class="keyword">int</span> flags);</div><div class="line"><span class="comment">//只分配一页，返回指向其逻辑地址的指针</span></div><div class="line">__get_free_pages(<span class="keyword">unsigned</span> <span class="keyword">int</span> flags, <span class="keyword">unsigned</span> <span class="keyword">int</span> order);</div><div class="line"><span class="comment">//分配 2^order 个页，返回指向第一页逻辑地址的指针。</span></div><div class="line"></div><div class="line"><span class="comment">/*以上函数中flag就是上面介绍的，order表示申请页面的数量，注意是2的order次方个页面*/</span></div></pre></td></tr></table></figure>
+<p>补充一点，页的大小与体系结构有关，在 x86 结构中一般是32机 4KB或者64位机8KB。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> __free_pages(<span class="keyword">struct</span> page *page, <span class="keyword">unsigned</span> <span class="keyword">int</span> order);</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">free_pages</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> addr, <span class="keyword">unsigned</span> <span class="keyword">int</span> order)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">free_page</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> addr)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">free_hot_page</span><span class="params">(<span class="keyword">struct</span> page *page)</span></span>;</div><div class="line"><span class="comment">/*释放内存。如果试图释放和先前分配数目不等的页面，内存映射关系会被破坏，系统会出错。*/</span></div></pre></td></tr></table></figure>
+<h4 id="alloc-page"><a href="#alloc-page" class="headerlink" title="alloc_page"></a>alloc_page</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">alloc_page(gfp_mask);</div><div class="line"><span class="comment">//只分配一页，返回指向页结构的指针</span></div><div class="line">alloc_pages(gfp_mask, order);</div><div class="line"><span class="comment">//分配 2^order 个页，返回指向第一页页结构的指针</span></div></pre></td></tr></table></figure>
+<p>这两个函数返回的是物理页面的结构体，下面会提到它。</p>
+<h2 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h2><h3 id="page结构体"><a href="#page结构体" class="headerlink" title="page结构体"></a>page结构体</h3><p>首先介绍一下页的概念。<strong>对系统中每个物理页，都有一个page结构相对应。</strong>其头文件为<code>&lt;linux/mm_types.h&gt;</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> page &#123;</div><div class="line">    <span class="keyword">atomic_t</span> count;	<span class="comment">//对该页的访问计数，计数为0时该页返回给空闲链表</span></div><div class="line">    <span class="keyword">void</span> *<span class="keyword">virtual</span>;	<span class="comment">//如果页面被映射，则指向页的内核虚拟地址；否则为NULL</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> flags;  <span class="comment">//描述页状态的一系列标志</span></div><div class="line">   	<span class="comment">//......</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>物理内存的每个页都有一个对应的 page 结构，看似会在管理上浪费很多内存，其实细细算来并没有多少。因为 里面有大量的共同体，我水平还不够，唉，看不懂:cry:。</p>
+<p>于是，<strong>内核维护了一个或多个page结构数组，用于跟踪系统中的物理内存。</strong></p>
+<h3 id="地址转换"><a href="#地址转换" class="headerlink" title="地址转换"></a>地址转换</h3><p>内核提供了一些函数和宏用于在虚拟地址和物理地址之间进行转换。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">struct</span> page  *<span class="title">virt_to_page</span><span class="params">(<span class="keyword">void</span> *kaddr)</span></span>;</div><div class="line"><span class="comment">//该宏在&lt;asm/page.h&gt;中定义，负责将内核逻辑地址转换为响应的page结构指针。</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">struct</span> page  *<span class="title">pfn_to_page</span><span class="params">(<span class="keyword">int</span> pfn)</span></span>;</div><div class="line"><span class="comment">// 针对给定的页帧号，返回page结构指针。</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span>  *<span class="title">page_address</span><span class="params">(<span class="keyword">struct</span> page *page)</span></span>;</div><div class="line"><span class="comment">//如果地址存在的话，则返回页的内核虚拟地址。</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">virt_to_phys</span><span class="params">(<span class="keyword">void</span> * address)</span></span>;</div><div class="line"><span class="comment">//内核虚拟地址转换为物理地址</span></div><div class="line"><span class="function"><span class="keyword">void</span> *<span class="title">phys_to_virt</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> address)</span></span>;</div><div class="line"><span class="comment">//物理地址转换为内核虚拟地址</span></div><div class="line"><span class="comment">/*上两种方法仅仅进行了3G的加减操作，linux内核用3G~4G的内核空间去映射实际的物理内存。适用于常规内存（内核物理内存映射区）*/</span></div></pre></td></tr></table></figure>
+<h3 id="VMA"><a href="#VMA" class="headerlink" title="VMA"></a>VMA</h3><p>虚拟内存区（VMA）用于管理进程地址空间中不同区域的内核数据结构。一个VMA表示在进程的虚拟内存中的一个同类区域。</p>
+<p>Linux内核中，关于虚存管理的最基本的管理单元应该是<code>struct vm_area_struct</code>了，它描述的是一段连续的、具有相同访问属性的虚存空间，该虚存空间的大小为物理内存页面的整数倍。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/mm.h&gt;</span></span></div><div class="line"><span class="keyword">struct</span> vm_area_struct &#123;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> vm_start; 	<span class="comment">//该VMA所覆盖的虚拟地址起始地址</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> vm_end;    <span class="comment">//该VMA所覆盖的虚拟地址结束地址</span></div><div class="line">    <span class="keyword">struct</span> file *vm_file;	<span class="comment">//指向与该区域相关联的file结构指针</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> vm_pgoff; <span class="comment">//以页为单位，文件中该区域的偏移 </span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> vm_flags;  <span class="comment">//描述该区域的一套标志</span></div><div class="line">    <span class="keyword">struct</span> vm_operations_struct * vm_ops; <span class="comment">//内核能调用的函数</span></div><div class="line">    <span class="keyword">void</span> * vm_private_data;<span class="comment">//驱动程序用来保存自身信息的成员</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>struct vm_operations_struct</code> 结构体用来处理进程的内存需求。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/mm.h&gt;</span></span></div><div class="line"><span class="comment">//内核调用open函数，以允许实现VMA的子系统初始化该区域</span></div><div class="line"><span class="keyword">void</span> (*open)(<span class="keyword">struct</span> vm_area_struct * vma);</div><div class="line"></div><div class="line"><span class="comment">//当销毁一个区域时，内核将调用close操作</span></div><div class="line"><span class="keyword">void</span> (*close)(<span class="keyword">struct</span> vm_area_struct * vma);</div><div class="line"></div><div class="line"><span class="comment">//当一个进程访问属于合法VMA的页，但该页又不在内存中时，则为相关区域调用nopage函数</span></div><div class="line"><span class="keyword">struct</span> page * (*nopage)(<span class="keyword">struct</span> vm_area_struct * vma, <span class="keyword">unsigned</span> <span class="keyword">long</span> address, <span class="keyword">int</span> *type);</div></pre></td></tr></table></figure>
+<h3 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h3><p><strong>mmap方法是file_operations结构的一部分，并且执行mmap系统调用时将调用该方法，实现物理地址空间和虚拟地址空间间的内存映射。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span>* <span class="title">mmap</span> <span class="params">( <span class="keyword">void</span> * addr , <span class="keyword">size_t</span> len , <span class="keyword">int</span> prot , <span class="keyword">int</span> flags ,<span class="keyword">int</span> fd , <span class="keyword">off_t</span> offset )</span></span></div><div class="line"><span class="comment">/*addr：指定映射的起始地址, 通常设为NULL, 由系统指定。</span></div><div class="line">length: 映射到内存的文件长度。</div><div class="line">prot：映射区的保护方式:PROT_EXEC/PROT_READ/PROT_WRITE</div><div class="line">flags: 映射区的特性:MAP_SHARED/MAP_PRIVATE</div><div class="line">fd: 由open返回的文件描述符, 代表要映射的文件。</div><div class="line">offset: 以文件开始处的偏移量, 必须是分页大小的整数倍, 通常为0, 表示从文件头开始映射。</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>用户态下文件操作的原型为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> (*mmap) (<span class="keyword">struct</span> file *, <span class="keyword">struct</span> vm_area_struct *)</div></pre></td></tr></table></figure>
+<p>mmap通过两种方式完成页表的建立，即完成物理地址和虚拟地址之间的映射：</p>
+<ul>
+<li>使用<code>remap_pfn_range</code>一次建立所有页表;</li>
+<li>使用<code>nopage VMA</code>方法每次建立一个页表，当用户访问VMA中的页，而该页又不在内存中时，将调用相关的<code>nopage函数</code>实现内存映射。</li>
+</ul>
+<h4 id="remap-pfn-range"><a href="#remap-pfn-range" class="headerlink" title="remap_pfn_range"></a>remap_pfn_range</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">remap_pfn_range</span><span class="params">(<span class="keyword">struct</span> vm_area_struct *vma, <span class="keyword">unsigned</span> <span class="keyword">long</span> virt_addr,<span class="keyword">unsigned</span> <span class="keyword">long</span> pfn, <span class="keyword">unsigned</span> <span class="keyword">long</span> size, <span class="keyword">pgprot_t</span> prot)</span></span></div><div class="line"><span class="comment">/*vma:            虚拟内存区域指针</span></div><div class="line">virt_addr:        虚拟地址的起始值</div><div class="line">pfn:             要映射的物理地址所在的物理页帧号，可将物理地址&gt;&gt;PAGE_SHIFT得到。</div><div class="line">size:            要映射的区域的大小。</div><div class="line">prot:            VMA的保护属性。</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>该函数为addr~addr+size之间的虚拟地址构造页表。pfn（Page Fram Number）是虚拟地址应该映射到的物理地址的页面号，实际上就是物理地址右移PAGE_SHIFT位。</p>
+<h4 id="nopage"><a href="#nopage" class="headerlink" title="nopage"></a>nopage</h4><p><strong>这个函数已被fault函数取代！！！不要妄想使用它了</strong></p>
+<p>当用户访问VMA中的页，而该页又不在内存中时，将调用相关的nopage函数实现内存映射.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> page * (*nopage)(<span class="keyword">struct</span> vm_area_struct * vma, <span class="keyword">unsigned</span> <span class="keyword">long</span> address, <span class="keyword">int</span> *type）</div><div class="line"><span class="comment">/*vma:           虚拟内存区域指针</span></div><div class="line">address:     引起错误的虚拟地址*/</div></pre></td></tr></table></figure>
+<h4 id="fault"><a href="#fault" class="headerlink" title="fault"></a>fault</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> vm_fault &#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> flags;		<span class="comment">/* FAULT_FLAG_xxx flags */</span></div><div class="line">	<span class="keyword">pgoff_t</span> pgoff;			<span class="comment">/* Logical page offset based on vma */</span></div><div class="line">	<span class="keyword">void</span> __user *virtual_address;	<span class="comment">/* Faulting virtual address */</span></div><div class="line"></div><div class="line">	<span class="keyword">struct</span> page *page;		<span class="comment">/* -&gt;fault handlers should return a</span></div><div class="line">					 * page here, unless VM_FAULT_NOPAGE</div><div class="line">					 * is set (which is also implied by</div><div class="line">					 * VM_FAULT_ERROR).</div><div class="line">					 */</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * These are the virtual MM functions - opening of an area, closing and</div><div class="line"> * unmapping it (needed to keep files on disk up-to-date etc), pointer</div><div class="line"> * to the functions called when a no-page or a wp-page exception occurs. </div><div class="line"> */</div><div class="line"><span class="keyword">struct</span> vm_operations_struct &#123;</div><div class="line">	<span class="keyword">void</span> (*open)(<span class="keyword">struct</span> vm_area_struct * area);</div><div class="line">	<span class="keyword">void</span> (*close)(<span class="keyword">struct</span> vm_area_struct * area);</div><div class="line">	<span class="keyword">int</span> (*fault)(<span class="keyword">struct</span> vm_area_struct *vma, <span class="keyword">struct</span> vm_fault *vmf);</div><div class="line"></div><div class="line">	<span class="comment">/* notification that a previously read-only page is about to become</span></div><div class="line">	 * writable, if an error is returned it will cause a SIGBUS */</div><div class="line">	<span class="keyword">int</span> (*page_mkwrite)(<span class="keyword">struct</span> vm_area_struct *vma, <span class="keyword">struct</span> vm_fault *vmf);</div><div class="line"></div><div class="line">	<span class="comment">/* called by access_process_vm when get_user_pages() fails, typically</span></div><div class="line">	 * for use by special VMAs that can switch between memory and hardware</div><div class="line">	 */</div><div class="line">	<span class="keyword">int</span> (*access)(<span class="keyword">struct</span> vm_area_struct *vma, <span class="keyword">unsigned</span> <span class="keyword">long</span> addr,</div><div class="line">		      <span class="keyword">void</span> *buf, <span class="keyword">int</span> len, <span class="keyword">int</span> write);</div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_NUMA</span></div><div class="line">	<span class="comment">/*</span></div><div class="line">	 * set_policy() op must add a reference to any non-NULL @new mempolicy</div><div class="line">	 * to hold the policy upon return.  Caller should pass NULL @new to</div><div class="line">	 * remove a policy and fall back to surrounding context--i.e. do not</div><div class="line">	 * install a MPOL_DEFAULT policy, nor the task or system default</div><div class="line">	 * mempolicy.</div><div class="line">	 */</div><div class="line">	<span class="keyword">int</span> (*set_policy)(<span class="keyword">struct</span> vm_area_struct *vma, <span class="keyword">struct</span> mempolicy *<span class="keyword">new</span>);</div><div class="line"></div><div class="line">	<span class="comment">/*</span></div><div class="line">	 * get_policy() op must add reference [mpol_get()] to any policy at</div><div class="line">	 * (vma,addr) marked as MPOL_SHARED.  The shared policy infrastructure</div><div class="line">	 * in mm/mempolicy.c will do this automatically.</div><div class="line">	 * get_policy() must NOT add a ref if the policy at (vma,addr) is not</div><div class="line">	 * marked as MPOL_SHARED. vma policies are protected by the mmap_sem.</div><div class="line">	 * If no [shared/vma] mempolicy exists at the addr, get_policy() op</div><div class="line">	 * must return NULL--i.e., do not "fallback" to task or system default</div><div class="line">	 * policy.</div><div class="line">	 */</div><div class="line">	<span class="keyword">struct</span> mempolicy *(*get_policy)(<span class="keyword">struct</span> vm_area_struct *vma,</div><div class="line">					<span class="keyword">unsigned</span> <span class="keyword">long</span> addr);</div><div class="line">	<span class="keyword">int</span> (*migrate)(<span class="keyword">struct</span> vm_area_struct *vma, <span class="keyword">const</span> <span class="keyword">nodemask_t</span> *from,</div><div class="line">		<span class="keyword">const</span> <span class="keyword">nodemask_t</span> *to, <span class="keyword">unsigned</span> <span class="keyword">long</span> flags);</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="程序示例"><a href="#程序示例" class="headerlink" title="程序示例"></a>程序示例</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/init.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/kernel.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/module.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/fs.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/errno.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/fcntl.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/vmalloc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/uaccess.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/io.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;asm/page.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/mm.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> DEVICE_NAME <span class="meta-string">"prime"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> DEVICE_NUMBER 240</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PAGE_COUNT 16</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TOTAL_SIZE (PAGE_SIZE*PAGE_COUNT)</span></div><div class="line"></div><div class="line"><span class="keyword">char</span> *share_memory=<span class="literal">NULL</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_vm_fault</span><span class="params">(<span class="keyword">struct</span> vm_area_struct *vma,<span class="keyword">struct</span> vm_fault *vmf)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">struct</span> page *page;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> offset;</div><div class="line">    <span class="keyword">void</span> *page_ptr;</div><div class="line">    </div><div class="line">    printk(<span class="string">"\n"</span>);</div><div class="line">    printk(<span class="string">"%-25s %08x\n"</span>,<span class="string">"1)vma-&gt;flags"</span>,vmf-&gt;flags);</div><div class="line">    printk(<span class="string">"%-25s %08x\n"</span>,<span class="string">"2)vmf-&gt;pgoff"</span>,vmf-&gt;pgoff);</div><div class="line">    printk(<span class="string">"%-25s %08x\n"</span>,<span class="string">"3)vmf-&gt;virtual_address"</span>,vmf-&gt;virtual_address);</div><div class="line">    printk(<span class="string">"%-25s %08x\n"</span>,<span class="string">"4)vma-&gt;vm_start"</span>,vma-&gt;vm_start);</div><div class="line">    printk(<span class="string">"%-25s %08x\n"</span>,<span class="string">"5)vma-&gt;vm_end"</span>,vma-&gt;vm_end);</div><div class="line">    printk(<span class="string">"%-25s %08x\n"</span>,<span class="string">"6)vma-&gt;vm_pgoff"</span>,vma-&gt;vm_pgoff);</div><div class="line">    <span class="comment">/*printk("%-25s %d\n","7)PAGE_SHIFT",PAGE_SHIFT);*/</span></div><div class="line"></div><div class="line">    page_ptr=<span class="literal">NULL</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span>((<span class="literal">NULL</span>==vma)||(<span class="literal">NULL</span>==share_memory))&#123;</div><div class="line">        printk(<span class="string">"return VM_FAULT_SIGBUS!\n"</span>);</div><div class="line">        <span class="keyword">return</span> VM_FAULT_SIGBUS;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    offset=vmf-&gt;virtual_address-vma-&gt;vm_start;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span>(offset&gt;=TOTAL_SIZE)</div><div class="line">    &#123;</div><div class="line">        printk(<span class="string">"return VM_FAULT_SIGBUS!"</span>);</div><div class="line">        <span class="keyword">return</span> VM_FAULT_SIGBUS;</div><div class="line">    &#125;</div><div class="line">    page_ptr=share_memory+offset;</div><div class="line">    page=virt_to_page(page_ptr);</div><div class="line">    get_page(page);</div><div class="line">    vmf-&gt;page=page;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> vm_operations_struct my_vm_ops=&#123;</div><div class="line">    .fault=my_vm_fault,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_mmap</span><span class="params">(<span class="keyword">struct</span> file *filp,<span class="keyword">struct</span> vm_area_struct *vma)</span></span></div><div class="line">&#123;</div><div class="line">    vma-&gt;vm_flags |= VM_RESERVED;</div><div class="line">    vma-&gt;vm_ops=&amp;my_vm_ops;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> file_operations my_file_ops=&#123;</div><div class="line">    .owner=THIS_MODULE,</div><div class="line">    .mmap=my_mmap,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">init_my_module</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> lp;</div><div class="line">    <span class="keyword">int</span> result;</div><div class="line">    result=register_chrdev(DEVICE_NUMBER,</div><div class="line">                DEVICE_NAME,</div><div class="line">                &amp;my_file_ops);</div><div class="line">    <span class="keyword">if</span>(result&lt;<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    share_memory=__get_free_pages(GFP_KERNEL,<span class="number">4</span>);</div><div class="line">    <span class="keyword">for</span>(lp=<span class="number">0</span>;lp&lt;PAGE_COUNT;lp++)&#123;</div><div class="line">        <span class="built_in">sprintf</span>(share_memory+PAGE_SIZE*lp,<span class="string">"mayuan %d"</span>,lp);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">exit_my_module</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(share_memory!=<span class="literal">NULL</span>)&#123;</div><div class="line">        free_pages(share_memory,<span class="number">4</span>);</div><div class="line">    &#125;</div><div class="line">    unregister_chrdev(DEVICE_NUMBER,</div><div class="line">            DEVICE_NAME);</div><div class="line">&#125;</div><div class="line"></div><div class="line">module_init(init_my_module);</div><div class="line">module_exit(exit_my_module);</div><div class="line"></div><div class="line">MODULE_LICENSE(<span class="string">"Dual BSD/GPL"</span>);</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/13/数据结构复习/" rel="next" title="数据结构复习">
+                <i class="fa fa-chevron-left"></i> 数据结构复习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/16/pat（四）/" rel="prev" title="pat（四）">
+                pat（四） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存分配与映射"><span class="nav-number">1.</span> <span class="nav-text">内存分配与映射</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配"><span class="nav-number">1.1.</span> <span class="nav-text">内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户态内存分配"><span class="nav-number">1.1.1.</span> <span class="nav-text">用户态内存分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内核态内存分配"><span class="nav-number">1.1.2.</span> <span class="nav-text">内核态内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kmalloc"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Kmalloc</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#size参数"><span class="nav-number">1.1.2.1.1.</span> <span class="nav-text">size参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#flags参数"><span class="nav-number">1.1.2.1.2.</span> <span class="nav-text">flags参数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vmalloc"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">vmalloc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-free-page"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">__get_free_page</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#alloc-page"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">alloc_page</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存映射"><span class="nav-number">1.2.</span> <span class="nav-text">内存映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#page结构体"><span class="nav-number">1.2.1.</span> <span class="nav-text">page结构体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址转换"><span class="nav-number">1.2.2.</span> <span class="nav-text">地址转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VMA"><span class="nav-number">1.2.3.</span> <span class="nav-text">VMA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mmap"><span class="nav-number">1.2.4.</span> <span class="nav-text">mmap</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#remap-pfn-range"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">remap_pfn_range</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nopage"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">nopage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fault"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">fault</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序示例"><span class="nav-number">1.3.</span> <span class="nav-text">程序示例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

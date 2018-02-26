@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="编程技巧," />
+
+
+<meta name="description" content="位运算的技巧总结。">
+<meta name="keywords" content="编程技巧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="位运算">
+<meta property="og:url" content="https://www.prime666.com/2017/03/25/位运算/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="位运算的技巧总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/afc0328beae9f539dd8886ee972ba47f.png">
+<meta property="og:updated_time" content="2017-03-26T03:38:35.514Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="位运算">
+<meta name="twitter:description" content="位运算的技巧总结。">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com/afc0328beae9f539dd8886ee972ba47f.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/03/25/位运算/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>位运算 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/03/25/位运算/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">位运算</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-25T21:15:23+08:00">2017-03-25</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>位运算的技巧总结。</p>
+<a id="more"></a>
+<h2 id="位操作基本概念"><a href="#位操作基本概念" class="headerlink" title="位操作基本概念"></a>位操作基本概念</h2><p><img src="http://on7mhq4kh.bkt.clouddn.com/afc0328beae9f539dd8886ee972ba47f.png" alt=""></p>
+<p>基本概念如上图。</p>
+<p><strong>这里重点说明一下，不论左移还是右移，都是右操作数表示移动的位数。操作的都是补码！！！</strong></p>
+<p>计算机中对数字的表示有三种方式：原码，反码，补码：</p>
+<ul>
+<li>原码表示法在数值前面增加了一位符号位（即最高位为符号位）：正数该位为0，负数该位为1。比如十进制3如果用8个二进制位来表示就是 00000011， -3就是 10000011。</li>
+<li>反码表示方法：正数的反码是其本身；负数的反码是在其原码的基础上，符号位不变，其余各个位取反。</li>
+<li>补码表示方法：正数的补码是其本身；负数的补码是在其原码的基础上，符号位不变，其余各位取反，最后+1。 (即在反码的基础上+1)。或者在原码的基础上，从最低位到最高位找起，找到第一个1不变，以后各位1变0、0变1，符号位变不变取决于原码是表示负数本身还是负数绝对值（补码的符号位是1表示是负数，符号位是0表示是正数）。</li>
+<li>移码表示方法：就是补码的符号位取反。目的是把有符号数变成无符号数好比较。</li>
+</ul>
+<h2 id="位操作的奇淫技巧-⊙﹏⊙"><a href="#位操作的奇淫技巧-⊙﹏⊙" class="headerlink" title="位操作的奇淫技巧(⊙﹏⊙)"></a>位操作的奇淫技巧(⊙﹏⊙)</h2><h3 id="断奇偶"><a href="#断奇偶" class="headerlink" title="断奇偶"></a>断奇偶</h3><p>判断奇数还是偶数就看最后一位是0还是1就好了，所以有以下技巧：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 2.7</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</div><div class="line">    <span class="keyword">if</span> i&amp;<span class="number">1</span>:</div><div class="line">        <span class="keyword">print</span> i</div></pre></td></tr></table></figure>
+<p>这会打印所有奇数，显然偶数也可以这样找出来。</p>
+<h3 id="交换值"><a href="#交换值" class="headerlink" title="交换值"></a>交换值</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a^=b</div><div class="line">b^=a</div><div class="line">a^=b</div><div class="line"><span class="comment">/*分析如下：</span></div><div class="line">a^=b意为a=a^b</div><div class="line">b^=a意为b=b^a=b^(a^b)=a  异或满足交换律和结合律</div><div class="line">a^=b意为a=a^b=(a^b)^b=a^b^a=b 注意这里第一个b不同于第二个b，第二个b由第二步知已经变成a了</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>这里交换了a，b的值不用第三个变量（python里不用这个也可以原地交换O(∩_∩)O哈！）</p>
+<h3 id="变换符号"><a href="#变换符号" class="headerlink" title="变换符号"></a>变换符号</h3><p>实际上就是求补运算，对一个正数求补就变成了负数，对一个负数求补就变成了正数（牢记计算机内部都是补码表示）。</p>
+<p>求补过程：包括符号位在内，将操作数各位取反再在最低位+1。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#2.7</span></div><div class="line">a=<span class="number">-5</span></div><div class="line"><span class="keyword">print</span> ~a+<span class="number">1</span></div></pre></td></tr></table></figure>
+<h3 id="求绝对值"><a href="#求绝对值" class="headerlink" title="求绝对值"></a>求绝对值</h3><p>同理利用上述说到的求补运算。</p>
+<p>先看下面的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#2.7</span></div><div class="line">a=<span class="number">-5</span></div><div class="line"><span class="keyword">print</span> a&gt;&gt;<span class="number">31</span></div><div class="line"><span class="comment">#结果是-1</span></div></pre></td></tr></table></figure>
+<p>所以这里Python似乎是算术右移。</p>
+<p>这里可以更加简洁一些：</p>
+<p><strong>对于任何数，与0异或都会保持不变，与-1即0xFFFFFFFF异或就相当于取反（各位取反的意思）。因此，a与i异或后再减i（因为i为0或-1，所以减i即是要么加0要么加1）也可以得到绝对值。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#2.7</span></div><div class="line">a=<span class="number">-5</span></div><div class="line">i=a&gt;&gt;<span class="number">31</span></div><div class="line"><span class="keyword">print</span> (i^a)-i</div></pre></td></tr></table></figure>
+<p>这里就两个情况：i=0，则 0^a=a,结果是a本身的值；i=-1，则-1^a等于a的各位取反，-i相当于加1，则这个过程完成了求补。</p>
+<h3 id="二进制高低位交换"><a href="#二进制高低位交换" class="headerlink" title="二进制高低位交换"></a>二进制高低位交换</h3><blockquote>
+<p>给出一个16位的无符号整数。称这个二进制数的前8位为“高位”，后8位为“低位”。现在写一程序将它的高低位交换。例如，数34520用二进制表示为：</p>
+<p>10000110 11011000</p>
+<p>将它的高低位进行交换，我们得到了一个新的二进制数：</p>
+<p>​      11011000 10000110</p>
+<p>它即是十进制的55430。</p>
+<p>这个问题用位操作解决起来非常方便，设x=34520=10000110 11011000(二进制) 由于x为无符号数，右移时会执行逻辑右移即高位补0，因此x右移8位将得到0000000010000110。而x左移8位将得到11011000  00000000。可以发现只要将x&gt;&gt;8与x&lt;&lt;8这两个数相或就可以得到11011000  10000110     </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span></span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> a=<span class="number">3344520</span>;</div><div class="line">        System.out.println(Integer.toBinaryString(a));</div><div class="line">        a=(a&gt;&gt;<span class="number">16</span>)|(a&lt;&lt;<span class="number">16</span>);</div><div class="line">        System.out.println(Integer.toBinaryString(a));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">/*</span></div><div class="line">输出结果如下：（可能前面的0会不输出，自己补全即可）</div><div class="line">0000  0000 0011 0011   0000 1000 1000 1000</div><div class="line">0000  1000 1000 1000   0000 0000 0011 0011</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>注意，上面引用的讲解是16位无符号数，java中int是32位 ，所以移动了16位。</p>
+<h3 id="二进制逆序"><a href="#二进制逆序" class="headerlink" title="二进制逆序"></a>二进制逆序</h3><blockquote>
+<p>可以通过如下步骤完成 16进制的逆序：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">第一步：每2位为一组，组内高低位交换</div><div class="line"></div><div class="line">      10 00 01 10  11 01 10 00</div><div class="line"></div><div class="line">  -- &gt;01 00 10 01 11 10 01 00</div><div class="line"></div><div class="line">第二步：每4位为一组，组内高低位交换</div><div class="line"></div><div class="line">      0100 1001 1110 0100</div><div class="line"></div><div class="line">  --&gt;0001 0110 1011 0001</div><div class="line"></div><div class="line">第三步：每8位为一组，组内高低位交换</div><div class="line"></div><div class="line">      00010110 10110001</div><div class="line"></div><div class="line">  --&gt;01100001 00011011</div><div class="line"></div><div class="line">第四步：每16位为一组，组内高低位交换</div><div class="line"></div><div class="line">      01100001 00011011</div><div class="line"></div><div class="line">  --&gt;00011011 01100001</div><div class="line"></div><div class="line">对第一步，可以依次取出每2位作一组，再组内高低位交换，这样有点麻烦，下面介绍一种非常有技巧的方法。先分别取10000110 11011000的奇数位和偶数位，空位以下划线表示。</div><div class="line"></div><div class="line">      原 数    10000110 11011000</div><div class="line"></div><div class="line">      奇数位   1_0_0_1_ 1_0_1_0_</div><div class="line"></div><div class="line">      偶数位   _0_0_1_0 _1_1_0_0</div><div class="line"></div><div class="line">将下划线用0填充，可得</div><div class="line"></div><div class="line">      原 数    10000110 11011000</div><div class="line"></div><div class="line">      奇数位   10000010 10001000</div><div class="line"></div><div class="line">      偶数位   00000100 01010000</div><div class="line"></div><div class="line">再将奇数位右移一位，偶数位左移一位，此时将这两个数据相或即可以达到奇偶位上数据交换的效果了。</div><div class="line">（很好理解，错开相加嘛）</div><div class="line"></div><div class="line">      原 数     10000110 11011000</div><div class="line"></div><div class="line">      奇数位右移 01000001 01000100  </div><div class="line"></div><div class="line">      偶数位左移 00001000 10100000</div><div class="line"></div><div class="line">      相或得到   01001001 11100100</div><div class="line"></div><div class="line">可以看出，结果完全达到了奇偶位的数据交换，再来考虑代码的实现——</div><div class="line"></div><div class="line">      取x的奇数位并将偶数位用0填充用代码实现就是x &amp; 0xAAAA</div><div class="line"></div><div class="line">      取x的偶数位并将奇数位用0填充用代码实现就是x &amp; 0x5555</div><div class="line"></div><div class="line">因此，第一步就用代码实现就是：</div><div class="line"></div><div class="line">       x = ((x &amp; 0xAAAA) &gt;&gt; 1) | ((x &amp; 0x5555) &lt;&lt; 1);</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>上述讲解中，用了16位的，这里还是改成32位。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">        a = ((a &amp; <span class="number">0xAAAA</span>) &gt;&gt; <span class="number">1</span>) | ((a &amp; <span class="number">0x5555</span>) &lt;&lt; <span class="number">1</span>);</div><div class="line">        a = ((a &amp; <span class="number">0xCCCC</span>) &gt;&gt; <span class="number">2</span>) | ((a &amp; <span class="number">0x3333</span>) &lt;&lt; <span class="number">2</span>);</div><div class="line">        a = ((a &amp; <span class="number">0xF0F0</span>) &gt;&gt; <span class="number">4</span>) | ((a &amp; <span class="number">0x0F0F</span>) &lt;&lt; <span class="number">4</span>);</div><div class="line">        a = ((a &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span>) | ((a &amp; <span class="number">0x00FF</span>) &lt;&lt; <span class="number">8</span>);</div><div class="line"><span class="comment">/*16位*/</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">a = ((a &amp; <span class="number">0xCCCCCCCC</span>) &gt;&gt; <span class="number">2</span>) | ((a &amp; <span class="number">0x33333333</span>) &lt;&lt; <span class="number">2</span>);</div><div class="line">a = ((a &amp; <span class="number">0xF0F0F0F0</span>) &gt;&gt; <span class="number">4</span>) | ((a &amp; <span class="number">0x0F0F0F0F</span>) &lt;&lt; <span class="number">4</span>);</div><div class="line">a = ((a &amp; <span class="number">0xFF00FF00</span>) &gt;&gt; <span class="number">8</span>) | ((a &amp; <span class="number">0x00FF00FF</span>) &lt;&lt; <span class="number">8</span>);</div><div class="line">a=  ((a&amp;<span class="number">0xFFFF0000</span>)&gt;&gt;<span class="number">16</span>)|((a&amp;<span class="number">0x0000FFFF</span>)&lt;&lt;<span class="number">16</span>);</div><div class="line"><span class="comment">/*32位*/</span></div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">上述结果如下：</div><div class="line">1000 0110 1101 1000</div><div class="line">0001 1011 0110 0001</div><div class="line"></div><div class="line">0000 0000 0000 0000	1000 0110 1101 1000</div><div class="line">0001 1011 0110 0001 0000 0000 0000 0000</div><div class="line">还是0自己补齐吧。</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>很遗憾，这里发现了一个坑</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintfBinary</span><span class="params">(T a)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    <span class="keyword">for</span> (i = <span class="keyword">sizeof</span>(a) * <span class="number">8</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> ((a &gt;&gt; i) &amp; <span class="number">1</span>)</div><div class="line">            <span class="built_in">putchar</span>(<span class="string">'1'</span>);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="built_in">putchar</span>(<span class="string">'0'</span>);</div><div class="line">        <span class="keyword">if</span> (i == <span class="number">16</span>)</div><div class="line">            <span class="built_in">putchar</span>(<span class="string">' '</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">putchar</span>(<span class="string">'\n'</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> a = <span class="number">3344520</span>;</div><div class="line">    PrintfBinary(a);</div><div class="line">    a=((a&amp;<span class="number">0xAAAAAAAA</span>)&gt;&gt;<span class="number">1</span>)|((a&amp;<span class="number">0x55555555</span>)&lt;&lt;<span class="number">1</span>);</div><div class="line">    a = ((a &amp; <span class="number">0xCCCCCCCC</span>) &gt;&gt; <span class="number">2</span>) | ((a &amp; <span class="number">0x33333333</span>) &lt;&lt; <span class="number">2</span>);</div><div class="line">    a = ((a &amp; <span class="number">0xF0F0F0F0</span>) &gt;&gt; <span class="number">4</span>) | ((a &amp; <span class="number">0x0F0F0F0F</span>) &lt;&lt; <span class="number">4</span>);</div><div class="line">    a = ((a &amp; <span class="number">0xFF00FF00</span>) &gt;&gt; <span class="number">8</span>) | ((a &amp; <span class="number">0x00FF00FF</span>) &lt;&lt; <span class="number">8</span>);</div><div class="line">    a=  ((a&amp;<span class="number">0xFFFF0000</span>)&gt;&gt;<span class="number">16</span>)|((a&amp;<span class="number">0x0000FFFF</span>)&lt;&lt;<span class="number">16</span>);</div><div class="line">    PrintfBinary(a);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当这里用3344520时，c++运行正确而java错误了。。</p>
+<p>java:</p>
+<p>0000 0000 0011 0011 0000 1000 1000 1000<br>1111 1111 1111 1111 1100 1100 0000 0000</p>
+<p>c++:</p>
+<p>0000 0000 0011 0011 0000 1000 1000 1000<br>0001 0001 0001 0000 1100 1100 0000 0000</p>
+<p>这个坑待填。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。</p>
+<h3 id="统计二进制中1的个数"><a href="#统计二进制中1的个数" class="headerlink" title="统计二进制中1的个数"></a>统计二进制中1的个数</h3><p>最快的方法，虽然看着就蛋疼。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintfBinary</span><span class="params">(T a)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    <span class="keyword">for</span> (i = <span class="keyword">sizeof</span>(a) * <span class="number">8</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> ((a &gt;&gt; i) &amp; <span class="number">1</span>)</div><div class="line">            <span class="built_in">putchar</span>(<span class="string">'1'</span>);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="built_in">putchar</span>(<span class="string">'0'</span>);</div><div class="line">        <span class="keyword">if</span> (i == <span class="number">16</span>)</div><div class="line">            <span class="built_in">putchar</span>(<span class="string">' '</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">putchar</span>(<span class="string">'\n'</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> a = <span class="number">55</span>;</div><div class="line">    PrintfBinary(a);</div><div class="line">    a=((a&amp;<span class="number">0xAAAAAAAA</span>)&gt;&gt;<span class="number">1</span>)+(a&amp;<span class="number">0x55555555</span>);</div><div class="line">    PrintfBinary(a);</div><div class="line">    a = ((a &amp; <span class="number">0xCCCCCCCC</span>) &gt;&gt; <span class="number">2</span>) + (a &amp; <span class="number">0x33333333</span>);</div><div class="line">    PrintfBinary(a);</div><div class="line">    a = ((a &amp; <span class="number">0xF0F0F0F0</span>) &gt;&gt; <span class="number">4</span>) + (a &amp; <span class="number">0x0F0F0F0F</span>);</div><div class="line">    PrintfBinary(a);</div><div class="line">    a = ((a &amp; <span class="number">0xFF00FF00</span>) &gt;&gt; <span class="number">8</span>) + (a &amp; <span class="number">0x00FF00FF</span>);</div><div class="line">    PrintfBinary(a);</div><div class="line">    a=  ((a&amp;<span class="number">0xFFFF0000</span>)&gt;&gt;<span class="number">16</span>)+(a&amp;<span class="number">0x0000FFFF</span>);</div><div class="line">    PrintfBinary(a);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,a);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>和二进制逆序相似。</p>
+<p>第一步：每2位为一组，组内高低位相加</p>
+<p>​      10 00 01 10  11 01 10 00</p>
+<p>  –&gt;01 00 01 01  10 01 01 00</p>
+<p>第二步：每4位为一组，组内高低位相加(这里<em>高低位是一组内，前两个加后两个</em>)</p>
+<p>​      0100 0101 1001 0100</p>
+<p>  –&gt;0001 0010 0011 0001</p>
+<p>第三步：每8位为一组，组内高低位相加</p>
+<p>​      00010010 00110001</p>
+<p>  –&gt;00000011 00000100</p>
+<p>第四步：每16位为一组，组内高低位相加</p>
+<p>​      00000011 00000100</p>
+<p>  –&gt;00000000 00000111</p>
+<p>这样最后得到的00000000 00000111即7即34520二进制中1的个数。类似上文中对二进制逆序的做法不难实现第一步的代码：</p>
+<p>​       x = ((x &amp; 0xAAAA) &gt;&gt; 1) + (x &amp; 0x5555);</p>
+<p>我的解法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">NumberOf1</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="keyword">if</span> n&lt;<span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">32</span>-bin(-n<span class="number">-1</span>).count(<span class="string">'1'</span>)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">return</span> bin(n).count(<span class="string">'1'</span>)</div></pre></td></tr></table></figure>
+<p>我这里用了python的库，bin函数转二进制，但是转换的结果是原码的形式，符号仍然保留。正数时候很好处理，关键在于负数。负数求补是正数，求补的过程是先求反码（各位取反）再加1。我这里逆序操作，先把正数-1，这时候再取反就是原来负数的补码表示，一共32位，so~~~</p>
+<p>别人的解法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123; </div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">NumberOf1</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123; </div><div class="line">          <span class="keyword">int</span> count = <span class="number">0</span>; </div><div class="line"></div><div class="line">          <span class="keyword">while</span>(n!= <span class="number">0</span>)&#123; </div><div class="line"></div><div class="line">              count++; </div><div class="line"></div><div class="line">              n = n &amp; (n - <span class="number">1</span>);</div><div class="line"></div><div class="line">           &#125; </div><div class="line">          <span class="keyword">return</span> count; </div><div class="line">      &#125; </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>如果一个整数不为0，那么这个整数至少有一位是1。如果我们把这个整数减1，那么原来处在整数最右边的1就会变为0，原来在1后面的所有的0都会变成1(如果最右边的1后面还有0的话)。其余所有位将不会受到影响。</p>
+<p>​     举个例子一个二进制数1100，从右边数起第三位是处于最右边的一个1。减去1后，第三位变成0，它后面的两位0变成了1，而前面的1保持不变，因此得到的结果是1011.我们发现减1的结果是把最右边的一个1开始的所有位都取反了。这个时候如果我们再把原来的整数和减去1之后的结果做与运算，从原来整数最右边一个1那一位开始所有位都会变成0。如1100&amp;1011=1000.也就是说，把一个整数减去1，再和原整数做与运算，会把该整数最右边一个1变成0.那么一个整数的二进制有多少个1，就可以进行多少次这样的操作。</p>
+<h3 id="找出只出现一次的数字"><a href="#找出只出现一次的数字" class="headerlink" title="找出只出现一次的数字"></a>找出只出现一次的数字</h3><p>利用异或运算的两个特性：</p>
+<ol>
+<li>自己与自己异或结果为0</li>
+<li>异或满足交换律。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">int</span> MAXN = <span class="number">15</span>;</div><div class="line">    <span class="keyword">int</span> a[MAXN] = &#123;<span class="number">1</span>, <span class="number">347</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">13</span>, <span class="number">65</span>, <span class="number">889</span>, <span class="number">712</span>, <span class="number">889</span>, <span class="number">347</span>, <span class="number">1</span>, <span class="number">9</span>, <span class="number">65</span>, <span class="number">13</span>, <span class="number">712</span>&#125;;</div><div class="line">    <span class="keyword">int</span> lostNum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAXN; i++)</div><div class="line">        lostNum ^= a[i];</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"缺失的数字为:  %d\n"</span>, lostNum);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>快速找到只出现一次的数字。</p>
+<p>如果找到两个出现一次的数字呢？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">L=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">1</span>,  <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">5</span>]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(L)</span>:</span></div><div class="line">    tmp=<span class="number">0</span></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> L:</div><div class="line">        tmp^=x</div><div class="line">    index=<span class="number">0</span></div><div class="line">    a=b=<span class="number">0</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>):</div><div class="line">        <span class="keyword">if</span> ((tmp&gt;&gt;i)&amp;<span class="number">1</span>)==<span class="number">1</span>:</div><div class="line">            index=i</div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> L:</div><div class="line">        <span class="keyword">if</span> ((x&gt;&gt;index)&amp;<span class="number">1</span>)==<span class="number">1</span>:</div><div class="line">            a^=x</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            b^=x</div><div class="line">    <span class="keyword">return</span> (a,b)</div><div class="line"></div><div class="line"><span class="keyword">print</span> search(L)</div></pre></td></tr></table></figure>
+<p>设题目中这两个只出现1次的数字分别为A和B，如果能将A，B分开到二个数组中，那显然符合“异或”解法的关键点了。因此这个题目的关键点就是将A，B分开到二个数组中。<strong>由于A，B肯定是不相等的，因此在二进制上必定有一位是不同的。根据这一位是0还是1可以将A，B分开到A组和B组。</strong>而这个数组中其它数字要么就属于A组，要么就属于B组。再对A组和B组分别执行“异或”解法就可以得到A，B了。而要判断A，B在哪一位上不相同，只要根据A异或B的结果就可以知道了，这个结果在二进制上为1的位都说明A，B在这一位上是不相同的。</p>
+<p>所以，程序中先把所有元素异或，结果中为1的位就是A、B中不相同的位，从最低位开始找到一个，用它分组，A，B必在两个组中。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/编程技巧/" rel="tag"># 编程技巧</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/23/反射/" rel="next" title="反射">
+                <i class="fa fa-chevron-left"></i> 反射
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/06/DP/" rel="prev" title="DP">
+                DP <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#位操作基本概念"><span class="nav-number">1.</span> <span class="nav-text">位操作基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位操作的奇淫技巧-⊙﹏⊙"><span class="nav-number">2.</span> <span class="nav-text">位操作的奇淫技巧(⊙﹏⊙)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#断奇偶"><span class="nav-number">2.1.</span> <span class="nav-text">断奇偶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换值"><span class="nav-number">2.2.</span> <span class="nav-text">交换值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变换符号"><span class="nav-number">2.3.</span> <span class="nav-text">变换符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求绝对值"><span class="nav-number">2.4.</span> <span class="nav-text">求绝对值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二进制高低位交换"><span class="nav-number">2.5.</span> <span class="nav-text">二进制高低位交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二进制逆序"><span class="nav-number">2.6.</span> <span class="nav-text">二进制逆序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#统计二进制中1的个数"><span class="nav-number">2.7.</span> <span class="nav-text">统计二进制中1的个数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找出只出现一次的数字"><span class="nav-number">2.8.</span> <span class="nav-text">找出只出现一次的数字</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

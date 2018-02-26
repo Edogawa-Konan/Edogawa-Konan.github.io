@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Machine Learn," />
+
+
+<meta name="description" content="暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。">
+<meta name="keywords" content="Machine Learn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络汇总">
+<meta property="og:url" content="https://www.prime666.com/2017/07/31/神经网络汇总/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/00a41aa6575886baef4193d943fa609b49534272">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/69b9832ae727dd93d743ed1daf1f7940ebc16f43">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/480px-Logistic-curve.svg.png">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/480px-Logistic-curve.svg.png">
+<meta property="og:image" content="http://neuralnetworksanddeeplearning.com/images/tikz37.png">
+<meta property="og:image" content="http://i.imgur.com/PHbta3D.jpg">
+<meta property="og:image" content="http://neuralnetworksanddeeplearning.com/images/tikz47.png">
+<meta property="og:image" content="http://mengqi92.github.io/2015/10/06/convolution/2d-convolution.png">
+<meta property="og:image" content="https://deeplearning4j.org/img/multiple_inputs_RBM.png">
+<meta property="og:image" content="https://deeplearning4j.org/img/multiple_hidden_layers_RBM.png">
+<meta property="og:image" content="https://deeplearning4j.org/img/reconstruction_RBM.png">
+<meta property="og:image" content="https://deeplearning4j.org/img/KL_divergence_RBM.png">
+<meta property="og:image" content="https://deeplearning4j.org/img/KLD_update_RBM.png">
+<meta property="og:updated_time" content="2018-02-26T02:56:02.193Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="神经网络汇总">
+<meta name="twitter:description" content="暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。">
+<meta name="twitter:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/00a41aa6575886baef4193d943fa609b49534272">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/07/31/神经网络汇总/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>神经网络汇总 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/07/31/神经网络汇总/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">神经网络汇总</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-31T20:38:28+08:00">2017-07-31</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。</p>
+<a id="more"></a>
+<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><p>说明：本文是学习神经网络的笔记，<a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener">英文原文</a>，本文内容均由我从原书中提炼而来，并对其中每个结论进行了数学证明（过于高深的问题未解决，只限于高等数学范畴）。</p>
+<p>作者：马源@prime        </p>
+<p>实验代码<a href="">git</a>        </p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>我的基本环境如下：</p>
+<p>Anacoda4.4 (python3.6)</p>
+<p>Theano 0.9</p>
+<p>Cuda 8.0（后面卷积神经网络cpu计算太慢，GPU对浮点数有优化，加速杠杠的！核弹厂比较是核弹厂。非核弹厂的卡就不行了）</p>
+<p>VS2010（主要是cuda需要c++环境，安装时也只需要安装c++即可！）</p>
+<p>我的安装顺序基本就是这样。硬件上是笔记本win10 i7 4710hq+GTX860M+16G RAM，跑起来还阔以（认真脸）。</p>
+<ol>
+<li><p>Anacoda</p>
+<p>不多说了，一个python的发行版，科学计算无人不知无人不晓。内建conda的管理系统可以管理包，也可以创建环境。好用到爆炸。</p>
+</li>
+<li><p>Theano</p>
+<p>直接pip install theano即可安装！这里贴出0.9的<a href="http://deeplearning.net/software/theano/install_windows.html" target="_blank" rel="noopener">文档</a>，内含丰富的安装教程。虽然现在标记&lt;3.6，我的3.6运行没问题！不放心的可以用conda创建一个低版本环境使用。</p>
+<p>然后用<code>conda install theano pygpu</code>安装必要的包，第一个就是c++环境，不装的话运行程序会用python的实现而不是c++的加速版，python实现你懂的。第二个是和GPU相关的。</p>
+</li>
+<li><p>cuda8.0</p>
+<p>直接英伟达官网下载即可。</p>
+</li>
+<li><p>vs2010</p>
+<p>只需要安装c++即可。后面运行的时候可能会提示<code>&lt;inttypes.h&gt;</code>头文件找不到，这时候去参考<a href="http://blog.csdn.net/acheld/article/details/50989438" target="_blank" rel="noopener">博客</a></p>
+</li>
+</ol>
+<p>经过以上过程之后，还要在用户根目录(就是打开命令行的显示的目录)下创建配置文件，我的配置文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[lib]</div><div class="line">cnmem = 0.8 #不设置会提示CNMeM is disable</div><div class="line">[blas]</div><div class="line">ldflags = </div><div class="line">[gcc]</div><div class="line">cxxflags = -ID:\Anaconda\MinGW\include  </div><div class="line">[nvcc]</div><div class="line">flags=-LD:\Anaconda\libs</div><div class="line">compiler_bindir=D:\VS2010\VC\bin</div><div class="line">[global]</div><div class="line">device=gpu</div><div class="line">floatX=float32</div></pre></td></tr></table></figure>
+<p>然后还会提示<code>CuDNN not available</code>，这个其实不管也没事，但是强迫症得治。下载cudnn5.1然后将下载来的文件解压，解压出cuda文件夹，里面包含3个文件夹。将设三个文件夹替换掉系统里面的对应文件，进行覆盖替换即可。我的是自定义安装的，就是development文件夹里面。</p>
+<p>由此，卷积网络大大加速，哈皮的时刻~~</p>
+<hr>
+<p>补充一下theano的介绍，其是一个科学计算的库，可以让python拥有与手写的c几乎相同的效率！同时，它可利用GPU进行加速，从而胜过C+CPU！theano把计算机代数系统( computer algebra system (CAS))与优化编译器相结合，因此，对于大多数数学计算操作，可以生成最优的c代码。</p>
+<h2 id="神经网络概述"><a href="#神经网络概述" class="headerlink" title="神经网络概述"></a>神经网络概述</h2><h3 id="感知器"><a href="#感知器" class="headerlink" title="感知器"></a>感知器</h3><p>感知器（英语：Perceptron）是Frank Rosenblatt在1957年就职于Cornell航空实验室（Cornell Aeronautical Laboratory）时所发明的一种人工神经网络。它可以被视为一种最简单形式的<strong>前馈神经网络</strong>，是一种<strong>二元线性分类器</strong>。</p>
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/00a41aa6575886baef4193d943fa609b49534272" alt=""></p>
+<p>感知器使用特征向量来表示的前馈神经网络，把矩阵上的输入x（实数值向量）映射到输出值 f(x)上（一个二元的值）。</p>
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6" alt="w">是实数的表式权重的向量，<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/69b9832ae727dd93d743ed1daf1f7940ebc16f43" alt="w\cdot x">是点积。<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" alt="b">是偏置，一个不依赖于任何输入值的常数。偏置可以认为是激励函数的偏移量，或者给神经元一个基础活跃等级。</p>
+<p>其基本结构如下图</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png" alt=""></p>
+<h3 id="S型神经元"><a href="#S型神经元" class="headerlink" title="S型神经元"></a>S型神经元</h3><p>其基本结构和上述感知器类似，只不过，输出不再是0和1，而是$\sigma (\vec w \vec x +b)$。此处的$\sigma$被称为S型函数(sigmoid function)。其表达式为：<br>$$<br>\sigma (z)=\frac {1} {1+e^{-z}}<br>$$<br>该函数图像如下：</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/480px-Logistic-curve.svg.png" alt=""></p>
+<p>其又被称作<strong>逻辑函数</strong>。</p>
+<p>其实，S型神经元可以理解为一个“平滑”的感知器，其平滑意为着权重和偏置的微小改变，会从神经元输出产生一个微小的变化。</p>
+<h3 id="神经网络的基本架构"><a href="#神经网络的基本架构" class="headerlink" title="神经网络的基本架构"></a>神经网络的基本架构</h3><p>网络中最左边的输入层，其中的神经元被称作<strong>输入神经元</strong>。最右边的即输出层包含<strong>输出神经元。</strong>中间层被称作隐藏层。</p>
+<p>本文讨论的都是以上一层的输出作为下一层的输入，这种网络被称作<strong>前馈神经网络</strong>，即意味着网络中是没有回路的——信息总是向前传播。当然，反馈回路也是可行的，这种网络叫做<strong>递归神经网络</strong>。但是后者的学习算法目前不够强大，虽然更接近大脑的工作方式，毕竟其思想就是具有休眠前会在一段有限时间内保持激活状态的神经元，可以刺激其它神经元，随后被激活并同样保持一段有限的时间。随着时间的推移，得到一个级联的神经元激活系统。</p>
+<h3 id="使用梯度下降算法进行学习"><a href="#使用梯度下降算法进行学习" class="headerlink" title="使用梯度下降算法进行学习"></a>使用梯度下降算法进行学习</h3><p>定义一个代价函数如下：<br>$$<br>\begin{eqnarray} C(w,b) \equiv \frac{1}{2n} \sum_x | y(x) - a|^2 \end{eqnarray}<br>$$<br>这里w是权重，b是偏置，n是训练输入数据的个数，$\vec a$是表示当输入为$\vec x$时输出的向量，而y(x)表示真实的结果。</p>
+<p>显而易见，我们训练的目的就是<strong>最小化代价函数</strong>。</p>
+<p>首先，直观的，梯度下降可以理解为下山，肯定最陡峭的路下降速度最快。在多元函数微分学中，梯度方向是函数增加最快的方向，而其反方向就是函数减小最快的方向！<br>$$<br>\nabla C=(\frac {\partial C}{\partial w},\frac {\partial C}{\partial b})^T<br>$$<br>由此，得到了更新公式如下：<br>$$<br>w_k:=w_k-\eta \frac {\partial C}{\partial w_k}<br>$$</p>
+<p>$$<br>b_l:=b_l-\eta \frac{\partial C}{\partial b_l}<br>$$</p>
+<p>但是，这里引出了一个问题，注意代价函数C的形式：<br>$$<br>C=\frac {1}{n} \sum _xC_x<br>$$<br>也就是说，它是遍及每个训练样本代价$C_x=\frac {|y(x)-a|^2}{2}$的平均值。所以为了求解C的梯度，需要为每个训练输入x单独计算$\nabla C_x$。然后求平均值$\nabla C=\frac {1}{n}\sum_x \nabla C_x$。这样最明显的一个问题就是如果训练输入数量过大，就会使得学习非常缓慢！</p>
+<hr>
+<p>由此，引入随机梯度下降算法，其思想就是<strong>通过随机选取小量训练输入样本来计算$\nabla C_x$，进而估算$\nabla C$。</strong></p>
+<p>更准确的说，随机梯度下降通过<strong>随机选取</strong>小量的m个训练输入来工作。将这些训练输入标记为$X_1,X_2,X_3…X_m$，并把它们称作一个小批量数据(mini-batch)。</p>
+<p>所以有以下估计：<br>$$<br>\frac {\sum<em>{j=1}^m\nabla C</em>{x_j}}{m} \approx \frac {\sum_x \nabla C_x}{n}=\nabla C<br>$$</p>
+<p>由此，更新的公式改为：</p>
+<p>$$<br>w_k:=w_k-\frac {\eta}{m}\sum<em>j \frac {\partial C</em>{X_j}}{\partial w_k}<br>$$</p>
+<p>$$<br>b_l:=b_l-\frac {\eta}{m}\sum<em>j \frac {\partial C</em>{X_j}}{\partial b_l}<br>$$</p>
+<p>这里的求和是针对每个小批量数据的所有训练样本$X_j$进行的。然后再去挑选另一个随机的小批量数据，知道用完了所有的训练输入，这称作一次迭代期(epoch)。</p>
+<p>特别说明一下，$\eta$这里是学习率的意思，显然越大表示每一步越大。</p>
+<h2 id="反向传播算法如何工作"><a href="#反向传播算法如何工作" class="headerlink" title="反向传播算法如何工作"></a>反向传播算法如何工作</h2><p>首先，先定义一些规则，用$w^l_{jk}$表示从$l-1$层的第k个神经元到第$l$层的第$j$个神经元的权重。</p>
+<p>同理，用$b^l_j$表示在第$l$层第j个神经元的偏置，$a^l_j$表示第$l$层第j个神经元的激活值($\sigma$也被称作激活函数)。</p>
+<p>所以，有以下表达式：<br>$$<br>a^l_j=\sigma (\sum<em>k w^l</em>{jk}a^{l-1}_{k}+b^l_j)<br>$$<br>其中求和是在第$l-1$层的所有k个神经元上进行的。</p>
+<p>于是，为每一层定义一个矩阵$W^l$,其第j行k列的元素就是$w^l_{jk}$。为每一层定义向量$B^l$，每个元素就是$b^l_j$。激活向量$A^l$同理。</p>
+<p>这样，上述表达式的向量表示如下：<br>$$<br>a^l=\sigma (w^la^{l-1}+b^l)<br>$$<br>其中，上面的都是向量或矩阵。$\sigma$的参数是一个k*1的向量，记为$z^l$，其表达式：<br>$$<br>z^l<em>j=\sum ^k</em>{j=1}w^l_{jk}a^{l-1}_k+b^l_j<br>$$<br>即第$l$层第j个神经元的激活函数的带权输入。</p>
+<hr>
+<p>此时，二次代价函数写作<br>$$<br>\begin{eqnarray} C(w,b) \equiv \frac{1}{2n} \sum_x | y(x) - a^L|^2 \end{eqnarray}<br>$$<br>其中，n是训练样本的总数，求和遍历了每个训练样本x；$y(x)$是对应的目标输出；L表示网络的层数；$a^L$是当输入为$\vec x$时网络输出的激活值向量。</p>
+<p>显然，对于单个训练样本，有：<br>$$<br>C_x=\frac {1}{2}|y-a^L|^2<br>$$</p>
+<h3 id="Hadamard乘积-odot"><a href="#Hadamard乘积-odot" class="headerlink" title="Hadamard乘积$\odot$"></a>Hadamard乘积$\odot$</h3><p>没什么好说的，就是按元素乘即可。区别于矩阵乘法O(∩_∩)O哈！</p>
+<h3 id="反向传播的四个方程"><a href="#反向传播的四个方程" class="headerlink" title="反向传播的四个方程"></a>反向传播的四个方程</h3><p>首先，先上这四个方程。待会我再证明它们！</p>
+<p>定义$\delta ^l_j=\frac {\partial C}{\partial z^l_j}$表示输出层的误差。</p>
+<p>四个方程如下：<br>$$<br>输出层误差\\delta^l_j=\frac {\partial C}{\partial a^l_j}\sigma \prime(z^l_j) \tag{1}<br>$$</p>
+<p>$$<br>使用下一层的误差来计算当前层的误差\<br>\delta^l=((w^{l+1})^T\delta^{l+1})\odot\sigma \prime(z^l) \tag{2}<br>$$</p>
+<p>$$<br>代价函数关于网络中任意偏置的改变率\\frac {\partial C}{\partial b^l_j}=\delta ^l_j \tag{3}<br>$$</p>
+<p>$$<br>代价函数关于任何一个权重的改变率\\frac {\partial C}{w^l_{jk}}=a^{j-1}_k\delta ^l_j \tag{4}<br>$$</p>
+<p>特别说明一下，(2)式给的是向量形式，特别的，(1)的向量形式为:<br>$$<br>\delta ^l=(a^l-y)\odot\sigma \prime(z^l)<br>$$<br>这四个方程就是反向传播的核心了。</p>
+<h3 id="证明上面的四个方程"><a href="#证明上面的四个方程" class="headerlink" title="证明上面的四个方程"></a>证明上面的四个方程</h3><p>原则就是一个，求导的链式法则！</p>
+<ol>
+<li><p>证明(1)式<br>$$<br>\begin{align<em>}<br>&amp;\because \delta^l_j=\frac {\partial C}{\partial z^l_j} \<br>&amp;又\because a^l_j=\sigma(z^l_j)\<br>&amp;\therefore \delta^l_j=\frac {\partial C}{a^l_j}\frac {\partial a^l_j}{z^l_j}=\frac {\partial C}{a^l_j}\sigma \prime(z^l_j)\<br>\end{align</em>}<br>$$</p>
+</li>
+<li><p>证明(2)式<br>$$<br>\begin {align<em>}<br>&amp;\because \delta ^l_j=\frac {\partial C}{\partial z^l_j}=\sum _k \frac {\partial C}{\partial k^{l+1}}\frac {z^{l+1}_k}{z^l_j}=\sum_k \frac {\partial z^{l+1}_k}{\partial z^l_j}\delta ^{l+1}_k\&amp;其中k是对下一层的神经元求和\<br>\<br>&amp;又 \because z^{l+1}_k=\sum<em>jw^{l+1}</em>{kj}a^l_j+b^{l+1}_k=\sum <em>jw^{l+1}</em>{kj}\sigma(z^l_j)+b^{l+1}_k\&amp;其中j是对l层的神经元求和\<br>\<br>&amp;\therefore \frac {\partial z^{l+1}_k}{z^l<em>j}=w^{l+1}</em>{kj}\sigma \prime(z^l_j)\&amp;求导的无关项都被消掉了\<br>\<br>&amp;\therefore \delta^l_j=\sum<em>kw^{l+1}</em>{kj}\sigma \prime(z^l_j) \&amp;此处的w是矩阵<br>\end{align</em>}<br>$$</p>
+</li>
+</ol>
+<ol>
+<li><p>证明(3)式<br>$$<br>\begin {align}\frac {\partial C}{b^l_j}&amp;=\frac {\partial C}{\partial z^l_j} \frac {z^l_j}{b^l_j}\&amp;=\delta^l_j*1\&amp;=\delta^l_j<br>\end{align}<br>$$</p>
+</li>
+<li><p>证明(4)式<br>$$<br>\because z^l<em>j=\sum^k</em>{j=1}w^l_{jk}a^{l-1}_k+b^l<em>j\<br>\begin{align*}<br>\therefore \frac{\partial C}{\partial w^l</em>{jk}}&amp;=\frac {\partial C}{\partial z^l_j}\frac {\partial z^l<em>j}{w^l</em>{jk}}\&amp;=\delta^l_j\frac {\partial z^l<em>j}{w^l</em>{jk}}\&amp;=a^{l-1}_k\delta^l_j<br>\end{align*}<br>$$</p>
+</li>
+</ol>
+<h3 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h3><p>该算法叙述如下：</p>
+<ul>
+<li>输入$\vec x$:为输入层设置对应的激活值$a^1$</li>
+<li>前向传播：为每个$l=2,3,4\cdots L$计算相应的$z^l=w^la^{l-1}+b^l$和$a^l=\sigma (z^l)$</li>
+<li>输出层误差$\delta^L$:计算向量$\delta^L=\nabla_aC \odot\sigma\prime(z^L) $</li>
+<li>反向传播误差：对每个$l=L-1,L-2\cdots2$，计算$\delta^l=((w^{l+1})^T\delta^{l+1})\odot\sigma \prime(z^l)$</li>
+<li>输出：代价函数的梯度由$\frac {\partial C}{\partial w^l_{jk}}=a^{l-1}_k\delta^l_j和\frac {\partial C}{\partial b^l_j}=\delta^l_j$</li>
+</ul>
+<p>当给定一个大小为m的小批量数据，对其中的每个样本，计算出$\delta^{x,l}$，对每个$l=L-1,L-2,\cdots,2$，根据$w^l:=w^l-\frac {\eta}{m}\sum_x\delta^{x,l}(a^{x,l-1})^T$和$b^l:=b^l-\frac {\eta}{m}\sum_x\delta^{x,l}$更新权重和偏置。</p>
+<h2 id="改进神经网络之交叉熵"><a href="#改进神经网络之交叉熵" class="headerlink" title="改进神经网络之交叉熵"></a>改进神经网络之交叉熵</h2><h3 id="交叉熵代价函数"><a href="#交叉熵代价函数" class="headerlink" title="交叉熵代价函数"></a>交叉熵代价函数</h3><p>通常人在已经知道犯错误的情况下会加速学习修正错误，但是上面的神经网络在明显出错的时候学习速率反而不高！这就引发了问题。</p>
+<p>也就是说，偏导数$\frac {\partial C}{\partial w},\frac {\partial C}{\partial b}$过小。</p>
+<p>由此，我们先考虑一个神经元，其结构图如下：</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png" alt=""></p>
+<p>代价函数$C=\frac {(y-a)^2}{2}$。$z=wx+b$<br>$$<br>\therefore \frac {\partial C}{\partial w}=(a-y)\sigma \prime(z)x \qquad \frac {\partial C}{\partial b}=(a-y)\sigma \prime(z)<br>$$<br>看一下sigmod函数图像，</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/480px-Logistic-curve.svg.png" alt=""></p>
+<p>显然，当z接近0或者1的时候，导数值明显比较小。</p>
+<p>所以，引入了交叉熵代价函数代替二次代价函数。<br>$$<br>C=-\frac {1}{n}\sum_x[y\ln a+(1-y)\ln (1-a)]<br>$$<br>n是训练样本总数，x是某个具体的样本。</p>
+<p>粗看这个函数，显然满足基本代价函数的要求：</p>
+<ol>
+<li>C非负</li>
+<li>当$y=0且a\approx0$时，$C\approx0$</li>
+<li>当$y=1且a\approx1时，C\approx0$</li>
+</ol>
+<p>代入$a=\sigma(z)$到上述表达式中，根据求导的链式法则，有<br>$$<br>\frac {\partial C} {\partial {w_j}}=\frac 1 n\sum_x\frac {\sigma \prime(z)x_j}{\sigma(z)(1-\sigma(z))}(\sigma(z)-y)\<br>又\because \sigma(z)=\frac 1{1+e^{-z}},\sigma \prime(z)=\sigma(z)(1-\sigma(z))\<br>\therefore \frac {\partial C}{\partial w_j}=\frac 1n\sum_xx_j(\sigma(z)-y)\同理有\frac {\partial C}{\partial b_j}=\frac 1 n\sum_x(\sigma(z)-y)<br>$$<br>显然学习速率受误差控制，误差越小学习速率约小，否则学习越快！<br>推广到神经网络，$\vec y=y_1,y_2,\cdots,y_n$是输出神经元上的目标值，而$a^L_1,a^L_2,\cdots,a^L_n$是实际的输出。所以有：<br>$$<br>C=-\frac 1 n\sum_x\sum_j[y_j\ln a^L_j+(1-y_j)\ln (1-a^L_j)]<br>$$<br>这里的j是对输出层所有的神经元求和。</p>
+<h3 id="交叉熵代价函数的推导"><a href="#交叉熵代价函数的推导" class="headerlink" title="交叉熵代价函数的推导"></a>交叉熵代价函数的推导</h3><p>考虑之前的$\frac {\partial C}{\partial w}=(a-y)\sigma \prime(z)x$，自然想，为何不能选择一个不包含$\sigma \prime(z)$的代价函数呢？</p>
+<p>由此，有了以下假定：<br>$$<br>\frac {\partial C}{\partial w_j}=x_j(a-y) \<br>\frac {\partial C}{\partial b}=(a-y)<br>$$</p>
+<p>那么，剩下的任务就是找到一个C满足上述表达式了。<br>$$<br>\begin{align}<br>\because \frac {\partial C}{\partial b}&amp;=\frac {\partial C}{\partial a}\frac {\partial a}{\partial b}\&amp;=\frac {\partial C}{\partial a}\sigma \prime(z)\<br>\end{align}<br>\<br>又\because \sigma \prime(z)=\sigma(z)(1-\sigma(z))\<br>\therefore \frac {\partial C}{\partial b}=\frac {\partial C}{\partial a}a(1-a)<br>$$<br>对比上述第二个表达式，显然有：<br>$$<br>\frac {(a-y)}{a(1-a)}=\frac {\partial C}{\partial a}<br>$$<br>不定积分之：<br>$$<br>C=-[y\ln a+(1-y)\ln (1-a)]+常数<br>$$<br>此时只是一个单独的样本$\vec x$对代价函数的贡献，对所有样本取平均后:<br>$$<br>C=-\frac 1n\sum_x[y\ln a+(1-y)\ln (1-a)]+常数<br>$$<br>此处的常数是上述的常数平均后的。</p>
+<h3 id="交叉熵的含义"><a href="#交叉熵的含义" class="headerlink" title="交叉熵的含义"></a>交叉熵的含义</h3><p>粗略的说，交叉熵是“不确定性”的一种度量，其衡量我们学习到y的正确值平均起来的不确定性。</p>
+<h2 id="改进神经网络之柔性最大值"><a href="#改进神经网络之柔性最大值" class="headerlink" title="改进神经网络之柔性最大值"></a>改进神经网络之柔性最大值</h2><p>引入如下定义：<br>$$<br>a^l_j=\frac {e^{z^l_j}}{\sum_ke^{z^l_k}}\qquad k是该层神经元的个数<br>$$<br>一个显而易见的 特点是，当某个$z_j$增大，其余的z就会减小，且$\sum_ja^l_j=1$。</p>
+<p>所以，可以看做一个概率分布，即$a^l_j$解释为网络估计正确数字分类为j的概率。</p>
+<p>由此，$\sigma$变了，代价函数也更改为：<br>$$<br>C=-\ln a^L_y<br>$$<br>其不会出现学习缓慢的情况，因为其两个偏导数如下：<br>$$<br>\frac {\partial C}{\partial b^L_j}=a^L_j-y_j<br>$$</p>
+<p>$$<br>\frac {\partial C}{\partial w^L_{jk}}=a^{L-1}_k(a^L_j-y_j)<br>$$</p>
+<p>PS：柔性最大值和对数似然函数<strong>更适合于那些需要将输出激活值解释成概率的场景</strong>。</p>
+<h2 id="改进神经网络之规范化"><a href="#改进神经网络之规范化" class="headerlink" title="改进神经网络之规范化"></a>改进神经网络之规范化</h2><h3 id="过度拟合"><a href="#过度拟合" class="headerlink" title="过度拟合"></a>过度拟合</h3><p>过度拟合直白说就是网络单纯记忆训练集合，而没有对数字本质进行理解泛化到测试数据集上。检测过度拟合最明显的方法是跟踪测试数据集上的准确度随训练变化的情况。一般来说，最好的防止过度拟合的手段就是增加训练数据集规模。</p>
+<h3 id="L2规范化"><a href="#L2规范化" class="headerlink" title="L2规范化"></a>L2规范化</h3><p>又名权重衰减(weight decay)，其想法是增加一个额外的项到代价函数上，这个项就叫规范化项。</p>
+<p>对交叉熵函数规范化如下，对原来的二次代价函数同样可以规范化。<br>$$<br>\begin{eqnarray} C = \frac{1}{2n} \sum_x |y-a^L|^2 +<br>  \frac{\lambda}{2n} \sum_w w^2.<br>\tag{1}\end{eqnarray}<br>$$<br>其中，$\lambda$就是规范化参数，n是训练集合的大小。<br>$$<br>\begin{eqnarray}  C = C_0 + \frac{\lambda}{2n}<br>\sum_w w^2,<br>\tag{2}\end{eqnarray}<br>$$<br>规范化可以看做寻找最小化代价函数和小权重的折中，这两部分的相对重要程度就取决于$\lambda$了，其越小越倾向于最小化原始代价函数；其越大越倾向于小的权重。</p>
+<h3 id="如何将梯度下降应用于L2规范化的网络"><a href="#如何将梯度下降应用于L2规范化的网络" class="headerlink" title="如何将梯度下降应用于L2规范化的网络"></a>如何将梯度下降应用于L2规范化的网络</h3><p>对上述(2)式求导得，<br>$$<br>\frac{\partial C}{\partial w}  =  \frac{\partial C_0}{\partial w} +<br>\frac{\lambda}{n} w \tag{3}<br>$$</p>
+<p>$$<br>\frac{\partial C}{\partial b}  =  \frac{\partial C_0}{\partial b} \tag{4}<br>$$<br>所以偏置的学习规则不变：<br>$$<br>\begin{eqnarray}<br>b &amp; \rightarrow &amp; b -\eta \frac{\partial C_0}{\partial b}.<br>\end{eqnarray}<br>$$<br>而权重的学习规则就是加上一个项：<br>$$<br>\begin{eqnarray}<br>  w &amp; \rightarrow &amp; w-\eta \frac{\partial C_0}{\partial<br>    w}-\frac{\eta \lambda}{n} w \<br>  &amp; = &amp; \left(1-\frac{\eta \lambda}{n}\right) w -\eta \frac{\partial<br>    C_0}{\partial w}.<br>\end{eqnarray}<br>$$<br>看上式，这也是权重衰减名字由来，因为相比以前的学习规则，权重更小了。</p>
+<p>同理，梯度下降的学习规则如下：<br>$$<br>\begin{eqnarray}<br>  w \rightarrow \left(1-\frac{\eta \lambda}{n}\right) w -\frac{\eta}{m}<br>  \sum_x \frac{\partial C_x}{\partial w},<br>\end{eqnarray}<br>$$</p>
+<p>$$<br>\begin{eqnarray}<br>  b \rightarrow b - \frac{\eta}{m} \sum_x \frac{\partial C_x}{\partial b},<br>\end{eqnarray}<br>$$</p>
+<p>PS：规范化没有限制偏置，因为网络对偏置不是很敏感。通常不对偏置进行规范化。</p>
+<h3 id="其它规范化的手段"><a href="#其它规范化的手段" class="headerlink" title="其它规范化的手段"></a>其它规范化的手段</h3><h4 id="L1规范化"><a href="#L1规范化" class="headerlink" title="L1规范化"></a>L1规范化</h4><p>$$<br>\begin{eqnarray}  C = C_0 + \frac{\lambda}{n} \sum_w |w|.<br>\end{eqnarray}<br>$$</p>
+<p>直观和L1规范化类似，都是惩罚大的权重，倾向于小权重。但是，下手轻重不同！<br>$$<br>\begin{eqnarray}  \frac{\partial C}{\partial<br>    w} = \frac{\partial C_0}{\partial w} + \frac{\lambda}{n} \, {\rm<br>    sgn}(w),<br>\end{eqnarray}<br>$$</p>
+<p>$$<br>\begin{eqnarray}  w \rightarrow w’ =<br>  w-\frac{\eta \lambda}{n} \mbox{sgn}(w) - \eta \frac{\partial<br>    C_0}{\partial w},<br>\end{eqnarray}<br>$$</p>
+<h4 id="齐权-Dropout"><a href="#齐权-Dropout" class="headerlink" title="齐权(Dropout)"></a>齐权(Dropout)</h4><p>就是每次训练时随机删除一部分隐藏神经元。当我们弃权掉不同的神经元集合时，有点像在训练不同的网络。所以这个过程就如同大量不同网络效果平均那样。</p>
+<h4 id="人为扩充训练集"><a href="#人为扩充训练集" class="headerlink" title="人为扩充训练集"></a>人为扩充训练集</h4><p>通过一些算法，扩大训练集。</p>
+<h2 id="改进神经网络之权重初始化"><a href="#改进神经网络之权重初始化" class="headerlink" title="改进神经网络之权重初始化"></a>改进神经网络之权重初始化</h2><p>之前的方式是根据标准正态分布来随机初始化权重，这种情况下会使得$z$的图像很宽，这样$\sigma(z)$的取值就容易达到0或1，看到之前的S函数图像可知，此时学习缓慢。</p>
+<p>特别说明，<strong>之前的交叉熵函数只是针对输出层，对隐藏层神经元的饱和是没有用的！</strong></p>
+<p>所以，这里使用期望为0，标准差为$\frac 1{\sqrt n}$的正态分布来初始化权重，这样$z$的图像就倾向于集中在中间。至于偏置依旧影响不大，沿用上面的初始化方式即可。</p>
+<h2 id="深层神经网络很难训练"><a href="#深层神经网络很难训练" class="headerlink" title="深层神经网络很难训练"></a>深层神经网络很难训练</h2><p>当训练深层神经网络时，会发现后面的神经元的学习速度快于前一层，或者相反，呈现一种波动性。</p>
+<p>考虑如下超简单的神经网络，</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz37.png" alt=""></p>
+<p>所以，<br>$$<br>z<em>j = w</em>{j} a_{j-1}+b_j<br>$$</p>
+<p>$$<br>a_j=\sigma(z_j)<br>$$</p>
+<p>由此，根据链式法则，<br>$$<br>\begin{eqnarray}<br>\frac{\partial C}{\partial b_1} = \sigma’(z_1) \, w_2 \sigma’(z_2) \,<br> w_3 \sigma’(z_3) \, w_4 \sigma’(z_4) \, \frac{\partial C}{\partial a_4}.<br>\end{eqnarray}<br>$$<br>对于S函数，其导数在0点取最大值0.25，若使用标准方法初始化网络权重，那么一般$w_j\sigma \prime(z_j)&lt;1$，所以越往后乘的项数越多，前面的导数越小。由此，就是“消失的梯度”。反之，如果权值给的很大，那么就相反了。</p>
+<h2 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h2><p>卷积神经网络(Convolutional Neural Network, CNN)是一种前馈神经网络，它的人工神经元可以响应一部分覆盖范围内的周围单元，对于大型图像处理有出色表现。传统的神经网络都是采用全连接的方式，即输入层到隐藏层的神经元都是全部连接的，这样做将导致参数量巨大，使得网络训练耗时甚至难以训练。</p>
+<p><img src="http://i.imgur.com/PHbta3D.jpg" alt=""></p>
+<p><strong>局部感受野</strong>(local receptive fields)：如上图，左图是全连接，隐藏层每个神经元都和输入层有连接，这参数多的难以训练！右图就是局部连接，这里局部感受野就是和每个隐藏层神经元相连的那部分区域。</p>
+<p><strong>共享权重和偏置</strong>：对于隐藏层的每个神经元，其权重矩阵和偏置是共享的，也就是说每个神经元的权重矩阵和偏置都是相同的。实际上，这意味着只提取了图像的一种特征。共享权重和偏置常被称作卷积核或滤波器。如果要多提取出一些特征，可以增加多个卷积核，不同的卷积核能够得到图像的不同映射下的特征，称之为<strong>Feature Map即特征映射</strong>。</p>
+<p><strong>卷积层</strong>：上面介绍共享权重和偏置的时候，用了隐藏层这个词。其实准确说应该是卷积层。</p>
+<p><strong>混合层</strong>：混合层通常紧接着卷积层，其要做的就是简化卷积层的信息。一种常见的是最大值混合(max-pooling)，它从卷积层的输入区域中选择一个最大的激活值输出。如下图</p>
+<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz47.png" alt=""></p>
+<p>可以把最大值混合理解为一种网络询问，是否有一个给定的特征在图像的某块区域中出现，然后丢掉具体的位置信息。这样进一步减少后面的层的参数。</p>
+<p>另一种常用的技术是<strong>L2混合(L2 pooling)</strong>。这里取区域中激活值的平方和的平方根。其是一种凝聚从卷积层输出信息的方式。</p>
+<hr>
+<p>关于卷积，可以直观解释如下：</p>
+<p>先上数学公式，二维离散卷积<br>$$<br>f[x,y] * g[x,y] = \sum_{n<em>1=-\infty}^\infty \sum</em>{n_2=-\infty}^\infty f[n_1, n_2] \cdot g[x-n_1, y-n_2]<br>$$</p>
+<p>$$<br>\text{这是一个 3x3 的均值滤波核，也就是卷积核：} \begin{bmatrix}     1/9 &amp; 1/9 &amp; 1/9 \     1/9 &amp; 1/9 &amp; 1/9 \     1/9 &amp; 1/9 &amp; 1/9 \ \end{bmatrix} \ \text{这是被卷积图像，这里简化为一个二维 5x5 矩阵：} \begin{bmatrix}     3 &amp; 3 &amp; 3 &amp; 3 &amp; 3 \     4 &amp; 4 &amp; 4 &amp; 4 &amp; 4 \     5 &amp; 5 &amp; 5 &amp; 5 &amp; 5 \     6 &amp; 6 &amp; 6 &amp; 6 &amp; 6 \     7 &amp; 7 &amp; 7 &amp; 7 &amp; 7 \ \end{bmatrix} \<br>$$</p>
+<p>当卷积核运动到图像右下角处（卷积中心和图像对应图像第 4 行第 4 列）时，它和图像卷积的结果如下图所示：</p>
+<p><img src="http://mengqi92.github.io/2015/10/06/convolution/2d-convolution.png" alt=""></p>
+<p>可以看出，二维卷积在图像中的效果就是：对图像的每个像素的邻域（邻域大小就是核的大小）加权求和得到该像素点的输出值。滤波器核在这里是作为一个“权重表”来使用的。</p>
+<hr>
+<h3 id="针对mnist问题"><a href="#针对mnist问题" class="headerlink" title="针对mnist问题"></a>针对mnist问题</h3><p>在引入卷积神经网络之后，我们的网络架构是输入层+卷积层+混合层+全连接层+输出层。</p>
+<p>对于此处的全连接层可以理解为在一种更抽象的层次上学习，从整个图像中整合信息。</p>
+<p>另外，还引入了线性修正单元，即不再使用S激活函数，而是使用$f(z)=max(0,z)$。此时正确率达到了最高。</p>
+<hr>
+<p>以上的大背景都是mnist问题。</p>
+<hr>
+<h2 id="受限玻尔兹曼机（Restricted-Boltzmann-Machine，RBM）"><a href="#受限玻尔兹曼机（Restricted-Boltzmann-Machine，RBM）" class="headerlink" title="受限玻尔兹曼机（Restricted Boltzmann Machine，RBM）"></a>受限玻尔兹曼机（Restricted Boltzmann Machine，RBM）</h2><p><img src="https://deeplearning4j.org/img/multiple_inputs_RBM.png" alt=""></p>
+<p>如上图是一个简单的RBM网络，<strong>层内无连接，层间全连接，显然RBM对应的图是一个二分图</strong>（层的内部不存在通信－这就是受限玻尔兹曼机被称为<em>受限</em>的原因），其第一个输入层又名可见层，第二个是隐藏层。</p>
+<p>如果这两个层属于一个深度神经网络，那么第一隐藏层的输出会成为第二隐藏层的输入，随后再通过任意数量的隐藏层，直至到达最终的分类层。</p>
+<p><img src="https://deeplearning4j.org/img/multiple_hidden_layers_RBM.png" alt=""></p>
+<h3 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h3><p>我们将重点关注受限玻尔兹曼机如何在无监督情况下学习重构数据（无监督指测试数据集没有作为实际基准的标签），在可见层和第一隐藏层之间进行多次正向和反向传递，而无需加大网络的深度。</p>
+<p>在重构阶段，第一隐藏层的激活值成为反向传递中的输入。这些输入值与同样的权重相乘，每两个相连的节点之间各有一个权重，就像正向传递中输入x的加权运算一样。这些乘积的和再与每个可见层的偏置相加，所得结果就是重构值，亦即原始输入的近似值。这一过程可以用下图来表示：</p>
+<p><img src="https://deeplearning4j.org/img/reconstruction_RBM.png" alt=""></p>
+<p>由于RBM权重初始值是随机决定的，重构值与原始输入之间的差别通常很大。可以将r值与输入值之差视为<strong>重构误差</strong>，此误差值随后经由反向传播来<strong>修</strong></p>
+<p><strong>RBM的权重</strong>，如此不断反复，<strong>直至误差达到最小</strong>。</p>
+<p>由此可见，RBM在正向传递中使用输入值来预测节点的激活值，亦即<strong>输入为加权的x时输出a的概率</strong>：<code>p(a|x; w)</code>。</p>
+<p>但在反向传递时，激活值成为输入，而输出的是对于原始数据的重构值，或者说猜测值。此时RBM则是在尝试估计激活值为a时输入为x的概率，激活</p>
+<p>的加权系数与正向传递中的权重相同。 第二个阶段可以表示为<code>p(x|a; w)</code>。</p>
+<p>上述两种预测值相结合，可以得到输入 <em>x</em> 和激活值 <em>a</em> 的<strong>联合概率分布</strong>，即<code>p(x, a)</code>。</p>
+<hr>
+<p>重构与回归、分类运算不同。回归运算根据许多输入值估测一个连续值，分类运算是猜测应当为一个特定的输入样例添加哪种具体的标签。</p>
+<p>而重构则是在猜测原始输入的概率分布，亦即同时预测许多不同的点的值。这被称为<a href="http://cs229.stanford.edu/notes/cs229-notes2.pdf" target="_blank" rel="noopener">生成学习</a>，必须和分类器所进行的判别学习区分开来，后者是将输</p>
+<p>值映射至标签，用直线将数据点划分为不同的组。</p>
+<hr>
+<p>RBM用Kullback Leibler散度来衡量预测的概率分布与输入值的基准分布之间的距离。</p>
+<p>KL散度衡量两条曲线下方不重叠（即离散）的面积，而RBM的优化算法会<em>尝试将这些离散部分的面积最小化</em>，使共用权重在与第一隐藏层的激活值相乘后，可以得到与原始输入高度近似的结果。下图左半边是一组原始输入的概率分布曲线<em>p</em>，与之并列的是重构值的概率分布曲线<em>q</em>；右半边的图则显示了两条曲线之间的差异。</p>
+<p><img src="https://deeplearning4j.org/img/KL_divergence_RBM.png" alt=""></p>
+<p>RBM根据权重产生的误差反复调整权重，以此学习估计原始数据的近似值。可以说权重会慢慢开始反映出输入的结构，而这种结构被编码为第一个隐藏层的激活值。整个学习过程看上去像是两条概率分布曲线在逐步重合。</p>
+<p><img src="https://deeplearning4j.org/img/KLD_update_RBM.png" alt=""></p>
+<p>最后一点：你会发现RBM有两个偏置值。隐藏的偏置值帮助RBM在正向传递中生成激活值（因为偏置设定了下限，所以无论数据有多稀疏，至少有一部分节点会被激活），而可见层的偏置则帮助RBM通过反向传递学习重构数据。</p>
+<h2 id="鸣谢"><a href="#鸣谢" class="headerlink" title="鸣谢"></a>鸣谢</h2><p>本文参考了以下博客和资料：</p>
+<p><a href="http://www.jeyzhang.com/cnn-learning-notes-1.html" target="_blank" rel="noopener">卷积神经网络(CNN)学习笔记1：基础入门</a></p>
+<p><a href="http://mengqi92.github.io/2015/10/06/convolution/" target="_blank" rel="noopener">我对卷积的理解</a></p>
+<p><a href="https://deeplearning4j.org/cn/restrictedboltzmannmachine" target="_blank" rel="noopener">玻尔兹曼机</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/22794772" target="_blank" rel="noopener">RBM学习笔记</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learn/" rel="tag"># Machine Learn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/25/pat（十一）/" rel="next" title="pat（十一）">
+                <i class="fa fa-chevron-left"></i> pat（十一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/03/pat（十二）/" rel="prev" title="pat（十二）">
+                pat（十二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络"><span class="nav-number">1.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">1.1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络概述"><span class="nav-number">1.2.</span> <span class="nav-text">神经网络概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#感知器"><span class="nav-number">1.2.1.</span> <span class="nav-text">感知器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S型神经元"><span class="nav-number">1.2.2.</span> <span class="nav-text">S型神经元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络的基本架构"><span class="nav-number">1.2.3.</span> <span class="nav-text">神经网络的基本架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用梯度下降算法进行学习"><span class="nav-number">1.2.4.</span> <span class="nav-text">使用梯度下降算法进行学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向传播算法如何工作"><span class="nav-number">1.3.</span> <span class="nav-text">反向传播算法如何工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadamard乘积-odot"><span class="nav-number">1.3.1.</span> <span class="nav-text">Hadamard乘积$\odot$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向传播的四个方程"><span class="nav-number">1.3.2.</span> <span class="nav-text">反向传播的四个方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明上面的四个方程"><span class="nav-number">1.3.3.</span> <span class="nav-text">证明上面的四个方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向传播"><span class="nav-number">1.3.4.</span> <span class="nav-text">反向传播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进神经网络之交叉熵"><span class="nav-number">1.4.</span> <span class="nav-text">改进神经网络之交叉熵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵代价函数"><span class="nav-number">1.4.1.</span> <span class="nav-text">交叉熵代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵代价函数的推导"><span class="nav-number">1.4.2.</span> <span class="nav-text">交叉熵代价函数的推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵的含义"><span class="nav-number">1.4.3.</span> <span class="nav-text">交叉熵的含义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进神经网络之柔性最大值"><span class="nav-number">1.5.</span> <span class="nav-text">改进神经网络之柔性最大值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进神经网络之规范化"><span class="nav-number">1.6.</span> <span class="nav-text">改进神经网络之规范化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过度拟合"><span class="nav-number">1.6.1.</span> <span class="nav-text">过度拟合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L2规范化"><span class="nav-number">1.6.2.</span> <span class="nav-text">L2规范化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何将梯度下降应用于L2规范化的网络"><span class="nav-number">1.6.3.</span> <span class="nav-text">如何将梯度下降应用于L2规范化的网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其它规范化的手段"><span class="nav-number">1.6.4.</span> <span class="nav-text">其它规范化的手段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#L1规范化"><span class="nav-number">1.6.4.1.</span> <span class="nav-text">L1规范化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#齐权-Dropout"><span class="nav-number">1.6.4.2.</span> <span class="nav-text">齐权(Dropout)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#人为扩充训练集"><span class="nav-number">1.6.4.3.</span> <span class="nav-text">人为扩充训练集</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进神经网络之权重初始化"><span class="nav-number">1.7.</span> <span class="nav-text">改进神经网络之权重初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深层神经网络很难训练"><span class="nav-number">1.8.</span> <span class="nav-text">深层神经网络很难训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">1.9.</span> <span class="nav-text">卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#针对mnist问题"><span class="nav-number">1.9.1.</span> <span class="nav-text">针对mnist问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#受限玻尔兹曼机（Restricted-Boltzmann-Machine，RBM）"><span class="nav-number">1.10.</span> <span class="nav-text">受限玻尔兹曼机（Restricted Boltzmann Machine，RBM）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重构"><span class="nav-number">1.10.1.</span> <span class="nav-text">重构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#鸣谢"><span class="nav-number">1.11.</span> <span class="nav-text">鸣谢</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

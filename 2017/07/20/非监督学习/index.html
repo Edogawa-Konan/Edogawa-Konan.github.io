@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Machine Learn," />
+
+
+<meta name="description" content="非监督学习">
+<meta name="keywords" content="Machine Learn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="非监督学习">
+<meta property="og:url" content="https://www.prime666.com/2017/07/20/非监督学习/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="非监督学习">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-21T03:12:29.253Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="非监督学习">
+<meta name="twitter:description" content="非监督学习">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/07/20/非监督学习/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>非监督学习 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/07/20/非监督学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">非监督学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T18:35:07+08:00">2017-07-20</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>非监督学习</p>
+<a id="more"></a>
+<h1 id="非监督学习"><a href="#非监督学习" class="headerlink" title="非监督学习"></a>非监督学习</h1><p>非监督学习和监督学习主要区别在于没有类别标记(class label)。</p>
+<h2 id="K-means算法"><a href="#K-means算法" class="headerlink" title="K-means算法"></a>K-means算法</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li><p>基本功能</p>
+<p>算法接受参数 k ；然后将事先输入的n个数据对象划分为 k个聚类以便使得所获得的聚类满足：同一聚类中的对象相似度较高；而不同聚类中的对象相似度较小。</p>
+</li>
+<li><p>算法流程</p>
+<ul>
+<li>适当选择c个类的初始中心；</li>
+<li>在第k次迭代中，对任意一个样本，求其到c各中心的距离，将该样本归到距离最短的中心所在的类；</li>
+<li>利用均值等方法更新该类的中心值；</li>
+<li>对于所有的c个聚类中心，如果利用以上两步的迭代法更新后，值保持不变（或者迭代次数达到了预设的阈值），则迭代结束，否则继续迭代。</li>
+</ul>
+</li>
+<li><p>算法优缺点</p>
+<ul>
+<li><p>优点</p>
+<p>速度快，简单</p>
+</li>
+<li><p>缺点</p>
+<p>最终结果跟初始点选择相关，容易陷入局部最优，另外需知道k值。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> traceback</div><div class="line"><span class="keyword">import</span> random</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">K_means</span><span class="params">(X,k,max_count)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param X: 训练数据</div><div class="line">    :param k: 类别个数</div><div class="line">    :param max_count: 最大迭代次数</div><div class="line">    :return:</div><div class="line">    '''</div><div class="line">    row,col=X.shape</div><div class="line">    dataSet=np.zeros((row,col+<span class="number">1</span>))</div><div class="line">    dataSet[:,:<span class="number">-1</span>]=X <span class="comment">#添加最后一列记录类别，用1~k表示</span></div><div class="line">    <span class="comment"># Initialize centroids randomly</span></div><div class="line">    <span class="comment"># centroids=dataSet[np.random.randint(low=X.shape[0],size=k),:] #选了k个点,这个方法并不好，因为可能会产生两次随机到了同一个点！</span></div><div class="line">    centroids=dataSet[random.sample(range(k),k),:] <span class="comment">#该随机函数从第一个参数序列中选择k个元素，保证不会重复选择同一个！</span></div><div class="line">    <span class="comment"># centroids = dataSet[0:2,:]</span></div><div class="line">    centroids[:,<span class="number">-1</span>]=np.arange(<span class="number">1</span>,k+<span class="number">1</span>) <span class="comment">#最后一行，赋值1~k记录类别</span></div><div class="line"></div><div class="line">    <span class="comment"># Initialize book keeping vars.</span></div><div class="line">    iterations = <span class="number">1</span></div><div class="line">    oldCentroids = <span class="keyword">None</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment"># Run the main k-means algorithm</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">not</span> Is_stop(oldCentroids,centroids,iterations,max_count):</div><div class="line">        print(<span class="string">'第%d次迭代'</span>%iterations,<span class="string">'*'</span>*<span class="number">50</span>)</div><div class="line">        print(<span class="string">'中心点:'</span>)</div><div class="line">        print(centroids)</div><div class="line"></div><div class="line">        oldCentroids=np.copy(centroids) <span class="comment">#深拷贝</span></div><div class="line">        iterations+=<span class="number">1</span></div><div class="line"></div><div class="line">        Updata_label(dataSet,centroids)</div><div class="line">        centroids=getCentroids(dataSet,k)</div><div class="line"></div><div class="line">    <span class="keyword">return</span>  dataSet</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Is_stop</span><span class="params">(oldCentroids, centroids, iterations, max_count)</span>:</span></div><div class="line">    <span class="keyword">if</span> iterations&gt;max_count:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">return</span> np.array_equal(oldCentroids,centroids)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Updata_label</span><span class="params">(dataSet,centroids)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param dataSet: 数据集</div><div class="line">    :param centroids: 中心点数据集</div><div class="line">    :return:</div><div class="line">    '''</div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> dataSet:</div><div class="line">        line[<span class="number">-1</span>]=getLabelFromClosestCentroid(line,centroids)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getLabelFromClosestCentroid</span><span class="params">(dataSetRow, centroids)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param dataSetRow: 数据集中某一行</div><div class="line">    :param centroids: 中心点的集合</div><div class="line">    :return: 该行对应点的更新后的Label</div><div class="line">    '''</div><div class="line">    label=centroids[<span class="number">0</span>,<span class="number">-1</span>] <span class="comment">#一个数字标记</span></div><div class="line">    minDist = np.linalg.norm(dataSetRow[:<span class="number">-1</span>]- centroids[<span class="number">0</span>, :<span class="number">-1</span>])</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,centroids.shape[<span class="number">0</span>]):</div><div class="line">        dis=np.linalg.norm(dataSetRow[:<span class="number">-1</span>]-centroids[i,:<span class="number">-1</span>])</div><div class="line">        <span class="keyword">if</span> dis&lt;minDist:</div><div class="line">            minDist=dis</div><div class="line">            label=centroids[i,<span class="number">-1</span>]</div><div class="line">    <span class="keyword">return</span> label</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getCentroids</span><span class="params">(dataSet, k)</span>:</span></div><div class="line">    result = np.zeros((k, dataSet.shape[<span class="number">1</span>])) <span class="comment">#新建中心点数据集，一开始全为0</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, k + <span class="number">1</span>):</div><div class="line">        oneCluster = dataSet[dataSet[:, <span class="number">-1</span>] == i, :<span class="number">-1</span>] <span class="comment">#掩码方式选择行，挺高的！</span></div><div class="line">        result[i - <span class="number">1</span>, :<span class="number">-1</span>] = np.mean(oneCluster, axis=<span class="number">0</span>) <span class="comment">#跨行求平均值，结果是一维向量，每个值表示这一列的平均值。</span></div><div class="line">        result[i - <span class="number">1</span>, <span class="number">-1</span>] = i</div><div class="line">    <span class="keyword">return</span> result</div><div class="line"></div><div class="line">x1 = np.array([<span class="number">1</span>, <span class="number">1</span>])</div><div class="line">x2 = np.array([<span class="number">2</span>, <span class="number">1</span>])</div><div class="line">x3 = np.array([<span class="number">4</span>, <span class="number">3</span>])</div><div class="line">x4 = np.array([<span class="number">5</span>, <span class="number">4</span>])</div><div class="line">testX = np.vstack((x1, x2, x3, x4))</div><div class="line"></div><div class="line">result = K_means(testX, <span class="number">2</span>, <span class="number">10</span>)</div><div class="line">print(<span class="string">'最终结果'</span>,result)</div></pre></td></tr></table></figure>
+<h2 id="层次聚类"><a href="#层次聚类" class="headerlink" title="层次聚类"></a>层次聚类</h2><h3 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li><p>算法流程</p>
+<p>假设有N个待聚类的样本，对于层次聚类来说，步骤：</p>
+<ol>
+<li>（初始化）把每个样本归为一类，计算每两个类之间的距离，也就是样本与样本之间的相似度；</li>
+<li>寻找各个类之间最近的两个类，把他们归为一类（这样类的总数就少了一个）；</li>
+<li>重新计算新生成的这个类与各个旧类之间的相似度；</li>
+<li>重复2和3直到所有样本点都归为一类，结束（或者设置一个阈值，当类之间距离大于这个阈值时终止）</li>
+</ol>
+</li>
+<li><p>求相似度</p>
+<p> 整个聚类过程其实是<strong>建立了一棵树</strong>（两两合并，类似霍夫曼树的构造），在建立的过程中，可以通过在第二步上设置一个阈值，当最近的两个类的距离大于这个阈值，则认为迭代可以终止。另外关键的一步就是第三步，如何判断两个类之间的相似度有不少种方法。这里介绍一下三种：</p>
+<ul>
+<li>SingleLinkage：又叫做 nearest-neighbor ，就是取两个类中距离最近的两个样本的距离作为这两个集合的距离，也就是说，最近两个样本之间的距离越小，这两个类之间的相似度就越大。容易造成一种叫做 Chaining 的效果，两个 cluster 明明从“大局”上离得比较远，但是由于其中个别的点距离比较近就被合并了，并且这样合并之后 Chaining 效应会进一步扩大，最后会得到比较松散的 cluster 。</li>
+<li>CompleteLinkage：这个则完全是 Single Linkage 的反面极端，取两个集合中距离最远的两个点的距离作为两个集合的距离。其效果也是刚好相反的，限制非常大，两个 cluster 即使已经很接近了，但是只要有不配合的点存在，就顽固到底，老死不相合并，也是不太好的办法。这两种相似度的定义方法的共同问题就是指考虑了某个有特点的数据，而没有考虑类内数据的整体特点。</li>
+<li>Average-linkage：这种方法就是把两个集合中的点两两的距离全部放在一起求一个平均值，相对也能得到合适一点的结果。</li>
+<li>average-linkage的一个变种就是取两两距离的中值，与取均值相比更加能够解除个别偏离样本对结果的干扰。</li>
+</ul>
+</li>
+</ol>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> numpy.ma <span class="keyword">import</span> sqrt, array</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">cluster_node</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,vec,left=None,right=None,distance=<span class="number">0.0</span>,id=None,count=<span class="number">1</span>)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        :param vec: 数据集中一行</div><div class="line">        :param left: 左孩子</div><div class="line">        :param right: 右孩子</div><div class="line">        :param distance: 结点距离</div><div class="line">        :param id:</div><div class="line">        :param count: 结点个数</div><div class="line">        '''</div><div class="line">        self.left=left</div><div class="line">        self.right=right</div><div class="line">        self.vec=vec</div><div class="line">        self.id=id</div><div class="line">        self.distance=distance</div><div class="line">        self.count=count <span class="comment">#only used for weighted average</span></div><div class="line"></div><div class="line"><span class="comment">#两个求距离的方法</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">L2dist</span><span class="params">(v1, v2)</span>:</span></div><div class="line">    <span class="keyword">return</span> sqrt(sum((v1 - v2) ** <span class="number">2</span>))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">L1dist</span><span class="params">(v1, v2)</span>:</span></div><div class="line">    <span class="keyword">return</span> sum(abs(v1 - v2))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hcluster</span><span class="params">(features, distance=L2dist)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param features: 数据集矩阵，每一行代表一个点</div><div class="line">    :param distance: 指定求距离的方法</div><div class="line">    :return: 根node</div><div class="line">    '''</div><div class="line">    <span class="comment"># cluster the rows of the "features" matrix</span></div><div class="line">    distances = &#123;&#125; <span class="comment">#键是点的tuple，值是其距离</span></div><div class="line">    currentclustid = <span class="number">-1</span></div><div class="line"></div><div class="line">    <span class="comment"># clusters are initially just the individual rows</span></div><div class="line">    clust = [cluster_node(array(features[i]), id=i) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(features))]</div><div class="line"></div><div class="line">    <span class="keyword">while</span> len(clust) &gt; <span class="number">1</span>: <span class="comment">#总类别大于1</span></div><div class="line">        lowestpair = (<span class="number">0</span>, <span class="number">1</span>) <span class="comment">#最近的两个点下标的tuple</span></div><div class="line">        closest = distance(clust[<span class="number">0</span>].vec, clust[<span class="number">1</span>].vec) <span class="comment">#保存最近的两个点的距离</span></div><div class="line"></div><div class="line">        <span class="comment"># loop through every pair looking for the smallest distance</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(clust)):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, len(clust)):</div><div class="line">                <span class="comment"># distances is the cache of distance calculations</span></div><div class="line">                <span class="keyword">if</span> (clust[i].id, clust[j].id) <span class="keyword">not</span> <span class="keyword">in</span> distances:</div><div class="line">                    distances[(clust[i].id, clust[j].id)] = distance(clust[i].vec, clust[j].vec)</div><div class="line"></div><div class="line">                d = distances[(clust[i].id, clust[j].id)]</div><div class="line"></div><div class="line">                <span class="keyword">if</span> d &lt; closest:</div><div class="line">                    closest = d</div><div class="line">                    lowestpair = (i, j)</div><div class="line"></div><div class="line">        <span class="comment"># calculate the average of the two clusters</span></div><div class="line">        mergevec = [(clust[lowestpair[<span class="number">0</span>]].vec[i] + clust[lowestpair[<span class="number">1</span>]].vec[i]) / <span class="number">2.0</span> \</div><div class="line">                    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(clust[<span class="number">0</span>].vec))]</div><div class="line"></div><div class="line">        <span class="comment"># create the new cluster</span></div><div class="line">        newcluster = cluster_node(array(mergevec), left=clust[lowestpair[<span class="number">0</span>]],</div><div class="line">                                  right=clust[lowestpair[<span class="number">1</span>]],</div><div class="line">                                  distance=closest, id=currentclustid)</div><div class="line"></div><div class="line">        <span class="comment"># cluster ids that weren't in the original set are negative</span></div><div class="line">        currentclustid -= <span class="number">1</span></div><div class="line">        <span class="keyword">del</span> clust[lowestpair[<span class="number">1</span>]]</div><div class="line">        <span class="keyword">del</span> clust[lowestpair[<span class="number">0</span>]]</div><div class="line">        clust.append(newcluster)</div><div class="line"></div><div class="line">    <span class="keyword">return</span> clust[<span class="number">0</span>]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">extract_clusters</span><span class="params">(clust,dist)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param clust: 根节点</div><div class="line">    :param dist: 距离的阈值</div><div class="line">    :return: 所有距离小于dist的子树</div><div class="line">    '''</div><div class="line">    <span class="comment"># extract list of sub-tree clusters from hcluster tree with distance&lt;dist</span></div><div class="line">    clusters = &#123;&#125;</div><div class="line">    <span class="keyword">if</span> clust.distance&lt;dist:</div><div class="line">        <span class="comment"># we have found a cluster subtree</span></div><div class="line">        <span class="keyword">return</span> [clust]</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="comment"># check the right and left branches</span></div><div class="line">        cl = []</div><div class="line">        cr = []</div><div class="line">        <span class="keyword">if</span> clust.left!=<span class="keyword">None</span>:</div><div class="line">            cl = extract_clusters(clust.left,dist=dist)</div><div class="line">        <span class="keyword">if</span> clust.right!=<span class="keyword">None</span>:</div><div class="line">            cr = extract_clusters(clust.right,dist=dist)</div><div class="line">        <span class="keyword">return</span> cl+cr</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_cluster_elements</span><span class="params">(clust)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param clust: 根节点</div><div class="line">    :return: id的列表</div><div class="line">    '''</div><div class="line">    <span class="comment"># return ids for elements in a cluster sub-tree</span></div><div class="line">    <span class="keyword">if</span> clust.id&gt;=<span class="number">0</span>:</div><div class="line">        <span class="comment"># positive id means that this is a leaf</span></div><div class="line">        <span class="keyword">return</span> [clust.id]</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="comment"># check the right and left branches</span></div><div class="line">        cl = []</div><div class="line">        cr = []</div><div class="line">        <span class="keyword">if</span> clust.left!=<span class="keyword">None</span>:</div><div class="line">            cl = get_cluster_elements(clust.left)</div><div class="line">        <span class="keyword">if</span> clust.right!=<span class="keyword">None</span>:</div><div class="line">            cr = get_cluster_elements(clust.right)</div><div class="line">        <span class="keyword">return</span> cl+cr</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">printclust</span><span class="params">(clust, labels=None, n=<span class="number">0</span>)</span>:</span></div><div class="line">    <span class="comment"># indent to make a hierarchy layout</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n): print(<span class="string">' '</span>,end=<span class="string">''</span>)</div><div class="line">    <span class="keyword">if</span> clust.id &lt; <span class="number">0</span>:</div><div class="line">        <span class="comment"># negative id means that this is branch</span></div><div class="line">        print(<span class="string">'-'</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="comment"># positive id means that this is an endpoint</span></div><div class="line">        <span class="keyword">if</span> labels == <span class="keyword">None</span>:</div><div class="line">            print(clust.id)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            print(labels[clust.id])</div><div class="line"></div><div class="line">    <span class="comment"># now print the right and left branches</span></div><div class="line">    <span class="keyword">if</span> clust.left != <span class="keyword">None</span>:</div><div class="line">        printclust(clust.left, labels=labels, n=n + <span class="number">1</span>)</div><div class="line">    <span class="keyword">if</span> clust.right != <span class="keyword">None</span>:</div><div class="line">        printclust(clust.right, labels=labels, n=n + <span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getheight</span><span class="params">(clust)</span>:</span></div><div class="line">    <span class="comment"># Is this an endpoint? Then the height is just 1</span></div><div class="line">    <span class="keyword">if</span> clust.left == <span class="keyword">None</span> <span class="keyword">and</span> clust.right == <span class="keyword">None</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="comment"># Otherwise the height is the same of the heights of</span></div><div class="line">    <span class="comment"># each branch</span></div><div class="line">    <span class="keyword">return</span> getheight(clust.left) + getheight(clust.right)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getdepth</span><span class="params">(clust)</span>:</span></div><div class="line">    <span class="comment"># The distance of an endpoint is 0.0</span></div><div class="line">    <span class="keyword">if</span> clust.left == <span class="keyword">None</span> <span class="keyword">and</span> clust.right == <span class="keyword">None</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="comment"># The distance of a branch is the greater of its two sides</span></div><div class="line">    <span class="comment"># plus its own distance</span></div><div class="line">    <span class="keyword">return</span> max(getdepth(clust.left), getdepth(clust.right)) + clust.distance</div></pre></td></tr></table></figure>
+<p>​</p>
+<p>   ​</p>
+<p>   ​</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learn/" rel="tag"># Machine Learn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/19/ML入门/" rel="next" title="ML入门">
+                <i class="fa fa-chevron-left"></i> ML入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/23/pat（九）/" rel="prev" title="pat（九）">
+                pat（九） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#非监督学习"><span class="nav-number">1.</span> <span class="nav-text">非监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#K-means算法"><span class="nav-number">1.1.</span> <span class="nav-text">K-means算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">1.1.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">1.1.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#层次聚类"><span class="nav-number">1.2.</span> <span class="nav-text">层次聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">1.2.2.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

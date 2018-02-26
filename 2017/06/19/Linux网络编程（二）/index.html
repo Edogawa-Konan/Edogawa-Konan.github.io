@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Linux," />
+
+
+<meta name="description" content="原始套接字编程以及linux进程信号机制。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux网络编程（二）">
+<meta property="og:url" content="https://www.prime666.com/2017/06/19/Linux网络编程（二）/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="原始套接字编程以及linux进程信号机制。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//linux%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/2017-06-19_224119.png">
+<meta property="og:updated_time" content="2017-06-21T14:09:07.192Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux网络编程（二）">
+<meta name="twitter:description" content="原始套接字编程以及linux进程信号机制。">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com//linux%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/2017-06-19_224119.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/06/19/Linux网络编程（二）/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>Linux网络编程（二） | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/19/Linux网络编程（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux网络编程（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-19T10:07:09+08:00">2017-06-19</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原始套接字编程以及linux进程信号机制。</p>
+<a id="more"></a>
+<h1 id="原始套接字"><a href="#原始套接字" class="headerlink" title="原始套接字"></a>原始套接字</h1><p>前面的socket都是TCp或 UDP的，TCP和UDP Socket对TCP和UDP协议做了封装，简化了编程接口，但失去了对IP数据包操作的灵活性。原始socket直接针对IP数据包编程，具有更强的灵活性，能够访问ICMP和IGMP数据包，也可以编写基于IP协议的高层协议。</p>
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span>          </span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(<span class="keyword">int</span> domain, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol)</span></span>;</div></pre></td></tr></table></figure>
+<p><code>type</code>类型设置为<code>SOCK_RAW</code>即可，对于<code>protocol</code>字段，可有如下设置：</p>
+<p>IPPROTO_ICMP－ICMP数据包<br>IPPROTO_IGMP－IGMP数据包<br>IPPROTO_IP－IP数据包</p>
+<h1 id="Linux进程与信号机制"><a href="#Linux进程与信号机制" class="headerlink" title="Linux进程与信号机制"></a>Linux进程与信号机制</h1><h2 id="Linux进程"><a href="#Linux进程" class="headerlink" title="Linux进程"></a>Linux进程</h2><h3 id="Linux进程结构"><a href="#Linux进程结构" class="headerlink" title="Linux进程结构"></a>Linux进程结构</h3><ul>
+<li><strong>数据段</strong>－数据段存放程序的全局 变量，常数以及动态分配的数据空间 </li>
+<li><strong>堆栈段</strong>－存放子程序的返回地址、子程序的参数以及程序的局部变量 </li>
+<li><strong>代码段</strong>－存放程序代码，多个进程可以使用同一个代码段</li>
+</ul>
+<h3 id="创建子进程"><a href="#创建子进程" class="headerlink" title="创建子进程"></a>创建子进程</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="keyword">pid_t</span> fork(<span class="keyword">void</span>);</div></pre></td></tr></table></figure>
+<font color="4876FF">通过复制正在运行的进程来创建子进程，简单说利用”写时复制”策略，</font>
+
+<p>返回值有以下三种：</p>
+<ul>
+<li><p><code>&gt;0</code> </p>
+<p>子进程的进程id，在父进程中返回</p>
+</li>
+<li><p><code>-1</code></p>
+<p>调用失败</p>
+</li>
+<li><p><code>=0</code></p>
+<p>在子进程返回</p>
+</li>
+</ul>
+<p>调用fork的进程（父进程）返回正整数（子进程ID），在新创建的进程（子进程）中返回0，表示是子进程。</p>
+<p>一个常用模板如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> **argv)</span></span>&#123;	</div><div class="line">	<span class="keyword">pid_t</span> child_pid=fork();	</div><div class="line">	<span class="keyword">if</span>(child_pid==<span class="number">0</span>)&#123;		</div><div class="line">		<span class="comment">//子进程程序		</span></div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>); <span class="comment">//如果不调用exit，将继续执行父进程其他代码</span></div><div class="line">	&#125;	</div><div class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(child_pid&gt;<span class="number">0</span>)&#123;</div><div class="line">		<span class="comment">//父进程程序</span></div><div class="line">	&#125;	</div><div class="line">	<span class="keyword">else</span>&#123;</div><div class="line">		<span class="comment">//调用失败</span></div><div class="line">	&#125;</div><div class="line">	<span class="comment">//父进程其他代码	</span></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当调用fork时：</p>
+<ul>
+<li>系统创建新进程，并为该进程准备数据段、堆栈段和代码段</li>
+<li>代码段使用和父进程相同的代码段</li>
+<li>父进程的数据段和堆栈段被复制（copy-on-write）给子进程</li>
+</ul>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//linux%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/2017-06-19_224119.png" alt=""></p>
+<h3 id="创建新进程"><a href="#创建新进程" class="headerlink" title="创建新进程"></a>创建新进程</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="keyword">extern</span> <span class="keyword">char</span> **environ;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execl</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">const</span> <span class="keyword">char</span> *arg, ...<span class="comment">/* (char  *) NULL */</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execlp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *file, <span class="keyword">const</span> <span class="keyword">char</span> *arg, ...<span class="comment">/* (char  *) NULL */</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execle</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">const</span> <span class="keyword">char</span> *arg, ...<span class="comment">/*, (char *) NULL, char * const envp[] */</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execv</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">char</span> *<span class="keyword">const</span> argv[])</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execvp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *file, <span class="keyword">char</span> *<span class="keyword">const</span> argv[])</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execvpe</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *file, <span class="keyword">char</span> *<span class="keyword">const</span> argv[],<span class="keyword">char</span> *<span class="keyword">const</span> envp[])</span></span>;</div></pre></td></tr></table></figure>
+<p>exec族函数会用新进程代替原有进程，系统会从新的进程运行。具体为：代码段替换为新的代码段，废弃原进程的数据段和堆栈段，创建新的数据段和堆栈段，但进程号保留。</p>
+<p>参数意义在于，在当前系统的可执行路径中根据指定的文件名<code>path</code>，找到合适的可执行文件，并用它取代调用进程的内容；如果是<code>file</code>，就看是否含有<code>/</code>，是就试做路径，找到相应文件，否则就从<code>PATH</code>环境变量中找到指定文件。</p>
+<p><code>const char *arg</code>和其后面的省略号代表参数，它们都是字符指针，且最后一个参数必须是<code>NULL</code>（must be cast<code>(char *) NULL</code>）。第一个参数按照惯例是这个程序的名字。同理，<code>char *const argv[]</code>意义也是一样的，第一个是新程序的名字，最后以<code>NULL</code>结尾。</p>
+<p>参数<code>envp</code>也是字符串数组，以<code>NULL</code>结尾，用于指定执行环境，其它没有这个参数的默认用外边变量<code>environ</code>设置。</p>
+<h2 id="信号机制"><a href="#信号机制" class="headerlink" title="信号机制"></a>信号机制</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
+<li>信号是对中断的软件模拟</li>
+<li>进程收到信号和CPU收到中断请求是相同的</li>
+<li>信号是异步的，信号何时到达是未知的</li>
+<li>信号来源：<ul>
+<li>硬件－键盘或硬件错误</li>
+<li>软件－其他进程或内核</li>
+</ul>
+</li>
+</ul>
+<h3 id="常用信号"><a href="#常用信号" class="headerlink" title="常用信号"></a>常用信号</h3><ul>
+<li>SIGALARM－计时器到时</li>
+<li>SIGCHLD－子进程停止或退出时通知父进程</li>
+<li>SIGKILL－终止进程</li>
+<li>SIGSTOP－停止进程</li>
+<li>SIGINT－中断字符，CTRL＋C</li>
+</ul>
+<h3 id="kill"><a href="#kill" class="headerlink" title="kill"></a>kill</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">kill</span><span class="params">(<span class="keyword">pid_t</span> pid, <span class="keyword">int</span> sig)</span></span>;</div></pre></td></tr></table></figure>
+<p>第一个参数<code>pid</code>表示接受信号的进程集合，第二个参数<code>sig</code>表示要发送的信号。</p>
+<table>
+<thead>
+<tr>
+<th>pid的值</th>
+<th>接收信号的进程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pid&gt;0</td>
+<td>进程ID为pid的进程</td>
+</tr>
+<tr>
+<td>pid=0</td>
+<td>同一个进程组的进程</td>
+</tr>
+<tr>
+<td>pid&lt;0 &amp;&amp; pid!=-1</td>
+<td>进程组ID为 -pid的所有进程</td>
+</tr>
+<tr>
+<td>pid=-1</td>
+<td>除发送进程自身外所有进程ID大于1的进程</td>
+</tr>
+</tbody>
+</table>
+<h3 id="raise"><a href="#raise" class="headerlink" title="raise"></a>raise</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">raise</span><span class="params">(<span class="keyword">int</span> sig)</span></span>;</div></pre></td></tr></table></figure>
+<p>向进程本身发送信号。</p>
+<h3 id="alarm"><a href="#alarm" class="headerlink" title="alarm"></a>alarm</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">alarm</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> seconds)</span></span>;</div></pre></td></tr></table></figure>
+<p>在指定的时间(seconds秒)后，将向进程自身发送SIGALRM信号。</p>
+<h3 id="abort"><a href="#abort" class="headerlink" title="abort"></a>abort</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">abort</span><span class="params">(<span class="keyword">void</span>)</span></span>;</div></pre></td></tr></table></figure>
+<p>向进程自身发送SIGABORT信号，默认情况下进程会异常退出，但可定义自己的信号处理函数。</p>
+<h3 id="发送信号"><a href="#发送信号" class="headerlink" title="发送信号"></a>发送信号</h3><ul>
+<li>用kill命令发送信号</li>
+<li>用特定的键盘字符产生信号<ul>
+<li>CTRL＋C产生SIGINT信号</li>
+<li>CTRL＋BACKSPACE产生SIGQUIT信号</li>
+</ul>
+</li>
+<li>硬件故障和算法错误产生信号</li>
+<li>某些软件条件<ul>
+<li>带外数据到达socket产生SIGURG信号</li>
+</ul>
+</li>
+</ul>
+<h3 id="接受信号"><a href="#接受信号" class="headerlink" title="接受信号"></a>接受信号</h3><p>接收信号的时机：进程从核心态返回用户态，进入或离开睡眠状态时，内核检查是否收到信号。<br>进程对信号的响应 </p>
+<ul>
+<li>执行缺省操作</li>
+<li>忽略信号（SIGKILL和SIGSTOP不能忽略）</li>
+<li>用户捕获信号，执行用户的信号处理函数 </li>
+</ul>
+<h3 id="sigaction"><a href="#sigaction" class="headerlink" title="sigaction"></a>sigaction</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sigaction</span><span class="params">(<span class="keyword">int</span> signum, <span class="keyword">const</span> <span class="keyword">struct</span> sigaction *act,<span class="keyword">struct</span> sigaction *oldact)</span></span>;</div></pre></td></tr></table></figure>
+<p><code>signum</code>—指定需要捕获的信号,SIGKILL和SIGSTOP不能捕捉，<code>act</code>—指定处理捕获信号的新动作，<code>oldact</code>—存储旧的动作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> sigaction &#123;</div><div class="line">               <span class="keyword">void</span>     (*sa_handler)(<span class="keyword">int</span>);</div><div class="line">               <span class="keyword">void</span>     (*sa_sigaction)(<span class="keyword">int</span>, <span class="keyword">siginfo_t</span> *, <span class="keyword">void</span> *);</div><div class="line">               <span class="keyword">sigset_t</span>   sa_mask;</div><div class="line">               <span class="keyword">int</span>        sa_flags;</div><div class="line">               <span class="keyword">void</span>     (*sa_restorer)(<span class="keyword">void</span>);</div><div class="line">           &#125;;</div></pre></td></tr></table></figure>
+<p><code>sa_handler/sa_sigaction</code>－信号处理函数</p>
+<ul>
+<li>使用默认动作时设置为SIG_DFL</li>
+<li>忽略信号时设置为SIG_IGN</li>
+<li>使用用户指定的处理函数时设置为相应处理函数</li>
+<li>sa_flags=SA_SIGINFO时sa_sigaction有效</li>
+</ul>
+<p><code>sa_mask</code>－指定信号处理函数中被屏蔽的信号集，通常被处理的信号本身被屏蔽。</p>
+<p><code>sa_flags</code>-影响信号处理函数行为的标志。</p>
+<ul>
+<li><code>SA_ONESHOT</code>或<code>SA_RESETHAND</code>－信号处理函数调用后，将信号的动作设置为默认动作</li>
+<li><code>SA_RESTART</code>－使某些系统调用在被信号中断后能自动重新执行</li>
+<li><code>SA_NOCLDSTOP</code>－当<code>signum=SIGCHLD</code>时，子进程停止不通知父进程</li>
+<li><code>SA_NOMASK</code>或<code>SA_NODEFER</code>－在某个信号的处理过程中，这个信号不被屏蔽 </li>
+</ul>
+<h3 id="signal"><a href="#signal" class="headerlink" title="signal"></a>signal</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*<span class="keyword">sighandler_t</span>)</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="keyword">sighandler_t</span> signal(<span class="keyword">int</span> signum, <span class="keyword">sighandler_t</span> handler);</div></pre></td></tr></table></figure>
+<p>用于截取系统的信号，对此信号挂载自己的处理函数。返回值是函数指针，指向以前的信号处理函数。</p>
+<p><code>signum</code>—指定需要捕获的信号,SIGKILL和SIGSTOP不能指定<br><code>handler</code>—指定信号处理函数</p>
+<h2 id="进程终止与僵尸进程"><a href="#进程终止与僵尸进程" class="headerlink" title="进程终止与僵尸进程"></a>进程终止与僵尸进程</h2><h3 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">exit</span><span class="params">(<span class="keyword">int</span> status)</span></span>;</div></pre></td></tr></table></figure>
+<p>系统调用<code>exit</code>用于 终止进程。</p>
+<h3 id="wait-amp-amp-waitpid"><a href="#wait-amp-amp-waitpid" class="headerlink" title="wait&amp;&amp;waitpid"></a>wait&amp;&amp;waitpid</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></div><div class="line"><span class="keyword">pid_t</span> wait(<span class="keyword">int</span> *status);<span class="comment">//成功时返回子进程的ID，错误返回-1</span></div><div class="line"><span class="keyword">pid_t</span> waitpid(<span class="keyword">pid_t</span> pid, <span class="keyword">int</span> *status, <span class="keyword">int</span> options);<span class="comment">//成功时返回子进程的ID；如果设置非阻塞后，被pid指定的进程存在但是没有改变状态，返回0；错误返回-1</span></div></pre></td></tr></table></figure>
+<p>这些系统调用用于等待子进程的状态改变，并获得这个信息。”状态改变“可以包含：进程终止、进程被信号终止、进程接收信号后恢复。第一种情况下，进行这个调用用于通知系统释放子进程的资源；如果不调用，这些子进程会保持“僵尸”状态。</p>
+<p>如果进程状态已经改变，调用会立刻返回；否则，直到有一个子进程状态改变或被信号打断为止。（<strong>可以理解为阻塞模式</strong>）</p>
+<p><code>wait</code>调用会暂停当前进程，直到有一个子进程“状态改变”。而<code>waitpid</code>会暂停当前进程，直到被<code>pid</code>指定的子进程“状态改变”，其意义很多，如下：</p>
+<table>
+<thead>
+<tr>
+<th>pid</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;-1</td>
+<td>等待进程组ID等于pid中的任意一个子进程</td>
+</tr>
+<tr>
+<td>=-1</td>
+<td>等待任意子进程（和wait效果一致）</td>
+</tr>
+<tr>
+<td>0</td>
+<td>等待任何子进程，其进程组ID必须等于调用进程的进程组ID。</td>
+</tr>
+<tr>
+<td>&gt;0</td>
+<td>等待特定的子进程</td>
+</tr>
+</tbody>
+</table>
+<p>可选参数<code>options</code>常用的是<code>WNOHANG</code>，表示非阻塞模式。</p>
+<p><code>status</code>用于保存状态信息。</p>
+<h3 id="理论知识"><a href="#理论知识" class="headerlink" title="理论知识"></a>理论知识</h3><p>正常情况下，子进程是通过父进程创建的，子进程在创建新的进程。子进程的结束和父进程的运行是一个异步过程,即父进程永远无法预测子进程 到底什么时候结束。 当一个 进程完成它的工作终止之后，它的父进程需要调用wait()或者waitpid()系统调用取得子进程的终止状态。</p>
+<p><strong>孤儿进程</strong>：一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被init进程(进程号为1)所收养，并由init进程对它们完成状态收集工作。</p>
+<p><strong>僵尸进程</strong>：一个进程使用fork创建子进程，如果子进程退出，而父进程并没有调用wait或waitpid获取子进程的状态信息，那么子进程的进程描述符仍然保存在系统中。这种进程称之为僵尸进程（<strong>简单说如果父进程没有调用wait函数，子进程先于父进程退出，则子进程将成为僵尸进程。</strong> ）。</p>
+<p>unix提供了一种机制可以保证只要父进程想知道子进程结束时的状态信息， 就可以得到。这种机制就是: 在每个进程退出的时候,内核释放该进程所有的资源,包括打开的文件,占用的内存等。 但是仍然为其保留一定的信息(包括进程号the process ID,退出状态the termination status of the process,运行时间the amount of CPU time taken by the process等)。直到父进程通过wait / waitpid来取时才释放。 但这样就导致了问题，<strong>如果进程不调用wait / waitpid的话， 那么保留的那段信息就不会释放，其进程号就会一直被占用，但是系统所能使用的进程号是有限的，如果大量的产生僵死进程，将因为没有可用的进程号而导致系统不能产生新的进程. 此即为僵尸进程的危害，应当避免。</strong></p>
+<p>孤儿进程是没有父进程的进程，孤儿进程这个重任就落到了init进程身上，而init进程会循环地wait()它的已经退出的子进程，<strong>因此孤儿进程并不会有什么危害。</strong></p>
+<p><strong>任何一个子进程(init除外)在exit()之后，并非马上就消失掉，而是留下一个称为僵尸进程(Zombie)的数据结构，等待父进程处理。</strong>这是每个 子进程在结束时都要经过的阶段。如果子进程在exit()之后，父进程没有来得及处理，这时用ps命令就能看到子进程的状态是“Z”。如果父进程能及时 处理，可能用ps命令就来不及看到子进程的僵尸状态，但这并不等于子进程不经过僵尸状态。  <strong>如果父进程在子进程结束之前退出，则子进程将由init接管。init将会以父进程的身份对僵尸状态的子进程进行处理（也就是说，如果一个父进程产生了大量僵尸进程，只需要把父进程杀了，init会接收它的孩子们）。</strong></p>
+<h3 id="清除僵尸进程"><a href="#清除僵尸进程" class="headerlink" title="清除僵尸进程"></a>清除僵尸进程</h3><ul>
+<li><p>忽略SIGCHLD信号时，系统将清除子进程的进程表项，这种方法依赖于Linux版本的实现。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">struct</span> sigaction act,oldact;</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	act.sa_handler=SIG_IGN;</div><div class="line">	sigemptyset(&amp;act.sa_mask);</div><div class="line">	act.sa_flags=<span class="number">0</span>;</div><div class="line">	<span class="keyword">if</span>(sigaction(SIGCHLD,&amp;act,&amp;oldact)&lt;<span class="number">0</span>)&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"sigaction error."</span>);</div><div class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</div><div class="line">		<span class="keyword">if</span>(fork()==<span class="number">0</span>)</div><div class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	<span class="keyword">for</span>(;;)&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//也可用signal(SIGCHLD, SIG_IGN)；</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>调用函数wait或waitpid等待子进程。这种方法没有兼容性问题，但主程序进入等待循环后不能做任何事情 。</p>
+</li>
+<li><p>捕获SIGCHLD信号。</p>
+<ul>
+<li>如果多个<code>SIGCHLD</code>信号同时到达，进程将只收到一个，因此信号处理函数中必须循环调用<code>waitpid</code>处理多个子进程终止</li>
+<li>不能使用<code>wait</code>来循环处理多个终止的子进程，因为<code>wait</code>在没有子进程终止时会阻塞，<code>waitpid</code>函数要设置选项<code>WNOHANG</code>防止阻塞。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sigchld_handler</span><span class="params">(<span class="keyword">int</span> sig)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">pid_t</span> pid;</div><div class="line">	<span class="keyword">int</span> stat;</div><div class="line">	<span class="keyword">for</span>(;(pid=waitpid(<span class="number">-1</span>,&amp;stat,WNOHANG))&gt;<span class="number">0</span>;)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"child %d died:%d\n"</span>,pid,WEXITSTATUS(stat));</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>调用fork两次，使子进程成为孤儿进程，由init进程管理。</p>
+<ul>
+<li>这种方法第一次调用fork产生的子进程可能成为僵尸进程。</li>
+<li>这种方法第二次调用fork产生的子进程由init处理子进程退出，不会成为僵尸进程。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	<span class="keyword">pid_t</span> pid;</div><div class="line">	pid=fork();</div><div class="line">	<span class="keyword">if</span>(pid==<span class="number">0</span>)&#123;</div><div class="line">		<span class="comment">//子进程1</span></div><div class="line">		<span class="built_in">printf</span>(<span class="string">"first child proc:%d\n"</span>,getpid());</div><div class="line">		<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span>(fork()==<span class="number">0</span>)&#123;</div><div class="line">				<span class="comment">//子进程2，3，4，5，6</span></div><div class="line">				<span class="built_in">printf</span>(<span class="string">"child %d\n"</span>,getpid());</div><div class="line">				sleep(<span class="number">1</span>);<span class="comment">//确保其父进程（进程1）先退出，本进程由init进程托管</span></div><div class="line">				<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span>(;;)&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h2><p>如何让一个用户进程变成守护进程：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">daemon_init</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">struct</span> sigaction act;</div><div class="line">	<span class="keyword">int</span> i,maxfd,fd_rd,fd_wr;</div><div class="line">	<span class="comment">//1.调用fork，然后父进程退出，子进程继续运行</span></div><div class="line">	<span class="keyword">if</span>(fork()!=<span class="number">0</span>)</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	<span class="comment">//2.调用setsid创建新的session</span></div><div class="line">	<span class="keyword">if</span>(setsid()&lt;<span class="number">0</span>)</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	<span class="comment">//3.忽略信号SIGHUP，再次调用fork，然后父进程（session的头进程）退出 </span></div><div class="line">	act.sa_handler=SIG_IGN;</div><div class="line">	sigemptyset(&amp;act.sa_mask);<span class="comment">//清空</span></div><div class="line">	act.sa_flags=<span class="number">0</span>;</div><div class="line">	<span class="keyword">if</span>(sigaction(SIGHUP,&amp;act,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"sigaction error."</span>);</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);                                           </div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span>(fork()!=<span class="number">0</span>)</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	<span class="comment">//4.调用函数chdir（“/”），使进程不使用任何目录 </span></div><div class="line">	chdir(<span class="string">"/"</span>);</div><div class="line">	<span class="comment">//5.调用函数unmask（0），使进程对任何写的内容有权限 </span></div><div class="line">	umask(<span class="number">0</span>);</div><div class="line">	<span class="comment">//6.关闭所有打开的文件描述符 </span></div><div class="line">	maxfd=sysconf(_SC_OPEN_MAX);<span class="comment">//返回系统最大的文件描述符</span></div><div class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;NOFILE;i++)</div><div class="line">		close(i);</div><div class="line">	<span class="comment">//7.为标准输入（0），标准输出（1），标准错误输出（2）打开新的文件描述符 </span></div><div class="line">	 </div><div class="line">	fd_rd=open(<span class="string">"/dev/null"</span>,O_RDONLY);</div><div class="line">	fd_wr=open(<span class="string">"/root/daemon.log"</span>,O_WRONLY);</div><div class="line">	dup(fd_rd);</div><div class="line">	dup(fd_wr);</div><div class="line">	dup(fd_wr);</div><div class="line">	</div><div class="line">	<span class="comment">//8.处理信号SIGCLD，避免守护进程的子进程成为僵尸进程</span></div><div class="line">	signal(SIGCHLD, SIG_IGN);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/19/Linux网络编程（一）/" rel="next" title="Linux网络编程（一）">
+                <i class="fa fa-chevron-left"></i> Linux网络编程（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/20/Linux网络编程（三）/" rel="prev" title="Linux网络编程（三）">
+                Linux网络编程（三） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原始套接字"><span class="nav-number">1.</span> <span class="nav-text">原始套接字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建"><span class="nav-number">1.1.</span> <span class="nav-text">创建</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux进程与信号机制"><span class="nav-number">2.</span> <span class="nav-text">Linux进程与信号机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux进程"><span class="nav-number">2.1.</span> <span class="nav-text">Linux进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux进程结构"><span class="nav-number">2.1.1.</span> <span class="nav-text">Linux进程结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建子进程"><span class="nav-number">2.1.2.</span> <span class="nav-text">创建子进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建新进程"><span class="nav-number">2.1.3.</span> <span class="nav-text">创建新进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号机制"><span class="nav-number">2.2.</span> <span class="nav-text">信号机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">2.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用信号"><span class="nav-number">2.2.2.</span> <span class="nav-text">常用信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kill"><span class="nav-number">2.2.3.</span> <span class="nav-text">kill</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#raise"><span class="nav-number">2.2.4.</span> <span class="nav-text">raise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alarm"><span class="nav-number">2.2.5.</span> <span class="nav-text">alarm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#abort"><span class="nav-number">2.2.6.</span> <span class="nav-text">abort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送信号"><span class="nav-number">2.2.7.</span> <span class="nav-text">发送信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接受信号"><span class="nav-number">2.2.8.</span> <span class="nav-text">接受信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sigaction"><span class="nav-number">2.2.9.</span> <span class="nav-text">sigaction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#signal"><span class="nav-number">2.2.10.</span> <span class="nav-text">signal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程终止与僵尸进程"><span class="nav-number">2.3.</span> <span class="nav-text">进程终止与僵尸进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exit"><span class="nav-number">2.3.1.</span> <span class="nav-text">exit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wait-amp-amp-waitpid"><span class="nav-number">2.3.2.</span> <span class="nav-text">wait&amp;&amp;waitpid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理论知识"><span class="nav-number">2.3.3.</span> <span class="nav-text">理论知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清除僵尸进程"><span class="nav-number">2.3.4.</span> <span class="nav-text">清除僵尸进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#守护进程"><span class="nav-number">2.4.</span> <span class="nav-text">守护进程</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

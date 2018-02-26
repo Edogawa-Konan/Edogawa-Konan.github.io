@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="算法," />
+
+
+<meta name="description" content="常见dp问题的java叙述总结。">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DP-java版本">
+<meta property="og:url" content="https://www.prime666.com/2017/05/01/DP-java版本/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="常见dp问题的java叙述总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-16T03:11:01.432Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DP-java版本">
+<meta name="twitter:description" content="常见dp问题的java叙述总结。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/05/01/DP-java版本/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>DP-java版本 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/05/01/DP-java版本/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DP-java版本</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-01T15:42:36+08:00">2017-05-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>常见dp问题的java叙述总结。</p>
+<a id="more"></a>
+<h1 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h1><h2 id="0-1背包"><a href="#0-1背包" class="headerlink" title="0-1背包"></a>0-1背包</h2><p>对于0-1背包问题，运用dp的思想可以有两种常见状态转移：<em>认为物品下标从0开始</em></p>
+<ul>
+<li><code>dp[i][j]</code>表示从前i-1个物品选，在重量不超过j的情况下的最大价值。（正向）</li>
+<li><code>dp[i][j]</code>表示从第i个物品开始选，在重量不超过j的情况下的最大价值。（反向）</li>
+</ul>
+<p>状态转移方程分别如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#初始化dp[0][j]=0</span></div><div class="line"><span class="keyword">if</span> j&lt;w[i]:</div><div class="line">	dp[i+<span class="number">1</span>][j]=dp[i][j]</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    dp[i+<span class="number">1</span>][j]=max(dp[i][j],dp[i][j-w[i]]+v[i])</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#初始化dp[n][j]=0</span></div><div class="line"><span class="keyword">if</span> j&lt;w[i]:</div><div class="line">    dp[i][j]=dp[i+<span class="number">1</span>][j]</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    dp[i][j]=max(dp[i+<span class="number">1</span>][j],dp[i+<span class="number">1</span>][j-w[i]]+v[i])</div></pre></td></tr></table></figure>
+<h2 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h2><p>这里运用正向dp思路：</p>
+<p><code>dp[i][j]</code>表示从前i-1个物品选，在重量不超过j的情况下的最大价值。</p>
+<p>转移方程如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#初始化dp[0][j]=0</span></div><div class="line">dp[i+<span class="number">1</span>][j]=max(dp[i][j],dp[i][j-k*w[i]]+k*v[i])  <span class="comment">#(k&gt;=0且k*w[i]&lt;=j)</span></div></pre></td></tr></table></figure>
+<p>这是最容易想到的思路，但是实际上还可以优化，因为其中有重复计算：</p>
+<p>比如在计算<code>dp[i+1][j]</code>的计算中（k&gt;=1），与在<code>d[i+1][j-w[i]]</code>的计算中选择k-1的情况相同。</p>
+<p>即有以下变形：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> dp[i+<span class="number">1</span>][j]</div><div class="line">=max(dp[i][j-k*w[i]]+j*v[i])(k&gt;=<span class="number">0</span>)</div><div class="line">=max(dp[i][j],max(dp[i][j-k*w[i]]+k*v[i]))(k&gt;=<span class="number">1</span>)</div><div class="line">=max(dp[i][j],max(dp[i][j-w[i]-k*w[i]]+k*v[i]+v[i]))(k&gt;=<span class="number">0</span>)</div><div class="line">=max(dp[i][j],dp[i+<span class="number">1</span>][j-w[i]]+v[i])</div></pre></td></tr></table></figure>
+<p>所以时间复杂度降为平方级。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> DP;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> prime  on 2017/5/1.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Arrays;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KnapSack</span></span></div><div class="line">&#123;<span class="comment">//各种背包</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">solve0_1</span><span class="params">(<span class="keyword">int</span>[] v,<span class="keyword">int</span>[] w,<span class="keyword">int</span> c)</span></span></div><div class="line">    &#123;<span class="comment">//正向dp解0-1背包</span></div><div class="line">        <span class="keyword">int</span> n=v.length;</div><div class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>][c+<span class="number">1</span>];<span class="comment">//从前i个物品中选出总重量不超过j的物品时总价值的最大值</span></div><div class="line">        Arrays.fill(dp[<span class="number">0</span>],<span class="number">0</span>);<span class="comment">//dp[0][j]置0</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=c;j++)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span> (j&lt;w[i])</div><div class="line">                    dp[i+<span class="number">1</span>][j]=dp[i][j];</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    dp[i+<span class="number">1</span>][j]=Math.max(dp[i][j],dp[i][j-w[i]]+v[i]);</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">return</span> dp[n][c];</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">solve0_1_reverse</span><span class="params">(<span class="keyword">int</span>[] v,<span class="keyword">int</span>[] w,<span class="keyword">int</span> c)</span></span></div><div class="line">    &#123;<span class="comment">//反向dp解0-1背包</span></div><div class="line">        <span class="keyword">int</span> n=v.length;</div><div class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>][c+<span class="number">1</span>];<span class="comment">//从第i个物品开始选，在不超过j的条件下的最大价值（i从0开始）</span></div><div class="line">        Arrays.fill(dp[n],<span class="number">0</span>);<span class="comment">//dp[n][j]置0</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=n-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=c;j++)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span> (j&lt;w[i])</div><div class="line">                    dp[i][j]=dp[i+<span class="number">1</span>][j];</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    dp[i][j]=Math.max(dp[i+<span class="number">1</span>][j],dp[i+<span class="number">1</span>][j-w[i]]+v[i]);</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][c];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">6</span>][<span class="number">101</span>];</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[] w=&#123;<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>,<span class="number">40</span>,<span class="number">50</span>&#125;;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[] v=&#123;<span class="number">20</span>,<span class="number">30</span>,<span class="number">65</span>,<span class="number">40</span>,<span class="number">60</span>&#125;;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> n=<span class="number">5</span>;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">solve0_1_rec</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span><span class="comment">//从第i个物品开始选，在不超过j的条件下的最大价值（i从0开始）</span></span></div><div class="line">    &#123;<span class="comment">//反向dp的递归版本</span></div><div class="line">        <span class="keyword">int</span> res;</div><div class="line">        <span class="keyword">if</span> (dp[i][j]&gt;<span class="number">0</span>)<span class="comment">//备忘录，没有这个就是BS</span></div><div class="line">            <span class="keyword">return</span> dp[i][j];</div><div class="line">        <span class="keyword">if</span> (i==n)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (j&lt;w[i])</div><div class="line">            res=solve0_1_rec(i+<span class="number">1</span>,j);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            res=Math.max(solve0_1_rec(i+<span class="number">1</span>,j),solve0_1_rec(i+<span class="number">1</span>,j-w[i])+v[i]);</div><div class="line">        <span class="keyword">return</span> dp[i][j]=res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span>[] v,<span class="keyword">int</span>[] w,<span class="keyword">int</span> c)</span></span></div><div class="line">    &#123;<span class="comment">//完全背包问题,正向dp思考,优化后</span></div><div class="line">        <span class="keyword">int</span> n=v.length;</div><div class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>][c+<span class="number">1</span>];</div><div class="line">        Arrays.fill(dp[<span class="number">0</span>],<span class="number">0</span>);<span class="comment">//dp[0][j]置0</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=c;j++)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span> (j&lt;w[i])</div><div class="line">                    dp[i+<span class="number">1</span>][j]=dp[i][j];</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    dp[i+<span class="number">1</span>][j]=Math.max(dp[i][j],dp[i+<span class="number">1</span>][j-w[i]]+v[i]);</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">return</span> dp[n][c];</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">solve_bad</span><span class="params">(<span class="keyword">int</span>[] v,<span class="keyword">int</span>[] w,<span class="keyword">int</span> c)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> n=v.length;</div><div class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>][c+<span class="number">1</span>];</div><div class="line">        Arrays.fill(dp[<span class="number">0</span>],<span class="number">0</span>);<span class="comment">//dp[0][j]置0</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=c;j++)</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k=<span class="number">0</span>;k*w[i]&lt;=j;k++)</div><div class="line">                &#123;</div><div class="line">                    dp[i+<span class="number">1</span>][j]=Math.max(dp[i+<span class="number">1</span>][j],dp[i][j-k*w[i]]+k*v[i]);</div><div class="line">                &#125;</div><div class="line">        <span class="keyword">return</span> dp[n][c];</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span>[] w=&#123;<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>,<span class="number">40</span>,<span class="number">50</span>&#125;;</div><div class="line">        <span class="keyword">int</span>[] v=&#123;<span class="number">20</span>,<span class="number">30</span>,<span class="number">65</span>,<span class="number">40</span>,<span class="number">60</span>&#125;;</div><div class="line">        System.out.println(solve0_1(v,w,<span class="number">100</span>));</div><div class="line">        System.out.println(solve0_1_reverse(v,w,<span class="number">100</span>));</div><div class="line">        System.out.println(solve0_1_rec(<span class="number">0</span>,<span class="number">100</span>));</div><div class="line">        System.out.println(solve(v,w,<span class="number">100</span>));</div><div class="line">        System.out.println(solve_bad(v,w,<span class="number">100</span>));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="换钱问题"><a href="#换钱问题" class="headerlink" title="换钱问题"></a>换钱问题</h1><p><code>dp[i][j]</code>表示可以随便使用0..i的纸币的情况下，组成j元所需要的最少纸币数。</p>
+<p>初始化都是相同的，即第一列<code>dp[i][0]</code>都是0；而第一行<code>dp[0][j]</code>，如果可以被第一个货币整除就填入结果即货币数（对于第二种纸币只有一张的情况下只有等于第一个纸币才填1），否则指定一个非常大的数（最好不要用整数最大值，可能会溢出）</p>
+<h2 id="无限纸币"><a href="#无限纸币" class="headerlink" title="无限纸币"></a>无限纸币</h2><p>这种情况下和完全背包问题很相似：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> arr[i]&gt;j: <span class="comment">#当前货币太大了</span></div><div class="line">    dp[i][j]=dp[i<span class="number">-1</span>][j]</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    dp[i][j]=min(dp[i<span class="number">-1</span>][j],dp[i][j-arr[i]]+<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>这里的也是像上面完全背包问题一样，化简后的结果。原始递推公式是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> arr[i]&gt;j: <span class="comment">#当前货币太大了</span></div><div class="line">    dp[i][j]=dp[i<span class="number">-1</span>][j]</div><div class="line"><span class="keyword">else</span>:</div><div class="line">	dp[i][j]=min(dp[i][j*k*arr[i]]+k)(k&gt;=<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<p>这里对它用上面一样的方法化简即可。</p>
+<h2 id="单一纸币"><a href="#单一纸币" class="headerlink" title="单一纸币"></a>单一纸币</h2><p>这种就相对容易些:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> arr[i]&gt;j: <span class="comment">#当前货币太大了</span></div><div class="line">    dp[i][j]=dp[i<span class="number">-1</span>][j]</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    dp[i][j]=min(dp[i<span class="number">-1</span>][j],dp[i<span class="number">-1</span>][j-arr[i]]+<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>代码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> DP;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 换钱问题的DP求解</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Arrays;</div><div class="line"><span class="keyword">import</span> java.util.Scanner;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">money</span></span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">minCoin1</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> aim)</span></span></div><div class="line">    &#123;<span class="comment">//每种纸币无限制的换钱问题</span></div><div class="line">        <span class="keyword">int</span> n=arr.length;</div><div class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n][aim+<span class="number">1</span>];<span class="comment">//dp[i][j]表示在可以任意使用0..i的货币的情况下，组成j所需要的最小张数</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)<span class="comment">//第一列显然是0</span></div><div class="line">            dp[i][<span class="number">0</span>]=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=aim;j++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (j%arr[<span class="number">0</span>]==<span class="number">0</span>)</div><div class="line">                dp[<span class="number">0</span>][j]=j/arr[<span class="number">0</span>];</div><div class="line">            <span class="keyword">else</span></div><div class="line">                dp[<span class="number">0</span>][j]=<span class="number">20000</span>;<span class="comment">//不用整数最大值是为了防止溢出。</span></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/*以上是初始化部分*/</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=aim;j++)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span> (j&lt;arr[i])<span class="comment">//第i个钱太大了</span></div><div class="line">                    dp[i][j]=dp[i-<span class="number">1</span>][j];</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    dp[i][j]=Math.min(dp[i-<span class="number">1</span>][j],dp[i][j-arr[i]]+<span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">return</span> dp[n-<span class="number">1</span>][aim]!=<span class="number">20000</span>?dp[n-<span class="number">1</span>][aim]:-<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">minCoin2</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> aim)</span></span></div><div class="line">    &#123;<span class="comment">//每种纸币只能用一次</span></div><div class="line">        <span class="keyword">int</span> n=arr.length;</div><div class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n][aim+<span class="number">1</span>];<span class="comment">//dp[i][j]表示任意使用0..i的纸币，组成j元的最小张数</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</div><div class="line">            dp[i][<span class="number">0</span>]=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=aim;j++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (j==arr[<span class="number">0</span>])</div><div class="line">                dp[<span class="number">0</span>][j]=<span class="number">1</span>;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                dp[<span class="number">0</span>][j]=<span class="number">20000</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">/*初始化完成*/</span></div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=aim;j++)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span> (arr[i]&gt;j)</div><div class="line">                    dp[i][j]=dp[i-<span class="number">1</span>][j];</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    dp[i][j]=Math.min(dp[i-<span class="number">1</span>][j],dp[i-<span class="number">1</span>][j-arr[i]]+<span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">return</span> dp[n-<span class="number">1</span>][aim]!=<span class="number">20000</span>?dp[n-<span class="number">1</span>][aim]:-<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span>[] a=&#123;<span class="number">5</span>,<span class="number">7</span>,<span class="number">25</span>,<span class="number">50</span>&#125;;</div><div class="line">        System.out.println(minCoin1(a,<span class="number">15</span>));</div><div class="line">        System.out.println(minCoin2(a,<span class="number">15</span>));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="换钱的方法数问题（每种货币无限）"><a href="#换钱的方法数问题（每种货币无限）" class="headerlink" title="换钱的方法数问题（每种货币无限）"></a>换钱的方法数问题（每种货币无限）</h1><p>三种方法：<strong>暴力搜索、记忆化搜索、DP</strong></p>
+<h2 id="暴力搜索"><a href="#暴力搜索" class="headerlink" title="暴力搜索"></a>暴力搜索</h2><p>暴力搜索基于以下事实：</p>
+<p>假设货币数组arr[0..n-1]，目标aim，则过程如下：</p>
+<ul>
+<li>不用arr[0]，用剩下的arr[1..n-1]组成aim</li>
+<li>用一张arr[0]，用剩下的arr[1..n-1]组成aim-arr[0]</li>
+<li>用两张arr[0]，用剩下的arr[1..n-1]组成aim-2*arr[0]</li>
+<li>……</li>
+</ul>
+<p>所以，就可以写出一个递归的暴力搜索方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">coin1</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> aim)</span></span></div><div class="line">    &#123;<span class="comment">//暴力搜索</span></div><div class="line">        <span class="keyword">if</span> (arr==<span class="keyword">null</span>||aim&lt;<span class="number">0</span>||arr.length==<span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> BS1(arr,<span class="number">0</span>,aim);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">BS1</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> index,<span class="keyword">int</span> aim)</span></span></div><div class="line">    &#123;<span class="comment">/*BS1表示如果用arr[index..]组成aim元的方法数*/</span></div><div class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span> (index==arr.length)</div><div class="line">            res=aim==<span class="number">0</span>?<span class="number">1</span>:<span class="number">0</span>;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i*arr[index]&lt;=aim;i++)</div><div class="line">                res+=BS1(arr,index+<span class="number">1</span>,aim-i*arr[index]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>暴力搜索最大的弊端在于有很多重复计算，比如用2张5元和一张10元而言，后序的递归都是一样的情形。为此想保留每次计算的结果，有了下面的优化：</p>
+<h2 id="记忆化的暴力搜索"><a href="#记忆化的暴力搜索" class="headerlink" title="记忆化的暴力搜索"></a>记忆化的暴力搜索</h2><p>把上述BS1的参数和返回值对应起来，并保存到二维数组中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">coin2</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> aim)</span></span></div><div class="line">    &#123;<span class="comment">/*记忆后的暴力搜索*/</span></div><div class="line">        <span class="keyword">if</span> (arr==<span class="keyword">null</span>||arr.length==<span class="number">0</span>||aim&lt;<span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span>[][] memo=<span class="keyword">new</span> <span class="keyword">int</span>[arr.length+<span class="number">1</span>][aim+<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] e:memo)</div><div class="line">            Arrays.fill(e,-<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> BS2(arr,<span class="number">0</span>,aim,memo);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">BS2</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> index,<span class="keyword">int</span> aim,<span class="keyword">int</span>[][] memo)</span></span></div><div class="line">    &#123;<span class="comment">/*基本参数都和上面一样，memo[i][j]表示index为i，aim为j时的计算结果*/</span></div><div class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span> (index==arr.length)</div><div class="line">            res=aim==<span class="number">0</span>?<span class="number">1</span>:<span class="number">0</span>;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (memo[index][aim]!=-<span class="number">1</span>)</div><div class="line">                <span class="keyword">return</span> memo[index][aim];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i*arr[index]&lt;=aim;i++)</div><div class="line">                res+=BS2(arr,index+<span class="number">1</span>,aim-i*arr[index],memo);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> memo[index][aim]=res;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>初始化memo为-1表示还没被计算，当后序程序递归时，查表即可。</p>
+<h2 id="非最优的动态规划"><a href="#非最优的动态规划" class="headerlink" title="非最优的动态规划"></a>非最优的动态规划</h2><p>dp和记忆化搜索本质上是一样的，都是空间换时间，以某种方式 进行记录。不同的地方在于dp规定计算顺序，后面的依赖前面的结果；而记忆化搜索只是单纯记录中间结果，对顺序没有规定。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">coin3</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> aim)</span></span></div><div class="line">    &#123;<span class="comment">//dp法</span></div><div class="line">        <span class="keyword">int</span> n=arr.length;</div><div class="line">        <span class="comment">/*dp[i][j]表示使用0..i的货币组成j元的方法数*/</span></div><div class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n][aim+<span class="number">1</span>];</div><div class="line">        <span class="comment">/*第一列显然都是1*/</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</div><div class="line">            dp[i][<span class="number">0</span>]=<span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=aim;j++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (j%arr[<span class="number">0</span>]==<span class="number">0</span>)</div><div class="line">                dp[<span class="number">0</span>][j]=<span class="number">1</span>;<span class="comment">//能被找开就说明是一种方法</span></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=aim;j++)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k=<span class="number">0</span>;k*arr[i]&lt;=j;k++)</div><div class="line">                    count+=dp[i-<span class="number">1</span>][j-k*arr[i]];</div><div class="line">                dp[i][j]=count;</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">return</span> dp[n-<span class="number">1</span>][aim];</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="最优DP"><a href="#最优DP" class="headerlink" title="最优DP"></a>最优DP</h2><p>上面的dp之中还有很多重复计算，利用推导可以化简如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> dp[i][j]</div><div class="line">=dp[i<span class="number">-1</span>][j-arr[i]*k] (k&gt;=<span class="number">0</span>)</div><div class="line">=dp[i<span class="number">-1</span>][j]+dp[i<span class="number">-1</span>][j-arr[i]-arr[i]*k](k&gt;=<span class="number">0</span>)</div><div class="line">=dp[i<span class="number">-1</span>][j]+dp[i][j-arr[i]]</div></pre></td></tr></table></figure>
+<p>由此有以下代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">coin4</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> aim)</span></span></div><div class="line">    &#123;<span class="comment">//最优dp</span></div><div class="line">        <span class="keyword">int</span> n=arr.length;</div><div class="line">        <span class="comment">/*dp[i][j]表示使用0..i的货币组成j元的方法数*/</span></div><div class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n][aim+<span class="number">1</span>];</div><div class="line">        <span class="comment">/*第一列显然都是1,组成0元只有一种方法*/</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</div><div class="line">            dp[i][<span class="number">0</span>]=<span class="number">1</span>;</div><div class="line">        <span class="comment">/*第一行如果可以被找开就是1*/</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=aim;j++)</div><div class="line">            <span class="keyword">if</span> (j%arr[<span class="number">0</span>]==<span class="number">0</span>)</div><div class="line">                dp[<span class="number">0</span>][j]=<span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=aim;j++)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span> (j&lt;arr[i])</div><div class="line">                    dp[i][j]=dp[i-<span class="number">1</span>][j];</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    dp[i][j]=dp[i-<span class="number">1</span>][j]+dp[i][j-arr[i]];</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">return</span> dp[n-<span class="number">1</span>][aim];</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h1 id="计数问题的DP"><a href="#计数问题的DP" class="headerlink" title="计数问题的DP"></a>计数问题的DP</h1><blockquote>
+<p>n个无区别的物品，划分成m组，求出划分总数。n&gt;=m</p>
+</blockquote>
+<p>记<code>dp[i][j]</code>表示<strong>把j的i划分总数</strong></p>
+<p>所以边界<code>dp[0][0]=1</code>，结果是<code>dp[m][n]</code></p>
+<p>递推公式如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> j&lt;i:</div><div class="line">   dp[i][j]=dp[i<span class="number">-1</span>][j]</div><div class="line"><span class="keyword">else</span>:</div><div class="line">   dp[i][j]=dp[i][j-i]+dp[i<span class="number">-1</span>][j]</div></pre></td></tr></table></figure>
+<p><u>分析，假设n的m划分是a1,a2,a3…am。如果有ai==0，则对应了n的m-1划分；如果ai&gt;0，则{ai-1}对应了n-m的m划分。</u></p>
+<p>一个代码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">    &#123;</div><div class="line">        Scanner in = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">        <span class="keyword">int</span> m,n;</div><div class="line">        <span class="keyword">while</span> (in.hasNext())</div><div class="line">        &#123;</div><div class="line">            m=in.nextInt();</div><div class="line">            n=in.nextInt();</div><div class="line">            <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>][m+<span class="number">1</span>];</div><div class="line">            dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=m;j++)</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">if</span> (j&lt;i)</div><div class="line">                        dp[i][j]=dp[i-<span class="number">1</span>][j];</div><div class="line">                    <span class="keyword">else</span></div><div class="line">                        dp[i][j]=dp[i][j-i]+dp[i-<span class="number">1</span>][j];</div><div class="line">                &#125;</div><div class="line">            System.out.println(dp[n][m]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/06/DP/" rel="next" title="DP">
+                <i class="fa fa-chevron-left"></i> DP
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/18/Huffman/" rel="prev" title="Huffman">
+                Huffman <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背包问题"><span class="nav-number">1.</span> <span class="nav-text">背包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-1背包"><span class="nav-number">1.1.</span> <span class="nav-text">0-1背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完全背包"><span class="nav-number">1.2.</span> <span class="nav-text">完全背包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#换钱问题"><span class="nav-number">2.</span> <span class="nav-text">换钱问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#无限纸币"><span class="nav-number">2.1.</span> <span class="nav-text">无限纸币</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单一纸币"><span class="nav-number">2.2.</span> <span class="nav-text">单一纸币</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#换钱的方法数问题（每种货币无限）"><span class="nav-number">3.</span> <span class="nav-text">换钱的方法数问题（每种货币无限）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#暴力搜索"><span class="nav-number">3.1.</span> <span class="nav-text">暴力搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记忆化的暴力搜索"><span class="nav-number">3.2.</span> <span class="nav-text">记忆化的暴力搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非最优的动态规划"><span class="nav-number">3.3.</span> <span class="nav-text">非最优的动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最优DP"><span class="nav-number">3.4.</span> <span class="nav-text">最优DP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计数问题的DP"><span class="nav-number">4.</span> <span class="nav-text">计数问题的DP</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

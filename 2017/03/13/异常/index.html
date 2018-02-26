@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Java," />
+
+
+<meta name="description" content="java异常机制的笔记~:hand:">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异常">
+<meta property="og:url" content="https://www.prime666.com/2017/03/13/异常/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="java异常机制的笔记~:hand:">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/java%E5%BC%82%E5%B8%B8%E7%BB%A7%E6%89%BF.jpeg">
+<meta property="og:updated_time" content="2017-05-30T11:14:43.576Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="异常">
+<meta name="twitter:description" content="java异常机制的笔记~:hand:">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com/java%E5%BC%82%E5%B8%B8%E7%BB%A7%E6%89%BF.jpeg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/03/13/异常/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>异常 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/03/13/异常/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">异常</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-13T21:40:42+08:00">2017-03-13</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>java异常机制的笔记~:hand:</p>
+<a id="more"></a>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>异常机制主要依赖于try、catch、finally、throw和throws五个关键字。try后紧跟可能引发异常的代码块，catch用于捕捉异常，对应一个异常类型和一个代码块。catch块后可以跟finally块，用于回收在try块里打开的物理资源（如打开的文件等，java垃圾回收机制只能回收堆内存中的资源），异常机制会保证finally块总被执行（即使catch中有return语句，也会保证finally先执行，但是如果用了System.exit()关闭jvm则finally失去执行的机会）。throws关键字主要用在方法签名中，用于声明该方法可能抛出的异常。而throw用于主动抛出一个实际的异常（后跟一个异常对象）。</p>
+<p><strong>只有try块是必需的，catch和finally是可选的，但是二者必须有一个。try-&gt;catch-&gt;finally的相对顺序不能变。注意捕获异常时子类在前父类在后。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DivTest</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">try</span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> a = Integer.parseInt(args[<span class="number">0</span>]);</div><div class="line">			<span class="keyword">int</span> b = Integer.parseInt(args[<span class="number">1</span>]);</div><div class="line">			<span class="keyword">int</span> c = a / b;</div><div class="line">			System.out.println(<span class="string">"您输入的两个数相除的结果是："</span> + c );</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (IndexOutOfBoundsException ie)</div><div class="line">		&#123;</div><div class="line">			System.out.println(<span class="string">"数组越界：运行程序时输入的参数个数不够"</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (NumberFormatException ne)</div><div class="line">		&#123;</div><div class="line">			System.out.println(<span class="string">"数字格式异常：程序只能接受整数参数"</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (ArithmeticException ae)</div><div class="line">		&#123;</div><div class="line">			System.out.println(<span class="string">"算术异常"</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (Exception e)</div><div class="line">		&#123;</div><div class="line">			System.out.println(<span class="string">"未知异常"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>catch可以一次捕获多个异常，中间用<code>|</code>分隔即可，捕获多个时异常变量有隐式<code>final</code>修饰。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MultiExceptionTest</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">try</span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> a = Integer.parseInt(args[<span class="number">0</span>]);</div><div class="line">			<span class="keyword">int</span> b = Integer.parseInt(args[<span class="number">1</span>]);</div><div class="line">			<span class="keyword">int</span> c = a / b;</div><div class="line">			System.out.println(<span class="string">"您输入的两个数相除的结果是："</span> + c );</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (IndexOutOfBoundsException|NumberFormatException</div><div class="line">			|ArithmeticException ie)</div><div class="line">		&#123;</div><div class="line">			System.out.println(<span class="string">"程序发生了数组越界、数字格式异常、算术异常之一"</span>);</div><div class="line">			<span class="comment">// 捕捉多异常时，异常变量默认有final修饰，</span></div><div class="line">			<span class="comment">// 所以下面代码有错：</span></div><div class="line">			ie = <span class="keyword">new</span> ArithmeticException(<span class="string">"test"</span>);  <span class="comment">// ①</span></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (Exception e)</div><div class="line">		&#123;</div><div class="line">			System.out.println(<span class="string">"未知异常"</span>);</div><div class="line">			<span class="comment">// 捕捉一个类型的异常时，异常变量没有final修饰</span></div><div class="line">			<span class="comment">// 所以下面代码完全正确。</span></div><div class="line">			e = <span class="keyword">new</span> RuntimeException(<span class="string">"test"</span>);    <span class="comment">// ②</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所有的异常对象都包含以下几个常用的方法用来了解异常信息：</p>
+<ul>
+<li><code>getMessage()</code>:返回该异常的描述字符串。</li>
+<li><code>printStackTrace():</code>将异常的跟踪栈信息打印到标准错误输出。</li>
+<li><code>printStackTrace(PrintSteam)</code>：将异常的跟踪栈信息打印到指定输出。</li>
+<li><code>getStackTrace():</code>返回跟踪栈信息。</li>
+</ul>
+<p>java7改进了try语句，允许try后紧跟一对圆括号，其中可以声明、初始化一个或多个资源（物理资源）。这些资源实现类必须实现<code>AutoCloseable或Closeable()</code>接口（java7开始几乎都实现了）。这时候finally语句可以没有了，catch也可以没有。</p>
+<h2 id="深入机制"><a href="#深入机制" class="headerlink" title="深入机制"></a>深入机制</h2><p>java的非正常情况有两种：</p>
+<ul>
+<li>Error</li>
+<li>Exception</li>
+</ul>
+<p>Error是不能被解决掉的，不能被捕捉。而异常可以被捕捉，分为Checked异常和Runtime异常。</p>
+<p>对于checked异常，属于不解决编译就过不去那种。所以似乎只有java有这个，其它语言都只保留runtime异常。</p>
+<ol>
+<li><p>checked异常</p>
+<p>该异常是显式抛出的，比如方法签名后用throws或者用throw语句。</p>
+</li>
+<li><p>runtime异常</p>
+<p>这种异常是系统运行时自动产生异常对象，不需要手动抛出。</p>
+</li>
+</ol>
+<p>异常继承图：</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/java%E5%BC%82%E5%B8%B8%E7%BB%A7%E6%89%BF.jpeg" alt="异常继承图"></p>
+<p>粉红色的是受检查的异常(checked exceptions),其必须被 <code>try{   }catch</code>语句块所捕获,或者在方法签名里通过throws子句声明.受检查的异常必须在编译时被捕捉处理,命名为 <code>Checked Exception</code> 是因为Java编译器要进行检查,Java虚拟机也要进行检查,以确保这个规则得到遵守.</p>
+<p>绿色的异常是运行时异常(runtime exceptions),需要程序员自己分析代码决定是否捕获和处理,比如 空指针,被0除…<br>而声明为Error的，则属于严重错误,需要根据业务信息进行特殊处理,Error不需要捕捉。</p>
+<p><strong>特别说明，所以的都是可以捕获的，但是一般error情况代表严重错误，所以不需要捕获，但是不代表不可以。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Scanner;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">t2</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="keyword">if</span>(count++==<span class="number">0</span>)</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> Throwable();</div><div class="line">                System.out.println(<span class="string">"No exception"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">catch</span> (Throwable e)</div><div class="line">            &#123;</div><div class="line">                System.out.println(<span class="string">"Exception thrown"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">finally</span> &#123;</div><div class="line">                System.out.println(<span class="string">"In finally thrown"</span>);</div><div class="line">                <span class="keyword">if</span> (count==<span class="number">2</span>)</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个例子说明两点：</p>
+<ul>
+<li>异常体系任何类都可以被捕获。</li>
+<li>finally语句块总会被执行，除非用<code>System.exit()</code>这种关闭JVM。（java7提供了括号的try语句，可以不再使用finally）</li>
+</ul>
+<p><strong>注意，throws抛出异常时(属于checked异常)，上一层必须处理它或者继续抛出，以此类推，不能放置不管。</strong></p>
+<p>看下面代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThrowsTest2</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">		<span class="keyword">throws</span> Exception</div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 因为test()方法声明抛出IOException异常，</span></div><div class="line">		<span class="comment">// 所以调用该方法的代码要么处于try...catch块中，</span></div><div class="line">		<span class="comment">// 要么处于另一个带throws声明抛出的方法中。</span></div><div class="line">		test();</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span><span class="keyword">throws</span> IOException</span></div><div class="line">	&#123;</div><div class="line">		<span class="comment">// 因为FileInputStream的构造器声明抛出IOException异常，</span></div><div class="line">		<span class="comment">// 所以调用FileInputStream的代码要么处于try...catch块中，</span></div><div class="line">		<span class="comment">// 要么处于另一个带throws声明抛出的方法中。</span></div><div class="line">      </div><div class="line">      <span class="comment">//顺便一提，IOException和RuntimeException都继承自Exception，二者同级。</span></div><div class="line">		FileInputStream fis = <span class="keyword">new</span> FileInputStream(<span class="string">"a.txt"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>只要异常没有被完全捕获（包括没有被捕获或异常被处理后重新抛出了新异常），异常从发生异常的方法逐渐向外传播，直到main方法，如果main方法解决不了就给jvm，jvm直接中断程序。</p>
+<p>throw抛出异常实例如下，注意两种异常的区别，<strong>runtime异常可以不管</strong>的！！！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThrowTest</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">try</span></div><div class="line">		&#123;</div><div class="line">			<span class="comment">// 调用声明抛出Checked异常的方法，要么显式捕获该异常</span></div><div class="line">			<span class="comment">// 要么在main方法中再次声明抛出</span></div><div class="line">			throwChecked(-<span class="number">3</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (Exception e)</div><div class="line">		&#123;</div><div class="line">			System.out.println(e.getMessage());</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 调用声明抛出Runtime异常的方法既可以显式捕获该异常，</span></div><div class="line">		<span class="comment">// 也可不理会该异常</span></div><div class="line">		throwRuntime(<span class="number">3</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">throwChecked</span><span class="params">(<span class="keyword">int</span> a)</span><span class="keyword">throws</span> Exception</span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (a &gt; <span class="number">0</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="comment">// 自行抛出Exception异常</span></div><div class="line">			<span class="comment">// 该代码必须处于try块里，或处于带throws声明的方法中</span></div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"a的值大于0，不符合要求"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">throwRuntime</span><span class="params">(<span class="keyword">int</span> a)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (a &gt; <span class="number">0</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="comment">// 自行抛出RuntimeException异常，既可以显式捕获该异常</span></div><div class="line">			<span class="comment">// 也可完全不理会该异常，把该异常交给该方法调用者处理</span></div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"a的值大于0，不符合要求"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/12/泛型/" rel="next" title="泛型">
+                <i class="fa fa-chevron-left"></i> 泛型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/19/排序算法/" rel="prev" title="排序算法">
+                排序算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深入机制"><span class="nav-number">2.</span> <span class="nav-text">深入机制</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

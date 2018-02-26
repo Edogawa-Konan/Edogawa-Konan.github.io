@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="算法," />
+
+
+<meta name="description" content="为了保研，，加油O(∩_∩)O">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构复习">
+<meta property="og:url" content="https://www.prime666.com/2017/06/13/数据结构复习/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="为了保研，，加油O(∩_∩)O">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-06-14_084707.png">
+<meta property="og:updated_time" content="2017-06-14T13:26:52.865Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构复习">
+<meta name="twitter:description" content="为了保研，，加油O(∩_∩)O">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-06-14_084707.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/06/13/数据结构复习/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>数据结构复习 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/13/数据结构复习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构复习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-13T21:53:49+08:00">2017-06-13</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>为了保研，，加油O(∩_∩)O</p>
+<a id="more"></a>
+<h1 id="数据结构知识复习"><a href="#数据结构知识复习" class="headerlink" title="数据结构知识复习"></a>数据结构知识复习</h1><h1 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h1><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>一个有穷结点的集合，要么是空的，要么是由根结点和左右子树构成。</p>
+<p><strong>和度为2的树区别在于，子树有左右顺序之分。</strong></p>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ul>
+<li>斜二叉树</li>
+<li>满二叉树</li>
+<li>完全二叉树</li>
+</ul>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><ol>
+<li>第i层最多<strong>2^i-1^个结点</strong>。i=1,2,3…</li>
+<li>深度为k的二叉树最多有<strong>2^k^-1个结点。</strong>此时就是满二叉树。k=1,2,3…</li>
+<li>对任何非空二叉树，n~0~表示叶子结点数，n~2~表示度为2的结点（非叶子结点）数，那么<strong>n~0~=n~2~+1</strong>。（用边数证明 ）</li>
+</ol>
+<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><ul>
+<li>完全二叉树可以存放到数组中，非根结点i的父节点i/2(向下取整)，左孩子2i，右孩子2i+1。（一般二叉树这样存储也行，但是浪费空间）</li>
+<li>链表存储。</li>
+</ul>
+<h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><ul>
+<li>先序遍历——根左右</li>
+<li>中序遍历——左根右</li>
+<li>后序遍历——左右根</li>
+</ul>
+<p><strong>三者经过结点的路线一样，只是访问结点数据域的时机不同。</strong></p>
+<p>遍历的递归程序不用多说了，很标准，背下来！</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(Node* root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root!= <span class="literal">nullptr</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;root-&gt;val&lt;&lt;<span class="string">" "</span>;</div><div class="line">        preorder(root-&gt;left);</div><div class="line">        preorder(root-&gt;right);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">inorder</span><span class="params">(Node* root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root)</div><div class="line">    &#123;</div><div class="line">        inorder(root-&gt;left);</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;root-&gt;val&lt;&lt;<span class="string">" "</span>;</div><div class="line">        inorder(root-&gt;right);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorder</span><span class="params">(Node*root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root)</div><div class="line">    &#123;</div><div class="line">        postorder(root-&gt;left);</div><div class="line">        postorder(root-&gt;right);</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;root-&gt;val&lt;&lt;<span class="string">" "</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>非递归的实现思路：</p>
+<p>先序:</p>
+<p><strong>实现一：由中序修改而来，即打印的时机。先序和中序只是打印结点的时机不同。针对非叶子结点来说，先序是第一次遇到就访问它，中序就是第二次遇到才访问它，后序是第三次遇到才访问它。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder2</span><span class="params">(Node* root)</span></span></div><div class="line">&#123;</div><div class="line"></div><div class="line">    Node *T=root;</div><div class="line">    <span class="built_in">deque</span>&lt;Node&gt; <span class="built_in">stack</span>;</div><div class="line">    <span class="keyword">while</span>(T||!<span class="built_in">stack</span>.empty())</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(T)</div><div class="line">        &#123;<span class="comment">//左子树全部进栈</span></div><div class="line">            <span class="built_in">stack</span>.push_back(*T);<span class="comment">//第一次遇到这个结点</span></div><div class="line">            <span class="built_in">cout</span>&lt;&lt;T-&gt;val&lt;&lt;<span class="string">" "</span>;</div><div class="line">            T=T-&gt;left;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(!<span class="built_in">stack</span>.empty())</div><div class="line">        &#123;</div><div class="line">            T=&amp;<span class="built_in">stack</span>.back();<span class="comment">//不能用*T=stack.back   第二次遇到这个结点</span></div><div class="line">            <span class="built_in">stack</span>.pop_back();<span class="comment">//访问栈顶，然后转向右子树。</span></div><div class="line">            T=T-&gt;right;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>实现二：申请一个栈，头结点入栈后进入主循环。弹出栈顶结点，访问之，右孩子左孩子依次进栈（如果有），直到栈为空时结束循环。（了解即可）</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder3</span><span class="params">(Node*root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root== <span class="literal">nullptr</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    <span class="built_in">deque</span>&lt;Node&gt; <span class="built_in">stack</span>;</div><div class="line">    <span class="built_in">stack</span>.push_back(*root);</div><div class="line">    <span class="keyword">while</span>(!<span class="built_in">stack</span>.empty())</div><div class="line">    &#123;</div><div class="line">        Node t=<span class="built_in">stack</span>.back();</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;t.val&lt;&lt;<span class="string">" "</span>;</div><div class="line">        <span class="built_in">stack</span>.pop_back();</div><div class="line">        <span class="keyword">if</span>(t.right)</div><div class="line">            <span class="built_in">stack</span>.push_back(*t.right);</div><div class="line">        <span class="keyword">if</span>(t.left)</div><div class="line">            <span class="built_in">stack</span>.push_back(*t.left);</div><div class="line">        <span class="comment">/*先右孩子进栈，再左孩子进栈，才能满足先序。*/</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>中序：当遇到一个结点，就把它压栈，并去遍历其左子树。当左子树遍历结束后，弹出这个结点访问它，然后遍历其右子树。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">inorder2</span><span class="params">(Node* root)</span></span></div><div class="line">&#123;</div><div class="line">    </div><div class="line">    Node *T=root;</div><div class="line">    <span class="built_in">deque</span>&lt;Node&gt; <span class="built_in">stack</span>;</div><div class="line">    <span class="keyword">while</span>(T||!<span class="built_in">stack</span>.empty())</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(T)</div><div class="line">        &#123;<span class="comment">//左子树全部进栈</span></div><div class="line">            <span class="built_in">stack</span>.push_back(*T);</div><div class="line">            T=T-&gt;left;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(!<span class="built_in">stack</span>.empty())</div><div class="line">        &#123;</div><div class="line">            T=&amp;<span class="built_in">stack</span>.back();<span class="comment">//不能用*T=stack.back</span></div><div class="line">            <span class="built_in">stack</span>.pop_back();<span class="comment">//访问栈顶，然后转向右子树。</span></div><div class="line">            <span class="built_in">cout</span>&lt;&lt;T-&gt;val&lt;&lt;<span class="string">" "</span>;</div><div class="line">            T=T-&gt;right;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>后序：</strong></p>
+<p><strong>双栈实现：</strong></p>
+<ol>
+<li>申请栈s1.s2，头结点入s1。</li>
+<li>s1出栈记为tmp，将tmp的左右孩子依次入s2（如果有的话），tmp入s2。</li>
+<li>重复2直到栈s1为空。</li>
+</ol>
+<p><strong>可以看到，入栈s2的顺序始终是根右左的形式，最后s2从栈顶到栈底的序列就是后序序列。</strong> </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorder2</span><span class="params">(Node* root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root== <span class="literal">nullptr</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    <span class="built_in">deque</span>&lt;Node&gt; s1,s2;</div><div class="line">    s1.push_back(*root);</div><div class="line">    <span class="keyword">while</span>(!s1.empty())</div><div class="line">    &#123;</div><div class="line">        Node tmp=s1.back();</div><div class="line">        s1.pop_back();</div><div class="line">        <span class="keyword">if</span>(tmp.left)</div><div class="line">            s1.push_back(*tmp.left);</div><div class="line">        <span class="keyword">if</span>(tmp.right)</div><div class="line">            s1.push_back(*tmp.right);</div><div class="line">        s2.push_back(tmp);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(!s2.empty())</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;s2.back().val&lt;&lt;<span class="string">" "</span>;</div><div class="line">        s2.pop_back();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>单栈实现：</strong></p>
+<ol>
+<li>申请栈。pre记为最近一次弹出并打印的结点，current为栈顶结点。</li>
+<li>进入主循环，左孩子依次进入栈，然后看右子树是否为空或者已被访问，满足就访问current，否则进入右子树。</li>
+<li>重复2直到栈为空且current为空。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorder4</span><span class="params">(Node*root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root== <span class="literal">nullptr</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    <span class="built_in">deque</span>&lt;Node*&gt; <span class="built_in">stack</span>;</div><div class="line">    Node* pre= <span class="literal">nullptr</span>,*current=root;</div><div class="line">    <span class="keyword">while</span> (current||!<span class="built_in">stack</span>.empty())</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span> (current!= <span class="literal">nullptr</span>)</div><div class="line">        &#123;<span class="comment">//左孩子递归入栈</span></div><div class="line">            <span class="built_in">stack</span>.push_back(current);</div><div class="line">            current=current-&gt;left;</div><div class="line">        &#125;</div><div class="line">        current=<span class="built_in">stack</span>.back();</div><div class="line">        <span class="keyword">if</span>(current-&gt;right== <span class="literal">nullptr</span>||current-&gt;right==pre)</div><div class="line">        &#123;<span class="comment">//右子树为空或者已被访问</span></div><div class="line">            <span class="built_in">cout</span>&lt;&lt;current-&gt;val&lt;&lt;<span class="string">" "</span>;</div><div class="line">            pre=current;</div><div class="line">            <span class="built_in">stack</span>.pop_back();</div><div class="line">            current= <span class="literal">nullptr</span>;<span class="comment">//这个不能省。不然叶子结点无限重复。</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span><span class="comment">//否则进入右子树</span></div><div class="line">            current=current-&gt;right;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em>想来想去还是总结这个方法吧，和中序、先序类似的版本都很像。易于记忆。</em></p>
+<p><strong>可以很容易的看到，和上面非递归的中序类似，只不过中序时直接先访问根节点，再进入右子树，而后序需要右子树遍历完成才访问根。</strong></p>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><h4 id="打印出叶子结点"><a href="#打印出叶子结点" class="headerlink" title="打印出叶子结点"></a>打印出叶子结点</h4><p>只需要在遍历程序中加一个判断即可，判断左右子树都为空时才输出，而不是遇到就输出。</p>
+<p>修改先序遍历得到：（也可以修改中序、后序）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printleaves</span><span class="params">(Node* root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(!root-&gt;left&amp;&amp;!root-&gt;right)</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;root-&gt;val&lt;&lt;<span class="string">" "</span>;</div><div class="line">        printleaves(root-&gt;left);</div><div class="line">        printleaves(root-&gt;right);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="二叉树高度"><a href="#二叉树高度" class="headerlink" title="二叉树高度"></a>二叉树高度</h4><p>高度的计算可有以下递推式：<strong>Height=max(H~L~,H~R~)+1</strong>。</p>
+<p><strong>所以，必须知道左右子树高度之后才能得到树的高度，显然应该修改后序遍历。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getheight</span><span class="params">(Node* root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> L,R,H;</div><div class="line">    <span class="keyword">if</span>(root)</div><div class="line">    &#123;</div><div class="line">        L=getheight(root-&gt;left);</div><div class="line">        R=getheight(root-&gt;right);</div><div class="line">        H=L&gt;R?L:R;取左右中较大的树的深度</div><div class="line">        <span class="keyword">return</span> H+<span class="number">1</span>;</div><div class="line">    &#125; <span class="keyword">else</span><span class="comment">//树为空</span></div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="二元表达式树的遍历"><a href="#二元表达式树的遍历" class="headerlink" title="二元表达式树的遍历"></a>二元表达式树的遍历</h4><p>中序遍历得到中缀表达式。但是中缀表达式会受到运算符优先级的影响。前缀和后缀都是正确的。</p>
+<p>可以通过输出左子树时先输出一个左括号，输出完左子树后再输出右括号来解决它。</p>
+<h4 id="已知两个遍历序列，确定二叉树"><a href="#已知两个遍历序列，确定二叉树" class="headerlink" title="已知两个遍历序列，确定二叉树"></a>已知两个遍历序列，确定二叉树</h4><p>只有先序和后序遍历序列，是不能唯一确定二叉树的。</p>
+<ul>
+<li><p>由先序和中序确定二叉树</p>
+<p>思路：根据先序序列的第一个结点得到其根结点，根据根节点在中序遍历序列中的位置确定左右子树，对左右子树采用相同方法继续求解。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-06-14_084707.png" alt=""></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function">Node* <span class="title">pre_in</span><span class="params">(<span class="keyword">int</span>* pre,<span class="keyword">int</span> pre_i,<span class="keyword">int</span> pre_j,<span class="keyword">int</span> * in,<span class="keyword">int</span> in_i,<span class="keyword">int</span> in_j,<span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; &amp;m)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(pre_i&gt;pre_j)</div><div class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</div><div class="line">    Node *head=<span class="keyword">new</span> Node(pre[pre_i]);</div><div class="line">    <span class="keyword">int</span> index=m[pre[pre_i]];<span class="comment">//左子树有index-in_i个结点</span></div><div class="line">    head-&gt;left=pre_in(pre,pre_i+<span class="number">1</span>,pre_i+index-in_i,in,in_i,index<span class="number">-1</span>,m);</div><div class="line">    head-&gt;right=pre_in(pre,pre_i+index-in_i+<span class="number">1</span>,pre_j,in,index+<span class="number">1</span>,in_j,m);</div><div class="line">    <span class="keyword">return</span> head;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里m建立了中序序列值到索引的映射，目的为了方便及时在中序序列中找到根节点的下标。</p>
+<p><strong>程序的难点在于在序列中切分左右子树，索引要细心，可以通过画图来思考。</strong></p>
+</li>
+<li><p>利用后序和中序重建二叉树</p>
+<p>思路：和上述类似，先在后序序列中取最后一个结点，其为根节点，然后在中序序列中找到根节点下标，分成左右子树。<strong>如同上图中的左图，只不过根结点在最后而已。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function">Node* <span class="title">post_in</span><span class="params">(<span class="keyword">int</span>* post,<span class="keyword">int</span> post_i,<span class="keyword">int</span> post_j,<span class="keyword">int</span> *in,<span class="keyword">int</span> in_i,<span class="keyword">int</span> in_j,<span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&amp; m)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(post_i&gt;post_j)</div><div class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</div><div class="line">    Node* head=<span class="keyword">new</span> Node(post[post_j]);</div><div class="line">    <span class="keyword">int</span> index=m[post[post_j]];<span class="comment">//左子树依旧有index-in_i个结点</span></div><div class="line">    head-&gt;left=post_in(post,post_i,post_i+index-in_i<span class="number">-1</span>,in,in_i,index<span class="number">-1</span>,m);</div><div class="line">    head-&gt;right=post_in(post,post_i+index-in_i,post_j<span class="number">-1</span>,in,index+<span class="number">1</span>,in_j,m);</div><div class="line">    <span class="keyword">return</span> head;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em>多画图，多思考。</em></p>
+</li>
+</ul>
+<h4 id="统计结点个数"><a href="#统计结点个数" class="headerlink" title="统计结点个数"></a>统计结点个数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">count_node</span><span class="params">(Node*root)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root== <span class="literal">nullptr</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>+count_node(root-&gt;left)+count_node(root-&gt;right);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<p>二叉树基本性质总结自此，回头遇到问题再补充~~~。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/11/pat（三）/" rel="next" title="pat（三）">
+                <i class="fa fa-chevron-left"></i> pat（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/15/内存分配与映射/" rel="prev" title="内存分配与映射">
+                内存分配与映射 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据结构知识复习"><span class="nav-number">1.</span> <span class="nav-text">数据结构知识复习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二叉树"><span class="nav-number">2.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">2.0.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类"><span class="nav-number">2.0.2.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性质"><span class="nav-number">2.0.3.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储"><span class="nav-number">2.0.4.</span> <span class="nav-text">存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历"><span class="nav-number">2.0.5.</span> <span class="nav-text">遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用"><span class="nav-number">2.0.6.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#打印出叶子结点"><span class="nav-number">2.0.6.1.</span> <span class="nav-text">打印出叶子结点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树高度"><span class="nav-number">2.0.6.2.</span> <span class="nav-text">二叉树高度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二元表达式树的遍历"><span class="nav-number">2.0.6.3.</span> <span class="nav-text">二元表达式树的遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#已知两个遍历序列，确定二叉树"><span class="nav-number">2.0.6.4.</span> <span class="nav-text">已知两个遍历序列，确定二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#统计结点个数"><span class="nav-number">2.0.6.5.</span> <span class="nav-text">统计结点个数</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

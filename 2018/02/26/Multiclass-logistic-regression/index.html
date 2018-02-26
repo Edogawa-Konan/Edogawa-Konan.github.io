@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="machine_learning," />
+
+
+<meta name="description" content="#Multiclass logistic regression Given $k$ classes, the most naive way to solve a multiclass classification problem is to train $k$ different binary classifiers $f_i(x)$.There’s a smarter way to go abo">
+<meta name="keywords" content="machine_learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Multiclass_logistic_regression">
+<meta property="og:url" content="https://www.prime666.com/2018/02/26/Multiclass-logistic-regression/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="#Multiclass logistic regression Given $k$ classes, the most naive way to solve a multiclass classification problem is to train $k$ different binary classifiers $f_i(x)$.There’s a smarter way to go abo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/zackchase/mxnet-the-straight-dope/blob/master/img/simple-softmax-net.png?raw=true">
+<meta property="og:updated_time" content="2018-02-26T03:28:52.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Multiclass_logistic_regression">
+<meta name="twitter:description" content="#Multiclass logistic regression Given $k$ classes, the most naive way to solve a multiclass classification problem is to train $k$ different binary classifiers $f_i(x)$.There’s a smarter way to go abo">
+<meta name="twitter:image" content="https://github.com/zackchase/mxnet-the-straight-dope/blob/master/img/simple-softmax-net.png?raw=true">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2018/02/26/Multiclass-logistic-regression/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>Multiclass_logistic_regression | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2018/02/26/Multiclass-logistic-regression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Multiclass_logistic_regression</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T11:26:16+08:00">2018-02-26</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#Multiclass logistic regression</p>
+<p>Given $k$ classes, the most naive way to solve a <strong><em>multiclass classification</em></strong> problem is to train $k$ different binary classifiers $f_i(x)$.There’s a smarter way to go about this. We could force the output layer to be a discrete probability distribution over the $k$ classes.</p>
+<p>We accomplish this by using the <strong><em>softmax</em> function</strong>. Given an input vector $z$, softmax does two things. First, it exponentiates (elementwise) $e^z$, forcing all values to be strictly positive. Then it normalizes so that all values sum to 1.<br>$$<br>\text{softmax}(\boldsymbol{z}) = \frac{e^{\boldsymbol{z}} }{\sum_{i=1}^k e^{z_i}}<br>$$<br>Because now we have $k$ outputs and not 1 we’ll need weights connecting each of our inputs to each of our outputs. Graphically, the network looks something like this:</p>
+<p><img src="https://github.com/zackchase/mxnet-the-straight-dope/blob/master/img/simple-softmax-net.png?raw=true" alt=""></p>
+<p>We generate the linear mapping from inputs to outputs via a matrix-vector product $\boldsymbol{x}W+\boldsymbol{b}$.</p>
+<p>The whole model, including the activation function can be written:<br>$$<br>\hat{y} = \text{softmax}(\boldsymbol{x} W + \boldsymbol{b})<br>$$<br>This model is sometimes called <em>multiclass logistic regression</em>. Other common names for it include <em>softmax regression</em> and <em>multinomial regression</em>.</p>
+<p>##About batch training</p>
+<p>In the above, we used plain lowercase letters for scalar variables, bolded lowercase letters for <strong>row</strong> vectors, and uppercase letters for matrices.</p>
+<p> Assume we have $d$ inputs and $k$ outputs. Let’s note the shapes of the various variables explicitly as follows:<br>$$<br>\underset{1 \times k}{\boldsymbol z} = \underset{1 \times d}{\boldsymbol{x}}\ \underset{d \times k}{W} + \underset{1 \times k}{\boldsymbol{b}}<br>$$<br>Often we would one-hot encode the output label. So $\hat{y} = \text{softmax}(\boldsymbol z)$ becomes:<br>$$<br>\underset{1 \times k}{\boldsymbol{\hat{y}}<em>{one-hot}} = \text{softmax}</em>{one-hot}(\underset{1 \times k}{\boldsymbol z})<br>$$<br>When we input a batch of $m$ training examples, we would have matrix $\underset{m \times d}{X}$ that is the vertical stacking of individual training examples $\boldsymbol x_i$, due to the choice of using row vectors.<br>$$<br>\begin{split}X=<br>\begin{bmatrix}<br>    \boldsymbol x_1 \<br>    \boldsymbol x_2 \<br>    \vdots \<br>    \boldsymbol x<em>m<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>    x</em>{11} &amp; x<em>{12} &amp; x</em>{13} &amp; \dots  &amp; x<em>{1d} \<br>    x</em>{21} &amp; x<em>{22} &amp; x</em>{23} &amp; \dots  &amp; x<em>{2d} \<br>    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>    x</em>{m1} &amp; x<em>{m2} &amp; x</em>{m3} &amp; \dots  &amp; x<em>{md}<br>\end{bmatrix}\end{split}<br>$$<br>${\boldsymbol{\hat{y}}</em>{one-hot}} = \text{softmax}({\boldsymbol z})$turns into:<br>$$<br>Y = \text{softmax}(Z) = \text{softmax}(XW + B)<br>$$<br>这里$B$是m*k矩阵，其相当于$\boldsymbol{b}$的m次拷贝，如下图所示：<br>$$<br>\begin{split} B =<br>\begin{bmatrix}<br>    \boldsymbol b \<br>    \boldsymbol b \<br>    \vdots \<br>    \boldsymbol b<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>    b<em>{1} &amp; b</em>{2} &amp; b<em>{3} &amp; \dots  &amp; b</em>{k} \<br>    b<em>{1} &amp; b</em>{2} &amp; b<em>{3} &amp; \dots  &amp; b</em>{k} \<br>    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>    b<em>{1} &amp; b</em>{2} &amp; b<em>{3} &amp; \dots  &amp; b</em>{k}<br>\end{bmatrix}\end{split}<br>$$<br>显然，可以通过broadcasting来直接使用$\boldsymbol{b}$。</p>
+<p>Each row of matrix $\underset{m \times k}{Z}$ corresponds to one training example. The softmax function operates on each row of matrix $Z$ and returns a matrix $\underset{m \times k}{Y}$, each row of which corresponds to the one-hot encoded prediction of one training example.</p>
+<p>##The MNIST dataset</p>
+<p>This time we’re going to work with real data, each a 28 by 28 centrally cropped（裁剪） black &amp; white photograph of a handwritten digit. Our task will be come up with a model that can associate each image with the digit (0-9) that it depicts.</p>
+<p>##The cross-entropy loss function</p>
+<p>The relevant loss function here is called <strong>cross-entropy</strong> and it may be the most common loss function you’ll find in all of deep learning. That’s because at the moment, classification problems tend to be far more abundant than regression problems.</p>
+<p>The basic idea is that we’re going to take a target Y that has been formatted as a one-hot vector, meaning one value corresponding to the correct label is set to 1 and the others are set to 0, e.g.<code>[0, 1, 0, 0, 0, 0, 0, 0, 0, 0]</code>.</p>
+<p>The basic idea of cross-entropy loss is that we only care about how much probability the prediction assigned to the correct label. In other words, for true label 2, we only care about the component of yhat corresponding to 2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">cross_entropy</span><span class="params">(yhat, y)</span>:</span></div><div class="line">    <span class="keyword">return</span> - nd.sum(y * nd.log(yhat+<span class="number">1e-6</span>))</div></pre></td></tr></table></figure>
+<p> MXNet’s has an efficient function that <u>simultaneously computes the softmax activation and cross-entropy loss</u>. However, if ever need to get the output probabilities,</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">softmax_cross_entropy = gluon.loss.SoftmaxCrossEntropyLoss()</div></pre></td></tr></table></figure>
+<h2 id="scratch"><a href="#scratch" class="headerlink" title="scratch"></a>scratch</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> mxnet <span class="keyword">as</span> mx</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> nd, autograd, gluon</div><div class="line"><span class="keyword">from</span> utils <span class="keyword">import</span> SGD</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line">start_time = time.time()</div><div class="line"></div><div class="line">mx.random.seed(<span class="number">1</span>)</div><div class="line"></div><div class="line">data_ctx = mx.gpu(<span class="number">0</span>)</div><div class="line">model_ctx = mx.gpu(<span class="number">0</span>)</div><div class="line"></div><div class="line">num_inputs = <span class="number">784</span>  <span class="comment"># 28 * 28</span></div><div class="line">num_outputs = <span class="number">10</span></div><div class="line">num_examples = <span class="number">60000</span></div><div class="line"></div><div class="line">W = nd.random_normal(shape=(num_inputs, num_outputs), ctx=model_ctx)</div><div class="line"></div><div class="line">b = nd.random_normal(shape=num_outputs, ctx=model_ctx)</div><div class="line"></div><div class="line">params = [W, b]</div><div class="line"></div><div class="line"><span class="keyword">for</span> param <span class="keyword">in</span> params:</div><div class="line">    param.attach_grad()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">transform</span><span class="params">(data, label)</span>:</span></div><div class="line">    <span class="comment"># cast data and label to floats and normalize data to range [0, 1]</span></div><div class="line">    <span class="keyword">return</span> data.astype(np.float32)/<span class="number">255</span>, label.astype(np.float32)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">softmax</span><span class="params">(y_linear)</span>:</span></div><div class="line">    exp = nd.exp(y_linear-nd.max(y_linear, axis=<span class="number">1</span>).reshape((<span class="number">-1</span>, <span class="number">1</span>)))</div><div class="line">    norms = nd.sum(exp, axis=<span class="number">1</span>).reshape((<span class="number">-1</span>, <span class="number">1</span>))</div><div class="line">    <span class="keyword">return</span> exp / norms  <span class="comment"># 矩阵除以列向量，矩阵每一行除以列向量norms的每一行元素。</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">net</span><span class="params">(X)</span>:</span></div><div class="line">    y_linear = nd.dot(X, W) + b</div><div class="line">    yhat = softmax(y_linear)</div><div class="line">    <span class="keyword">return</span> yhat</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">cross_entropy</span><span class="params">(yhat, y)</span>:</span></div><div class="line">    <span class="keyword">return</span> - nd.sum(y * nd.log(yhat+<span class="number">1e-6</span>))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate_accuracy</span><span class="params">(data_iterator, net)</span>:</span></div><div class="line">    <span class="comment"># 计算精确度</span></div><div class="line">    numerator = <span class="number">0.</span>  <span class="comment"># 分子</span></div><div class="line">    denominator = <span class="number">0.</span>  <span class="comment"># 分母</span></div><div class="line">    <span class="keyword">for</span> i, (data, label) <span class="keyword">in</span> enumerate(data_iterator):</div><div class="line">        data = data.as_in_context(model_ctx).reshape((<span class="number">-1</span>, <span class="number">784</span>))</div><div class="line">        label = label.as_in_context(model_ctx)</div><div class="line">        <span class="comment"># label_one_hot = nd.one_hot(label, 10)</span></div><div class="line">        output = net(data)</div><div class="line">        predictions = nd.argmax(output, axis=<span class="number">1</span>)</div><div class="line">        numerator += nd.sum(predictions == label)</div><div class="line">        denominator += data.shape[<span class="number">0</span>]</div><div class="line">    <span class="keyword">return</span> (numerator / denominator).asscalar()</div><div class="line"></div><div class="line"></div><div class="line">mnist_train = gluon.data.vision.MNIST(root=<span class="string">'../data_set/mnist'</span>, train=<span class="keyword">True</span>, transform=transform)</div><div class="line">mnist_test = gluon.data.vision.MNIST(root=<span class="string">'../data_set/mnist'</span>, train=<span class="keyword">False</span>, transform=transform)</div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"># each item is a tuple of an image(28*28) and a label</div><div class="line">image, label = mnist_train[0]</div><div class="line">print(type(image))</div><div class="line">print(image.shape, label)  # 28 * 28 * 1</div><div class="line"></div><div class="line">im = mx.nd.tile(image, (1, 1, 3))  # 把图片按照第三维broadcast，这样matplotlib才能画图</div><div class="line">print(im.shape)</div><div class="line"></div><div class="line">plt.imshow(im.asnumpy())</div><div class="line">plt.show()</div><div class="line">'''</div><div class="line"></div><div class="line"></div><div class="line">batch_size = <span class="number">64</span></div><div class="line">train_data = mx.gluon.data.DataLoader(mnist_train, batch_size, shuffle=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">test_data = mx.gluon.data.DataLoader(mnist_test, batch_size, shuffle=<span class="keyword">False</span>)</div><div class="line"></div><div class="line"></div><div class="line">epochs = <span class="number">20</span></div><div class="line">learning_rate = <span class="number">.005</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> e <span class="keyword">in</span> range(epochs):</div><div class="line">    cumulative_loss = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> i, (data, label) <span class="keyword">in</span> enumerate(train_data):</div><div class="line">        data = data.as_in_context(model_ctx).reshape((<span class="number">-1</span>, <span class="number">784</span>))</div><div class="line">        label = label.as_in_context(model_ctx)</div><div class="line">        label_one_hot = nd.one_hot(label, <span class="number">10</span>)</div><div class="line">        <span class="keyword">with</span> autograd.record():</div><div class="line">            output = net(data)</div><div class="line">            loss = cross_entropy(output, label_one_hot)</div><div class="line">        loss.backward()</div><div class="line">        SGD(params, learning_rate)</div><div class="line">        cumulative_loss += nd.sum(loss).asscalar()</div><div class="line"></div><div class="line">    test_accuracy = evaluate_accuracy(test_data, net)</div><div class="line">    train_accuracy = evaluate_accuracy(train_data, net)</div><div class="line">    print(<span class="string">"Epoch &#123;&#125;. Loss: &#123;&#125;, Train_acc &#123;:%&#125;, Test_acc &#123;:%&#125;"</span>.format(e, cumulative_loss/num_examples, train_accuracy, test_accuracy))</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># Define the function to do prediction</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_predict</span><span class="params">(net, data)</span>:</span></div><div class="line">    output = net(data)</div><div class="line">    <span class="keyword">return</span> nd.argmax(output, axis=<span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># let's sample 10 random data points from the test set</span></div><div class="line">sample_data = mx.gluon.data.DataLoader(mnist_test, batch_size=<span class="number">10</span>, shuffle=<span class="keyword">True</span>)</div><div class="line"><span class="keyword">for</span> i, (data, label) <span class="keyword">in</span> enumerate(sample_data):</div><div class="line">    data = data.as_in_context(model_ctx)</div><div class="line">    print(data.shape)</div><div class="line">    im = nd.transpose(data, (<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>))</div><div class="line">    im = nd.reshape(im, (<span class="number">28</span>, <span class="number">10</span>*<span class="number">28</span>, <span class="number">1</span>))</div><div class="line">    imtiles = nd.tile(im, (<span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>))</div><div class="line">    print(imtiles.shape)</div><div class="line"></div><div class="line">    plt.imshow(imtiles.asnumpy())</div><div class="line">    plt.show()</div><div class="line">    pred = model_predict(net, data.reshape((<span class="number">-1</span>, <span class="number">784</span>)))</div><div class="line">    print(<span class="string">'model predictions are:'</span>, pred)</div><div class="line">    <span class="keyword">break</span></div><div class="line"></div><div class="line">end_time = time.time()</div><div class="line"></div><div class="line">print(<span class="string">'total time:%.0fs'</span> % (end_time-start_time))</div></pre></td></tr></table></figure>
+<h2 id="gluon"><a href="#gluon" class="headerlink" title="gluon"></a>gluon</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> mxnet <span class="keyword">as</span> mx</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> nd, autograd</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> gluon</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">data_ctx = mx.gpu(<span class="number">0</span>)</div><div class="line">model_ctx = mx.gpu(<span class="number">0</span>)</div><div class="line"></div><div class="line">mx.random.seed(<span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line">batch_size = <span class="number">64</span></div><div class="line">num_inputs = <span class="number">784</span></div><div class="line">num_outputs = <span class="number">10</span></div><div class="line">num_examples = <span class="number">60000</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">transform</span><span class="params">(data, label)</span>:</span></div><div class="line">    <span class="keyword">return</span> data.astype(np.float32)/<span class="number">255</span>, label.astype(np.float32)</div><div class="line"></div><div class="line"></div><div class="line">train_data = mx.gluon.data.DataLoader(mx.gluon.data.vision.MNIST(root=<span class="string">'../data_set/mnist'</span>, train=<span class="keyword">True</span>, transform=transform), batch_size, shuffle=<span class="keyword">True</span>)</div><div class="line">test_data = mx.gluon.data.DataLoader(mx.gluon.data.vision.MNIST(root=<span class="string">'../data_set/mnist'</span>, train=<span class="keyword">False</span>, transform=transform), batch_size, shuffle=<span class="keyword">False</span>)</div><div class="line"></div><div class="line">net = gluon.nn.Dense(num_outputs)</div><div class="line"></div><div class="line">net.collect_params().initialize(mx.init.Normal(sigma=<span class="number">1.</span>), ctx=model_ctx)</div><div class="line"></div><div class="line">softmax_cross_entropy = gluon.loss.SoftmaxCrossEntropyLoss()</div><div class="line"></div><div class="line">trainer = gluon.Trainer(net.collect_params(), <span class="string">'sgd'</span>, &#123;<span class="string">'learning_rate'</span>: <span class="number">0.1</span>&#125;)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate_accuracy</span><span class="params">(data_iterator, net)</span>:</span></div><div class="line">    acc = mx.metric.Accuracy()</div><div class="line">    <span class="keyword">for</span> i, (data, label) <span class="keyword">in</span> enumerate(data_iterator):</div><div class="line">        data = data.as_in_context(model_ctx).reshape((<span class="number">-1</span>, <span class="number">784</span>))</div><div class="line">        label = label.as_in_context(model_ctx)</div><div class="line">        output = net(data)</div><div class="line">        predictions = nd.argmax(output, axis=<span class="number">1</span>)</div><div class="line">        acc.update(preds=predictions, labels=label)</div><div class="line">    <span class="keyword">return</span> acc.get()[<span class="number">1</span>]</div><div class="line"></div><div class="line"></div><div class="line">print(<span class="string">'未训练时精确度 %.2f'</span> % evaluate_accuracy(test_data, net))</div><div class="line"></div><div class="line">epochs = <span class="number">10</span></div><div class="line">moving_loss = <span class="number">0</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">for</span> e <span class="keyword">in</span> range(epochs):</div><div class="line">    cumulative_loss = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> data, label <span class="keyword">in</span> train_data:</div><div class="line">        data = data.as_in_context(model_ctx).reshape((<span class="number">-1</span>, <span class="number">784</span>))</div><div class="line">        label = label.as_in_context(model_ctx)</div><div class="line">        <span class="keyword">with</span> autograd.record():</div><div class="line">            output = net(data)</div><div class="line">            loss = softmax_cross_entropy(output, label)</div><div class="line">        loss.backward()</div><div class="line">        trainer.step(batch_size)</div><div class="line">        cumulative_loss += nd.sum(loss).asscalar()</div><div class="line">    test_accuracy = evaluate_accuracy(test_data, net)</div><div class="line">    train_accuracy = evaluate_accuracy(train_data, net)</div><div class="line">    print(<span class="string">"Epoch &#123;&#125;. Loss: &#123;&#125;, Train_acc &#123;:%&#125;, Test_acc &#123;:%&#125;"</span>.format(e, cumulative_loss / num_examples, train_accuracy,</div><div class="line">                                                                     test_accuracy))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_predict</span><span class="params">(net,data)</span>:</span></div><div class="line">    output = net(data.as_in_context(model_ctx))</div><div class="line">    <span class="keyword">return</span> nd.argmax(output, axis=<span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># let's sample 10 random data points from the test set</span></div><div class="line">sample_data = mx.gluon.data.DataLoader(mx.gluon.data.vision.MNIST(train=<span class="keyword">False</span>, transform=transform), <span class="number">10</span>, shuffle=<span class="keyword">True</span>)</div><div class="line"><span class="keyword">for</span> i, (data, label) <span class="keyword">in</span> enumerate(sample_data):</div><div class="line">    data = data.as_in_context(model_ctx)</div><div class="line">    print(data.shape)</div><div class="line">    im = nd.transpose(data, (<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>))</div><div class="line">    im = nd.reshape(im, (<span class="number">28</span>, <span class="number">10</span>*<span class="number">28</span>, <span class="number">1</span>))</div><div class="line">    imtiles = nd.tile(im, (<span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>))</div><div class="line"></div><div class="line">    plt.imshow(imtiles.asnumpy())</div><div class="line">    plt.show()</div><div class="line">    pred = model_predict(net, data.reshape((<span class="number">-1</span>, <span class="number">784</span>)))</div><div class="line">    print(<span class="string">'model predictions are:'</span>, pred)</div><div class="line">    <span class="keyword">break</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine_learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/16/python第三方库用法/" rel="next" title="python第三方库用法">
+                <i class="fa fa-chevron-left"></i> python第三方库用法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#scratch"><span class="nav-number">1.</span> <span class="nav-text">scratch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gluon"><span class="nav-number">2.</span> <span class="nav-text">gluon</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

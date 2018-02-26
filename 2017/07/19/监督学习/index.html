@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Machine Learn," />
+
+
+<meta name="description" content="机器学习之监督学习">
+<meta name="keywords" content="Machine Learn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="监督学习">
+<meta property="og:url" content="https://www.prime666.com/2017/07/19/监督学习/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="机器学习之监督学习">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/67841ec4b4f7e6ab658842ef2f53add46a2debbd">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/ee01fe927d862cbc18097ac30a320331e98f4173">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-07-19_110229.png">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/69853af4b84a7f3597a642a56b9ca9ab5a1c63d0">
+<meta property="og:image" content="http://images.cnitblog.com/blog/487468/201402/261219153897663.gif">
+<meta property="og:image" content="http://images.cnitblog.com/blog/487468/201402/261219289804718.gif">
+<meta property="og:image" content="http://images.cnitblog.com/blog/487468/201402/261219434733214.gif">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/7331bb9b6e36128d1d9cb735b11b65427929105d">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/f76ccfa7c2ed7f5b085115086107bbe25d329cec">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/fed29779d54adeccdec58f0894870c680f3d6b5b">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/f6e88c86fcecf4cfb5418760909bbe2d499bd1aa">
+<meta property="og:updated_time" content="2017-07-21T12:58:28.698Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="监督学习">
+<meta name="twitter:description" content="机器学习之监督学习">
+<meta name="twitter:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/67841ec4b4f7e6ab658842ef2f53add46a2debbd">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/07/19/监督学习/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>监督学习 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/07/19/监督学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">监督学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T11:06:11+08:00">2017-07-19</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>机器学习之监督学习</p>
+<a id="more"></a>
+<h1 id="监督学习——分类"><a href="#监督学习——分类" class="headerlink" title="监督学习——分类"></a>监督学习——分类</h1><h2 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h2><p>判定树是一个类似于流程图的树结构：其中，每个内部结点表示在一个属性上的测试，每个分支代表一个属性输出，而每个树叶结点代表类或类分布。树的最顶层是根结点。</p>
+<hr>
+<p><strong>熵的概念</strong>：</p>
+<p><a href="https://en.wikipedia.org/wiki/Entropy_(information_theory" target="_blank" rel="noopener">wiki</a>)</p>
+<p>熵的概念最早起源于物理学，用于度量一个热力学系统的无序程度。在信息论里面，熵是<strong>对不确定性的测量</strong>，<strong>熵</strong>是接收的每条消息中包含的信息的平均量，单位通常为<strong>比特</strong>。在信息世界，熵越高，则能传输越多的信息，不确定性越大，熵越低，则意味着传输的信息越少，不确定性越低。</p>
+<p>我们不知道某事物具体状态，却知道它有几种可能性时，显然，可能性种类愈多，不确定性愈大。不确定性愈大的事物，我们最后确定了、知道了，这就是说我们从中得到了愈多的信息，也就是信息量大。<em>所以，熵、不确定性、信息量，这三者是同一个数值。</em></p>
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/67841ec4b4f7e6ab658842ef2f53add46a2debbd" alt=""></p>
+<p>在这里b是对数所使用的底，通常是2,自然常数e，或是10。当b = 2，熵的单位是bit；当b = e，熵的单位是nat；而当b = 10,熵的单位是Hart。</p>
+<ol>
+<li><p>构造决策树的基本算法——决策树归纳算法（Iterative Dichotomiser 3简称ID3算法）</p>
+<p>思路<strong>关键就是选择哪个属性作为结点</strong></p>
+<p>信息获取量(Information Gain)：Gain(A) = Info(D) - Infor_A(D)</p>
+<p>即用先不考虑属性A的信息熵-考虑属性A后的信息熵</p>
+<p>每次选择一个Gain最大的作为结点。</p>
+</li>
+<li><p>优缺点</p>
+<ul>
+<li><p>优点</p>
+<p>直观，便于理解</p>
+</li>
+<li><p>缺点</p>
+<p>处理连续变量不好（连续变量必须离散化）</p>
+<p>类别较多时，错误增加的比较快</p>
+<p>小规模数据集有效</p>
+</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> csv</div><div class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing,tree</div><div class="line"><span class="keyword">from</span> sklearn.feature_extraction <span class="keyword">import</span> DictVectorizer</div><div class="line"></div><div class="line">featureList=[]<span class="comment">#字典的列表，每个字典对应一个实例</span></div><div class="line">lableList=[]<span class="comment">#标题的列表</span></div><div class="line"></div><div class="line"><span class="keyword">with</span> open(<span class="string">r'E:\pycharm\ML\computer.csv'</span>,<span class="string">'r'</span>) <span class="keyword">as</span> f:</div><div class="line">    r=csv.reader(f)</div><div class="line">    header=next(r) <span class="comment">#标题行</span></div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> r:</div><div class="line">        lableList.append(line[<span class="number">-1</span>])</div><div class="line">        dic=&#123;&#125;</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(line)<span class="number">-1</span>):</div><div class="line">            dic[header[i]]=line[i]</div><div class="line">        featureList.append(dic)</div><div class="line"></div><div class="line"><span class="comment"># pprint(featureList)</span></div><div class="line"></div><div class="line">vec=DictVectorizer()<span class="comment">#进行特征向量的变换</span></div><div class="line"></div><div class="line">dummyX=vec.fit_transform(featureList).toarray()</div><div class="line"></div><div class="line"><span class="comment"># print(dummyX.shape)</span></div><div class="line"><span class="comment"># print(dummyX)</span></div><div class="line"></div><div class="line">print(vec.get_feature_names())</div><div class="line"><span class="comment"># print(dummyX)</span></div><div class="line"></div><div class="line">dummyY=preprocessing.LabelBinarizer().fit_transform(lableList)</div><div class="line"></div><div class="line"></div><div class="line">classifier=tree.DecisionTreeClassifier(criterion=<span class="string">'entropy'</span>)<span class="comment">#利用信息熵时，用entropy（熵）。默认是gini</span></div><div class="line">classifier.fit(dummyX,dummyY)</div><div class="line"><span class="string">'''</span></div><div class="line">根据训练集(X,Y)建立决策树，X的维度为[n_samples, n_features]，Y的维度是shape = [n_samples] or [n_samples, n_outputs]，代表标记</div><div class="line">return:self</div><div class="line">'''</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">with</span> open(<span class="string">'picture.dot'</span>,<span class="string">'w'</span>) <span class="keyword">as</span> f: <span class="comment">#写入dot文件</span></div><div class="line">    f=tree.export_graphviz(classifier,feature_names=vec.get_feature_names(),out_file=f)</div><div class="line"></div><div class="line">Row=dummyX[<span class="number">0</span>,:]</div><div class="line">Row[<span class="number">0</span>]=<span class="number">1</span></div><div class="line">Row[<span class="number">2</span>]=<span class="number">0</span></div><div class="line">print(<span class="string">'new Row:'</span>,str(Row))</div><div class="line"></div><div class="line">predict=classifier.predict(Row)</div><div class="line">print(<span class="string">'预测结果为'</span>,str(predict))</div></pre></td></tr></table></figure>
+<p>Graphviz可以将dot文件转换成pdf，其即是可视化的文件。Graphviz安装后，把其bin目录添加到环境变量中，用<code>dot -Tpdf 输入文件名.dot -o 输出文件名.pdf</code>即可。</p>
+<h2 id="KNN算法（k-Nearest-Neighbor）"><a href="#KNN算法（k-Nearest-Neighbor）" class="headerlink" title="KNN算法（k-Nearest Neighbor）"></a>KNN算法（k-Nearest Neighbor）</h2><ol>
+<li><p>基本流程</p>
+<ul>
+<li>为了判断未知实例的类别，以所有已知类别的实例作为参照</li>
+<li>选择参数K</li>
+<li>计算未知实例与所有已知实例的距离</li>
+<li>选择最近K个已知实例</li>
+<li>根据少数服从多数的投票法则(majority-voting)，让未知实例归类为K个最邻近样本中最多数的类别</li>
+</ul>
+<p>针对距离的衡量，选择<strong>Euclidean distance，即两点间的直线距离</strong>。</p>
+</li>
+<li><p>算法优缺点</p>
+<ul>
+<li><p>优点</p>
+<p>简单</p>
+<p>易于理解</p>
+<p>容易实现</p>
+<p>通过对K的选择可具备丢弃噪音数据的健壮性</p>
+</li>
+<li><p>缺点</p>
+<p>需要大量空间储存所有已知实例</p>
+<p>算法复杂度高（需要比较所有已知实例与要分类的实例）</p>
+<p>当其样本分布不平衡时，比如其中一类样本过大（实例数量过多）占主导的时候，新的未知实例容易被归类为这个主导样本，因为这类样本实例的数量过大，但这个新的未知实例实际并木接近目标样本</p>
+</li>
+</ul>
+</li>
+<li><p>改进</p>
+<p>引入距离作为权重。</p>
+</li>
+</ol>
+<p><strong>数据集iris介绍：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sklearn.datasets.load_iris(return_X_y=<span class="keyword">False</span>)</div><div class="line"><span class="comment">#return_X_y : boolean, default=False.If True, returns (data, target) instead of a Bunch object。</span></div><div class="line"><span class="comment">#return:</span></div><div class="line"><span class="string">'''</span></div><div class="line">data : Bunch</div><div class="line">Dictionary-like object, the interesting attributes are: ‘data’, the data to learn, ‘target’, the classification labels, ‘target_names’, the meaning of the labels, ‘feature_names’, the meaning of the features, and ‘DESCR’, the full description of the dataset.</div><div class="line">(data, target) : tuple if return_X_y is True</div><div class="line">'''</div></pre></td></tr></table></figure>
+<p>该数据集包括3个类别，每个类50个实例，共计150个实例。</p>
+<p><strong>KNN算法的封装</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">neighbors</span>.<span class="title">KNeighborsClassifier</span><span class="params">(n_neighbors=<span class="number">5</span>, weights=<span class="string">'uniform'</span>, algorithm=<span class="string">'auto'</span>, leaf_size=<span class="number">30</span>, p=<span class="number">2</span>, metric=<span class="string">'minkowski'</span>, metric_params=None, n_jobs=<span class="number">1</span>, **kwargs)</span></span></div></pre></td></tr></table></figure>
+<p>更多内容见<a href="http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html" target="_blank" rel="noopener">详细文档</a></p>
+<p>这里用到了其<code>fit(X,Y)</code>方法，用X作为训练数据，Y是target。<u>大部分情况下，fit基本上就是建立模型,其有拟合之意。</u></p>
+<p>关于测试用了<code>predict(X)</code>方法，这里选择了参数X的维度是 (n_query, n_features)，返回一个数组，每个值都代表Class lable。</p>
+<p>以下是利用库方法实现KNN算法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> neighbors</div><div class="line"></div><div class="line"></div><div class="line">K=neighbors.KNeighborsClassifier()<span class="comment">#实现了knn算法的分类器</span></div><div class="line">iris=datasets.load_iris() <span class="comment">#鸢尾(花)数据集</span></div><div class="line"></div><div class="line">K.fit(iris[<span class="string">'data'</span>],iris[<span class="string">'target'</span>])</div><div class="line"></div><div class="line">print(iris.target_names) <span class="comment">#也可以用iris['target_names']，如上</span></div><div class="line"></div><div class="line">predicted_lable=K.predict([[<span class="number">0.1</span>,<span class="number">0.2</span>,<span class="number">0.3</span>,<span class="number">0.4</span>]])</div><div class="line">print(predicted_lable)</div></pre></td></tr></table></figure>
+<p>封装的很好，很简洁。</p>
+<hr>
+<p>手动实现如下 </p>
+<p>先补充一些知识：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">operator.itemgetter(item)</div><div class="line">operator.itemgetter(*items)</div></pre></td></tr></table></figure>
+<p>它们都是返回一个可调用对象，该对象会对其参数调用<code>__getitem__()</code>方法，也就是<code>[]</code>运算符。给定多个参数，就返回元组，示例如下</p>
+<ul>
+<li>After <code>f = itemgetter(2)</code>, the call <code>f(r)</code> returns <code>r[2]</code>.</li>
+<li>After <code>g = itemgetter(2, 5, 3)</code>, the call <code>g(r)</code> returns <code>(r[2], r[5], r[3])</code>.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sorted(iterable, *, key=<span class="keyword">None</span>, reverse=<span class="keyword">False</span>)</div><div class="line"><span class="comment">#Return a new sorted list from the items in iterable!</span></div></pre></td></tr></table></figure>
+<p>可以利用reverse进行相反排序，key参数可以传递排序方法。<strong>特别注意返回的是一个list。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> csv</div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> math <span class="keyword">import</span> sqrt</div><div class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> itemgetter</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataset</span><span class="params">(filename,split,trainingSet=[],testSet=[])</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param filename: 数据集文件名，建议绝对路径</div><div class="line">    :param split: 区分训练集和数据集的一个浮点数</div><div class="line">    :param trainingSet: 训练集</div><div class="line">    :param testSet: 测试集</div><div class="line">    :return: none</div><div class="line">    '''</div><div class="line">    <span class="keyword">with</span> open(filename,<span class="string">'r'</span>) <span class="keyword">as</span> f:</div><div class="line">        dataSet=csv.reader(f)</div><div class="line">        lines=list(dataSet)</div><div class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> lines:</div><div class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">4</span>):</div><div class="line">                line[x]=float(line[x])</div><div class="line">            <span class="keyword">if</span> random.random()&lt;split:</div><div class="line">                trainingSet.append(line)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                testSet.append(line)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">euclideanDistance</span><span class="params">(position1,position2,dim)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param position1: 起点坐标</div><div class="line">    :param position2: 终点坐标</div><div class="line">    :param dim: 维度</div><div class="line">    :return: 距离</div><div class="line">    '''</div><div class="line">    distance=<span class="number">0</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(dim):</div><div class="line">        distance+=(position1[i]-position2[i])**<span class="number">2</span></div><div class="line">    <span class="keyword">return</span> sqrt(distance)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getNeighbors</span><span class="params">(trainSet,test,K)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param trainSet:训练集</div><div class="line">    :param test: 待测试的用例</div><div class="line">    :param K: 代表选择多少个最近的点</div><div class="line">    :return: K个最近的用例</div><div class="line">    '''</div><div class="line">    distances=[]<span class="comment">#tuple的list，保存test到每个train的distance</span></div><div class="line">    dim=len(test)<span class="number">-1</span><span class="comment">#不算lable</span></div><div class="line">    <span class="keyword">for</span> train <span class="keyword">in</span> trainSet:</div><div class="line">        distances.append((train,euclideanDistance(test,train,dim)))</div><div class="line">    distances.sort(key=itemgetter(<span class="number">1</span>))</div><div class="line">    neighbors=[]<span class="comment">#K个最近的train的列表</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(K):</div><div class="line">        neighbors.append(distances[i][<span class="number">0</span>])</div><div class="line">    <span class="keyword">return</span> neighbors</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getResponse</span><span class="params">(neighbors)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param neighbors:K个最近的点的列表</div><div class="line">    :return: 占多数的类别名，str类型</div><div class="line">    '''</div><div class="line">    Class=&#123;&#125;</div><div class="line">    <span class="keyword">for</span> point <span class="keyword">in</span> neighbors:</div><div class="line">        lable=point[<span class="number">-1</span>]</div><div class="line">        <span class="keyword">if</span> lable <span class="keyword">in</span> Class:</div><div class="line">            Class[lable]+=<span class="number">1</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            Class[lable]=<span class="number">1</span></div><div class="line">    <span class="keyword">return</span> sorted(Class,key=itemgetter(<span class="number">1</span>),reverse=<span class="keyword">True</span>)[<span class="number">0</span>]<span class="comment">#对字典按键值排序，返回列表。dict也是iterable的</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getAccuracy</span><span class="params">(testSet,correctSet)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    :param testSet: 测试集</div><div class="line">    :param correctSet: 正确的结果</div><div class="line">    :return: 测试集正确的比例</div><div class="line">    '''</div><div class="line">    correct_count=<span class="number">0</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(testSet)):</div><div class="line">        <span class="keyword">if</span> testSet[i][<span class="number">-1</span>]==correctSet[i]:</div><div class="line">            correct_count+=<span class="number">1</span></div><div class="line">    <span class="keyword">return</span> correct_count/len(testSet)*<span class="number">100.0</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    trainSet=[]</div><div class="line">    testSet=[]</div><div class="line"></div><div class="line">    split=<span class="number">0.67</span></div><div class="line">    loadDataset(<span class="string">r'E:\pycharm\ML\KNN\iris.data.txt'</span>,split,trainSet,testSet)</div><div class="line">    print(<span class="string">'trainset个数:'</span>,len(trainSet))</div><div class="line">    print(<span class="string">'testset个数:'</span>,len(testSet))</div><div class="line"></div><div class="line">    correctSet=[]</div><div class="line">    K=<span class="number">3</span></div><div class="line">    <span class="keyword">for</span> test <span class="keyword">in</span> testSet:</div><div class="line">        neighbors=getNeighbors(trainSet,test,K)</div><div class="line">        result=getResponse(neighbors)</div><div class="line">        correctSet.append(result)</div><div class="line">        print(<span class="string">'预测为:'</span>,result,<span class="string">'实际为:'</span>,test[<span class="number">-1</span>])</div><div class="line">    print(<span class="string">'精确度为:'</span>,getAccuracy(testSet,correctSet),<span class="string">'%'</span>)</div></pre></td></tr></table></figure>
+<h2 id="支持向量机（上）"><a href="#支持向量机（上）" class="headerlink" title="支持向量机（上）"></a>支持向量机（上）</h2><p>​    在机器学习中，支持向量机（英语：Support Vector Machine，常简称为SVM，又名支持向量网络）是在分类与回归分析中分析数据的<strong>监督式学习模型</strong>与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为非概率二元线性分类器。SVM模型是将<strong>实例表示为空间中的点</strong>，这样映射就使得单独类别的实例被尽可能宽的明显的间隔分开。然后，<u>将新的实例映射到同一空间，并基于它们落在间隔的哪一侧来预测所属类别。</u></p>
+<p>​    对于支持向量机来说，<strong>数据点被视为p 维向量</strong>，而我们想知道是否可以<strong>用(p-1) 维超平面来分开这些点</strong>。这就是所谓的线性分类器。可能有许多超平面可以把数据分类。最佳超平面的一个<strong>合理选择是以最大间隔把两个类分开的超平面</strong>。因此，我们要选择能够让到每边最近的数据点的距离最大化的超平面。</p>
+<p>这部分主要是<a href="https://en.wikipedia.org/wiki/Support_vector_machine#Linear_SVM" target="_blank" rel="noopener">线性SVM</a>，即线性可分的情况（用一条线可以分开）。</p>
+<hr>
+<p>显然，算法复杂度仅仅由支持向量的个数决定，而不是由数据的维度决定。另外，SVM训练出来的模型，完全依赖于支持向量，其余的点删除也不影响。如果支持向量比较少，则更容易被泛化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> pylab <span class="keyword">as</span> pl <span class="comment">#matplotlib的一个子模块，被单独拿了出来</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</div><div class="line"></div><div class="line">np.random.seed(<span class="number">0</span>) <span class="comment">#固定随机化种子</span></div><div class="line"></div><div class="line"><span class="comment">#生成数据</span></div><div class="line">X=np.r_[np.random.randn(<span class="number">20</span>,<span class="number">2</span>)-[<span class="number">2</span>,<span class="number">2</span>],np.random.randn(<span class="number">20</span>,<span class="number">2</span>)+[<span class="number">2</span>,<span class="number">2</span>]]</div><div class="line"><span class="comment">#上面这句话的意思是先根据标准正态分布生成20*2的矩阵，然后对每一行减去[2,2]；然后把两个矩阵进行连接。实际上这样一减，点分别左右平移，这样方便分类。</span></div><div class="line">Y=[<span class="number">0</span>]*<span class="number">20</span>+[<span class="number">1</span>]*<span class="number">20</span></div><div class="line"></div><div class="line"><span class="comment">#拟合模型</span></div><div class="line">classifier=svm.SVC(kernel=<span class="string">'linear'</span>)</div><div class="line">classifier.fit(X,Y)<span class="comment">#进行模型拟合</span></div><div class="line"></div><div class="line"><span class="comment">#超平面</span></div><div class="line"><span class="comment">#w0x+w1y+w3=0转化为y=-w0/w1-w3/w1</span></div><div class="line">w=classifier.coef_[<span class="number">0</span>] <span class="comment">#系数w0 w1</span></div><div class="line">k=-w[<span class="number">0</span>]/w[<span class="number">1</span>] <span class="comment">#斜率</span></div><div class="line">xx=np.linspace(<span class="number">-5</span>,<span class="number">5</span>)</div><div class="line">yy=k*xx-(classifier.intercept_[<span class="number">0</span>]/w[<span class="number">1</span>])</div><div class="line"></div><div class="line"><span class="comment">#上下两条平行线</span></div><div class="line">b=classifier.support_vectors_[<span class="number">0</span>]</div><div class="line">yy_down=k*xx+(b[<span class="number">1</span>]-k*b[<span class="number">0</span>])</div><div class="line"></div><div class="line">b=classifier.support_vectors_[<span class="number">-1</span>]</div><div class="line">yy_up=k*xx+(b[<span class="number">1</span>]-k*b[<span class="number">0</span>])</div><div class="line"></div><div class="line"><span class="comment">#画图</span></div><div class="line">pl.plot(xx,yy,<span class="string">'k-'</span>)<span class="comment">#实线</span></div><div class="line">pl.plot(xx,yy_down,<span class="string">'k--'</span>)</div><div class="line">pl.plot(xx,yy_up,<span class="string">'k--'</span>)<span class="comment">#虚线</span></div><div class="line"></div><div class="line">pl.scatter(classifier.support_vectors_[:,<span class="number">0</span>],classifier.support_vectors_[:,<span class="number">1</span>],s=<span class="number">80</span>,facecolors=<span class="string">'none'</span>)</div><div class="line">pl.scatter(X[:,<span class="number">0</span>],X[:,<span class="number">1</span>],c=Y,cmap=pl.cm.Paired)</div><div class="line"></div><div class="line">pl.axis(<span class="string">'tight'</span>)<span class="comment">#为了让所有数据都能在一张图展示</span></div><div class="line">pl.show()</div></pre></td></tr></table></figure>
+<p>相关知识补充：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numpy.r_</div></pre></td></tr></table></figure>
+<p>其是一个类的实例，实现了<code>__getitem__</code>方法，可用于连接矩阵。<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.r_.html?highlight=r_#numpy.r_" target="_blank" rel="noopener">详细文档</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numpy.random.randn(d0, d1, ..., dn)</div></pre></td></tr></table></figure>
+<p>根据标准正态分布（期望0，方差1）产生随机数，返回矩阵，参数指定维度。不传递参数时默认返回一个浮点数。</p>
+<p><a href="http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html" target="_blank" rel="noopener">SVC类</a></p>
+<p>由于该部分是线性SVM，所以，构造分类器时只需要将<code>kernel</code>关键字置为<code>linear</code>即可。</p>
+<p>其有以下属性：</p>
+<blockquote>
+<p>support_ : array-like, shape = [n_SV]<br>Indices of support vectors.</p>
+<p>support<em>vectors</em> : array-like, shape = [n_SV, n_features]<br>Support vectors.</p>
+<p>n<em>support</em> : array-like, dtype=int32, shape = [n_class]<br>Number of support vectors for each class.</p>
+<p>coef_ : array, shape = [n_class-1, n_features]<br>Weights assigned to the features (coefficients in the primal problem). This is only available in the case of a linear kernel.</p>
+<p>intercept_ : array, shape = [n_class * (n_class-1) / 2]<br>Constants in decision function.</p>
+</blockquote>
+<p><a href="https://matplotlib.org/api/pyplot_api.html?highlight=scatter#matplotlib.pyplot.scatter" target="_blank" rel="noopener">散点图</a>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">matplotlib.pyplot.scatter(x, y, s=<span class="keyword">None</span>, c=<span class="keyword">None</span>, marker=<span class="keyword">None</span>, cmap=<span class="keyword">None</span>, norm=<span class="keyword">None</span>, vmin=<span class="keyword">None</span>, vmax=<span class="keyword">None</span>, alpha=<span class="keyword">None</span>, linewidths=<span class="keyword">None</span>, verts=<span class="keyword">None</span>, edgecolors=<span class="keyword">None</span>, hold=<span class="keyword">None</span>, data=<span class="keyword">None</span>, **kwargs)</div></pre></td></tr></table></figure>
+<p>x,y均是序列，代表点的坐标。s是点的大小，c上面程序用的是Y，其可以是一个序列，这样点会根据Y中值映射到不同颜色（根据cmap参数）。</p>
+<h2 id="支持向量机（下）"><a href="#支持向量机（下）" class="headerlink" title="支持向量机（下）"></a>支持向量机（下）</h2><p>下面讨论线性不可分的情况。为此，有人提出将原有限维空间映射到维数高得多的空间中，在该空间中进行分离可能会更容易。但是高维度计算时向量点积可能比较复杂，所以引入核函数，用来取代计算非线性映射函数的内积从而快速得到点积。</p>
+<hr>
+<p><strong>SVM可以扩展到多个类的情况</strong></p>
+<p>对于每个类，有一个当前类和其它类的二类分类器（one vs rest）</p>
+<hr>
+<p><a href="http://scikit-learn.org/stable/auto_examples/applications/face_recognition.html#sphx-glr-auto-examples-applications-face-recognition-py" target="_blank" rel="noopener">人脸识别</a>的示例：</p>
+<ol>
+<li><p>相关库函数用法总结</p>
+<ul>
+<li><p>数据集获取</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lfw_people=fetch_lfw_people(min_faces_per_person=<span class="number">70</span>,resize=<span class="number">0.4</span>)</div></pre></td></tr></table></figure>
+<p>min_faces_per_person : int, optional, default None<br>数据集只会保留至少拥有<code>min_faces_person</code>张照片的人。</p>
+<p>resize : float, optional, default 0.5<br>用于调整每张图片大小的比例。</p>
+<p>其返回一个字典类型的对象，有以下属性：</p>
+<blockquote>
+<p>dataset : dict-like object with the following attributes:<br>dataset.data : numpy array of shape (13233, 2914)  二维数组，第一维算是序号，每一行存储图片数据（62*47==2914）<br>Each row corresponds to a ravelled face image of original size 62 x 47 pixels. Changing the slice_ or resize parameters will change the shape of the output.</p>
+<p>dataset.images : numpy array of shape (13233, 62, 47)  三维数组，第一维算是序号，后两维对应一张图片的长和高<br>Each row is a face image corresponding to one of the 5749 people in the dataset. Changing the slice_ or resize parameters will change the shape of the output.</p>
+<p>dataset.target : numpy array of shape (13233,)  一维数组，下标是序号，对应的值是相应的label<br>Labels associated to each face image. Those labels range from 0-5748 and correspond to the person IDs.</p>
+</blockquote>
+</li>
+<li><p>数据集分割成测试集和训练集</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sklearn.model_selection.train_test_split(*arrays, **options)</div></pre></td></tr></table></figure>
+<p>该函数把数组或矩阵随机分成测试子集和训练子集。</p>
+<p>第一个参数是传入的序列，其有一个关键字参数下面会用到：</p>
+<blockquote>
+<p>test_size : float, int, or None (default is None)<br>If float, should be between 0.0 and 1.0 and represent the proportion of the dataset to include in the test split. If int, represents the absolute number of test samples. If None, the value is automatically set to the complement of the train size. If train size is also None, test size is set to 0.25.</p>
+</blockquote>
+<p>返回就是划分后的四个子集。</p>
+</li>
+<li><p>降维——Principal component analysis主要组件分析 (PCA)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">decomposition</span>.<span class="title">PCA</span><span class="params">(n_components=None, copy=True, whiten=False, svd_solver=<span class="string">'auto'</span>, tol=<span class="number">0.0</span>, iterated_power=<span class="string">'auto'</span>, random_state=None)</span></span></div></pre></td></tr></table></figure>
+<p>该算法<strong>主要利用奇异值分解将数据投影到更低维的空间</strong>。</p>
+<p>主要参数详解：</p>
+<blockquote>
+<p>n_components : int, float, None or string<br>Number of components to keep. if n_components is not set all components are kept: n_components == min(n_samples, n_features)</p>
+<p>​</p>
+<p>svd_solver : string {‘auto’, ‘full’, ‘arpack’, ‘randomized’}</p>
+<p>randomized :run randomized SVD by the method of Halko et al.</p>
+<p>​</p>
+<p>whiten : bool, optional (default False)<br>When True (False by default) the components_ vectors are multiplied by the square root of n_samples and then divided by the singular values to ensure uncorrelated outputs with unit component-wise variances.<br>Whitening will remove some information from the transformed signal (the relative variance scales of the components) but can sometime improve the predictive accuracy of the downstream estimators by making their data respect some hard-wired assumptions.</p>
+</blockquote>
+<p>主要属性如下：</p>
+<blockquote>
+<p>components_ : array, [n_components, n_features]<br>Principal axes in feature space, representing the directions of maximum variance in the data.</p>
+</blockquote>
+<p>其有几个方法下面会用到：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fit(X, y=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>用X拟合</p>
+<p>Parameters:<br>X: array-like, shape (n_samples, n_features) :<br>Training data, where n_samples in the number of samples and n_features is the number of features.<br>Returns:<br>self : object<br>Returns the instance itself.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">transform(X, y=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<p>对X进行降维：</p>
+<blockquote>
+<p>Parameters:<br>X : array-like, shape (n_samples, n_features)<br>New data, where n_samples is the number of samples and n_features is the number of features.<br>Returns:<br>X_new : array-like, shape (n_samples, n_components)</p>
+</blockquote>
+</li>
+<li><p>分类器求解<a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html" target="_blank" rel="noopener">文档</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">model_selection</span>.<span class="title">GridSearchCV</span><span class="params">(estimator, param_grid, scoring=None, fit_params=None, n_jobs=<span class="number">1</span>, iid=True, refit=True, cv=None, verbose=<span class="number">0</span>, pre_dispatch=<span class="string">'2*n_jobs'</span>, error_score=<span class="string">'raise'</span>,return_train_score=True)</span></span></div></pre></td></tr></table></figure>
+<p>其是一个穷举式算法，</p>
+<p>主要参数：</p>
+<blockquote>
+<p>estimator : estimator object.<br>This is assumed to implement the scikit-learn estimator interface. Either estimator needs to provide a score function, or scoring must be passed.</p>
+<p>param_grid : dict or list of dictionaries<br>Dictionary with parameters names (string) as keys and lists of parameter settings to try as values, or a list of such dictionaries, in which case the grids spanned by each dictionary in the list are explored. This enables searching over any sequence of parameter settings.</p>
+</blockquote>
+<p>其属性<code>best_estimator_</code> 为Estimator that was chosen by the search</p>
+<p>方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fit(X, y=<span class="keyword">None</span>, groups=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>X : array-like, shape = [n_samples, n_features]<br>Training vector, where n_samples is the number of samples and n_features is the number of features.</p>
+<p>y : array-like, shape = [n_samples] or [n_samples, n_output], optional<br>Target relative to X for classification or regression; None for unsupervised learning.</p>
+<p>groups : array-like, with shape (n_samples,), optional<br>Group labels for the samples used while splitting the dataset into train/test set.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">predict(*args, **kwargs)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Call predict on the estimator with the best found parameters.</p>
+<p>Parameters:<br>X : indexable, length n_samples</p>
+</blockquote>
+</li>
+<li><p>分析报告<a href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html" target="_blank" rel="noopener">文档</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sklearn.metrics.classification_report(y_true, y_pred, labels=<span class="keyword">None</span>, target_names=<span class="keyword">None</span>, sample_weight=<span class="keyword">None</span>, digits=<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Parameters:<br>y_true : 1d array-like, or label indicator array / sparse matrix<br>Ground truth (correct) target values.<br>y_pred : 1d array-like, or label indicator array / sparse matrix<br>Estimated targets as returned by a classifier.<br>labels : array, shape = [n_labels]<br>Optional list of label indices to include in the report.<br>target_names : list of strings<br>Optional display names matching the labels (same order).<br>sample_weight : array-like of shape = [n_samples], optional<br>Sample weights.<br>digits : int<br>Number of digits for formatting output floating point values</p>
+<p>​</p>
+<p>Returns:<br>report : string<br>Text summary of the precision, recall, F1 score for each class.</p>
+</blockquote>
+</li>
+<li><p>混淆矩阵（confusion matrix）<a href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html#sklearn.metrics.confusion_matrix" target="_blank" rel="noopener">文档</a></p>
+<p>矩阵的每一列代表一个类的实例预测，而每一行表示一个实际的类的实例。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sklearn.metrics.confusion_matrix(y_true, y_pred, labels=<span class="keyword">None</span>, sample_weight=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Parameters:<br>y_true : array, shape = [n_samples]<br>Ground truth (correct) target values.<br>y_pred : array, shape = [n_samples]<br>Estimated targets as returned by a classifier.<br>labels : array, shape = [n_classes], optional<br>List of labels to index the matrix. This may be used to reorder or select a subset of labels. If none is given, those that appear at least once in y_true or y_pred are used in sorted order.</p>
+<p>​</p>
+<p>Returns:<br>C : array, shape = [n_classes, n_classes] 代表混淆矩阵</p>
+</blockquote>
+<p>比如下面的例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y_true = [<span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y_pred = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>confusion_matrix(y_true, y_pred)</div><div class="line">array([[<span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">       [<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>]])</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">  0 1 2	</div><div class="line">0 2 0 0	</div><div class="line">1 0 0 1</div><div class="line">2 1 0 2</div></pre></td></tr></table></figure>
+<p>把上述矩阵补全，这个矩阵中(0,0)的意思为实际为0预测为0的情况有几种，看上例显然有两种！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>y_true = [<span class="string">"cat"</span>, <span class="string">"ant"</span>, <span class="string">"cat"</span>, <span class="string">"cat"</span>, <span class="string">"ant"</span>, <span class="string">"bird"</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y_pred = [<span class="string">"ant"</span>, <span class="string">"ant"</span>, <span class="string">"cat"</span>, <span class="string">"cat"</span>, <span class="string">"ant"</span>, <span class="string">"cat"</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>confusion_matrix(y_true, y_pred, labels=[<span class="string">"ant"</span>, <span class="string">"bird"</span>, <span class="string">"cat"</span>])</div><div class="line">array([[<span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">       [<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>]])</div></pre></td></tr></table></figure>
+<p>这里补全矩阵的行列就不再是上面的0 1 2了，而是那三个字符串！</p>
+</li>
+</ul>
+</li>
+<li><p>实现代码</p>
+</li>
+</ol>
+<h2 id="神经网络算法"><a href="#神经网络算法" class="headerlink" title="神经网络算法"></a>神经网络算法</h2><h3 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h3><ol>
+<li><p>神经元</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png" alt=""></p>
+<ul>
+<li>a1~an为输入向量的各个分量</li>
+<li>w1~wn为神经元各个突触的权值</li>
+<li>b为偏置</li>
+<li>f为传递函数 activation function or transfer function，通常为非线性函数(sigmod函数)。</li>
+<li>t为神经元输出</li>
+</ul>
+<p>所以有<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ee01fe927d862cbc18097ac30a320331e98f4173" alt=""></p>
+<p>其中，W’是W的转置。</p>
+<p>可见，一个神经元的功能是求得输入向量与权向量的内积后，经一个非线性传递函数得到一个标量结果。</p>
+</li>
+<li><p>常见结构</p>
+<p>一种常见的多层结构的前馈网络（Multilayer Feedforward Network）由三部分组成：<br>输入层（Input layer），众多神经元（Neuron）接受大量非线形输入消息。输入的消息称为输入向量。<br>输出层（Output layer），消息在神经元链接中传输、分析、权衡，形成输出结果。输出的消息称为输出向量。（通常个数等于类别个数）<br>隐藏层（Hidden layer），简称“隐层”，是输入层和输出层之间众多神经元和链接组成的各个层面。隐层可以有多层，习惯上会用一层。隐层的节点（神经元）数目不定，但数目越多神经网络的非线性越显著，从而神经网络的强健性（robustness）（控制系统在一定结构、大小等的参数摄动下，维持某些性能的特性。）更显著。习惯上会选输入节点1.2至1.5倍的节点。</p>
+</li>
+<li><p>交叉验证之K-fold cross-validation</p>
+<p>K次交叉验证，初始采样分割成K个子样本，一个单独的子样本被保留作为验证模型的数据，其他K-1个样本用来训练。交叉验证重复K次，每个子样本验证一次，平均K次的结果或者使用其它结合方式，最终得到一个单一估测。这个方法的优势在于，同时重复运用随机产生的子样本进行训练和验证，每次的结果验证一次，10次交叉验证是最常用的。</p>
+</li>
+<li><p>反向传播算法——Backpropagation</p>
+<p>其本质上计算损失函数对权重w的偏导数或梯度。这里的损失函数（cost function or error function ）是一个函数，负责把一个或多个变量映射到实数域，代表与某事件有关的成本。在本算法中，主要负责计算输出和期待输出之间的差异。</p>
+<p><strong>这个算法一开始对权值和偏置进行随机初始化，然后通过不断计算输出和期望输出之间的差异，根据这个差异来向前更新权值和偏置，最后训练完成后结束。</strong></p>
+<p>其具体公式见<a href="https://en.wikipedia.org/wiki/Backpropagation#Assumptions_about_the_loss_function" target="_blank" rel="noopener">wiki</a></p>
+</li>
+<li><p>手动实现神经网络算法</p>
+<ul>
+<li><p>随机数生成</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numpy.random.random(size=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<p>Return random floats in the half-open interval [0.0, 1.0)</p>
+<blockquote>
+<p>Parameters:    </p>
+<p>size : int or tuple of ints, optional</p>
+<p>Output shape. If the given shape is, e.g., (m, n, k), then m <em> n </em> k samples are drawn. Default is None, in which case a single value is returned.</p>
+<p>​</p>
+<p>Returns:    </p>
+<p>out : float or ndarray of floats</p>
+<p>Array of random floats of shape size (unless size=None, in which case a single float is returned). </p>
+</blockquote>
+<p>   它可以生成[a,b)区间内的随机数，利用<code>(b - a) * random() + a</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numpy.random.randint(low, high=<span class="keyword">None</span>, size=<span class="keyword">None</span>, dtype=<span class="string">'l'</span>)</div></pre></td></tr></table></figure>
+<p>Return random integers from low (inclusive) to high (exclusive).如果high未赋值，范围就是[0,low)</p>
+<blockquote>
+<p>Parameters:<br>low : int<br>Lowest (signed) integer to be drawn from the distribution (unless high=None, in which case this parameter is one above the highest such integer).<br>high : int, optional<br>If provided, one above the largest (signed) integer to be drawn from the distribution (see above for behavior if high=None).<br>size : int or tuple of ints, optional<br>Output shape. If the given shape is, e.g., (m, n, k), then m <em> n </em> k samples are drawn. Default is None, in which case a single value is returned.<br>dtype : dtype, optional<br>Desired dtype of the result. All dtypes are determined by their name, i.e., ‘int64’, ‘int’, etc, so byteorder is not available and a specific precision may have different C types depending on the platform. The default value is ‘np.int’.<br>​</p>
+<p>Returns:<br>out : int or ndarray of ints<br>size-shaped array of random integers from the appropriate distribution, or a single such random int if size not provided.</p>
+</blockquote>
+</li>
+<li><p>维度保证<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.atleast_2d.html?highlight=atleast_2d#numpy.atleast_2d" target="_blank" rel="noopener">文档</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numpy.atleast_2d(*arys)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>View inputs as arrays with at least two dimensions.</p>
+<p>Parameters:    </p>
+<p>arys1, arys2, … : array_like</p>
+<p>One or more array-like sequences. Non-array inputs are converted to arrays. Arrays that already have two or more dimensions are preserved.</p>
+<p>​</p>
+<p>Returns:    </p>
+<p>res, res2, … : ndarray</p>
+<p>An array, or list of arrays, each with a.ndim &gt;= 2. Copies are avoided where possible, and views with two or more dimensions are returned</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><ol>
+<li><p>测试神经网络</p>
+<ul>
+<li><p>引入测试数据集 <a href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html" target="_blank" rel="noopener">文档</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sklearn.datasets.load_digits(n_class=<span class="number">10</span>, return_X_y=<span class="keyword">False</span>)</div></pre></td></tr></table></figure>
+<p>其有10个类，总共1797个用例，每个用例是一个8*8的图片。</p>
+</li>
+<li><p>标记分类 <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelBinarizer.html" target="_blank" rel="noopener">文档</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">preprocessing</span>.<span class="title">LabelBinarizer</span><span class="params">(neg_label=<span class="number">0</span>, pos_label=<span class="number">1</span>, sparse_output=False)</span></span></div></pre></td></tr></table></figure>
+<p>简而言之，该方法把label分成两类，即进行二值化。</p>
+<p>其有一个方法:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fit_transform(X, y=<span class="keyword">None</span>, **fit_params)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Parameters:<br>X : numpy array of shape [n_samples, n_features]<br>Training set.<br>y : numpy array of shape [n_samples]<br>Target values.</p>
+<p>​</p>
+<p>Returns:<br>X_new : numpy array of shape [n_samples, n_features_new]<br>Transformed array.</p>
+</blockquote>
+</li>
+<li><p>获取某个维度的极值的索引</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numpy.argmax(a, axis=<span class="keyword">None</span>, out=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<p>如果<code>axis</code>不给定，则把a视作扁平化数组即比较全部元素，返回最大值索引。</p>
+<p>如果指定<code>axis</code>，则只对对应的轴进行操作。</p>
+<p>关于<code>axis</code>困扰了很久，总结如下：</p>
+<p><strong>axis=0代表跨行（down)，而axis=1代表跨列（across)！也就是说轴用来为超过一维的数组定义的属性，二维数据拥有两个轴：第0轴沿着行的垂直往下，第1轴沿着列的方向水平延伸。</strong></p>
+</li>
+<li><p>测试代码如下</p>
+</li>
+<li><p>运行结果</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-07-19_110229.png" alt=""></p>
+<p>可以看到，第一个是混淆矩阵，其意义已经在前面说明。第二个就是图表化分析结果。第一列精度的意思是（都以第一行为例），预测为0的用用例中，真实值也为0的比例为1。第二列recall的意思相反，是真实为0的用例中，预测为0的比例。</p>
+<p>可见，precison可以由上述混淆矩阵中，<strong>对角线元素/该列累计和</strong>得到。而recall可以由<strong>对角线元素/该行累计和</strong>得到。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="监督学习——回归"><a href="#监督学习——回归" class="headerlink" title="监督学习——回归"></a>监督学习——回归</h1><p>首先回顾一下，回归和分类的区别。</p>
+<p>回归(regression) Y变量为<strong>连续数值型</strong>(continuous numerical variable)，如：房价，人数，降雨量</p>
+<p>分类(Classification): Y变量为<strong>类别型</strong>(categorical variable)，如：颜色类别，电脑品牌，有无信誉</p>
+<h2 id="简单线性回归-Simple-Linear-Regression"><a href="#简单线性回归-Simple-Linear-Regression" class="headerlink" title="简单线性回归(Simple Linear Regression)"></a>简单线性回归(Simple Linear Regression)</h2><p>很多做决定过过程通常是根据两个或者多个变量之间的关系，回归分析(regression analysis)用来建立方程模拟两个或者多个变量之间如何关联</p>
+<ol>
+<li><p>简单线性回归介绍</p>
+<ul>
+<li>简单线性回归包含一个自变量(x)和一个因变量(y) </li>
+<li>以上两个变量的关系用一条直线来模拟</li>
+<li>如果包含两个以上的自变量，则称作<u>多元回归分析(multiple regression)</u></li>
+</ul>
+</li>
+<li><p>最小二乘法</p>
+<p>计算简单线性回归方程时，只需要用到很熟悉的最小二乘法即可。$\hat y=b1*x+b0$</p>
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/69853af4b84a7f3597a642a56b9ca9ab5a1c63d0" alt=""></p>
+<p>求出b1之后根据$b0=\bar y-\overline x*b1$即可求出b0</p>
+</li>
+</ol>
+<h2 id="多元线性回归"><a href="#多元线性回归" class="headerlink" title="多元线性回归"></a>多元线性回归</h2><p>与简单线性回归相对比，有多个自变量。</p>
+<p>$\hat y=b<em>{1}*x</em>{1}+b<em>{2}*x</em>{2}+…+b_{0}$</p>
+<p><em>需要注意，如果如果自变量中有分类型变量(categorical data) ,比如车型信息，A、B、C，只需要新加入三个x分类，把这三种车型映射到对应的x分量。这样就变成了多了3个x分量的问题。</em></p>
+<ol>
+<li><p>机器学习库介绍</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">linear_model</span>.<span class="title">LinearRegression</span><span class="params">(fit_intercept=True, normalize=False, copy_X=True, n_jobs=<span class="number">1</span>)</span></span></div></pre></td></tr></table></figure>
+<p>其是最小二乘法的封装。<a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression.predict" target="_blank" rel="noopener">详细文档</a></p>
+<p>这里用到了两个属性，<code>coef_</code>表示回归方程中系数的序列，<code>intercept_</code>是截距。</p>
+</li>
+<li><p>代码实现</p>
+<p>​</p>
+</li>
+</ol>
+<h2 id="非线性回归"><a href="#非线性回归" class="headerlink" title="非线性回归"></a>非线性回归</h2><h3 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h3><ol>
+<li><p>梯度下降法基本概念</p>
+<ul>
+<li><p>步长（Learning rate）：步长决定了在梯度下降迭代的过程中，每一步沿梯度负方向前进的长度。用上面下山的例子，步长就是在当前这一步所在位置沿着最陡峭最易下山的位置走的那一步的长度。</p>
+</li>
+<li><p>特征（feature）：指的是样本中输入部分，比如样本（x0,y0）,（x1,y1）,则样本特征为x，样本输出为y。</p>
+</li>
+<li><p>假设函数（hypothesis function）：在监督学习中，为了拟合输入样本，而使用的假设函数，记为hθ(x)。比如对于样本（xi,yi）(i=1,2,…n),可以采用拟合函数如下： hθ(x) = θ0+θ1x。</p>
+</li>
+<li><p>损失函数（loss function）：为了评估模型拟合的好坏，通常用损失函数来度量拟合的程度。损失函数极小化，意味着拟合程度最好，对应的模型参数即为最优参数。在线性回归中，损失函数通常为样本输出和假设函数的差取平方。比如对于样本（xi,yi）(i=1,2,…n),采用线性回归，损失函数为：</p>
+<p>$J(\theta_0, \theta<em>1) = \sum\limits</em>{i=1}^{m}(h_\theta(x_i) - y_i)^2$</p>
+<p>其中$x_i$表示样本特征x的第i个元素，$y<em>i$表示样本输出y的第i个元素，$h</em>\theta(x_i)$为假设函数。</p>
+</li>
+</ul>
+</li>
+<li><p>批量梯度下降法（Batch Gradient Descent）</p>
+<p> $\theta_i = \theta<em>i - \alpha\sum\limits</em>{j=0}^{m}(h_\theta(x_0^{j}, x_1^{j}, …x_n^{j}) - y_j)x_i^{j}$</p>
+<p>由于我们有m个样本，这里求梯度的时候就用了所有m个样本的梯度数据。</p>
+</li>
+<li><p>随机梯度下降法（Stochastic Gradient Descent）</p>
+<p>其实和批量梯度下降法原理类似，区别在与求梯度时没有用所有的m个样本的数据，而是仅仅选取一个样本j来求梯度。<br>$$<br>\theta_i = \theta<em>i - \alpha (h</em>\theta(x_0^{j}, x_1^{j}, …x_n^{j}) - y_j)x_i^{j}<br>$$</p>
+</li>
+<li><p>二者之间对比总结</p>
+<p>批量梯度下降：最小化所有训练样本的损失函数，使得最终求解的是全局的最优解，即求解的参数是使得风险函数最小，但是对于大规模样本问题效率低下。</p>
+<p>随机梯度下降：最小化每条样本的损失函数，虽然不是每次迭代得到的损失函数都向着全局最优方向， 但是大的整体的方向是向全局最优解的，最终的结果往往是在全局最优解附近，适用于大规模训练样本情况。</p>
+<p><strong>两者的关系可以这样理解：随机梯度下降方法以损失很小的一部分精确度和增加一定数量的迭代次数为代价，换取了总体的优化效率的提升。增加的迭代次数远远小于样本的数量。</strong></p>
+</li>
+<li><p>梯度下降法的向量描述<br>$$<br>J(θ)=\frac {1}{2}(X<em>θ−Y)^T(X</em>θ−Y)<br>$$</p>
+<p>$$<br>\frac {\partial J(θ)}{\partial \theta}=X^T(X_θ−Y)<br>$$</p>
+<p>$$<br>θ=θ−αX^T(X_θ−Y)<br>$$</p>
+</li>
+<li><p>矩阵求导知识补充</p>
+<p><img src="http://images.cnitblog.com/blog/487468/201402/261219153897663.gif" alt=""></p>
+<p>​</p>
+<p><img src="http://images.cnitblog.com/blog/487468/201402/261219289804718.gif" alt=""></p>
+<p><img src="http://images.cnitblog.com/blog/487468/201402/261219434733214.gif" alt=""></p>
+</li>
+</ol>
+<h3 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h3><ol>
+<li><p>基本原理</p>
+<p>Logistic Regression和Linear Regression的原理是相似的，可以简单的描述为这样的过程：</p>
+<ul>
+<li>找一个合适的预测函数（Andrew Ng的公开课中称为hypothesis），一般表示为h函数，该函数就是我们需要找的分类函数，它用来预测输入数据的判断结果。这个过程时非常关键的，需要对数据有一定的了解或分析，知道或者猜测预测函数的“大概”形式，比如是线性函数还是非线性函数。</li>
+<li>构造一个Cost函数（损失函数），该函数表示预测的输出（h）与训练数据类别（y）之间的偏差，可以是二者之间的差（h-y）或者是其他的形式。综合考虑所有训练数据的“损失”，将Cost求和或者求平均，记为J(θ)函数，表示所有训练数据预测值与实际类别的偏差。</li>
+<li>显然，J(θ)函数的值越小表示预测函数越准确（即h函数越准确），所以这一步需要做的是找到J(θ)函数的最小值。找函数的最小值有不同的方法，Logistic Regression实现时有的是梯度下降法（Gradient Descent）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="回归中的相关性"><a href="#回归中的相关性" class="headerlink" title="回归中的相关性"></a>回归中的相关性</h3><h3 id="理论知识"><a href="#理论知识" class="headerlink" title="理论知识"></a>理论知识</h3><ol>
+<li><p>协方差（covariance）</p>
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/7331bb9b6e36128d1d9cb735b11b65427929105d" alt=""></p>
+<p>​</p>
+<p>协方差是一个反映两个随机变量相关程度的指标，如果一个变量跟随着另一个变量同时变大或者变小，那么这两个变量的协方差就是正值，反之相反。</p>
+<p>而 <strong>Pearson correlation coefficient</strong>是衡量两个变量的线性相关程度，值取[-1,1]。+1表示完全正相关，0表示不是线性相关，-1表示完全负相关。</p>
+<p>其定义为协方差除以它们标准差之积。</p>
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f76ccfa7c2ed7f5b085115086107bbe25d329cec" alt=""></p>
+<p>​</p>
+</li>
+<li><p>决定系数</p>
+<p>决定系数（英语：coefficient of determination，记为R2或r2）在统计学中用于度量因变量的变异中可由自变量解释部分所占的比例，以此来判断统计模型的解释力。</p>
+<p>比如，R平方为0.8，则表示回归关系可以解释因变量80%的变异。换句话说，如果我们能控制自变量不变，则因变量的变异程度会减少80%。</p>
+<p>对于简单线性回归而言，<strong>决定系数为样本相关系数的平方</strong>。当加入其他回归自变量后，决定系数相应地变为多重相关系数的平方。</p>
+<p>​</p>
+<p>假设一数据集包括y1,…,yn共n个观察值，相对应的模型预测值分别为f1,…,fn。定义残差$e_i = y_i − f<em>i$，平均观察值为：$\bar y=\frac 1 n\sum </em>{i=1}^ny_i$</p>
+<p>于是得到总平方和（total sum of squares）$SS<em>{tot}=\sum </em>{i=1} ^n(y<em>i-\bar y)^2$，所以回归平方和（regression sum of squares）为$SS</em>{reg}=\sum _{i=1}^n(f_i-\bar y)^2$。</p>
+<p>另外，残差平方和（sum of squares of residuals）为$SS<em>{res}=\sum </em>{i=1} ^n(y_i-f<em>i)^2=\sum </em>{i=1}^ne_i^2$</p>
+<p>所以，决定系数为：</p>
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/fed29779d54adeccdec58f0894870c680f3d6b5b" alt=""></p>
+<p>由于$R^2$会随着自变量个数增加而虚假的增加，所以修正的$R^2$为：<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f6e88c86fcecf4cfb5418760909bbe2d499bd1aa" alt=""></p>
+<p>调整后的$R^2$值可以为负，其始终小于等于$R^2$。其中，n是样本数目，p是自变量个数。</p>
+</li>
+</ol>
+<h3 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h3><ol>
+<li><p>用到的函数库总结</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numpy.polyfit(x, y, deg, rcond=<span class="keyword">None</span>, full=<span class="keyword">False</span>, w=<span class="keyword">None</span>, cov=<span class="keyword">False</span>)</div></pre></td></tr></table></figure>
+<p>最小二乘法多项式拟合。拟合形式为<code>p(x) = p[0] * x**deg + ... + p[deg]</code>，返回最后p的向量形式。</p>
+<p>这里只用到了<code>deg</code>代表最高次数。其余见<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html?highlight=numpy%20polyfit#numpy.polyfit" target="_blank" rel="noopener">文档</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">numpy</span>.<span class="title">poly1d</span><span class="params">(c_or_r, r=False, variable=None)</span></span></div></pre></td></tr></table></figure>
+<p>一个很方便的类，它对一维多项式进行了封装，第一个参数代表了多项式系数。<code>poly1d([1, 2, 3])</code>代表$x^2+2x+3$，如果<code>r=True</code>，则代表$(x-1)(x-2)(x-3)$。<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.poly1d.html?highlight=poly1d#numpy.poly1d" target="_blank" rel="noopener">文档</a></p>
+</li>
+<li><p>实现代码</p>
+<p>​</p>
+<p>​</p>
+<p>​</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learn/" rel="tag"># Machine Learn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/02/pat（八）/" rel="next" title="pat（八）">
+                <i class="fa fa-chevron-left"></i> pat（八）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/19/ML入门/" rel="prev" title="ML入门">
+                ML入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#监督学习——分类"><span class="nav-number">1.</span> <span class="nav-text">监督学习——分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树"><span class="nav-number">1.1.</span> <span class="nav-text">决策树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KNN算法（k-Nearest-Neighbor）"><span class="nav-number">1.2.</span> <span class="nav-text">KNN算法（k-Nearest Neighbor）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持向量机（上）"><span class="nav-number">1.3.</span> <span class="nav-text">支持向量机（上）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持向量机（下）"><span class="nav-number">1.4.</span> <span class="nav-text">支持向量机（下）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络算法"><span class="nav-number">1.5.</span> <span class="nav-text">神经网络算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#理论基础"><span class="nav-number">1.5.1.</span> <span class="nav-text">理论基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">1.5.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#监督学习——回归"><span class="nav-number">2.</span> <span class="nav-text">监督学习——回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单线性回归-Simple-Linear-Regression"><span class="nav-number">2.1.</span> <span class="nav-text">简单线性回归(Simple Linear Regression)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多元线性回归"><span class="nav-number">2.2.</span> <span class="nav-text">多元线性回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非线性回归"><span class="nav-number">2.3.</span> <span class="nav-text">非线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降法"><span class="nav-number">2.3.1.</span> <span class="nav-text">梯度下降法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归"><span class="nav-number">2.3.2.</span> <span class="nav-text">逻辑回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回归中的相关性"><span class="nav-number">2.3.3.</span> <span class="nav-text">回归中的相关性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理论知识"><span class="nav-number">2.3.4.</span> <span class="nav-text">理论知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-1"><span class="nav-number">2.3.5.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

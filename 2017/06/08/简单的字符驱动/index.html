@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Linux," />
+
+
+<meta name="description" content="一个简单的字符驱动，以及内核驱动有关的基础知识总结。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单的字符驱动">
+<meta property="og:url" content="https://www.prime666.com/2017/06/08/简单的字符驱动/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="一个简单的字符驱动，以及内核驱动有关的基础知识总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//Linux/%E5%9B%BE%E7%89%871.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com//Linux/2017-06-08_213400.png">
+<meta property="og:updated_time" content="2017-07-04T01:07:49.423Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简单的字符驱动">
+<meta name="twitter:description" content="一个简单的字符驱动，以及内核驱动有关的基础知识总结。">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com//Linux/%E5%9B%BE%E7%89%871.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/06/08/简单的字符驱动/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>简单的字符驱动 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/08/简单的字符驱动/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">简单的字符驱动</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-08T21:10:30+08:00">2017-06-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一个简单的字符驱动，以及内核驱动有关的基础知识总结。</p>
+<a id="more"></a>
+<h1 id="字符驱动"><a href="#字符驱动" class="headerlink" title="字符驱动"></a>字符驱动</h1><h2 id="理论概述"><a href="#理论概述" class="headerlink" title="理论概述"></a>理论概述</h2><p>设备驱动程序（Device Driver）简称“驱动程序”，是一种可以使计算机和设备通信的特殊程序，可以说相当于硬件的接口。操作系统通过这个接口，才能控制硬件设备的工作。</p>
+<ul>
+<li>系统调用是<strong>操作系统内核</strong>和<strong>应用程序</strong>之间的接口。</li>
+<li>设备驱动程序是<strong>操作系统内核</strong>和<strong>机器硬件</strong>之间的接口。</li>
+<li>设备驱动程序作为内核模块<strong>动态加载</strong>。</li>
+<li>设备驱动程序为应用程序<strong>屏蔽了硬件的细节。</strong><ul>
+<li>在应用程序看来，硬件设备只是一个设备文件， 应用程序可以象操作普通文件一样对硬件设备进行操作。</li>
+<li>从用户角度出发，用户希望能使用同样的应用程序接口和命令来访问设备和普通文件。</li>
+</ul>
+</li>
+</ul>
+<font color="C0FF3E">Linux抽象了对硬件的处理，所有的硬件设备都可以作为普通文件来看待；它们可以使用和操作文件相同的、标准的系统调用接口来完成打开、关闭、读写和I/O控制操作，而<strong>驱动程序的主要任务也就是要实现这些系统调用</strong>。（<strong>设备即文件</strong>）</font>
+
+<h2 id="设备驱动程序的功能"><a href="#设备驱动程序的功能" class="headerlink" title="设备驱动程序的功能"></a>设备驱动程序的功能</h2><ul>
+<li>对设备初始化和释放；</li>
+<li>把数据从内核传送到硬件和从硬件读取数据；</li>
+<li><em>读取</em>应用程序传送给设备文件的数据和<em>回送</em>应用程序请求的数据；</li>
+<li>检测和处理设备出现的错误；</li>
+</ul>
+<h2 id="Linux设备分类"><a href="#Linux设备分类" class="headerlink" title="Linux设备分类"></a>Linux设备分类</h2><ol>
+<li>字符设备<ul>
+<li>字符设备以<strong>单个字节</strong>为单位进行顺序读写操作，通常不使用缓冲技术。典型的字符设备包括鼠标、键盘、串行口等。</li>
+<li>字符设备驱动通常至少实现open、close、read和write等系统调用。</li>
+<li>与普通文件的区别主要在于大部分字符设备只能<strong>顺序访问</strong>数据通道。</li>
+</ul>
+</li>
+<li>块设备<ul>
+<li>块设备是以固定大小的数据块进行存储和读写的设备，例如硬盘、软盘、CD-ROM等。</li>
+<li>为提高效率，对于块设备，系统利用一块系统内存作为缓冲区，为块设备的读写提供了缓存机制，由于涉及缓冲区管理、调度和同步等问题，块设备实现起来比字符设备复杂得多。</li>
+<li>块驱动程序，除了给内核提供和字符驱动一样的接口外，还提供了专门面向块设备的接口，块设备的接口必须支持挂载文件系统。</li>
+</ul>
+</li>
+<li>网络设备<ul>
+<li>Linux的网络系统主要是基于BSD UNIX的Socket机制。</li>
+<li>在系统和驱动程序之间有专门的数据结构（sk_buff）进行数据的传递，负责发送和接收数据包。</li>
+<li>系统支持对发送数据和接收数据的缓存，提供流量控制机制，提供对多协议的支持。</li>
+</ul>
+</li>
+</ol>
+<h2 id="Linux字符设备驱动原理"><a href="#Linux字符设备驱动原理" class="headerlink" title="Linux字符设备驱动原理"></a>Linux字符设备驱动原理</h2><h3 id="基本理论"><a href="#基本理论" class="headerlink" title="基本理论"></a>基本理论</h3><p>首先需要明确：<font color="FF00FF">用户进程运行在用户空间，设备驱动程序工作在内核空间</font>。</p>
+<ul>
+<li>系统调用是用户进程进入内核空间的唯一通道。</li>
+<li>每当用户进程使用系统调用时，都自动地将运行模式从用户级转为内核级，此时进程在内核的地址空间中运行。</li>
+<li>Linux抽象了对硬件的处理，各种设备都以文件的形式存放在/dev目录下，称为设备文件。</li>
+<li>所有的硬件设备都可以作为普通文件来看待，应用程序可以打开、关闭和读写这些设备文件，完成对设备的操作，就像操作普通的数据文件一样。（设备及文件的思想）</li>
+<li>驱动程序是直接驱动硬件设备的程序，因此，在驱动程序开发中，需要对开发的设备硬件非常熟悉，通常是对硬件设备的寄存器设置来完成，这些需要查看相关芯片手册。</li>
+</ul>
+<p>一图以蔽之~~~</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//Linux/%E5%9B%BE%E7%89%871.png" alt=""></p>
+<h3 id="设备号与注册"><a href="#设备号与注册" class="headerlink" title="设备号与注册"></a>设备号与注册</h3><p>嵌入式Linux系统通过设备号来区分不同设备。设备号分为<strong>主设备号</strong>和<strong>次设备号</strong>两种。</p>
+<p>内核通过<strong>主设备号将设备与相应的驱动程序对应起来，主设备号的取值范围是0～255</strong>；而当一个驱动程序要控制若干个设备时，就要用次设备号来区分它们。</p>
+<p>对自定义的产品设备，用户需定义设备的主设备号，注意，自定义设备的主设备号不能与已存在的主设备号冲突。通过位于文件系统/dev目录下的设备文件，可查看每个设备的名称、主从设备号及文件属性等信息。</p>
+<p>例如，输入<code>ls -l /dev</code>命令，即可查看文件设备号。在我的机器上，部分截图如下：</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com//Linux/2017-06-08_213400.png" alt=""></p>
+<p>也可以用<code>cat /proc/devices</code>查看,同时它也可以查看程序申请到的设备名，设备号（如果没有说明程序有BUG）。</p>
+<p>而创建一个设备号有以下两种方式：</p>
+<ol>
+<li>静态指定</li>
+<li>由系统动态分配</li>
+</ol>
+<p><strong>当然，不管是哪种方法获取设备号，都需要在/dev目录下用mknod命令建立相应设备的设备标识（mknod filename type major minor）。</strong>其实，也可以由程序创建设备文件，详情移步于<a href="http://blog.csdn.net/zqixiao_09/article/details/50849735" target="_blank" rel="noopener">此篇博客</a>。</p>
+<p>在linux内核中，用<code>dev_t</code>类型表示设备号，在2.6内核中定义为无符号长整型，定义如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> u_long <span class="keyword">dev_t</span></div></pre></td></tr></table></figure>
+<p>其中，<code>u_long</code>在32位上4字节(<strong>高12位表示主设备号，低20位表示次设备号。</strong>)，在64位机上是8字节。</p>
+<p>预定义的宏:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">MAJOR(<span class="keyword">dev_t</span> dev)取主设备号</div><div class="line">MINOR(<span class="keyword">dev_t</span> dev)取次设备号</div><div class="line">MKDEV(<span class="keyword">int</span> ma,<span class="keyword">int</span> mi)将主次设备号转换为设备号类型<span class="keyword">dev_t</span></div></pre></td></tr></table></figure>
+<p>都是通过移位实现的，其实并不复杂。</p>
+<p>具体方法位于<code>linux/fs.h</code>头文件中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">register_chrdev_region</span><span class="params">(<span class="keyword">dev_t</span> first,<span class="keyword">unsigned</span> <span class="keyword">int</span> count,<span class="keyword">char</span> *name)</span></span>; </div><div class="line"><span class="comment">//first是分配的起始值，count是请求的连续设备编号的个数，name是设备的名字</span></div><div class="line"><span class="comment">//成功时返回0，失败返回负值</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">alloc_chrdev_region</span><span class="params">(<span class="keyword">dev_t</span> *dev,<span class="keyword">unsigned</span> <span class="keyword">int</span> baseminor,<span class="keyword">unsigned</span> <span class="keyword">int</span> count,<span class="keyword">const</span> <span class="keyword">char</span> *name)</span></span>;</div><div class="line"><span class="comment">//dev作为输出参数，baseminor表示第一个次设备号，通常设为0，count与name同上。</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">unregister_chrdev_region</span><span class="params">(<span class="keyword">dev_t</span> from,<span class="keyword">unsigned</span> <span class="keyword">int</span> count)</span></span>;</div><div class="line"><span class="comment">//from表示要释放的设备号，count表示释放的个数</span></div></pre></td></tr></table></figure>
+<h3 id="cdev结构体"><a href="#cdev结构体" class="headerlink" title="cdev结构体"></a>cdev结构体</h3><p>cdev结构体用于描述字符设备，该结构体是所有字符设备的抽象。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/cdev.h&gt;</span>  </span></div><div class="line"> </div><div class="line"><span class="keyword">struct</span> cdev &#123;   </div><div class="line">    <span class="keyword">struct</span> kobject kobj;                  <span class="comment">//内嵌的内核对象.驱动开发人员一般不使用它</span></div><div class="line">    <span class="keyword">struct</span> <span class="keyword">module</span> *owner;                 <span class="comment">//该字符设备所在的内核模块的对象指针.</span></div><div class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> file_operations *ops;    <span class="comment">//该结构描述了字符设备所能实现的方法，是极为关键的一个结构体.  </span></div><div class="line">    <span class="keyword">struct</span> list_head <span class="built_in">list</span>;                <span class="comment">//用来将已经向内核注册的所有字符设备形成链表.  </span></div><div class="line">    <span class="keyword">dev_t</span> dev;                            <span class="comment">//字符设备的设备号，由主设备号和次设备号构成.  </span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count;                   <span class="comment">//隶属于同一主设备号的次设备号的个数.  </span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>owner成员的存在体现了驱动程序与内核模块间的亲密关系，struct module是内核对于一个模块的抽象，该成员在字符设备中可以体现该设备隶属于哪个模块，在驱动程序的编写中一般由用户显式的初始化<code>.owner = THIS_MODULE</code></p>
+<p>申请一个cdev结构，分配内存：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">struct</span> cdev *<span class="title">cdev_alloc</span><span class="params">(<span class="keyword">void</span>)</span></span>;</div></pre></td></tr></table></figure>
+<p>申请完需要手动初始化ops。</p>
+<p>初始化cdev结构体的方法：这个函数相当于上面的函数+手动初始化ops</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">cdev_init</span><span class="params">(<span class="keyword">struct</span> cdev *, <span class="keyword">const</span> <span class="keyword">struct</span> file_operations *)</span></span>;</div><div class="line"><span class="comment">//该函数主要对struct cdev结构体做初始化，最重要的就是建立cdev 和 file_operations之间的连接</span></div></pre></td></tr></table></figure>
+<p>通知内核设备以及可以使用了：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">cdev_add</span><span class="params">(<span class="keyword">struct</span> cdev *p, <span class="keyword">dev_t</span> dev, <span class="keyword">unsigned</span> count)</span></span>;</div></pre></td></tr></table></figure>
+<p><strong>该函数向内核注册一个struct cdev结构</strong>，即正式通知内核由struct cdev *p代表的字符设备已经可以使用了。</p>
+<p>当然这里还需提供两个参数：第一个设备号 dev，和该设备关联的设备编号的数量。</p>
+<p>通知内核设备已经被删除:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">void cdev_del(struct cdev *p)；</div></pre></td></tr></table></figure>
+<h3 id="file结构体"><a href="#file结构体" class="headerlink" title="file结构体"></a>file结构体</h3><p> 在设备驱动中，这也是个非常重要的数据结构，必须要注意一点，这里的file与用户空间程序中的FILE指针是不同的，用户空间FILE是定义在C库中，从来不会出现在内核中。而struct file，却是内核当中的数据结构，因此，它也不会出现在用户层程序中。</p>
+ <font color="00FFFF">file结构体指示一个<strong>已经打开的文件（设备对应于设备文件）</strong>，其实系统中的每个打开的文件在内核空间都有一个相应的struct file结构体，它<strong>由内核在打开文件时创建，并传递给在文件上进行操作的任何函数，直至文件被关闭。如果文件被关闭，内核就会释放相应的数据结构。</strong></font><br> 在内核源码中，struct file要么表示为file，或者为filp(意指“file pointer”), 注意区分一点，file指的是struct file本身，而filp是指向这个结构体的指针。<br><br>几个重要成员如下:<br><br><em> loff_t f_pos<br><br>  <strong>当前读写文件的位置</strong>。为64位。如果想知道当前文件当前位置在哪，驱动可以读取这个值而不会改变其位置。<strong>对read,write来说，当其接收到一个loff_t型指针作为其最后一个参数时，他们的读写操作便更新文件指针的位置，而不需要直接执行filp -&gt;f_pos操作。而llseek方法的目的就是用于改变文件的位置。</strong>
+
+</em> struct file_operations <em>f_op<br><br>  与文件相关的各种操作。当文件需要迅速进行各种操作时，内核分配这个指针作为它实现文件打开，读，写等功能的一部分。filp-&gt;f_op 其值从未被内核保存作为下次的引用，即你可以改变与文件相关的各种操作，这种方式效率非常高。
+
+</em> void <em>private_data<br><br>  在驱动调用open方法之前，open系统调用设置此指针为NULL值。你可以很自由的将其做为你自己需要的一些数据域或者不管它，如，你可以将其指向一个分配好的数据，但是你必须记得在file struct被内核销毁之前在release方法中释放这些数据的内存空间。private_data用于在系统调用期间保存各种状态信息是非常有用的。
+
+</em> unsigned int f_flags<br><br>  文件标志，如O_RDONLY, O_NONBLOCK以及O_SYNC。在驱动中还可以检查O_NONBLOCK标志查看是否有非阻塞请求。其它的标志较少使用。特别地注意的是，读写权限的检查是使用f_mode而不是f_flog。所有的标量定义在头文件<code>linux/fctnl.h</code>中。<br><br><em> mode_t f_mode<br><br>  此文件模式通过FMODE_READ, FMODE_WRITE识别了文件为可读的，可写的，或者是二者。在open或ioctl函数中可能需要检查此域以确认文件的读/写权限，你不必直接去检测读或写权限，因为在进行octl等操作时内核本身就需要对其权限进行检测。<br><br>### inode结构体<br><br>VFS inode 包含文件访问权限、属主、组、大小、生成时间、访问时间、最后修改时间等信息。它是Linux 管理文件系统的最基本单位，也是文件系统连接任何子目录、文件的桥梁。<br><br>​       <font color="DB7093"><strong>内核使用inode结构体在内核内部表示一个文件</strong>。因此，它与表示一个已经打开的文件描述符的结构体(即file 文件结构)是不同的，我们可以使用多个file 文件结构表示同一个文件的多个文件描述符，但此时，所有的这些file文件结构全部都<em>*必须只能指向一个inode结构体</em></font></em>。
+
+<p>inode结构体包含了一大堆文件相关的信息，但是就针对驱动代码来说，我们只要关心其中的两个域即可：</p>
+<ul>
+<li><p><code>dev_t i_rdev</code>表示设备文件的结点，这个域实际上包含了设备号。</p>
+</li>
+<li><p><code>struct cdev *i_cdev</code></p>
+<p>struct cdev是内核的一个内部结构，它是用来表示字符设备的，当inode结点指向一个字符设备文件时，此域为一个指向cdev结构的指针。</p>
+</li>
+</ul>
+<h3 id="chardevs数组"><a href="#chardevs数组" class="headerlink" title="chardevs数组"></a>chardevs数组</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">struct</span> char_device_struct &#123;  </div><div class="line">    <span class="keyword">struct</span> char_device_struct *next; <span class="comment">// 结构体指针  </span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> major;              <span class="comment">// 主设备号  </span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> baseminor;          <span class="comment">// 次设备起始号  </span></div><div class="line">    <span class="keyword">int</span> minorct;                     <span class="comment">// 次备号个数  </span></div><div class="line">    <span class="keyword">char</span> name[<span class="number">64</span>];  </div><div class="line">    <span class="keyword">struct</span> cdev *cdev; <span class="comment">/* will die */</span>  </div><div class="line">&#125; *chrdevs[CHRDEV_MAJOR_HASH_SIZE];      <span class="comment">// 只能挂255个字符主设备</span></div></pre></td></tr></table></figure>
+<p>可以看到全局数组 chrdevs 包含了255(CHRDEV_MAJOR_HASH_SIZE 的值)个 struct char_device_struct的元素，每一个对应一个相应的主设备号。</p>
+<p>​       <strong>如果分配了一个设备号,就会创建一个 struct char_device_struct 的对象,并将其添加到 chrdevs 中；这样,通过chrdevs数组,我们就可以知道分配了哪些设备号。</strong></p>
+<h3 id="file-operations结构体"><a href="#file-operations结构体" class="headerlink" title="file_operations结构体"></a>file_operations结构体</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> file_operations &#123;   </div><div class="line">  </div><div class="line">    <span class="keyword">struct</span> <span class="keyword">module</span> *owner;<span class="comment">//拥有该结构的模块的指针，一般为THIS_MODULES   </span></div><div class="line">  </div><div class="line">  </div><div class="line">    <span class="keyword">loff_t</span> (*llseek) (<span class="keyword">struct</span> file *, <span class="keyword">loff_t</span>, <span class="keyword">int</span>);<span class="comment">//用来修改文件当前的读写位置   </span></div><div class="line">  </div><div class="line">    <span class="keyword">ssize_t</span> (*read) (<span class="keyword">struct</span> file *, <span class="keyword">char</span> __user *, <span class="keyword">size_t</span>, <span class="keyword">loff_t</span> *);<span class="comment">//从设备中同步读取数据   </span></div><div class="line">  </div><div class="line">    <span class="keyword">ssize_t</span> (*write) (<span class="keyword">struct</span> file *, <span class="keyword">const</span> <span class="keyword">char</span> __user *, <span class="keyword">size_t</span>, <span class="keyword">loff_t</span> *);<span class="comment">//向设备发送数据  </span></div><div class="line">  </div><div class="line">    <span class="keyword">ssize_t</span> (*aio_read) (<span class="keyword">struct</span> kiocb *, <span class="keyword">const</span> <span class="keyword">struct</span> iovec *, <span class="keyword">unsigned</span> <span class="keyword">long</span>, <span class="keyword">loff_t</span>);<span class="comment">//初始化一个异步的读取操作   </span></div><div class="line">  </div><div class="line">    <span class="keyword">ssize_t</span> (*aio_write) (<span class="keyword">struct</span> kiocb *, <span class="keyword">const</span> <span class="keyword">struct</span> iovec *, <span class="keyword">unsigned</span> <span class="keyword">long</span>, <span class="keyword">loff_t</span>);<span class="comment">//初始化一个异步的写入操作   </span></div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*readdir) (<span class="keyword">struct</span> file *, <span class="keyword">void</span> *, <span class="keyword">filldir_t</span>);<span class="comment">//仅用于读取目录，对于设备文件，该字段为NULL   </span></div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span> <span class="params">(*poll)</span> <span class="params">(<span class="keyword">struct</span> file *, <span class="keyword">struct</span> poll_table_struct *)</span></span>; <span class="comment">//轮询函数，判断目前是否可以进行非阻塞的读写或写入   </span></div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*ioctl) (<span class="keyword">struct</span> inode *, <span class="keyword">struct</span> file *, <span class="keyword">unsigned</span> <span class="keyword">int</span>, <span class="keyword">unsigned</span> <span class="keyword">long</span>); <span class="comment">//执行设备I/O控制命令   </span></div><div class="line">  </div><div class="line">    <span class="keyword">long</span> (*unlocked_ioctl) (<span class="keyword">struct</span> file *, <span class="keyword">unsigned</span> <span class="keyword">int</span>, <span class="keyword">unsigned</span> <span class="keyword">long</span>); <span class="comment">//不使用BLK文件系统，将使用此种函数指针代替ioctl   </span></div><div class="line">  </div><div class="line"> <span class="comment">//因为在kernel 2.6.36 中已经完全删除了ioctl 函数指针，取而代之的是unlocked_ioctl，注意后者没有inode参数！ </span></div><div class="line">    <span class="keyword">long</span> (*compat_ioctl) (<span class="keyword">struct</span> file *, <span class="keyword">unsigned</span> <span class="keyword">int</span>, <span class="keyword">unsigned</span> <span class="keyword">long</span>); <span class="comment">//在64位系统上，32位的ioctl调用将使用此函数指针代替   </span></div><div class="line">  </div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*mmap) (<span class="keyword">struct</span> file *, <span class="keyword">struct</span> vm_area_struct *); <span class="comment">//用于请求将设备内存映射到进程地址空间  </span></div><div class="line">   </div><div class="line">    <span class="keyword">int</span> (*open) (<span class="keyword">struct</span> inode *, <span class="keyword">struct</span> file *); <span class="comment">//打开   </span></div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*flush) (<span class="keyword">struct</span> file *, <span class="keyword">fl_owner_t</span> id);   </div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*release) (<span class="keyword">struct</span> inode *, <span class="keyword">struct</span> file *); <span class="comment">//关闭   </span></div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*fsync) (<span class="keyword">struct</span> file *, <span class="keyword">struct</span> dentry *, <span class="keyword">int</span> datasync); <span class="comment">//刷新待处理的数据   </span></div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*aio_fsync) (<span class="keyword">struct</span> kiocb *, <span class="keyword">int</span> datasync); <span class="comment">//异步刷新待处理的数据   </span></div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*fasync) (<span class="keyword">int</span>, <span class="keyword">struct</span> file *, <span class="keyword">int</span>); <span class="comment">//通知设备FASYNC标志发生变化   </span></div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*lock) (<span class="keyword">struct</span> file *, <span class="keyword">int</span>, <span class="keyword">struct</span> file_lock *);   </div><div class="line">  </div><div class="line">    <span class="keyword">ssize_t</span> (*sendpage) (<span class="keyword">struct</span> file *, <span class="keyword">struct</span> page *, <span class="keyword">int</span>, <span class="keyword">size_t</span>, <span class="keyword">loff_t</span> *, <span class="keyword">int</span>);   </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">long</span> <span class="params">(*get_unmapped_area)</span><span class="params">(<span class="keyword">struct</span> file *, <span class="keyword">unsigned</span> <span class="keyword">long</span>, <span class="keyword">unsigned</span> <span class="keyword">long</span>, <span class="keyword">unsigned</span> <span class="keyword">long</span>, <span class="keyword">unsigned</span> <span class="keyword">long</span>)</span></span>;   </div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*check_flags)(<span class="keyword">int</span>);   </div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*flock) (<span class="keyword">struct</span> file *, <span class="keyword">int</span>, <span class="keyword">struct</span> file_lock *);  </div><div class="line">   </div><div class="line">    <span class="keyword">ssize_t</span> (*splice_write)(<span class="keyword">struct</span> pipe_inode_info *, <span class="keyword">struct</span> file *, <span class="keyword">loff_t</span> *, <span class="keyword">size_t</span>, <span class="keyword">unsigned</span> <span class="keyword">int</span>);  </div><div class="line">   </div><div class="line">    <span class="keyword">ssize_t</span> (*splice_read)(<span class="keyword">struct</span> file *, <span class="keyword">loff_t</span> *, <span class="keyword">struct</span> pipe_inode_info *, <span class="keyword">size_t</span>, <span class="keyword">unsigned</span> <span class="keyword">int</span>);   </div><div class="line">  </div><div class="line">    <span class="keyword">int</span> (*setlease)(<span class="keyword">struct</span> file *, <span class="keyword">long</span>, <span class="keyword">struct</span> file_lock **);   </div><div class="line">  </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p> Linux使用file_operations结构访问驱动程序的函数，这个结构的每一个成员的名字都对应着一个系统调用。</p>
+<p>用户进程利用在对设备文件进行诸如read/write操作的时候，<strong>系统调用通过设备文件的主设备号找到相应的设备驱动程序，然后读取这个数据结构相应的函数指针，接着把控制权交给该函数，这是Linux的设备驱动程序工作的基本原理。</strong></p>
+<p>编写设备驱动程序的主要工作就是<strong>编写子函数，并填充file_operations的各个域。</strong></p>
+<p>具体解释如下：</p>
+<ol>
+<li><p><code>struct module *owner</code></p>
+<p>第一个 file_operations 成员根本不是一个操作，它是一个指向拥有这个结构的模块的指针。</p>
+<p>这个成员用来在它的操作还在被使用时阻止模块被卸载. 几乎所有时间中, 它被简单初始化为 THIS_MODULE, 一个在<code>&lt;linux/module.h&gt;</code> 中定义的宏.这个宏比较复杂，在进行简单学习操作的时候，一般初始化为THIS_MODULE。</p>
+</li>
+<li><p><code>loff_t (*llseek) (struct file * filp , loff_t p, int orig);</code></p>
+<p> (指针参数filp为进行读取信息的目标文件结构体指针；<strong>参数 p 为文件定位的目标偏移量</strong>；<strong>参数orig为对文件定位的起始地址</strong>，这个值可以为文件开头（SEEK_SET，0),当前位置(SEEK_CUR,1)，文件末尾(SEEK_END,2))</p>
+<p><strong>llseek 方法用作改变文件中的当前读/写位置, 并且新位置作为(正的)返回值.</strong></p>
+<p>loff_t 参数是一个”long offset”, 并且就算在 32位平台上也至少 64 位宽. 错误由一个负返回值指示；如果这个函数指针是 NULL, seek 调用会以潜在地无法预知的方式修改 file 结构中的位置计数器( 在”file 结构” 一节中描述).</p>
+</li>
+<li><p><code>ssize_t (*read) (struct file * filp, char __user * buffer, size_t size, loff_t * p);</code></p>
+<p>  (指针参数 <strong>filp 为进行读取信息的目标文件</strong>，<strong>指针参数buffer 为对应放置信息的缓冲区（即用户空间内存地址）</strong>，参数<strong>size为要读取的信息长度</strong>，参数 <strong>p 为读的位置相对于文件开头的偏移</strong>，在读取信息后，这个指针一般都会移动，移动的值为要读取信息的长度值）</p>
+<p><strong>这个函数用来从设备中获取数据</strong>。在这个位置的一个空指针导致 read 系统调用以 -EINVAL(“Invalid argument”) 失败。<strong>一个非负返回值代表了成功读取的字节数( 返回值是一个 “signed size” 类型, 常常是目标平台本地的整数类型).</strong></p>
+</li>
+<li><p><code>ssize_t (*write) (struct file * filp, const char __user *   buffer, size_t count, loff_t * ppos);</code></p>
+<p>(参数<strong>filp为目标文件结构体指针</strong>，<strong>buffer为要写入文件的信息缓冲区</strong>，<strong>count为要写入信息的长度</strong>，<strong>ppos为当前相对于文件头的偏移位置，这个值通常是用来判断写文件是否越界</strong>）</p>
+<p> <strong>发送数据给设备</strong>。如果 NULL, -EINVAL 返回给调用 write 系统调用的程序. <strong>如果非负, 返回值代表成功写的字节数。</strong></p>
+<p> <strong>(注：这个操作和上面的对文件进行读的操作均为阻塞操作</strong>）</p>
+</li>
+<li><p><code>int (*ioctl) (struct inode *inode, struct file *filp, unsigned int cmd, unsigned long arg);</code></p>
+<p> (inode 和 filp 指针是对应应用程序传递的文件描述符 fd 的值, 和传递给 open 方法的相同参数.<strong>cmd 参数从用户那里不改变地传下来</strong>, 并且可选的参数 arg 参数以一个 unsigned long 的形式传递, 不管它是否由用户给定为一个整数或一个指针.如果调用程序不传递第 3 个参数, 被驱动操作收到的 arg 值是无定义的.因为类型检查在这个额外参数上被关闭, 编译器不能警告你如果一个无效的参数被传递给 ioctl, 并且任何关联的错误将难以查找.）</p>
+</li>
+</ol>
+<p>​         <strong>ioctl 系统调用提供了发出设备特定命令的方法</strong>(例如格式化软盘的一个磁道, 这不是读也不是写). 另外, 几个 ioctl 命令被内核识别而不必引用 fops 表.如果设备不提供 ioctl 方法, 对于任何未事先定义的请求(-ENOTTY, “设备无这样的 ioctl”), 系统调用返回一个错误.</p>
+<ol>
+<li><p><code>int (*mmap) (struct file *, struct vm_area_struct *);</code></p>
+<p>mmap 用来请求将设备内存映射到进程的地址空间。 如果这个方法是 NULL, mmap 系统调用返回 -ENODEV.</p>
+</li>
+<li><p><code>int (*open) (struct inode * inode , struct file * filp ) ;</code></p>
+<p>(<strong>inode 为文件节点,这个节点只有一个</strong>，无论用户打开多少个文件，都只是对应着一个inode结构；但是filp就不同，只要打开一个文件，就对应着一个file结构体，<strong>file结构体通常用来追踪文件在运行时的状态信息</strong>）</p>
+<p>尽管这常常是对设备文件进行的第一个操作, 不要求驱动声明一个对应的方法. <strong>如果这个项是 NULL, 设备打开一直成功, 但是你的驱动不会得到通知.</strong>与open()函数对应的是release()函数。</p>
+</li>
+<li><p><code>int (*release) (struct inode *, struct file *);</code></p>
+<p><strong>release ()函数当最后一个打开设备的用户进程执行close()系统调用的时候</strong>，内核将调用驱动程序release()函数：</p>
+<p>release函数的主要任务是清理未结束的输入输出操作，释放资源，用户自定义排他标志的复位等。在文件结构被释放时引用这个操作. 如同 open, release 可以为 NULL.</p>
+</li>
+</ol>
+<p><strong>file、file_operations和inode都在<code>linux/fs.h</code>头文件中定义。</strong></p>
+<h2 id="一个示例"><a href="#一个示例" class="headerlink" title="一个示例"></a>一个示例</h2><p>以下是一个简单的字符驱动程序，在open时申请1024字节空间，在release时释放。可以对其读和写~</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/module.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/fs.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/init.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/cdev.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/slab.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/uaccess.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_SIZE    1024</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MEM_CLEAR   0x1</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">struct</span> mayuan_dev</div><div class="line">&#123;</div><div class="line">	<span class="keyword">struct</span> cdev cdev; <span class="comment">//表示字符设备的内核内的数据结构</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> *mem;</div><div class="line">	<span class="keyword">int</span> count;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> mayuan_dev *devp; <span class="comment">//自定义结构的指针</span></div><div class="line"><span class="keyword">dev_t</span> devno; <span class="comment">//设备号的结构</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">my_open</span><span class="params">(<span class="keyword">struct</span> inode *inode, <span class="keyword">struct</span> file *filp)</span></span></div><div class="line">&#123;</div><div class="line">	devp-&gt;count++;</div><div class="line">	<span class="keyword">if</span>(devp-&gt;count==<span class="number">1</span>)</div><div class="line">	&#123;</div><div class="line">		devp-&gt;mem=kzalloc(<span class="keyword">sizeof</span>(<span class="keyword">char</span>)*MAX_SIZE,GFP_KERNEL);<span class="comment">//为字符缓冲区进行空间预分配</span></div><div class="line">		printk(KERN_INFO <span class="string">"Apply 1024 bytes of memory！\n"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span></div><div class="line">	&#123;</div><div class="line">		printk(KERN_INFO <span class="string">"after add 1,count=%d\n"</span>,devp-&gt;count);</div><div class="line">	&#125;</div><div class="line">	filp-&gt;private_data = devp;<span class="comment">//private_data是file结构的一个域</span></div><div class="line">	try_module_get(devp-&gt;cdev.owner);<span class="comment">//int try_module_get(struct module *module);用于增加模块的引用计数</span></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">my_release</span><span class="params">(<span class="keyword">struct</span> inode *inode, <span class="keyword">struct</span> file *filp)</span></span></div><div class="line">&#123;</div><div class="line">	devp-&gt;count--;</div><div class="line">	<span class="keyword">if</span>(devp-&gt;count==<span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		kfree(devp-&gt;mem);</div><div class="line">		printk(KERN_INFO <span class="string">"Recycle memory space!!!\n"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span></div><div class="line">	&#123;</div><div class="line">		printk(KERN_INFO <span class="string">"after subtract 1,count=%d\n"</span>,devp-&gt;count);</div><div class="line">	&#125;</div><div class="line">	module_put(devp-&gt;cdev.owner);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">long</span> <span class="title">my_ioctl</span><span class="params">(<span class="keyword">struct</span> file *filp, <span class="keyword">unsigned</span> <span class="keyword">int</span> cmd, <span class="keyword">unsigned</span> <span class="keyword">long</span> arg)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">struct</span> mayuan_dev *dev = filp-&gt;private_data;</div><div class="line">	</div><div class="line">	<span class="keyword">switch</span> (cmd)</div><div class="line">	&#123;</div><div class="line">	<span class="keyword">case</span> MEM_CLEAR:<span class="comment">//自定义了一个命令清除内存。</span></div><div class="line">		<span class="built_in">memset</span>(dev-&gt;mem, <span class="number">0</span>, MAX_SIZE);</div><div class="line">		printk(KERN_INFO <span class="string">"mayuan is set to zero\n"</span>);</div><div class="line">		<span class="keyword">break</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">default</span>:</div><div class="line">		<span class="keyword">return</span> -EINVAL;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> ssize_t <span class="title">my_read</span><span class="params">(<span class="keyword">struct</span> file *filp, <span class="keyword">char</span> __user *buf, <span class="keyword">size_t</span> size, <span class="keyword">loff_t</span> *ppos)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> p = *ppos;<span class="comment">//读的位置相对于文件头的偏移</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> count = size;<span class="comment">//读的大小</span></div><div class="line">	<span class="keyword">int</span> ret = <span class="number">0</span>;</div><div class="line">	<span class="keyword">struct</span> mayuan_dev *dev = filp-&gt;private_data;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (p &gt;= MAX_SIZE)</div><div class="line">		<span class="keyword">return</span> -EINVAL;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (count &gt; MAX_SIZE - p)</div><div class="line">		count = MAX_SIZE - p;</div><div class="line">		</div><div class="line">	<span class="keyword">if</span> (copy_to_user(buf, dev-&gt;mem + p, count))<span class="comment">//拷贝数据到用户空间，buf是用户空间缓冲区的指针</span></div><div class="line">		ret = -EINVAL;</div><div class="line">	<span class="keyword">else</span></div><div class="line">	&#123;</div><div class="line">		*ppos += count;<span class="comment">//拷贝完数据记得把ppos指针偏移指定字节</span></div><div class="line">		ret = count;</div><div class="line">		printk(KERN_INFO <span class="string">"read %u byte(s) from %lu\n"</span>, count, p);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> ret;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> ssize_t <span class="title">my_write</span><span class="params">(<span class="keyword">struct</span> file *filp, <span class="keyword">const</span> <span class="keyword">char</span> __user *buf, <span class="keyword">size_t</span> size,<span class="keyword">loff_t</span> *ppos)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> p = *ppos;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> count = size;</div><div class="line">	<span class="keyword">int</span> ret = <span class="number">0</span>;</div><div class="line">	<span class="keyword">struct</span> mayuan_dev *dev = filp-&gt;private_data;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (p &gt;= MAX_SIZE)</div><div class="line">		<span class="keyword">return</span> -EINVAL;</div><div class="line">	<span class="keyword">if</span> (count &gt; MAX_SIZE - p)</div><div class="line">		count = MAX_SIZE - p;</div><div class="line">		</div><div class="line">	<span class="keyword">if</span> (copy_from_user(dev-&gt;mem + p, buf, count))</div><div class="line">		ret = -EINVAL;</div><div class="line">	<span class="keyword">else</span></div><div class="line">	&#123;</div><div class="line">		*ppos += count;<span class="comment">//和read一样记得偏移指针</span></div><div class="line">		ret = count;</div><div class="line">		printk(KERN_INFO <span class="string">"write %u byte(s) from %lu\n"</span>, count, p);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> ret;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> loff_t <span class="title">my_llseek</span><span class="params">(<span class="keyword">struct</span> file *filp, <span class="keyword">loff_t</span> offset, <span class="keyword">int</span> orig)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">loff_t</span> ret = <span class="number">0</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">switch</span> (orig)</div><div class="line">	&#123;</div><div class="line">      <span class="keyword">case</span> <span class="number">0</span>:<span class="comment">//文件开头</span></div><div class="line">          <span class="keyword">if</span> (offset &lt; <span class="number">0</span>)</div><div class="line">          &#123;</div><div class="line">              ret = -EINVAL;</div><div class="line">              <span class="keyword">break</span>;</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">if</span> (offset &gt; MAX_SIZE)</div><div class="line">          &#123;</div><div class="line">              ret = -EINVAL;</div><div class="line">              <span class="keyword">break</span>;</div><div class="line">          &#125;</div><div class="line">          filp-&gt;f_pos = offset;</div><div class="line">          ret = filp-&gt;f_pos;</div><div class="line">          <span class="keyword">break</span>;</div><div class="line"></div><div class="line">      <span class="keyword">case</span> <span class="number">1</span>:<span class="comment">//当前位置</span></div><div class="line">          <span class="keyword">if</span> ((filp-&gt;f_pos + offset) &lt; <span class="number">0</span> )</div><div class="line">          &#123;</div><div class="line">              ret = -EINVAL;</div><div class="line">              <span class="keyword">break</span>;</div><div class="line">          &#125;</div><div class="line"></div><div class="line">          <span class="keyword">if</span> ((filp-&gt;f_pos + offset) &gt; MAX_SIZE)</div><div class="line">          &#123;</div><div class="line">              ret = -EINVAL;</div><div class="line">              <span class="keyword">break</span>;</div><div class="line">          &#125;</div><div class="line">          filp-&gt;f_pos += offset;</div><div class="line">          ret = filp-&gt;f_pos;</div><div class="line">          <span class="keyword">break</span>;</div><div class="line"></div><div class="line">      <span class="keyword">default</span>:</div><div class="line">          ret = -EINVAL;</div><div class="line">          <span class="keyword">break</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> ret;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">struct</span> file_operations virtdev_fops =</div><div class="line">&#123;</div><div class="line">	.owner  =  THIS_MODULE,</div><div class="line">	.llseek =  my_llseek,</div><div class="line">	.read   =  my_read,</div><div class="line">	.write  =  my_write,</div><div class="line">	.unlocked_ioctl = my_ioctl,</div><div class="line">	.open   =  my_open,</div><div class="line">	.release = my_release,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> __<span class="function">init <span class="title">init_my_module</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> ret;</div><div class="line">	<span class="keyword">int</span> err;</div><div class="line">	</div><div class="line">	ret = alloc_chrdev_region(&amp;devno, <span class="number">0</span>, <span class="number">1</span>, <span class="string">"mayuan"</span>);</div><div class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>)</div><div class="line">		<span class="keyword">return</span> ret;</div><div class="line">		</div><div class="line">	devp = kzalloc(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> mayuan_dev), GFP_KERNEL);</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (!devp)</div><div class="line">	&#123;</div><div class="line">		ret = -ENOMEM;</div><div class="line">		<span class="keyword">goto</span> fail_malloc;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	cdev_init(&amp;devp-&gt;cdev, &amp;virtdev_fops);<span class="comment">//初始化cdev结构，参数分别是cdev结构的指针和file ops的指针</span></div><div class="line">	devp-&gt;cdev.owner = THIS_MODULE;</div><div class="line"></div><div class="line">	err = cdev_add(&amp;devp-&gt;cdev, devno, <span class="number">1</span>);<span class="comment">//注册，参数分别是cdev的指针、主设备号、关联数量</span></div><div class="line">	<span class="comment">//在驱动程序还没准备好处理设备上的操作时，不要调用！！！</span></div><div class="line">	<span class="keyword">if</span> (err)</div><div class="line">		printk(KERN_NOTICE <span class="string">"Error %d adding mayuan"</span>, err);</div><div class="line">	printk(KERN_INFO <span class="string">"Initialize mayuan 's device!"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	</div><div class="line">fail_malloc:</div><div class="line">	unregister_chrdev_region(devno, <span class="number">1</span>);</div><div class="line">	<span class="keyword">return</span> ret;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> __<span class="function"><span class="built_in">exit</span> <span class="title">exit_my_module</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	cdev_del(&amp;devp-&gt;cdev);<span class="comment">//注销</span></div><div class="line">	kfree(devp);</div><div class="line">	unregister_chrdev_region(devno, <span class="number">1</span>);<span class="comment">//释放设备号</span></div><div class="line">	printk(KERN_INFO <span class="string">"exit mayuan 's device!"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">module_init(init_my_module);</div><div class="line">module_exit(exit_my_module);</div><div class="line"></div><div class="line">MODULE_AUTHOR(<span class="string">"mayuan"</span>);</div><div class="line">MODULE_DESCRIPTION(<span class="string">"A poor program by mayuan."</span>);</div><div class="line">MODULE_LICENSE(<span class="string">"GPL"</span>);</div></pre></td></tr></table></figure>
+<p>PS：上面的程序我都用了<code>private_data</code>来保存我自定义的结构<code>mayuan_dev</code>，其实不需要这个也完全可以。直接用全局定义的<code>devp</code>。</p>
+<h2 id="知识点补充"><a href="#知识点补充" class="headerlink" title="知识点补充"></a>知识点补充</h2><p>上述示例中，用到了一些其他知识点，补充如下O(∩_∩)O</p>
+<ol>
+<li><p>模块引用计数问题</p>
+<p>2.4内核中，模块自身通过<code>MOD_INC_USE_COUNT, MOD_DEC_USE_COUNT</code>宏来管理自己被使用的计数。2.6内核提供了更健壮、灵活的模块计数管理接口<code>try_module_get(&amp;module)</code>, <code>module_put(&amp;module)</code>取代2.4中的模块使用计数管理宏。</p>
+<p>其函数原型为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">try_module_get</span><span class="params">(<span class="keyword">struct</span> <span class="keyword">module</span> *<span class="keyword">module</span>)</span></span>; 用于增加模块使用计数；若返回为<span class="number">0</span>，表示调用失败，希望使用的模块没有被加载或正在被卸载中。</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">module_put</span><span class="params">(<span class="keyword">struct</span> <span class="keyword">module</span> *<span class="keyword">module</span>)</span></span>; 减少模块使用计数。</div></pre></td></tr></table></figure>
+<p>从设备使用的角度出发，当需要打开、开始使用某个设备时，使用<code>try_module_get(dev-&gt;owner)</code>去增加管理此设备的owner模块的使用计数；当关闭、不再使用此设备时，使用<code>module_put(dev-&gt;owner)</code>减少对管理此设备的owner模块的使用 计数。<strong>这样，当设备在使用时，管理此设备的模块就不能被卸载；只有设备不再使用时模块才能被卸载。(其中，dev是cdev类型)</strong></p>
+</li>
+<li><p><code>copy_to_user和copy_from_user</code></p>
+<p>它们在头文件<code>&lt;asm/uaccess.h&gt;</code>中,由于内核空间与用户空间的内存不能直接互访，因此借助函数<code>copy_to_user()</code>内核空间到用户空间的复制完成，函数<code>copy_from_user()</code>完成用户空间到内核空间的复制。二者都是失败返回没有被拷贝的字节数，成功返回0。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span>  <span class="title">copy_to_user</span><span class="params">(<span class="keyword">void</span> __user *to, <span class="keyword">const</span> <span class="keyword">void</span> *from, <span class="keyword">unsigned</span> <span class="keyword">long</span> n)</span></span>;</div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span>  <span class="title">copy_from_user</span><span class="params">(<span class="keyword">void</span> *to, <span class="keyword">const</span> <span class="keyword">void</span> __user *from, <span class="keyword">unsigned</span> <span class="keyword">long</span> n)</span></span></div></pre></td></tr></table></figure>
+<p>二者参数相同：</p>
+<p>to——Destination address, in kernel space.</p>
+<p>from——Source address, in user space.</p>
+<p>n——Number of bytes to copy.</p>
+<p>注意，<strong>两个函数都有可能休眠</strong>。成功返回0，失败返回失败数目。</p>
+</li>
+<li><p>内存分配</p>
+<p><code>kmalloc</code>：在物理内存中分配一个连续的空间，数据不会被清空。头文件<code>&lt;linux/slab.h&gt;</code>。函数原型如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> *<span class="title">kmalloc</span><span class="params">(<span class="keyword">size_t</span> size, <span class="keyword">int</span> flags)</span></span></div></pre></td></tr></table></figure>
+<p>标志位有很多：最常用的是<code>GFP_KERNEL</code>。</p>
+<p>进程上下文，可以睡眠 <code>GFP_KERNEL</code><br>进程上下文，不可以睡眠 <code>GFP_ATOMIC</code></p>
+<p>特别说明的是，<code>malloc</code>是c中的一个函数，其在堆中分配内存，十分灵活。但是<code>kmalloc</code>不同，Linux分配一系列大小不同的内存池，分配内存时，就将足够大的内存池传给<code>kmalloc</code>，预分配的内存池大小有32B、64B、128B……128KB。所以，如果不足32字节也会给你这么大的空间。</p>
+<p><code>vmalloc</code>：用来分配虚拟地址连续但是物理地址不连续的内存。常用来申请较大的内存。头文件<code>mm/vmalloc.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> *<span class="title">vmalloc</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> size)</span></span></div></pre></td></tr></table></figure>
+<p><code>vfree</code>：释放内存</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">vfree</span><span class="params">(<span class="keyword">void</span> *addr)</span></span></div></pre></td></tr></table></figure>
+</li>
+<li><p>调试技术</p>
+<p>printk()和C库中的printf()在使用上最主要的区别就是 printk()指定了<strong>日志级别</strong>。如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> KERN_EMERG <span class="meta-string">"&lt;0&gt;"</span>	 <span class="comment">/* 系统不可使用 */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> KERN_ALERT <span class="meta-string">"&lt;1&gt;"</span> 	<span class="comment">/* 需要立即采取行动 */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> KERN_CRIT <span class="meta-string">"&lt;2&gt;"</span> 	<span class="comment">/* 严重情况 */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> KERN_ERR <span class="meta-string">"&lt;3&gt;"</span> 	<span class="comment">/* 错误情况 */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> KERN_WARNING <span class="meta-string">"&lt;4&gt;"</span> <span class="comment">/* 警告情况 */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> KERN_NOTICE <span class="meta-string">"&lt;5&gt;"</span> 	<span class="comment">/* 正常情况, 但是值得注意 */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> KERN_INFO <span class="meta-string">"&lt;6&gt;"</span> 	<span class="comment">/* 信息型消息 */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> KERN_DEBUG <span class="meta-string">"&lt;7&gt;"</span> 	<span class="comment">/* 调试级别的信息 */</span></span></div><div class="line"></div><div class="line">KERN_EMERG          <span class="comment">/* 用于紧急事件消息，一般是系统崩溃消息 */</span></div><div class="line">KERN_ALERT           <span class="comment">/* 用于需要立即采取行动的情况 */</span></div><div class="line">KERN_CRIT          <span class="comment">/* 临界状态，通常涉及严重的硬件或软件操作失败 */</span></div><div class="line">KERN_ERR               <span class="comment">/* 用于报告错误状态 */</span></div><div class="line">KERN_WARNING  <span class="comment">/* 对可能出现问题的情况进行告警 */</span></div><div class="line">KERN_NOTICE       <span class="comment">/* 有必要进行提示的正常情况 */</span></div><div class="line">KERN_INFO            <span class="comment">/* 提示性信息 */</span></div><div class="line">KERN_DEBUG        <span class="comment">/* 用于调试级别的信息 */</span></div></pre></td></tr></table></figure>
+<p>未指定优先级的<code>printk</code>语句采用的默认级别默认为<code>KERN_WARNING</code>。</p>
+<p>可以通过<code>dmesg</code>或<code>cat /proc/kmsg</code>指令来查看内核调试输出。</p>
+<p>​</p>
+</li>
+</ol>
+<h2 id="用户态一些读写常用函数"><a href="#用户态一些读写常用函数" class="headerlink" title="用户态一些读写常用函数"></a>用户态一些读写常用函数</h2><p>对于Linux而言，所有对设备和文件的操作都是使用<font color="00F5FF">文件描述符</font>来进行的。<br><strong>文件描述符是一个非负的整数，它是一个索引值</strong>，并指向内核中每个进程打开文件的记录表。<br>当打开一个现存文件或创建一个新文件时，内核就向进程返回一个文件描述符；当需要读/写文件时，也需要把文件描述符作为参数传递给相应的函数。<br>通常，一个进程启动时，都会打开3个文件：标准输入、标准输出和标准出错处理。这3个文件分别对应的文件描述符为0，1，2</p>
+<h3 id="open"><a href="#open" class="headerlink" title="open"></a>open</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname, <span class="keyword">int</span> flags)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname, <span class="keyword">int</span> flags, <span class="keyword">mode_t</span> mode)</span></span>;</div></pre></td></tr></table></figure>
+<p>打开一个文件，并指定访问该文件的方式，调用成功后返回一个文件描述符，发生错误时返回-1。</p>
+<p><code>pathname</code>是要打开文件的完全路径名或相对路径名，是一个字符串指针。<br><code>flags</code>可以是<code>O_RDONLY</code>（只读）、<code>O_WRONLY</code>（只写）和<code>O_RDWR</code>（读写）3个值之一。</p>
+<p>还有以下描述符：</p>
+<p><code>O_CREAT</code>如果文件不存在，就创建它。</p>
+<p><code>O_EXCL</code>保证创建文件，如果和<code>O_CREAT</code>的连用，如果文件已经存在open会失败。</p>
+<p><code>O_NONBLOCK</code>以非阻塞形式打开，任何会引起阻塞的操作都会立刻返回。</p>
+<p>对于第三个描述符 ：</p>
+<p>当flags为<code>O_CREAT</code>时，mode可以使用，否则被忽略，其有以下值，用于定义文件权限。</p>
+<blockquote>
+<p>S_IRWXU  00700 user (file owner) has read, write, and execute permission</p>
+<p>S_IRUSR  00400 user has read permission</p>
+<p>S_IWUSR  00200 user has write permission</p>
+<p>S_IXUSR  00100 user has execute permission</p>
+<p>S_IRWXG  00070 group has read, write, and execute permission</p>
+<p>S_IRGRP  00040 group has read permission</p>
+<p>S_IWGRP  00020 group has write permission</p>
+<p>S_IXGRP  00010 group has execute permission</p>
+<p>S_IRWXO  00007 others have read, write, and execute permission</p>
+<p>S_IROTH  00004 others have read permission</p>
+<p>S_IWOTH  00002 others have write permission</p>
+<p>S_IXOTH  00001 others have execute permission</p>
+</blockquote>
+<h3 id="close"><a href="#close" class="headerlink" title="close"></a>close</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">close</span><span class="params">(<span class="keyword">int</span> fd)</span></span>;</div></pre></td></tr></table></figure>
+<p>使用完文件后调用close关闭相应的文件描述符。</p>
+<p>fd是文件描述符，该文件描述符是在调用open时返回的。</p>
+<h3 id="read"><a href="#read" class="headerlink" title="read"></a>read</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ssize_t</span> read(<span class="keyword">int</span> fd, <span class="keyword">void</span>* buf, <span class="keyword">size_t</span> count );</div></pre></td></tr></table></figure>
+<p>从文件描述符对应的文件中读取数据，调用成功后返回读出的字节数，失败时返回-1。</p>
+<p>fd是从open调用返回的文件描述符。buf是缓冲区的指针，读出的数据将被存放到该缓冲区中。count要读取的字节数。</p>
+<h3 id="write"><a href="#write" class="headerlink" title="write"></a>write</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ssize_t</span> write(<span class="keyword">int</span> fd, <span class="keyword">void</span>* buf, <span class="keyword">size_t</span> count );</div></pre></td></tr></table></figure>
+<p>向文件描述符对应的文件中写入数据，调用成功后返回写入的字节数，失败时返回-1。</p>
+<p>fd是从open调用返回的文件描述符。buf是缓冲区的指针，用于存放要写入文件的数据。其大小必须满足能够放得下这些数据。count要写入的字节数。</p>
+<h3 id="ioctl"><a href="#ioctl" class="headerlink" title="ioctl"></a>ioctl</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ioctl.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">ioctl</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">int</span> cmd, <span class="keyword">long</span> arg )</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">ioctl</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">int</span> cmd)</span></span>;</div></pre></td></tr></table></figure>
+<p>设置或检索文件的有关参数并对文件进行一些其他的操作，涉及的设备不同，其参数也不同。</p>
+<p>fd是从open调用返回的文件描述符。<br>cmd是命令<br>arg是特殊的命令参数</p>
+<h3 id="lseek"><a href="#lseek" class="headerlink" title="lseek"></a>lseek</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="keyword">off_t</span> lseek(<span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset, <span class="keyword">int</span> whence);</div></pre></td></tr></table></figure>
+<p>在文件描述符对应的文件里把文件指针设定到指定的位置，调用成功后返回新指针的位置offset。失败时返回-1。</p>
+<p>offset所指的偏移位置与whence 有关， whence 有3个取值：<br><code>SEEK_SET</code>：从文件的开始处计算偏移。<br><code>SEEK_CUR</code>：从当前的文件偏移值计算偏移。<br><code>SEEK_END</code>：从文件的结束处计算偏移。</p>
+<h2 id="模块加载有关知识"><a href="#模块加载有关知识" class="headerlink" title="模块加载有关知识"></a>模块加载有关知识</h2><p>应用程序一般有一个main 函数，从头到尾执行一个任务；驱动程序却不同，它没有main 函数，通过使用宏<code>module_init(初始化函数名)</code>，将初始化函数加入内核全局初始化函数列表中。通过宏<code>module_exit(退出处理函数名)</code>注册退出处理函数。<br>应用程序可以包含标准的头文件，比如<code>&lt;stdio.h&gt;、&lt;stdlib.h&gt;</code>等；在驱动程序中是不能使用标准C 库的，因此不能调用所有的C 库函数， 只能调用内核的函数，比如输出打印函数只能使用内核的printk 函数，包含的头文件只能是内核的头文件<code>&lt;linux/kernel.h&gt;</code>。</p>
+<p>驱动加载的命令：</p>
+<ul>
+<li>加载设备驱动程序——insmod  &lt; 设备驱动程序.ko &gt;</li>
+<li>查看当前加载的设备驱动程序——lsmod  </li>
+<li>卸载驱动程序—— rmmod  &lt; 设备驱动程序 &gt;</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/03/定时器/" rel="next" title="定时器&&tasklet&&工作队列">
+                <i class="fa fa-chevron-left"></i> 定时器&&tasklet&&工作队列
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/09/pat（一）/" rel="prev" title="pat（一）">
+                pat（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#字符驱动"><span class="nav-number">1.</span> <span class="nav-text">字符驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#理论概述"><span class="nav-number">1.1.</span> <span class="nav-text">理论概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设备驱动程序的功能"><span class="nav-number">1.2.</span> <span class="nav-text">设备驱动程序的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux设备分类"><span class="nav-number">1.3.</span> <span class="nav-text">Linux设备分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux字符设备驱动原理"><span class="nav-number">1.4.</span> <span class="nav-text">Linux字符设备驱动原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本理论"><span class="nav-number">1.4.1.</span> <span class="nav-text">基本理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设备号与注册"><span class="nav-number">1.4.2.</span> <span class="nav-text">设备号与注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cdev结构体"><span class="nav-number">1.4.3.</span> <span class="nav-text">cdev结构体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file结构体"><span class="nav-number">1.4.4.</span> <span class="nav-text">file结构体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chardevs数组"><span class="nav-number">1.4.5.</span> <span class="nav-text">chardevs数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file-operations结构体"><span class="nav-number">1.4.6.</span> <span class="nav-text">file_operations结构体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个示例"><span class="nav-number">1.5.</span> <span class="nav-text">一个示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知识点补充"><span class="nav-number">1.6.</span> <span class="nav-text">知识点补充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户态一些读写常用函数"><span class="nav-number">1.7.</span> <span class="nav-text">用户态一些读写常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#open"><span class="nav-number">1.7.1.</span> <span class="nav-text">open</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#close"><span class="nav-number">1.7.2.</span> <span class="nav-text">close</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#read"><span class="nav-number">1.7.3.</span> <span class="nav-text">read</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#write"><span class="nav-number">1.7.4.</span> <span class="nav-text">write</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ioctl"><span class="nav-number">1.7.5.</span> <span class="nav-text">ioctl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lseek"><span class="nav-number">1.7.6.</span> <span class="nav-text">lseek</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块加载有关知识"><span class="nav-number">1.8.</span> <span class="nav-text">模块加载有关知识</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

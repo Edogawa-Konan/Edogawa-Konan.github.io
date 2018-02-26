@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Java," />
+
+
+<meta name="description" content="疯狂java讲义第三版读书笔记。oop下。">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象(下)">
+<meta property="og:url" content="https://www.prime666.com/2017/03/02/面向对象(下)/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="疯狂java讲义第三版读书笔记。oop下。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-12T07:03:26.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面向对象(下)">
+<meta name="twitter:description" content="疯狂java讲义第三版读书笔记。oop下。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/03/02/面向对象(下)/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>面向对象(下) | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/03/02/面向对象(下)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">面向对象(下)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-02T21:14:04+08:00">2017-03-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>疯狂java讲义第三版读书笔记。<br>oop下。</p>
+<a id="more"></a>
+<h2 id="包装类"><a href="#包装类" class="headerlink" title="包装类"></a>包装类</h2><p>java有8种基本数据类型，虽然java做到了所有引用类型的变量都继承了object类，都可当做object类型使用，但是这几个基本类型就歇菜了。（还是python好啊O(∩_∩)O哈哈哈~）。<br>java提供了包装类来改善这个情况，为基本数据类型定义了相应的引用类型：</p>
+<ul>
+<li>byte:Byte</li>
+<li>short:Short</li>
+<li>int:Integer</li>
+<li>long:Long</li>
+<li>char:Character</li>
+<li>float:Float</li>
+<li>double:Double</li>
+<li>boolean:Boolean</li>
+</ul>
+<p>jdk1.5开始提供了自动装箱（auto boxing）和自动拆箱（auto unboxing）：</p>
+<ul>
+<li>自动装箱：可以把基本类型直接赋值给对应的包装类变量或object</li>
+<li>自动拆箱：可以把包装类对象直接赋值给对应的基本类型变量</li>
+</ul>
+<p>包装类还可实现基本类型和String之间的转化：</p>
+<ol>
+<li>利用包装类的<code>parse类型名（String s）</code>的静态方法（除了Character）</li>
+<li>利用包装类的<code>类型名（String s）</code>构造器</li>
+</ol>
+<p>当然，String类也可以转成基本类型，用<code>valueOf()</code>方法，该方法被重载多次。（把基本类型和String连接会自动转化）</p>
+<p>比较两个包装类的实例用<code>compare()</code>静态方法。</p>
+<h2 id="对象处理的技巧"><a href="#对象处理的技巧" class="headerlink" title="对象处理的技巧"></a>对象处理的技巧</h2><p><code>toString()</code>方法是object类提供的，作用和Python的<code>__str__()</code>一样。如果需要可以重新实现它，默认实现不友好。</p>
+<p>java判断相等有两个方式：</p>
+<ol>
+<li><code>==</code>运算符，针对基本类型有效，对于引用变量判断的是是否指向同一个对象。</li>
+<li><code>equals（）</code>方法，针对引用变量。（默认object类的实现和<code>==</code>一样，需要就重写）</li>
+</ol>
+<h2 id="final修饰符"><a href="#final修饰符" class="headerlink" title="final修饰符"></a>final修饰符</h2><p><strong>final修饰的变量不可更改，只允许赋值一次，针对引用变量而言是保证一直引用同一个对象，对象可以原地修改</strong></p>
+<ol>
+<li>成员变量：如果是类变量，可以在静态初始化块或声明变量时给定初始值；如果是实例变量，可以在非静态初始化块、声明该实例变量或构造器中指定初始值。</li>
+<li>局部变量：可以在定义时指定也可以不指定再后面赋值一次。</li>
+</ol>
+<p>成员变量（除了final修饰的）会默认初始化，局部变量不会。</p>
+<p><strong>final修饰的方法不能被重写，可以重载。</strong></p>
+<p>注意，如果final修饰了private方法，实际上该方法对子类不可见，子类根本无法重写，可以定义一个一模一样的方法，只是新的方法而已。</p>
+<p><strong>final修饰的类不能有子类</strong></p>
+<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>关于抽象的规则如下：</p>
+<ol>
+<li>抽象类和抽象方法必须用<code>abstract</code>修饰，抽象方法不能有方法体（空的也算有方法体）。</li>
+<li>抽象类不能被实例化，即使抽象类不包含抽象方法。</li>
+<li>含有抽象方法或者重写不完全的都只能被定义成抽象类。</li>
+</ol>
+<p>abstract不能修饰变量。</p>
+<blockquote>
+<p>抽象类体现的是一种模板模式的设计，抽象类作为多个子类的通用模板，子类在抽象类的基础上进行扩展、改造，但子类总体上会大致保留抽象类的行为方式。</p>
+</blockquote>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>对抽象类抽象到底，就是接口。接口是一种规范，只规定这批类里必须提供某些方法。</p>
+<p>接口只能继承接口，不能继承类。</p>
+<p>接口里可以包含<strong>静态常量、抽象实例方法、类方法、默认方法、内部类，没有构造器和初始化块，类方法和默认方法必须有方法体。</strong></p>
+<p>接口内所有成员都是<code>public</code>，可以省略。上述说明包含的成员都可以省略修饰符（默认方法default和类方法static还是要的）。</p>
+<p>接口可以看做一个特殊的类，一个源文件最多一个public接口，如果有了一个public接口，文件名必须与接口同名。接口支持多继承。</p>
+<p>接口不能用于创建实例，但是接口可以用于声明引用类型变量，然后让这个引用类型变量引用到其实现类。示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; books = <span class="keyword">new</span> ArrayList&lt;&gt;();</div></pre></td></tr></table></figure>
+<h2 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h2><p>顾名思义定义在另一个类中的类就是<strong>内部类</strong>，也叫嵌套类，包含内部类的类叫<strong>外部类</strong>也称作宿主类。</p>
+<p>内部类比外部类可以多使用：private、protected和static修饰符。（本身实质作为外部类的一个成员变量或类变量）</p>
+<h3 id="非静态内部类（作为成员变量）"><a href="#非静态内部类（作为成员变量）" class="headerlink" title="非静态内部类（作为成员变量）"></a>非静态内部类（作为成员变量）</h3><blockquote>
+<p>其实，修饰符和作用域息息相关。外部类只有默认和public，上一级是包，因为它要么只能在同一个包中被访问，要么可以被任意访问。而内部类上一级是外部类，就有了四个作用域：同一个类，同一个包，父子类或同一个包和任意位置。因而对应多了几个修饰符。</p>
+</blockquote>
+<p><strong>成员内部类（不论静态非静态）的class文件总是这种形式：<code>OuterClass$InnerClass.class</code>。</strong></p>
+<p>当外部类成员变量、内部类成员变量和内部类局部变量同名时，可用this、外部类名.this来区分：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public class DiscernVariable</div><div class="line">&#123;</div><div class="line">	private String prop = &quot;外部类的实例变量&quot;;</div><div class="line">	private class InClass</div><div class="line">	&#123;</div><div class="line">		private String prop = &quot;内部类的实例变量&quot;;</div><div class="line">		public void info()</div><div class="line">		&#123;</div><div class="line">			String prop = &quot;局部变量&quot;;</div><div class="line">			// 通过 外部类类名.this.varName 访问外部类实例变量</div><div class="line">			System.out.println(&quot;外部类的实例变量值：&quot;</div><div class="line">				+ DiscernVariable.this.prop);</div><div class="line">			// 通过 this.varName 访问内部类实例的变量</div><div class="line">			System.out.println(&quot;内部类的实例变量值：&quot; + this.prop);</div><div class="line">			// 直接访问局部变量</div><div class="line">			System.out.println(&quot;局部变量的值：&quot; + prop);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	public void test()</div><div class="line">	&#123;</div><div class="line">		InClass in = new InClass();</div><div class="line">		in.info();</div><div class="line">		System.out.println(&quot;私有变量的值：&quot; + in.prop);</div><div class="line">	&#125;</div><div class="line">	public static void main(String[] args)</div><div class="line">	&#123;</div><div class="line">		new DiscernVariable().test();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>非静态内部类的成员可以访问外部类的private成员，但是反过来，如果一个外部类需要访问非静态内部类的成员，必须显式创建内部类的对象，通过它访问内部类私有成员（没错，的确可以访问啊，应该是把内部类的成员看做和外部类成员变量平等的成员变量。世界观崩塌了好久~~）。</p>
+<p><strong>根据静态成员不能访问非静态成员的规则，显然，外部类的一切静态的东东不能使用非静态内部类定义变量、创建实例等，总之不允许在外部类的静态成员中直接使用非静态内部类。</strong></p>
+<p><strong><em>java也不允许在非静态内部类里定义任何静态的东东！！！</em></strong></p>
+<h3 id="静态内部类（作为类变量）"><a href="#静态内部类（作为类变量）" class="headerlink" title="静态内部类（作为类变量）"></a>静态内部类（作为类变量）</h3><p><strong>始终记得<code>static</code>的作用就是把类的成员变成类相关而不是实例相关。</strong></p>
+<p>静态内部类可以包含静态成员也可以有非静态成员（即使是非静态成员也不能访问外部类的实例成员）。</p>
+<p>静态内部类是外部类的一个静态成员，因此外部类的所有方法 、初始化块中都可以使用静态内部类来定义变量、创建对象等。</p>
+<p>外部类依然不能直接访问内部类的成员，要么用类名作为调用者，要么通过静态内部类的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class AccessStaticInnerClass</div><div class="line">&#123;</div><div class="line">	static class StaticInnerClass</div><div class="line">	&#123;</div><div class="line">		private static int prop1 = 5;</div><div class="line">		private int prop2 = 9;</div><div class="line">	&#125;</div><div class="line">	public void accessInnerProp()</div><div class="line">	&#123;</div><div class="line">		// System.out.println(prop1);</div><div class="line">		// 上面代码出现错误，应改为如下形式：</div><div class="line">		// 通过类名访问静态内部类的类成员</div><div class="line">		System.out.println(StaticInnerClass.prop1);</div><div class="line">		// System.out.println(prop2);</div><div class="line">		// 上面代码出现错误，应改为如下形式：</div><div class="line">		// 通过实例访问静态内部类的实例成员</div><div class="line">		System.out.println(new StaticInnerClass().prop2);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>除此之外，java还允许在接口里定义内部类，接口里的默认都用public static修饰。（也只能是这样）</p>
+<p>###　内部类的使用</p>
+<h4 id="在外部类内使用"><a href="#在外部类内使用" class="headerlink" title="在外部类内使用"></a>在外部类内使用</h4><p>这种情况就和普通类一样，注意不要在外部类的静态成员中使用非静态内部类就好了。</p>
+<h4 id="在外部类之外使用非静态内部类"><a href="#在外部类之外使用非静态内部类" class="headerlink" title="在外部类之外使用非静态内部类"></a>在外部类之外使用非静态内部类</h4><ul>
+<li>不能用private修饰，这只对外部类可见。</li>
+<li>默认访问权限，只能被与外部类处于同一包中的其它类访问。</li>
+<li>protected，上一条加外部类的子类。</li>
+<li>public，任何地方</li>
+</ul>
+<p>使用内部类时，要用<code>OuterClass.InnerClass</code>作为内部类的类名（必要时还得加包名，层层嵌套）。<strong>非静态内部类的对象必须寄存在外部类的对象里，因此创建非静态内部类对象之前，必须先创建其外部类对象。</strong>，<code>OuterInstance.new InnerConstructor()</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">class Out</div><div class="line">&#123;</div><div class="line">	// 定义一个内部类，不使用访问控制符，</div><div class="line">	// 即只有同一个包中其他类可访问该内部类</div><div class="line">	class In</div><div class="line">	&#123;</div><div class="line">		public In(String msg)</div><div class="line">		&#123;</div><div class="line">			System.out.println(msg);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class CreateInnerInstance</div><div class="line">&#123;</div><div class="line">	public static void main(String[] args)</div><div class="line">	&#123;</div><div class="line">		Out.In in = new Out().new In(&quot;测试信息&quot;);</div><div class="line">		/*</div><div class="line">		上面代码可改为如下三行代码：</div><div class="line">		使用OutterClass.InnerClass的形式定义内部类变量</div><div class="line">		Out.In in;</div><div class="line">		创建外部类实例，非静态内部类实例将寄存在该实例中</div><div class="line">		Out out = new Out();</div><div class="line">		通过外部类实例和new来调用内部类构造器创建非静态内部类实例</div><div class="line">		in = out.new In(&quot;测试信息&quot;);</div><div class="line">		*/</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>创建子类时，子类构造器总会通过<code>super</code>调用父类的构造器。看下述示例，非静态内部类In类的构造器必须使用外部类对象来调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class SubClass extends Out.In</div><div class="line">&#123;</div><div class="line">	//显示定义SubClass的构造器</div><div class="line">	public SubClass(Out out)</div><div class="line">	&#123;</div><div class="line">		//通过传入的Out对象显式调用In的构造器</div><div class="line">		out.super(&quot;hello&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="在外部类之外使用静态内部类"><a href="#在外部类之外使用静态内部类" class="headerlink" title="在外部类之外使用静态内部类"></a>在外部类之外使用静态内部类</h4><p>因为静态内部类是外部类类相关的，所以创建静态内部类对象时无需创建外部类对象，只要提供外部类名字即可：<code>new OuterClass.InnerConstruct()</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class StaticOut</div><div class="line">&#123;</div><div class="line">	// 定义一个静态内部类，不使用访问控制符，</div><div class="line">	// 即同一个包中其他类可访问该内部类</div><div class="line">	static class StaticIn</div><div class="line">	&#123;</div><div class="line">		public StaticIn()</div><div class="line">		&#123;</div><div class="line">			System.out.println(&quot;静态内部类的构造器&quot;);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class CreateStaticInnerInstance</div><div class="line">&#123;</div><div class="line">	public static void main(String[] args)</div><div class="line">	&#123;</div><div class="line">		StaticOut.StaticIn in = new StaticOut.StaticIn();</div><div class="line">		/*</div><div class="line">		上面代码可改为如下两行代码：</div><div class="line">		使用OutterClass.InnerClass的形式定义内部类变量</div><div class="line">		StaticOut.StaticIn in;</div><div class="line">		通过new来调用内部类构造器创建静态内部类实例</div><div class="line">		in = new StaticOut.StaticIn();</div><div class="line">		*/</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>**不管是静态内部类还是非静态内部类，创建变量方式都是一样的，不同的是创建对象时，静态内部类只需要使用外部类即可调用构造器，而非静态内部类必须使用外部类对象来调用构造器。</p>
+<p>定义子类和前面的类似，构造器直接用外部类名即可。</p>
+<p>静态类还是简单，优先选择它！！！</p>
+<h3 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h3><p>太鸡肋了？</p>
+<h3 id="匿名内部类（ヾ-｡｀Д´｡-，好多）"><a href="#匿名内部类（ヾ-｡｀Д´｡-，好多）" class="headerlink" title="匿名内部类（ヾ(｡｀Д´｡)，好多）"></a>匿名内部类（ヾ(｡｀Д´｡)，好多）</h3><p>创建匿名内部类时会立即创建一个该类的实例（故而匿名内部内不能是抽象类），这个类定义立即消失，匿名内部类不能重复使用。</p>
+<p>匿名内部类形式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">new 实现接口（）|父类构造器（）</div><div class="line">&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>匿名内部类必须继承一个父类，或实现一个接口，但是只能二选一且只能继承（或实现）一个。</p>
+<p>匿名内部类不能定义构造器（可以有初始化块）。通过实现接口创建时，不能传入任何参数，通过继承父类创建时可以拥有和父类一样的构造器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">interface Product</div><div class="line">&#123;</div><div class="line">	public double getPrice();</div><div class="line">	public String getName();</div><div class="line">&#125;</div><div class="line">public class AnonymousTest</div><div class="line">&#123;</div><div class="line">	public void test(Product p)</div><div class="line">	&#123;</div><div class="line">		System.out.println(&quot;购买了一个&quot; + p.getName()</div><div class="line">			+ &quot;，花掉了&quot; + p.getPrice());</div><div class="line">	&#125;</div><div class="line">	public static void main(String[] args)</div><div class="line">	&#123;</div><div class="line">		AnonymousTest ta = new AnonymousTest();</div><div class="line">		// 调用test()方法时，需要传入一个Product参数，</div><div class="line">		// 此处传入其匿名实现类的实例</div><div class="line">		ta.test(new Product()</div><div class="line">		&#123;</div><div class="line">			public double getPrice()</div><div class="line">			&#123;</div><div class="line">				return 567.8;</div><div class="line">			&#125;</div><div class="line">			public String getName()</div><div class="line">			&#123;</div><div class="line">				return &quot;AGP显卡&quot;;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">abstract class Device</div><div class="line">&#123;</div><div class="line">	private String name;</div><div class="line">	public abstract double getPrice();</div><div class="line">	public Device()&#123;&#125;</div><div class="line">	public Device(String name)</div><div class="line">	&#123;</div><div class="line">		this.name = name;</div><div class="line">	&#125;</div><div class="line">	// 此处省略了name的setter和getter方法</div><div class="line">	public void setName(String name)</div><div class="line">	&#123;</div><div class="line">		this.name = name;</div><div class="line">	&#125;</div><div class="line">	public String getName()</div><div class="line">	&#123;</div><div class="line">		return this.name;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class AnonymousInner</div><div class="line">&#123;</div><div class="line">	public void test(Device d)</div><div class="line">	&#123;</div><div class="line">		System.out.println(&quot;购买了一个&quot; + d.getName()</div><div class="line">			+ &quot;，花掉了&quot; + d.getPrice());</div><div class="line">	&#125;</div><div class="line">	public static void main(String[] args)</div><div class="line">	&#123;</div><div class="line">		AnonymousInner ai = new AnonymousInner();</div><div class="line">		// 调用有参数的构造器创建Device匿名实现类的对象</div><div class="line">		ai.test(new Device(&quot;电子示波器&quot;)</div><div class="line">		&#123;</div><div class="line">			public double getPrice()</div><div class="line">			&#123;</div><div class="line">				return 67.8;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		// 调用无参数的构造器创建Device匿名实现类的对象</div><div class="line">		Device d = new Device()</div><div class="line">		&#123;</div><div class="line">			// 初始化块</div><div class="line">			&#123;</div><div class="line">				System.out.println(&quot;匿名内部类的初始化块...&quot;);</div><div class="line">			&#125;</div><div class="line">			// 实现抽象方法</div><div class="line">			public double getPrice()</div><div class="line">			&#123;</div><div class="line">				return 56.2;</div><div class="line">			&#125;</div><div class="line">			// 重写父类的实例方法</div><div class="line">			public String getName()</div><div class="line">			&#123;</div><div class="line">				return &quot;键盘&quot;;</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">		ai.test(d);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>被匿名内部类访问的局部变量默认加了final修饰！！！（从1.8开始，以前必须强制声明成final）</p>
+<h2 id="Lambda表达式（简洁的语法创建函数式接口的实例！啥语言都有o-╯□╰-o）"><a href="#Lambda表达式（简洁的语法创建函数式接口的实例！啥语言都有o-╯□╰-o）" class="headerlink" title="Lambda表达式（简洁的语法创建函数式接口的实例！啥语言都有o(╯□╰)o）"></a>Lambda表达式（简洁的语法创建函数式接口的实例！啥语言都有o(╯□╰)o）</h2><p>java的lambda表达式和c++的还是很像的，基本形式就是<code>(形参列表)-&gt;{}</code>，，形参类型可省略，只有一条语句时可以省略return，不然怎么叫表达式了呢？</p>
+<p>没啥好说，直接套示例代码了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">interface Eatable</div><div class="line">&#123;</div><div class="line">	void taste();</div><div class="line">&#125;</div><div class="line">interface Flyable</div><div class="line">&#123;</div><div class="line">	void fly(String weather);</div><div class="line">&#125;</div><div class="line">interface Addable</div><div class="line">&#123;</div><div class="line">	int add(int a , int b);</div><div class="line">&#125;</div><div class="line">public class LambdaQs</div><div class="line">&#123;</div><div class="line">	// 调用该方法需要Eatable对象</div><div class="line">	public void eat(Eatable e)</div><div class="line">	&#123;</div><div class="line">		System.out.println(e);</div><div class="line">		e.taste();</div><div class="line">	&#125;</div><div class="line">	// 调用该方法需要Flyable对象</div><div class="line">	public void drive(Flyable f)</div><div class="line">	&#123;</div><div class="line">		System.out.println(&quot;我正在驾驶：&quot; + f);</div><div class="line">		f.fly(&quot;【碧空如洗的晴日】&quot;);</div><div class="line">	&#125;</div><div class="line">	// 调用该方法需要Addable对象</div><div class="line">	public void test(Addable add)</div><div class="line">	&#123;</div><div class="line">		System.out.println(&quot;5与3的和为：&quot; + add.add(5, 3));</div><div class="line">	&#125;</div><div class="line">	public static void main(String[] args)</div><div class="line">	&#123;</div><div class="line">		LambdaQs lq = new LambdaQs();</div><div class="line">		// Lambda表达式的代码块只有一条语句，可以省略花括号。</div><div class="line">		lq.eat(()-&gt; System.out.println(&quot;苹果的味道不错！&quot;));</div><div class="line">		// Lambda表达式的形参列表只有一个形参，省略圆括号</div><div class="line">		lq.drive(weather -&gt;</div><div class="line">		&#123;</div><div class="line">			System.out.println(&quot;今天天气是：&quot; + weather);</div><div class="line">			System.out.println(&quot;直升机飞行平稳&quot;);</div><div class="line">		&#125;);</div><div class="line">		// Lambda表达式的代码块只有一条语句，省略花括号</div><div class="line">		// 代码块中只有一条语句，即使该表达式需要返回值，也可以省略return关键字。</div><div class="line">		lq.test((a , b)-&gt;a + b);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>lambda作为匿名方法，由上述代码可以看出来，可以作为任何类型的对象，到底需要什么类型需要看运行环境。</p>
+<p>lambda的类型叫做<code>target type</code>，其目标类型必须是函数式接口（functional interface），函数式接口代表<strong>只包含一个抽象方法</strong>的接口，可以有多个默认方法、类方法。</p>
+<p>lambda做的就是为函数式接口创建对象，接口只有一个抽象方法，所以lambda正好也只能实现一个方法。</p>
+<p>java8专门加了<code>@FunctionalInterface</code>注解。</p>
+<p>常用方式：</p>
+<ul>
+<li>赋值给函数式接口类型的变量</li>
+<li>作为函数式接口类型的参数传给某个方法</li>
+<li>使用函数式接口对表达式进行强制类型转换</li>
+</ul>
+<p><strong>同样的lambda表达式的目标类型可以不同，只要转换时保证lambda的匿名方法与函数式接口中唯一的抽象方法有相同的形参列表</strong>。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/27/面向对象（上）/" rel="next" title="面向对象（上）">
+                <i class="fa fa-chevron-left"></i> 面向对象（上）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/07/经典题目/" rel="prev" title="经典题目">
+                经典题目 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#包装类"><span class="nav-number">1.</span> <span class="nav-text">包装类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象处理的技巧"><span class="nav-number">2.</span> <span class="nav-text">对象处理的技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#final修饰符"><span class="nav-number">3.</span> <span class="nav-text">final修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象类"><span class="nav-number">4.</span> <span class="nav-text">抽象类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口"><span class="nav-number">5.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部类"><span class="nav-number">6.</span> <span class="nav-text">内部类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非静态内部类（作为成员变量）"><span class="nav-number">6.1.</span> <span class="nav-text">非静态内部类（作为成员变量）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态内部类（作为类变量）"><span class="nav-number">6.2.</span> <span class="nav-text">静态内部类（作为类变量）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在外部类内使用"><span class="nav-number">6.2.1.</span> <span class="nav-text">在外部类内使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在外部类之外使用非静态内部类"><span class="nav-number">6.2.2.</span> <span class="nav-text">在外部类之外使用非静态内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在外部类之外使用静态内部类"><span class="nav-number">6.2.3.</span> <span class="nav-text">在外部类之外使用静态内部类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部内部类"><span class="nav-number">6.3.</span> <span class="nav-text">局部内部类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#匿名内部类（ヾ-｡｀Д´｡-，好多）"><span class="nav-number">6.4.</span> <span class="nav-text">匿名内部类（ヾ(｡｀Д´｡)，好多）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda表达式（简洁的语法创建函数式接口的实例！啥语言都有o-╯□╰-o）"><span class="nav-number">7.</span> <span class="nav-text">Lambda表达式（简洁的语法创建函数式接口的实例！啥语言都有o(╯□╰)o）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

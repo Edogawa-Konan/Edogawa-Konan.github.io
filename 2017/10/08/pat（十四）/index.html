@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="PAT," />
+
+
+<meta name="description" content="浙大保研结束，感觉刷pat的过程还是很充实的，虽然考的还不是很好，下次一定要拿满分。下次就可以去浙大考了哈哈。。。">
+<meta name="keywords" content="PAT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pat（十四）">
+<meta property="og:url" content="https://www.prime666.com/2017/10/08/pat（十四）/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="浙大保研结束，感觉刷pat的过程还是很充实的，虽然考的还不是很好，下次一定要拿满分。下次就可以去浙大考了哈哈。。。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-26T03:25:10.985Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pat（十四）">
+<meta name="twitter:description" content="浙大保研结束，感觉刷pat的过程还是很充实的，虽然考的还不是很好，下次一定要拿满分。下次就可以去浙大考了哈哈。。。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/10/08/pat（十四）/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>pat（十四） | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/10/08/pat（十四）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pat（十四）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-08T10:02:42+08:00">2017-10-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>浙大保研结束，感觉刷pat的过程还是很充实的，虽然考的还不是很好，下次一定要拿满分。下次就可以去浙大考了哈哈。。。</p>
+<a id="more"></a>
+<h1 id="PAT甲级1131——1135"><a href="#PAT甲级1131——1135" class="headerlink" title="PAT甲级1131——1135"></a>PAT甲级1131——1135</h1><h2 id="1131-DFS"><a href="#1131-DFS" class="headerlink" title="1131[DFS]"></a>1131[DFS]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1131" target="_blank" rel="noopener">Subway Map</a></p>
+<p>题目输入一个地铁图（就是无向图），然后对结点进行编号。之后输入站点进行查询，输出最短路线（经过的站点最少），如果经过站点一样输出换乘次数最少的。</p>
+<p>思路：<strong>由于是稀疏图，故用邻接表存储，即存储每个顶点的邻接顶点。然后针对每一次查询用一次DFS搜索即可。另外，用二维数组line打表记录两个站点之间是几号线，根据这个好统计换乘次数。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/9/4.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> line[<span class="number">10000</span>][<span class="number">10000</span>];<span class="comment">//保存两个站点之间是几号线</span></div><div class="line"><span class="keyword">bool</span> visited[<span class="number">10000</span>];</div><div class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; G(<span class="number">10000</span>);<span class="comment">//每个结点的邻接结点</span></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tmp_path,path;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">transfer_count</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; tmp)</span></span></div><div class="line">&#123;<span class="comment">//统计一条线路的换乘次数,即简单遍历</span></div><div class="line">    <span class="keyword">int</span> count=<span class="number">-1</span>,pre=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;tmp.size();++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(line[tmp[i<span class="number">-1</span>]][tmp[i]]!=pre)</div><div class="line">        &#123;</div><div class="line">            count++;</div><div class="line">            pre=line[tmp[i<span class="number">-1</span>]][tmp[i]];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> count;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> point,<span class="keyword">int</span> destination,<span class="keyword">int</span> count,<span class="keyword">int</span> &amp;min_count,<span class="keyword">int</span> &amp;min_transfer)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(point==destination&amp;&amp;(count&lt;min_count||count==min_count&amp;&amp;transfer_count(tmp_path)&lt;min_transfer))</div><div class="line">    &#123;</div><div class="line">        min_count=count;</div><div class="line">        min_transfer=transfer_count(tmp_path);</div><div class="line">        path=tmp_path;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(point==destination)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp;e:G[point])</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(!visited[e])</div><div class="line">            &#123;</div><div class="line">                visited[e]=<span class="literal">true</span>;</div><div class="line">                tmp_path.push_back(e);</div><div class="line">                DFS(e,destination,count+<span class="number">1</span>,min_count,min_transfer);<span class="comment">//每次DFS一次，count加1表示又过了一个站点</span></div><div class="line">                visited[e]=<span class="literal">false</span>;</div><div class="line">                tmp_path.pop_back();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> N,M,pre,cur,K;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=N;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;M,&amp;pre);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;M;++j)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;cur);</div><div class="line">            G[pre].push_back(cur);</div><div class="line">            G[cur].push_back(pre);<span class="comment">//构建图</span></div><div class="line">            line[pre][cur]=line[cur][pre]=i;<span class="comment">//线路编号</span></div><div class="line">            pre=cur;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K);</div><div class="line">    <span class="keyword">int</span> a,b;<span class="comment">//起点和终点的编号</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;K;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;a,&amp;b);</div><div class="line">        <span class="keyword">int</span> min_count=<span class="number">9999</span>,min_transfer=<span class="number">99</span>;<span class="comment">//最少经过几站，最少换乘次数</span></div><div class="line">        tmp_path.clear();</div><div class="line">        tmp_path.push_back(a);</div><div class="line">        visited[a]=<span class="literal">true</span>;</div><div class="line">        DFS(a,b,<span class="number">0</span>,min_count,min_transfer);</div><div class="line">        visited[a]=<span class="literal">false</span>;</div><div class="line"></div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,min_count);</div><div class="line">        <span class="keyword">int</span> pre_line=<span class="number">0</span>,pre_stop=a;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;path.size();++j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(line[path[j<span class="number">-1</span>]][path[j]]!=pre_line)</div><div class="line">            &#123;<span class="comment">//path[j-1]是转运点</span></div><div class="line">                <span class="keyword">if</span>(pre_line!=<span class="number">0</span>)<span class="comment">//输出该转运点之前的路段</span></div><div class="line">                    <span class="built_in">printf</span>(<span class="string">"Take Line#%d from %04d to %04d.\n"</span>,pre_line,pre_stop,path[j<span class="number">-1</span>]);</div><div class="line">                pre_line=line[path[j<span class="number">-1</span>]][path[j]];</div><div class="line">                pre_stop=path[j<span class="number">-1</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Take Line#%d from %04d to %04d.\n"</span>, pre_line, pre_stop, b);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1132-字符串分割"><a href="#1132-字符串分割" class="headerlink" title="1132[字符串分割]"></a>1132[字符串分割]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1132" target="_blank" rel="noopener">Cut Integer</a></p>
+<p>思路：<strong>一目了然。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/10/7.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp;s)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> num=s.size();</div><div class="line">    <span class="keyword">int</span> a=stoi(s.substr(<span class="number">0</span>,num/<span class="number">2</span>));</div><div class="line">    <span class="keyword">int</span> b=stoi(s.substr(num/<span class="number">2</span>));</div><div class="line">    <span class="keyword">int</span> c=stoi(s);</div><div class="line">    <span class="keyword">if</span>(a*b!=<span class="number">0</span>&amp;&amp;c%(a*b)==<span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> N;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">string</span> in;</div><div class="line">        <span class="built_in">cin</span>&gt;&gt;in;</div><div class="line">        <span class="keyword">if</span>(check(in))</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"Yes\n"</span>);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="built_in">printf</span>(<span class="string">"No\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1133-链表分段排序"><a href="#1133-链表分段排序" class="headerlink" title="1133[链表分段排序]"></a>1133[链表分段排序]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1133" target="_blank" rel="noopener">Splitting A Linked List</a></p>
+<p>思路：<strong>用点小技巧，分多次for循环即可！</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/10/7.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> Node</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> address;</div><div class="line">    <span class="keyword">int</span> val;</div><div class="line">    <span class="keyword">int</span> next;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> start,N,K;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>,&amp;start,&amp;N,&amp;K);</div><div class="line">    <span class="built_in">vector</span>&lt;Node&gt; tmp(<span class="number">100000</span>);</div><div class="line">    <span class="built_in">vector</span>&lt;Node&gt; s,res;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> addr,val,next;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>,&amp;addr,&amp;val,&amp;next);</div><div class="line">        tmp[addr].address=addr;</div><div class="line">        tmp[addr].val=val;</div><div class="line">        tmp[addr].next=next;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> begin=start;begin!=<span class="number">-1</span>;begin=tmp[begin].next)</div><div class="line">    &#123;</div><div class="line">        s.push_back(tmp[begin]);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp;e:s)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(e.val&lt;<span class="number">0</span>)</div><div class="line">            res.push_back(e);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp;e:s)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(e.val&gt;=<span class="number">0</span>&amp;&amp;e.val&lt;=K)</div><div class="line">            res.push_back(e);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp;e:s)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(e.val&gt;K)</div><div class="line">            res.push_back(e);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;res.size();++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(i!=res.size()<span class="number">-1</span>)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%05d %d %05d\n"</span>,res[i].address,res[i].val,res[i+<span class="number">1</span>].address);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%05d %d -1"</span>,res[i].address,res[i].val);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1134-图论概念"><a href="#1134-图论概念" class="headerlink" title="1134[图论概念]"></a>1134[图论概念]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1134" target="_blank" rel="noopener">Vertex Cover</a></p>
+<p>思路：<strong>判断是不是顶点覆盖，根据定义判断即可。用邻接表比较好！</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/10/7.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_set&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> N,M,K;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; G[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> nv,id;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;nv);</div><div class="line">    <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; tmp;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;nv;j++)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;id);</div><div class="line">        tmp.insert(id);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;N;++j)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(tmp.find(j)==tmp.end())</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span>&amp;e:G[j])</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(tmp.find(e)==tmp.end())</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;N,&amp;M);</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; G[N];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;M;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> u,v;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;u,&amp;v);</div><div class="line">        G[u].push_back(v);</div><div class="line">        G[v].push_back(u);</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;K;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(check(G))</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"Yes\n"</span>);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="built_in">printf</span>(<span class="string">"No\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="1135-红黑树"><a href="#1135-红黑树" class="headerlink" title="1135[红黑树]"></a>1135[红黑树]</h2><p><a href="https://www.patest.cn/contests/pat-a-practise/1135" target="_blank" rel="noopener">Is It A Red-Black Tree</a></p>
+<p>思路：<strong>红黑树判断，考试的时候没做出来 ，主要没理解透。其实题目中说的第三条是废话，它的意思是指空结点都是黑的，但是这个题而言没啥用的，但还是成功让我发呆了2小时没做出来。咳咳，根据先序序列建立树，然后DFS之判断“双红”和黑结点个数问题。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// @author prime on 2017/10/8.</span></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> Node</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> val;</div><div class="line">    Node*left,*right;</div><div class="line">    Node()= <span class="keyword">default</span>;</div><div class="line">    Node(<span class="keyword">int</span> v):val(v) &#123;left=right= <span class="literal">nullptr</span>;&#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function">Node *<span class="title">insert</span><span class="params">(Node*root,<span class="keyword">int</span> v)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(root== <span class="literal">nullptr</span>)</div><div class="line">        root=<span class="keyword">new</span> Node(v);</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">abs</span>(v)&lt;=<span class="built_in">abs</span>(root-&gt;val))</div><div class="line">        root-&gt;left=insert(root-&gt;left,v);</div><div class="line">    <span class="keyword">else</span></div><div class="line">        root-&gt;right=insert(root-&gt;right,v);</div><div class="line">    <span class="keyword">return</span> root;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> is_red_black=<span class="literal">false</span>;</div><div class="line"><span class="keyword">int</span> num=<span class="number">-1</span>;<span class="comment">//辅助记忆黑色结点个数</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(Node*root,<span class="keyword">int</span> count)</span></span></div><div class="line">&#123;<span class="comment">//count统计黑色结点个数</span></div><div class="line">    <span class="keyword">if</span>(!is_red_black) <span class="keyword">return</span>;<span class="comment">//为了排除下面的双红问题</span></div><div class="line">    <span class="keyword">if</span>(root== <span class="literal">nullptr</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(num==<span class="number">-1</span>)</div><div class="line">            num=count;<span class="comment">//表示第一次初始化</span></div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(num!=count)</div><div class="line">            is_red_black=<span class="literal">false</span>;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(root-&gt;val&gt;<span class="number">0</span>)</div><div class="line">        count++;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;<span class="comment">//当前root结点是红的，孩子不能是红色的了！</span></div><div class="line">        <span class="keyword">if</span>(root-&gt;left&amp;&amp;root-&gt;left-&gt;val&lt;<span class="number">0</span>)</div><div class="line">            is_red_black=<span class="literal">false</span>;</div><div class="line">        <span class="keyword">if</span>(root-&gt;right&amp;&amp;root-&gt;right-&gt;val&lt;<span class="number">0</span>)</div><div class="line">            is_red_black=<span class="literal">false</span>;</div><div class="line">        <span class="comment">//此处不可return！！！</span></div><div class="line">    &#125;</div><div class="line">    DFS(root-&gt;left,count);</div><div class="line">    DFS(root-&gt;right,count);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> K;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;K);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;K;++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> N;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N);</div><div class="line">        Node*root= <span class="literal">nullptr</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;N;++j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> v;</div><div class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;v);</div><div class="line">            root=insert(root,v);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root-&gt;val&lt;<span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"No\n"</span>);</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        num=<span class="number">-1</span>,is_red_black=<span class="literal">true</span>;</div><div class="line">        DFS(root,<span class="number">0</span>);</div><div class="line">        <span class="keyword">if</span>(is_red_black)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"Yes\n"</span>);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="built_in">printf</span>(<span class="string">"No\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PAT/" rel="tag"># PAT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/03/pat（十三）/" rel="next" title="pat（十三）">
+                <i class="fa fa-chevron-left"></i> pat（十三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/16/python语法/" rel="prev" title="python语法">
+                python语法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PAT甲级1131——1135"><span class="nav-number">1.</span> <span class="nav-text">PAT甲级1131——1135</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1131-DFS"><span class="nav-number">1.1.</span> <span class="nav-text">1131[DFS]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1132-字符串分割"><span class="nav-number">1.2.</span> <span class="nav-text">1132[字符串分割]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1133-链表分段排序"><span class="nav-number">1.3.</span> <span class="nav-text">1133[链表分段排序]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1134-图论概念"><span class="nav-number">1.4.</span> <span class="nav-text">1134[图论概念]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1135-红黑树"><span class="nav-number">1.5.</span> <span class="nav-text">1135[红黑树]</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

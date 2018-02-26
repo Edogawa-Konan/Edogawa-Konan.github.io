@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="算法," />
+
+
+<meta name="description" content="霍夫曼编码的实现">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Huffman">
+<meta property="og:url" content="https://www.prime666.com/2017/05/18/Huffman/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="霍夫曼编码的实现">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-05-18T07:01:29.612Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Huffman">
+<meta name="twitter:description" content="霍夫曼编码的实现">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/05/18/Huffman/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>Huffman | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/05/18/Huffman/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Huffman</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-18T14:35:53+08:00">2017-05-18</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>霍夫曼编码的实现</p>
+<a id="more"></a>
+<h1 id="霍夫曼编码"><a href="#霍夫曼编码" class="headerlink" title="霍夫曼编码"></a>霍夫曼编码</h1><h2 id="理论概述"><a href="#理论概述" class="headerlink" title="理论概述"></a>理论概述</h2><p>引用维基百科中的描述如下：</p>
+<p><strong>霍夫曼编码</strong>（英语：Huffman Coding），又译为<strong>哈夫曼编码</strong>、<strong>赫夫曼编码</strong>，是一种用于无损<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9" target="_blank" rel="noopener">数据压缩</a>的<a href="https://zh.wikipedia.org/wiki/%E7%86%B5%E7%BC%96%E7%A0%81" target="_blank" rel="noopener">熵编码</a>（权编码）<a href="https://zh.wikipedia.org/wiki/%E6%BC%94%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">算法</a>。由<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7%E8%A1%9B%C2%B7%E9%9C%8D%E5%A4%AB%E6%9B%BC" target="_blank" rel="noopener">大卫·霍夫曼</a>在1952年发明。</p>
+<p>在<a href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA" target="_blank" rel="noopener">计算机</a><a href="https://zh.wikipedia.org/w/index.php?title=%E8%B3%87%E6%96%99%E8%99%95%E7%90%86&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener">数据处理</a>中，霍夫曼编码使用<a href="https://zh.wikipedia.org/w/index.php?title=%E8%AE%8A%E9%95%B7%E7%B7%A8%E7%A2%BC%E8%A1%A8&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener">变长编码表</a>对源符号（如文件中的一个字母）进行编码，其中<a href="https://zh.wikipedia.org/w/index.php?title=%E8%AE%8A%E9%95%B7%E7%B7%A8%E7%A2%BC%E8%A1%A8&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener">变长编码表</a>是通过一种评估来源符号出现概率的方法得到的，出现概率高的字母使用较短的编码，反之出现概率低的则使用较长的编码，这便使编码之后的字符串的平均长度、<a href="https://zh.wikipedia.org/wiki/%E6%9C%9F%E6%9C%9B%E5%80%BC" target="_blank" rel="noopener">期望值</a>降低，从而达到<a href="https://zh.wikipedia.org/wiki/%E6%97%A0%E6%8D%9F%E5%8E%8B%E7%BC%A9" target="_blank" rel="noopener">无损压缩</a>数据的目的。</p>
+<p>例如，在英文中，e的出现<a href="https://zh.wikipedia.org/wiki/%E6%A9%9F%E7%8E%87" target="_blank" rel="noopener">概率</a>最高，而z的出现概率则最低。当利用霍夫曼编码对一篇英文进行压缩时，e极有可能用一个<a href="https://zh.wikipedia.org/wiki/%E4%BD%8D%E5%85%83" target="_blank" rel="noopener">比特</a>来表示，而z则可能花去25个<a href="https://zh.wikipedia.org/wiki/%E4%BD%8D%E5%85%83" target="_blank" rel="noopener">比特</a>（不是26）。用普通的表示方法时，每个英文字母均占用一个<a href="https://zh.wikipedia.org/wiki/%E5%AD%97%E8%8A%82" target="_blank" rel="noopener">字节</a>，即8个<a href="https://zh.wikipedia.org/wiki/%E4%BD%8D%E5%85%83" target="_blank" rel="noopener">比特</a>。二者相比，e使用了一般编码的1/8的长度，z则使用了3倍多。倘若我们能实现对于英文中各个字母出现概率的较准确的估算，就可以大幅度提高无损压缩的比例。</p>
+<p>霍夫曼树又称最优二叉树，是一种带权路径长度最短的二叉树。所谓树的带权路径长度，就是树中所有的叶结点的权值乘上其到根结点的路径长度（若根结点为0层，叶结点到根结点的路径长度为叶结点的层数）。树的路径长度是从树根到每一结点的路径长度之和，记为WPL=（W1<em>L1+W2</em>L2+W3<em>L3+…+Wn</em>Ln），N个权值Wi（i=1,2,…n）构成一棵有N个叶结点的二叉树，相应的叶结点的路径长度为Li（i=1,2,…n）。可以证明霍夫曼树的WPL是最小的。</p>
+<h2 id="霍夫曼算法"><a href="#霍夫曼算法" class="headerlink" title="霍夫曼算法"></a>霍夫曼算法</h2><p>计算霍夫曼编码首先需要创建一棵霍夫曼树，而创建树的算法基于<strong>贪心</strong>的思想：</p>
+<ol>
+<li>将所有叶子节点加入优先级队列中（频率从小到大排序）</li>
+<li>每次从队列头部取出两个节点，然后创建 一个新的节点，其孩子为这两个节点，值为二者频率的和。依次进行直到只剩下一个根节点即可。</li>
+</ol>
+<p>注意，最优二叉树不是唯一的，为了编码解码唯一，所以，我在实现过程中加了一个判断条件，保证左子树永远小于等于右子树，另外比如对于2,3,5的情况，2和3作为孩子的父节点作为左子树，右子树是5。</p>
+<p>有了以上规定，并且编码左子树为0，右子树为1.这样的解是唯一的。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> Huffman;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">code</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">node</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">node</span>&gt;</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        node left;</div><div class="line">        node right;</div><div class="line">        <span class="keyword">int</span> position; <span class="comment">//为了保证huffman树的唯一性</span></div><div class="line">        node()</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">this</span>.val=-<span class="number">1</span>;</div><div class="line">            <span class="keyword">this</span>.left=<span class="keyword">null</span>;</div><div class="line">            <span class="keyword">this</span>.right=<span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        node(<span class="keyword">int</span> val)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">this</span>.val=val;</div><div class="line">            <span class="keyword">this</span>.left=<span class="keyword">null</span>;</div><div class="line">            <span class="keyword">this</span>.right=<span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(node o)</span></span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.val!=o.val)</div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.val-o.val;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.position-o.position;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></div><div class="line">    &#123;</div><div class="line">        Scanner in = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">        Queue&lt;node&gt; q=<span class="keyword">new</span> PriorityQueue&lt;&gt;();</div><div class="line">        <span class="keyword">int</span> n=in.nextInt();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</div><div class="line">        &#123;</div><div class="line">            node tmp=<span class="keyword">new</span> node();</div><div class="line">            tmp.val=in.nextInt();</div><div class="line">            tmp.position=i;</div><div class="line">            q.add(tmp);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> (q.size()&gt;<span class="number">1</span>)</div><div class="line">        &#123;</div><div class="line">            node L=q.poll();</div><div class="line">            node R=q.poll();</div><div class="line">            node tmp=<span class="keyword">new</span> node(L.val+R.val);</div><div class="line">            tmp.left=L;</div><div class="line">            tmp.right=R;</div><div class="line">            tmp.position=L.position;</div><div class="line">            q.add(tmp);</div><div class="line">        &#125;</div><div class="line">        res=<span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        encode(q.peek(),<span class="keyword">new</span> ArrayList&lt;&gt;());</div><div class="line">        <span class="keyword">for</span> (Integer e:res.keySet())</div><div class="line">            System.out.println(e+<span class="string">"编码为:"</span>+res.get(e));</div><div class="line">        List&lt;Integer&gt; tobedecode=<span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        System.out.println(<span class="string">"请输入欲解码的编码"</span>);</div><div class="line">        String tmp=in.next();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;tmp.length();i++)</div><div class="line">            tobedecode.add(tmp.charAt(i)-<span class="string">'0'</span>);</div><div class="line"><span class="comment">//        System.out.println(tobedecode);</span></div><div class="line">        <span class="keyword">try</span></div><div class="line">        &#123;</div><div class="line">            decode(q.peek(),tobedecode);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (AssertionError e)</div><div class="line">        &#123;</div><div class="line">            System.out.println(e.getMessage());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;Integer,List&lt;Integer&gt;&gt; res;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">encode</span><span class="params">(node root,List&lt;Integer&gt; prefix)</span></span></div><div class="line">    &#123;<span class="comment">//回溯法打印编码</span></div><div class="line">        <span class="keyword">if</span> (root.right==<span class="keyword">null</span>&amp;&amp;root.left==<span class="keyword">null</span>)</div><div class="line">        &#123;</div><div class="line">            res.put(root.val,<span class="keyword">new</span> ArrayList&lt;&gt;(prefix));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            prefix.add(<span class="number">0</span>);</div><div class="line">            encode(root.left,prefix);</div><div class="line">            prefix.remove(prefix.size()-<span class="number">1</span>);</div><div class="line"></div><div class="line">            prefix.add(<span class="number">1</span>);</div><div class="line">            encode(root.right,prefix);</div><div class="line">            prefix.remove(prefix.size()-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">decode</span><span class="params">(node root,List&lt;Integer&gt; prefix)</span></span></div><div class="line">    &#123;<span class="comment">//解码prefix</span></div><div class="line">        <span class="keyword">if</span> (prefix.size()==<span class="number">0</span>&amp;&amp;root.left==<span class="keyword">null</span>&amp;&amp;root.right==<span class="keyword">null</span>)</div><div class="line">            System.out.println(<span class="string">"该编码表示字符的优先级为"</span>+root.val);</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (prefix.size()&gt;<span class="number">0</span>&amp;&amp;prefix.get(<span class="number">0</span>)==<span class="number">0</span>&amp;&amp;root.left!=<span class="keyword">null</span>)</div><div class="line">        &#123;</div><div class="line">            prefix.remove(<span class="number">0</span>);</div><div class="line">            decode(root.left,prefix);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (prefix.size()&gt;<span class="number">0</span>&amp;&amp;prefix.get(<span class="number">0</span>)==<span class="number">1</span>&amp;&amp;root.right!=<span class="keyword">null</span>)</div><div class="line">        &#123;</div><div class="line">            prefix.remove(<span class="number">0</span>);</div><div class="line">            decode(root.right,prefix);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError(<span class="string">"未能识别的编码"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(node root)</span></span></div><div class="line">    &#123;<span class="comment">//先序遍历huffman树，debug用</span></div><div class="line">        <span class="keyword">if</span> (root==<span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            System.out.print(root.val+<span class="string">"  "</span>);</div><div class="line">            print(root.left);</div><div class="line">            print(root.right);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>思路很简单，最后加了个先序遍历是为了debug。可以不实现它。</p>
+<p>编码过程用了回溯的思想（说白了就是DFS），解码就很简单了，直接从根出发即可。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/01/DP-java版本/" rel="next" title="DP-java版本">
+                <i class="fa fa-chevron-left"></i> DP-java版本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/18/最短路径/" rel="prev" title="最短路径">
+                最短路径 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#霍夫曼编码"><span class="nav-number">1.</span> <span class="nav-text">霍夫曼编码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#理论概述"><span class="nav-number">1.1.</span> <span class="nav-text">理论概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#霍夫曼算法"><span class="nav-number">1.2.</span> <span class="nav-text">霍夫曼算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">1.3.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="算法," />
+
+
+<meta name="description" content="最短路径问题总结。">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最短路径">
+<meta property="og:url" content="https://www.prime666.com/2017/05/18/最短路径/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="最短路径问题总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-05-18T09:06:57.131Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最短路径">
+<meta name="twitter:description" content="最短路径问题总结。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/05/18/最短路径/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>最短路径 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/05/18/最短路径/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">最短路径</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-18T16:24:15+08:00">2017-05-18</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最短路径问题总结。</p>
+<a id="more"></a>
+<h1 id="最短路径问题"><a href="#最短路径问题" class="headerlink" title="最短路径问题"></a>最短路径问题</h1><h2 id="Dijkstra"><a href="#Dijkstra" class="headerlink" title="Dijkstra"></a>Dijkstra</h2><p><strong>适用于单源点、非负权值的图。</strong></p>
+<p>基本思想是基于<strong>贪心法</strong>，执行过程描述如下:</p>
+<p>​    <strong>初始化字典dist表示源点到任一顶点的距离。dist[源点]=0,其余INF。然后用一个集合set保存已经被访问的元素。从源点开始，对该顶点所有的出边进行松弛，然后加入到被访问集合中，然后在dist字典中寻找下一个值最小的顶点，依次进行直到所有顶点已经加入被访问集合中。</strong></p>
+<p>以上是最朴素的思想，可以用一个<strong>优先级队列</strong>进行优化。</p>
+<p>代码实现如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Dijkstra</span><span class="params">(G, vo)</span>:</span></div><div class="line">    old = set()</div><div class="line">    view = vo</div><div class="line"></div><div class="line">    INF = float(<span class="string">'inf'</span>)</div><div class="line"></div><div class="line">    dis = dict((k, INF) <span class="keyword">for</span> k <span class="keyword">in</span> G.keys())  <span class="comment"># dis[k]表示到k的最短距离</span></div><div class="line">    dis[vo] = <span class="number">0</span></div><div class="line"></div><div class="line">    path=&#123;&#125;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> len(old) &lt; len(G):</div><div class="line">        old.add(view)  <span class="comment"># 当前考虑的节点</span></div><div class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> G[view]:<span class="comment">#遍历view周围的节点，进行松弛</span></div><div class="line">            <span class="keyword">if</span> dis[w] &gt; dis[view] + G[view][w]:</div><div class="line">                dis[w] = dis[view] + G[view][w]</div><div class="line">                path[w]=view<span class="comment">#path[w]记录w的上一个结点的下标</span></div><div class="line"></div><div class="line">        new =INF</div><div class="line"></div><div class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> dis.keys():<span class="comment">#找下一个节点k，要求dis[k]最小且k未被松弛过。</span></div><div class="line">            <span class="keyword">if</span> n <span class="keyword">in</span> old:</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            <span class="keyword">if</span> dis[n]&lt;=new: <span class="comment">#必须小于等于，因为如果一个顶点没出边，for循环转一圈没有意义，view会一直是这个顶点.</span></div><div class="line">                view=n</div><div class="line">                new=dis[n]</div><div class="line"></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> path:</div><div class="line">        print(<span class="string">'到顶点'</span>,x,<span class="string">'的路径为'</span>,end=<span class="string">': '</span>)</div><div class="line">        t=x</div><div class="line">        <span class="keyword">while</span> t!=<span class="keyword">None</span>:</div><div class="line">            print(t,<span class="string">"&lt;-"</span>,end=<span class="string">' '</span>)</div><div class="line">            t=path.get(t)</div><div class="line">        print(<span class="string">'总长度为'</span>,dis[x])</div><div class="line"></div><div class="line">    <span class="keyword">return</span> dis,path</div></pre></td></tr></table></figure>
+<p>这里G代表图，vo代表起点。图的表示使用嵌套的字典表示的，即{‘A’:{‘B’:3}}表示顶点A有A到B的边，权值为3.</p>
+<h2 id="Bellman-Ford"><a href="#Bellman-Ford" class="headerlink" title="Bellman-Ford"></a>Bellman-Ford</h2><p><strong>适用于单源非负环图。</strong></p>
+<p>思想描述如下：</p>
+<p>​    <strong>初始化dist字典同上，松弛每条边（等价于松弛所有顶点）顶点-1轮，如果之后松弛还能成功，表明有负环存在，无法求解。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Bellman_Ford</span><span class="params">(G,v)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    每一轮对所有顶点进行松弛，如果哪一轮松弛后最短距离都不变化就提前结束。否则，如果执行n</div><div class="line">    轮之后还在变化则说明存在负环。最多n-1次松弛就可以得到答案。（n为顶点个数）</div><div class="line">    :param G: 图的邻接表</div><div class="line">    :param v: 起点</div><div class="line">    :return: dis,path</div><div class="line">    '''</div><div class="line">    dis=dict((k,float(<span class="string">'inf'</span>))<span class="keyword">for</span> k <span class="keyword">in</span> G)</div><div class="line">    dis[v]=<span class="number">0</span></div><div class="line">    path=&#123;&#125;</div><div class="line">    <span class="keyword">for</span> rounds <span class="keyword">in</span> G:<span class="comment">#一共执行n次，如果n次之后最短路径还没求出来说明有负环</span></div><div class="line">        changed=<span class="keyword">False</span></div><div class="line">        <span class="comment">#对所有顶点进行松弛</span></div><div class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> G:</div><div class="line">            <span class="keyword">for</span> w <span class="keyword">in</span> G[u]:</div><div class="line">                <span class="keyword">if</span> dis[w] &gt; dis[u] + G[u][w]:</div><div class="line">                    dis[w] = dis[u] + G[u][w]</div><div class="line">                    path[w] = u</div><div class="line">                    changed=<span class="keyword">True</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> changed:</div><div class="line">            <span class="keyword">break</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        sys.exit(<span class="string">'存在负环，算法求不出来'</span>)</div><div class="line">    <span class="keyword">return</span> dis,path</div></pre></td></tr></table></figure>
+<h2 id="SPFA"><a href="#SPFA" class="headerlink" title="SPFA"></a>SPFA</h2><p>即<strong>用队列优化的Bellman-Ford算法，考虑上述算法，显然只有前面的边松弛成功，后面的边松弛才会成功。所以上面的实现用了个标志用于提前结束，这里用一个队列，把松弛成功的顶点的所有邻接顶点加入其中，每次从队列取出顶点进行松弛。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">SPFA</span><span class="params">(G,v)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    利用 spfa 算法判断负环有两种方法：</div><div class="line"></div><div class="line">      1） spfa 的 dfs 形式，判断条件是存在一点在一条路径上出现多次。</div><div class="line"></div><div class="line">      2） spfa 的 bfs 形式，判断条件是存在一点入队次数大于总顶点数。</div><div class="line">    :param G: 图</div><div class="line">    :param v: 起点</div><div class="line">    :return: dis,path</div><div class="line">    '''</div><div class="line">    <span class="comment">#用队列优化Bellman-Ford算法，这里不能有负环，程序中没有判断。</span></div><div class="line">    q=deque()</div><div class="line">    path=&#123;&#125;<span class="comment">#用于打印路径</span></div><div class="line">    dis=dict((k,float(<span class="string">'inf'</span>))<span class="keyword">for</span> k <span class="keyword">in</span> G)<span class="comment">#记录距离</span></div><div class="line">    dis[v]=<span class="number">0</span></div><div class="line">    times=dict((k,<span class="number">0</span>) <span class="keyword">for</span> k <span class="keyword">in</span> G)<span class="comment">#用于记录每个顶点入队列的次数，如果大于顶点个数表明有负环</span></div><div class="line">    q.append(v)<span class="comment">#起始把起点入队</span></div><div class="line">    <span class="keyword">while</span> len(q)!=<span class="number">0</span>:</div><div class="line">        x=q.popleft()<span class="comment">#出队一个</span></div><div class="line">        <span class="comment">#对该顶点所有的邻边进行松弛</span></div><div class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> G[x]:</div><div class="line">            <span class="keyword">if</span> dis[w]&gt;dis[x]+G[x][w]:</div><div class="line">                dis[w]=dis[x]+G[x][w]</div><div class="line">                path[w]=x <span class="comment">#记录此顶点的上一个顶点</span></div><div class="line">                <span class="keyword">if</span> w <span class="keyword">not</span> <span class="keyword">in</span> q:</div><div class="line">                    <span class="keyword">if</span> times[w]&gt;len(G):</div><div class="line">                        sys.exit(<span class="string">'存在负环，嗝屁了'</span>)</div><div class="line">                    q.append(w)</div><div class="line">                    times[w]+=<span class="number">1</span></div><div class="line">    <span class="keyword">return</span> dis,path</div></pre></td></tr></table></figure>
+<h2 id="Floyd-Warshall"><a href="#Floyd-Warshall" class="headerlink" title="Floyd-Warshall"></a>Floyd-Warshall</h2><p>基于DP的一个算法，代码即是递推式。</p>
+<p><strong>思想就是u到v的最短路径经不经过k，这也解释了为什么k是最外层循环（自底向上运算，后面的需要用到前面的结果）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Folyd_Warshall</span><span class="params">(G)</span>:</span></div><div class="line">    G2=deepcopy(G)</div><div class="line">    <span class="comment">#强行补成邻接矩阵的形式</span></div><div class="line">    <span class="keyword">for</span> u <span class="keyword">in</span> G2:</div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> G2:</div><div class="line">            <span class="keyword">if</span> u==v:</div><div class="line">                G2[u][v]=<span class="number">0</span></div><div class="line">            <span class="keyword">if</span> G2[u].get(v)==<span class="keyword">None</span>:</div><div class="line">                G2[u][v]=float(<span class="string">'inf'</span>)</div><div class="line">	<span class="comment">#算法开始</span></div><div class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> G:</div><div class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> G:</div><div class="line">            <span class="keyword">for</span> v <span class="keyword">in</span> G:</div><div class="line">                <span class="keyword">if</span> G2[u][v]&gt;G2[u][k]+G2[k][v]:</div><div class="line">                    G2[u][v]=G2[u][k]+G2[k][v]</div><div class="line">    <span class="keyword">return</span> G2</div></pre></td></tr></table></figure>
+<h2 id="Johnson"><a href="#Johnson" class="headerlink" title="Johnson"></a>Johnson</h2><p>这个算法利用了Bellman和Dijkstra算法。</p>
+<p>由于Bellman算法限制，同样<strong>不能用于负环图</strong>。</p>
+<p>其本质思想是:</p>
+<p>​    <strong>给图加上一个顶点s，然后令s到其所有顶点距离为0，利用Bellman-Ford算法，求出s到其它顶点的最短距离记为h（h[a]表示s到a的最短距离），然后对图中所有的边进行重新赋权（目的消除负权，好使用Dijkstra算法），具体体现为若有顶点u、v和边<code>G[u][v]</code>，则<code>G[u][v]+=h[u]-h[v]</code>。之后，去除顶点s即可。然后对所有顶点执行Dijkstra算法。最后在已经求解的结果上别忘了恢复原来的权值，即<code>Dist[u][v]+=h[v]-h[u]</code>，这里Dist表示u到v的最短距离。</strong></p>
+<p>可以证明，<strong>重新赋权图求得的最短路径和原始图一样，（值不一样可以通过恢复操作来求出）。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">johnson</span><span class="params">(G)</span>:</span></div><div class="line">    G=deepcopy(G)</div><div class="line">    s=object()</div><div class="line">    G[s]=&#123;v:<span class="number">0</span> <span class="keyword">for</span> v <span class="keyword">in</span> G&#125; <span class="comment">#新节点到所有其它顶点距离为0</span></div><div class="line">    h,_=Bellman_Ford(G,s) <span class="comment">#h表示s到其它节点的最短路径值</span></div><div class="line">    <span class="keyword">del</span> G[s] <span class="comment">#可以删除s节点了</span></div><div class="line">    <span class="keyword">for</span> u <span class="keyword">in</span> G:  <span class="comment">#对于从u到v的边，进行重新赋权</span></div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> G[u]:</div><div class="line">            G[u][v]+=h[u]-h[v]</div><div class="line">    D=&#123;&#125;</div><div class="line">    <span class="keyword">for</span> u <span class="keyword">in</span> G:</div><div class="line">        D[u]=Dijstra(G,vo=u)[<span class="number">0</span>]</div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> G:</div><div class="line">            D[u][v]+=h[v]-h[u]</div><div class="line">    <span class="keyword">return</span> D</div></pre></td></tr></table></figure>
+<h2 id="附上测试用例和打印路径的函数"><a href="#附上测试用例和打印路径的函数" class="headerlink" title="附上测试用例和打印路径的函数"></a>附上测试用例和打印路径的函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_path</span><span class="params">(dis,path)</span>:</span></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> path:</div><div class="line">        print(<span class="string">'到顶点'</span>,x,<span class="string">'的总长度为:'</span>,dis[x],<span class="string">'具体的路径为'</span>,end=<span class="string">': '</span>)</div><div class="line">        t=x</div><div class="line">        <span class="keyword">while</span> t!=<span class="keyword">None</span>:</div><div class="line">            print(t,<span class="string">"&lt;-"</span>,end=<span class="string">' '</span>)</div><div class="line">            t=path.get(t)</div><div class="line">        print()</div><div class="line">        </div><div class="line">      G1=&#123;<span class="string">'B'</span>: &#123;<span class="string">'D'</span>: <span class="number">3</span>, <span class="string">'E'</span>: <span class="number">0</span>, <span class="string">'C'</span>: <span class="number">1</span>&#125;,</div><div class="line">        <span class="string">'D'</span>: &#123;<span class="string">'B'</span>: <span class="number">0</span>, <span class="string">'C'</span>: <span class="number">2</span>&#125;,</div><div class="line">        <span class="string">'E'</span>: &#123;<span class="string">'D'</span>: <span class="number">0</span>&#125;,</div><div class="line">        <span class="string">'C'</span>: &#123;&#125;,</div><div class="line">        <span class="string">'A'</span>: &#123;<span class="string">'B'</span>: <span class="number">1</span>, <span class="string">'C'</span>: <span class="number">3</span>&#125;&#125;</div><div class="line"></div><div class="line">    G=&#123;<span class="number">0</span>:&#123;<span class="number">1</span>:<span class="number">5</span>,<span class="number">2</span>:<span class="number">3</span>&#125;,</div><div class="line">       <span class="number">1</span>:&#123;<span class="number">0</span>:<span class="number">5</span>,<span class="number">3</span>:<span class="number">1</span>,<span class="number">4</span>:<span class="number">3</span>,<span class="number">5</span>:<span class="number">6</span>&#125;,</div><div class="line">       <span class="number">2</span>:&#123;<span class="number">0</span>:<span class="number">3</span>,<span class="number">4</span>:<span class="number">8</span>,<span class="number">5</span>:<span class="number">7</span>,<span class="number">6</span>:<span class="number">6</span>&#125;,</div><div class="line">       <span class="number">3</span>:&#123;<span class="number">1</span>:<span class="number">1</span>,<span class="number">7</span>:<span class="number">6</span>,<span class="number">8</span>:<span class="number">8</span>&#125;,</div><div class="line">       <span class="number">4</span>:&#123;<span class="number">1</span>:<span class="number">3</span>,<span class="number">2</span>:<span class="number">8</span>,<span class="number">7</span>:<span class="number">3</span>,<span class="number">8</span>:<span class="number">5</span>&#125;,</div><div class="line">       <span class="number">5</span>:&#123;<span class="number">1</span>:<span class="number">6</span>,<span class="number">2</span>:<span class="number">7</span>,<span class="number">8</span>:<span class="number">3</span>,<span class="number">9</span>:<span class="number">3</span>&#125;,<span class="comment">#5</span></div><div class="line">       <span class="number">6</span>:&#123;<span class="number">2</span>:<span class="number">6</span>,<span class="number">8</span>:<span class="number">8</span>,<span class="number">9</span>:<span class="number">4</span>&#125;,<span class="comment">#6</span></div><div class="line">       <span class="number">7</span>:&#123;<span class="number">3</span>:<span class="number">6</span>,<span class="number">4</span>:<span class="number">3</span>,<span class="number">10</span>:<span class="number">2</span>,<span class="number">11</span>:<span class="number">2</span>&#125;,<span class="comment">#7</span></div><div class="line">       <span class="number">8</span>:&#123;<span class="number">3</span>:<span class="number">8</span>,<span class="number">4</span>:<span class="number">5</span>,<span class="number">5</span>:<span class="number">3</span>,<span class="number">6</span>:<span class="number">8</span>,<span class="number">11</span>:<span class="number">1</span>,<span class="number">12</span>:<span class="number">2</span>&#125;,<span class="comment">#8</span></div><div class="line">       <span class="number">9</span>:&#123;<span class="number">5</span>:<span class="number">3</span>,<span class="number">6</span>:<span class="number">4</span>,<span class="number">11</span>:<span class="number">3</span>,<span class="number">12</span>:<span class="number">3</span>&#125;,<span class="comment">#9</span></div><div class="line">       <span class="number">10</span>:&#123;<span class="number">7</span>:<span class="number">2</span>,<span class="number">13</span>:<span class="number">3</span>,<span class="number">14</span>:<span class="number">5</span>&#125;,<span class="comment">#10</span></div><div class="line">       <span class="number">11</span>:&#123;<span class="number">7</span>:<span class="number">2</span>,<span class="number">8</span>:<span class="number">1</span>,<span class="number">9</span>:<span class="number">3</span>,<span class="number">13</span>:<span class="number">5</span>,<span class="number">14</span>:<span class="number">2</span>&#125;,<span class="comment">#11</span></div><div class="line">       <span class="number">12</span>:&#123;<span class="number">8</span>:<span class="number">2</span>,<span class="number">9</span>:<span class="number">3</span>,<span class="number">13</span>:<span class="number">6</span>,<span class="number">14</span>:<span class="number">6</span>&#125;,<span class="comment">#12</span></div><div class="line">       <span class="number">13</span>:&#123;<span class="number">10</span>:<span class="number">3</span>,<span class="number">11</span>:<span class="number">5</span>,<span class="number">12</span>:<span class="number">6</span>,<span class="number">15</span>:<span class="number">4</span>&#125;,<span class="comment">#13</span></div><div class="line">       <span class="number">14</span>:&#123;<span class="number">10</span>:<span class="number">5</span>,<span class="number">11</span>:<span class="number">2</span>,<span class="number">12</span>:<span class="number">6</span>,<span class="number">15</span>:<span class="number">3</span>&#125;,<span class="comment">#14</span></div><div class="line">       <span class="number">15</span>:&#123;<span class="number">13</span>:<span class="number">4</span>,<span class="number">14</span>:<span class="number">3</span>&#125;<span class="comment">#15</span></div><div class="line">       &#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/18/Huffman/" rel="next" title="Huffman">
+                <i class="fa fa-chevron-left"></i> Huffman
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/28/java多线程/" rel="prev" title="java多线程">
+                java多线程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#最短路径问题"><span class="nav-number">1.</span> <span class="nav-text">最短路径问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dijkstra"><span class="nav-number">1.1.</span> <span class="nav-text">Dijkstra</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bellman-Ford"><span class="nav-number">1.2.</span> <span class="nav-text">Bellman-Ford</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPFA"><span class="nav-number">1.3.</span> <span class="nav-text">SPFA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Floyd-Warshall"><span class="nav-number">1.4.</span> <span class="nav-text">Floyd-Warshall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Johnson"><span class="nav-number">1.5.</span> <span class="nav-text">Johnson</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附上测试用例和打印路径的函数"><span class="nav-number">1.6.</span> <span class="nav-text">附上测试用例和打印路径的函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

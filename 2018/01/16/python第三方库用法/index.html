@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Python," />
+
+
+<meta name="description" content="一些第三方库用法">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python第三方库用法">
+<meta property="og:url" content="https://www.prime666.com/2018/01/16/python第三方库用法/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="一些第三方库用法">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2.JPG">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/14.JPG">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/15.JPG">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/17.JPG">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/18.JPG">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/16.JPG">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/19.JPG">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/20.JPG">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_091253.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_091512.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_102352.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_093813.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_095405.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_101212.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_101049.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111048.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111206.png">
+<meta property="og:image" content="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111004.png">
+<meta property="og:image" content="http://www.scipy-lectures.org/_images/numpy_indexing.png">
+<meta property="og:image" content="http://www.scipy-lectures.org/_images/numpy_fancy_indexing.png">
+<meta property="og:updated_time" content="2018-01-16T03:19:22.443Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python第三方库用法">
+<meta name="twitter:description" content="一些第三方库用法">
+<meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com/2.JPG">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2018/01/16/python第三方库用法/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>python第三方库用法 | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2018/01/16/python第三方库用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python第三方库用法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-16T11:11:54+08:00">2018-01-16</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一些第三方库用法</p>
+<a id="more"></a>
+<h1 id="自带性能分析工具"><a href="#自带性能分析工具" class="headerlink" title="自带性能分析工具"></a>自带性能分析工具</h1><p>##cProfile</p>
+<p>cProfile是Python解释器默认的性能分析器，它只测量CPU时间而不去关心内存等信息。</p>
+<p>​<br><img src="http://on7mhq4kh.bkt.clouddn.com/2.JPG" alt="haha"></p>
+<p>其中，第一列表示有 39986次函数调用，其中23340次原生调用（不涉及递归）。</p>
+<p>下面是具体的细节：</p>
+<ul>
+<li><p><code>ncalls</code>表示函数调用的次数，如果有两个数字，第一个是总调用次数，第二个是原生调用次数。</p>
+</li>
+<li><p><code>tottime</code>表示函数内部消耗时间，不包括调用其它函数的时间。</p>
+</li>
+<li><p><code>percall</code>是<code>tottime</code>除以<code>ncalls</code>，表示一个函数每次调用的平均时间。</p>
+</li>
+<li><p><code>cumtime</code>是之前所有子函数消耗时间的累计和（也包含递归调用）。</p>
+</li>
+<li><p><code>percall</code>是<code>cumtime</code>除以原生调用的数量，表示到该函数调用时，每个原生调用平均消耗时间。</p>
+</li>
+<li><p><code>filename:lineno(function)</code>显示了被分析函数所在文件名、行号和函数名。</p>
+<p>​</p>
+</li>
+</ul>
+<p>基本API如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">class Profile(timer=None, timeunit=0.0, subcalls=True, builtins=True)</div><div class="line">#返回一个类，可以提供自定义函数计时，必须是一个返回当前时间的函数。如果数字是整数，timeunit 指定一个乘数表示换算成秒的系数。例如，如果定时器返回以毫秒为单位测量的时间，则timeunit就是.001</div><div class="line">enable()</div><div class="line">#Start collecting profiling data.</div><div class="line">disable()</div><div class="line">#Stop collecting profiling data.</div><div class="line">create_stats()</div><div class="line">#Stop collecting profiling data and record the results internally as the current profile.</div><div class="line">#创建stats对象</div><div class="line">print_stats()</div><div class="line">#Create a Stats object based on the current profile and print the results to stdout.</div><div class="line">dump_stats(filename)</div><div class="line">#Write the results of the current profile to filename.</div><div class="line">run(cmd)</div><div class="line">#Profile the cmd via exec().</div><div class="line">runctx(cmd, globals, locals)</div><div class="line">#Profile the cmd via exec() with the specified global and local environment.</div><div class="line">runcall(func, *args, **kwargs)</div><div class="line">#Profile func(*args, **kwargs)</div></pre></td></tr></table></figure>
+<p>##Stats类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">pstats.Stats(*filenames <span class="keyword">or</span> profile, stream=sys.stdout)</div><div class="line"><span class="comment">#构造函数，可以接受Profile类型的参数或者其生成文件的文件名</span></div><div class="line">strip_dirs()</div><div class="line"><span class="comment">#删除报告中所有函数文件名的路径信息。如果两个项目文件名函数名行数相同，就会合并。</span></div><div class="line">dump_stats(filename)</div><div class="line"><span class="comment">#生成文件</span></div><div class="line">sort_stats(*keys)</div><div class="line"><span class="comment">#根据参数进行排序，多个参数就先按第一个排，相同的再按第二个排</span></div><div class="line"><span class="string">'''</span></div><div class="line">'calls'	call count</div><div class="line">'cumulative'	cumulative time</div><div class="line">'cumtime'	cumulative time</div><div class="line">'file'	file name</div><div class="line">'filename'	file name</div><div class="line">'module'	file name</div><div class="line">'ncalls'	call count</div><div class="line">'pcalls'	primitive call count</div><div class="line">'line'	line number</div><div class="line">'name'	function name</div><div class="line">'nfl'	name/file/line</div><div class="line">'stdname'	standard name</div><div class="line">'time'	internal time</div><div class="line">'tottime'	internal time</div><div class="line">'''</div><div class="line">print_stats(*restrictions)</div><div class="line"><span class="comment">#把信息打印到stdout，里面的可选参数用于体现打印结果的形式，可以是整数、小数和字符串</span></div><div class="line"><span class="comment">#整数：限制打印的行数</span></div><div class="line"><span class="comment">#小数（0.0~1.0）：表示按总行数的的百分比打印（一些行不打印）</span></div><div class="line"><span class="comment">#字符串：正则，用于匹配stdname</span></div><div class="line">print_callers(*restrictions)</div><div class="line"><span class="comment">#规则和上面一样，显示调用关系（右边的调用左边的）</span></div></pre></td></tr></table></figure>
+<p>#requests库基本概念</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/14.JPG" alt=""></p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/15.JPG" alt=""></p>
+<p>如上图，基本的requests的库的操作实质上只有一个<code>request</code>函数，其它函数都是对此函数的二次封装，它们都对应http协议的基本操作</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/17.JPG" alt=""></p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/18.JPG" alt=""></p>
+<p>另外，requests库也提供了一些异常用于debug。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/16.JPG" alt=""></p>
+<p>通用代码模式：</p>
+<p>requests模块的基本操作返回的是<code>Response</code>对象，它支持以下基本属性：</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/19.JPG" alt=""></p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/20.JPG" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span>:</div><div class="line">    html=requests.request(<span class="string">'Head'</span>,URL,timeout=<span class="number">3</span>)</div><div class="line">    html.raise_for_status()<span class="comment">#判断返回类型是不是200，否则引起HTTPerror异常</span></div><div class="line">    html.encoding=html.apparent_encoding<span class="comment">#解决编码问题，前者只通过头部判断编码。</span></div><div class="line"></div><div class="line">    print(html.status_code)</div><div class="line">    print(html.encoding)</div><div class="line">    print(html.apparent_encoding)</div><div class="line">    print(html.text)</div><div class="line">    print(html.headers)</div><div class="line">    print(html.content)</div><div class="line"><span class="keyword">except</span> requests.HTTPError <span class="keyword">as</span> e:</div><div class="line">    print(e.msg)</div></pre></td></tr></table></figure>
+<p>注意，Response对象之中包含有request对象，看以下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">URL=<span class="string">'https://item.jd.com/2967929.html'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        html=requests.request(<span class="string">'Get'</span>,URL,timeout=<span class="number">3</span>)</div><div class="line">        html.raise_for_status()<span class="comment">#判断返回类型是不是200，否则引起HTTPerror异常</span></div><div class="line">        html.encoding=html.apparent_encoding<span class="comment">#解决编码问题，前者只通过头部判断编码。</span></div><div class="line"></div><div class="line">        print(html.request.headers)</div><div class="line">        print(html.request.url)</div><div class="line">        print(html.headers)</div><div class="line"></div><div class="line">    <span class="keyword">except</span> requests.HTTPError <span class="keyword">as</span> e:</div><div class="line">        print(e.msg)</div><div class="line">        </div><div class="line"><span class="comment">#输出如下，可以看到request的head和response的head还是完全不同的。</span></div><div class="line"><span class="comment">#head可以理解为元数据。。</span></div><div class="line">&#123;<span class="string">'Connection'</span>: <span class="string">'keep-alive'</span>, <span class="string">'Accept'</span>: <span class="string">'*/*'</span>, <span class="string">'User-Agent'</span>: <span class="string">'python-requests/2.13.0'</span>, <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate'</span>&#125;</div><div class="line">https://item.jd.com/<span class="number">2967929.</span>html</div><div class="line">&#123;<span class="string">'Last-Modified'</span>: <span class="string">'Sat, 01 Apr 2017 14:45:15 GMT'</span>, <span class="string">'Date'</span>: <span class="string">'Sat, 01 Apr 2017 14:45:39 GMT'</span>, <span class="string">'Connection'</span>: <span class="string">'keep-alive'</span>, <span class="string">'hh'</span>: <span class="string">'1-1'</span>, <span class="string">'ser'</span>: <span class="string">'3.83'</span>, <span class="string">'Server'</span>: <span class="string">'JDWS/2.0'</span>, <span class="string">'Transfer-Encoding'</span>: <span class="string">'chunked'</span>, <span class="string">'Content-Encoding'</span>: <span class="string">'gzip'</span>, <span class="string">'Expires'</span>: <span class="string">'Sat, 01 Apr 2017 14:46:15 GMT'</span>, <span class="string">'Age'</span>: <span class="string">'0'</span>, <span class="string">'Cache-Control'</span>: <span class="string">'max-age=60'</span>, <span class="string">'Content-Type'</span>: <span class="string">'text/html; charset=gbk'</span>, <span class="string">'Via'</span>: <span class="string">'BJ-H-NX-110(HIT), http/1.1 BJ-CT-2-JCS-47 ( [cSsSfU])'</span>, <span class="string">'Vary'</span>: <span class="string">'Accept-Encoding'</span>&#125;</div></pre></td></tr></table></figure>
+<p>##小例子——百度关键字搜索</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">URL='https://wwww.baidu.com/s'</div><div class="line"></div><div class="line">def test():</div><div class="line">    try:</div><div class="line">        # html=requests.request('Get',URL,timeout=3)</div><div class="line">        html=requests.get(URL,params=&#123;'wd':'Python'&#125;,timeout=3)</div><div class="line">        html.raise_for_status()#判断返回类型是不是200，否则引起HTTPerror异常</div><div class="line">        html.encoding=html.apparent_encoding#解决编码问题，前者只通过头部判断编码。</div><div class="line"></div><div class="line">        print(html.request.headers)</div><div class="line">        print(html.request.url)</div><div class="line">        print(html.headers)</div><div class="line"></div><div class="line">    except requests.HTTPError as e:</div><div class="line">        print(e.msg)</div><div class="line">        </div><div class="line"></div><div class="line">&#123;'Accept-Encoding': 'gzip, deflate', 'Connection': 'keep-alive', 'User-Agent': 'python-requests/2.13.0', 'Accept': '*/*'&#125;</div><div class="line">http://www.baidu.com/s?wd=Python</div><div class="line">&#123;'Connection': 'Keep-Alive', 'BDQID': '0x81fef0b1000a35aa', 'Content-Type': 'text/html;charset=utf-8', 'BDPAGETYPE': '3', 'Vary': 'Accept-Encoding', 'P3P': 'CP=" OTI DSP COR IVA OUR IND COM "', 'Content-Encoding': 'gzip', 'Set-Cookie': 'BAIDUID=898004FADBB69298785150C34A09E2DB:FG=1; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com, BIDUPSID=898004FADBB69298785150C34A09E2DB; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com, PSTM=1491058449; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com, BD_CK_SAM=1;path=/, PSINO=1; domain=.baidu.com; path=/, BDSVRTM=52; path=/, H_PS_PSSID=1433_12897_21081_22177_20930; path=/; domain=.baidu.com', 'Date': 'Sat, 01 Apr 2017 14:54:09 GMT', 'X-UA-Compatible': 'IE=Edge,chrome=1', 'Server': 'BWS/1.1', 'CKPACKNUM': '2', 'BDUSERID': '0', 'Cache-Control': 'private', 'X-Powered-By': 'HPHP', 'Transfer-Encoding': 'chunked', 'CKRNDSTR': '1000a35aa'&#125;</div></pre></td></tr></table></figure>
+<p>主要利用百度的关键字搜索，<strong>注意看url</strong></p>
+<p>##小例子——爬取图片</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line">URL=<span class="string">'https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1491069395426&amp;di=902ba066e42c94de496bba270bb67d8d&amp;imgtype=0&amp;src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F83025aafa40f4bfb76c0cac5074f78f0f736180a.jpg'</span></div><div class="line">root=<span class="string">'D:\\prime\\图库\\'</span><span class="comment">#转义字符\很重要</span></div><div class="line"><span class="comment"># path=root+URL.split('/')[-1] 这样用可以让图片名字取原本链接中的文件名</span></div><div class="line">path=root+<span class="string">'炮姐.jpg'</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(root):</div><div class="line">            os.mkdir(root)</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(path):</div><div class="line">            html=requests.request(<span class="string">'Get'</span>,URL,timeout=<span class="number">3</span>)</div><div class="line">            html.raise_for_status()<span class="comment">#判断返回类型是不是200，否则引起HTTPerror异常</span></div><div class="line">            <span class="keyword">with</span> open(path,<span class="string">'wb'</span>) <span class="keyword">as</span> f:</div><div class="line">                f.write(html.content)<span class="comment">#写二进制数据</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            print(<span class="string">'文件已经存在'</span>)</div><div class="line"></div><div class="line">    <span class="keyword">except</span> requests.HTTPError <span class="keyword">as</span> e:</div><div class="line">        print(e.msg)</div></pre></td></tr></table></figure>
+<h2 id="小例子——爬取大学排名"><a href="#小例子——爬取大学排名" class="headerlink" title="小例子——爬取大学排名"></a>小例子——爬取大学排名</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># -*- by prime -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> bs4</div><div class="line"><span class="keyword">import</span> csv</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getHTMLtext</span><span class="params">(url)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        html=requests.get(url,timeout=<span class="number">10</span>)</div><div class="line">        html.raise_for_status()</div><div class="line">        html.encoding=html.apparent_encoding</div><div class="line">    <span class="keyword">except</span> requests.HTTPError <span class="keyword">as</span> e:</div><div class="line">        print(e)</div><div class="line">    <span class="keyword">return</span> html.text</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">store_in_list</span><span class="params">(html)</span>:</span></div><div class="line">    bs=BeautifulSoup(html,<span class="string">'lxml'</span>)</div><div class="line">    rank=[]</div><div class="line">    name=[]</div><div class="line">    location=[]</div><div class="line">    score=[]</div><div class="line">    <span class="keyword">for</span> tr <span class="keyword">in</span> bs.find(<span class="string">'tbody'</span>).children:</div><div class="line">        <span class="keyword">if</span> isinstance(tr,bs4.element.Tag):<span class="comment">#这个很重要，考虑子孙中字符串也是结点</span></div><div class="line">            tmp=tr.findAll(<span class="string">'td'</span>)</div><div class="line">            rank.append(tmp[<span class="number">0</span>].string)</div><div class="line">            name.append(tmp[<span class="number">1</span>].string)</div><div class="line">            location.append(tmp[<span class="number">2</span>].string)</div><div class="line">            score.append(tmp[<span class="number">3</span>].string)</div><div class="line">    pd.DataFrame(data=&#123;<span class="string">'排名'</span>:rank,<span class="string">'名字'</span>:name,<span class="string">'位置'</span>:location,<span class="string">'得分'</span>:score&#125;).to_csv(<span class="string">'E:\\pycharm\\data3\\大学排名.csv'</span>)</div><div class="line">    print(<span class="string">'完成'</span>)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    url=<span class="string">'http://www.zuihaodaxue.com/zuihaodaxuepaiming2017.html'</span></div><div class="line">    L=[]</div><div class="line">    store_in_list(getHTMLtext(url))</div></pre></td></tr></table></figure>
+<p>程序中爬取之后写入了csv文件，利用了<code>pandas</code>这个第三方库。</p>
+<h1 id="urlib模块"><a href="#urlib模块" class="headerlink" title="urlib模块"></a>urlib模块</h1><h2 id="urlib-request"><a href="#urlib-request" class="headerlink" title="urlib.request"></a>urlib.request</h2><h3 id="urlopen"><a href="#urlopen" class="headerlink" title="urlopen"></a>urlopen</h3><p>此模块是用于处理url的标准库。</p>
+<p>基本方法如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">urlopen(url, data=<span class="keyword">None</span>, [timeout, ]*, cafile=<span class="keyword">None</span>, capath=<span class="keyword">None</span>, cadefault=<span class="keyword">False</span>, context=<span class="keyword">None</span>)</div><div class="line"><span class="comment">#此方法用来打开url，url可以是字符串也可以是request对象。其中data参数是指定要发送到服务器的附加数据的对象;如果不需要此类数据，则为None。timeout指定超时时间，单位是秒。其它参数再查文档吧，不常用。</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">URL=<span class="string">'https://www.baidu.com/'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        html=urlopen(URL,timeout=<span class="number">3</span>)</div><div class="line">        print(type(html))</div><div class="line">        print(html.geturl())</div><div class="line">        print(<span class="string">'-'</span>*<span class="number">50</span>)</div><div class="line">        print(html.info())</div><div class="line">        print(<span class="string">'-'</span>*<span class="number">50</span>)</div><div class="line">        print(html.getcode())</div><div class="line">        print(html.msg)</div><div class="line">        print(<span class="string">'-'</span>*<span class="number">50</span>)</div><div class="line">        print(html.reason)</div><div class="line">    <span class="keyword">except</span> HTTPError <span class="keyword">as</span> e:</div><div class="line">        print(e.msg)</div><div class="line">        </div><div class="line"><span class="string">'''</span></div><div class="line">结果如下</div><div class="line">&lt;class 'http.client.HTTPResponse'&gt;</div><div class="line">https://www.baidu.com/</div><div class="line">--------------------------------------------------</div><div class="line">Server: bfe/1.0.8.18</div><div class="line">Date: Wed, 29 Mar 2017 11:32:06 GMT</div><div class="line">Content-Type: text/html</div><div class="line">Content-Length: 227</div><div class="line">Connection: close</div><div class="line">Last-Modified: Tue, 14 Mar 2017 07:30:00 GMT</div><div class="line">Set-Cookie: BD_NOT_HTTPS=1; path=/; Max-Age=300</div><div class="line">Set-Cookie: BIDUPSID=5FD510CDBAE06553755A922E99BA0503; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com</div><div class="line">Set-Cookie: PSTM=1490787126; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com</div><div class="line">P3P: CP=" OTI DSP COR IVA OUR IND COM "</div><div class="line">X-UA-Compatible: IE=Edge,chrome=1</div><div class="line">Pragma: no-cache</div><div class="line">Cache-control: no-cache</div><div class="line">Strict-Transport-Security: max-age=0</div><div class="line">Accept-Ranges: bytes</div><div class="line">Set-Cookie: __bsi=14269974527146618256_00_30_N_N_2_0303_C02F_N_N_N_0; expires=Wed, 29-Mar-17 11:32:11 GMT; domain=www.baidu.com; path=/</div><div class="line">--------------------------------------------------</div><div class="line">200</div><div class="line">OK</div><div class="line">--------------------------------------------------</div><div class="line">OK</div><div class="line">'''</div></pre></td></tr></table></figure>
+<p>这个函数返回的对象（可以像context manager一样工作）包含以下方法：</p>
+<ul>
+<li><code>geturl()</code>返回url用于确定是否重定向</li>
+<li><code>info()</code>返回页面的元信息（就是描述信息的信息，比如headers）</li>
+<li><code>getcode()</code>返回HTTP的状态码</li>
+</ul>
+<p>除了上述方法以外，对于HTTP或HTTPS的URL，返回一个轻微修改的<code>http.client.HTTPRespons</code>对象，除了上述方法，还有其它一些常用方法：</p>
+<ol>
+<li><code>HTTPResponse.read()</code>读取响应内容</li>
+<li><code>HTTPResponse.getreaders()</code>就是上面的<code>info()</code>方法，不过每个属性：值对都封装成了元组的列表。</li>
+</ol>
+<h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">Request(url, data=<span class="keyword">None</span>, headers=&#123;&#125;, origin_req_host=<span class="keyword">None</span>, unverifiable=<span class="keyword">False</span>, method=<span class="keyword">None</span>)</div><div class="line"><span class="comment">#url是个字符串</span></div><div class="line"><span class="comment">#data表示预提交的数据</span></div><div class="line"><span class="comment">#headers是个字典，主要用它欺骗服务器，冒充自己不是脚本。。。下面列出几个</span></div><div class="line"><span class="comment">#注意同一个网站会给不同浏览器返回不同的页面！！！</span></div><div class="line">pcUserAgent = &#123;</div><div class="line"><span class="string">"safari 5.1 – MAC"</span>:<span class="string">"User-Agent:Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50"</span>,</div><div class="line"><span class="string">"safari 5.1 – Windows"</span>:<span class="string">"User-Agent:Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50"</span>,</div><div class="line"><span class="string">"IE 9.0"</span>:<span class="string">"User-Agent:Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0);"</span>,</div><div class="line"><span class="string">"IE 8.0"</span>:<span class="string">"User-Agent:Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)"</span>,</div><div class="line"><span class="string">"IE 7.0"</span>:<span class="string">"User-Agent:Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)"</span>,</div><div class="line"><span class="string">"IE 6.0"</span>:<span class="string">"User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"</span>,</div><div class="line"><span class="string">"Firefox 4.0.1 – MAC"</span>:<span class="string">"User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"</span>,</div><div class="line"><span class="string">"Firefox 4.0.1 – Windows"</span>:<span class="string">"User-Agent:Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"</span>,</div><div class="line"><span class="string">"Opera 11.11 – MAC"</span>:<span class="string">"User-Agent:Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; en) Presto/2.8.131 Version/11.11"</span>,</div><div class="line"><span class="string">"Opera 11.11 – Windows"</span>:<span class="string">"User-Agent:Opera/9.80 (Windows NT 6.1; U; en) Presto/2.8.131 Version/11.11"</span>,</div><div class="line"><span class="string">"Chrome 17.0 – MAC"</span>:<span class="string">"User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11"</span>,</div><div class="line"><span class="string">"Maxthon"</span>:<span class="string">"User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Maxthon 2.0)"</span>,</div><div class="line"><span class="string">"Tencent TT"</span>:<span class="string">"User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; TencentTraveler 4.0)"</span>,</div><div class="line"><span class="string">"The World 2.x"</span>:<span class="string">"User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)"</span>,</div><div class="line"><span class="string">"The World 3.x"</span>:<span class="string">"User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; The World)"</span>,</div><div class="line"><span class="string">"sogou 1.x"</span>:<span class="string">"User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; SE 2.X MetaSr 1.0; SE 2.X MetaSr 1.0; .NET CLR 2.0.50727; SE 2.X MetaSr 1.0)"</span>,</div><div class="line"><span class="string">"360"</span>:<span class="string">"User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; 360SE)"</span>,</div><div class="line"><span class="string">"Avant"</span>:<span class="string">"User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Avant Browser)"</span>,</div><div class="line"><span class="string">"Green Browser"</span>:<span class="string">"User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">mobileUserAgent = &#123;</div><div class="line"><span class="string">"iOS 4.33 – iPhone"</span>:<span class="string">"User-Agent:Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"</span>,</div><div class="line"><span class="string">"iOS 4.33 – iPod Touch"</span>:<span class="string">"User-Agent:Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"</span>,</div><div class="line"><span class="string">"iOS 4.33 – iPad"</span>:<span class="string">"User-Agent:Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"</span>,</div><div class="line"><span class="string">"Android N1"</span>:<span class="string">"User-Agent: Mozilla/5.0 (Linux; U; Android 2.3.7; en-us; Nexus One Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"</span>,</div><div class="line"><span class="string">"Android QQ"</span>:<span class="string">"User-Agent: MQQBrowser/26 Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; MB200 Build/GRJ22; CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"</span>,</div><div class="line"><span class="string">"Android Opera "</span>:<span class="string">"User-Agent: Opera/9.80 (Android 2.3.4; Linux; Opera Mobi/build-1107180945; U; en-GB) Presto/2.8.149 Version/11.10"</span>,</div><div class="line"><span class="string">"Android Pad Moto Xoom"</span>:<span class="string">"User-Agent: Mozilla/5.0 (Linux; U; Android 3.0; en-us; Xoom Build/HRI39) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13"</span>,</div><div class="line"><span class="string">"BlackBerry"</span>:<span class="string">"User-Agent: Mozilla/5.0 (BlackBerry; U; BlackBerry 9800; en) AppleWebKit/534.1+ (KHTML, like Gecko) Version/6.0.0.337 Mobile Safari/534.1+"</span>,</div><div class="line"><span class="string">"WebOS HP Touchpad"</span>:<span class="string">"User-Agent: Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.0; U; en-US) AppleWebKit/534.6 (KHTML, like Gecko) wOSBrowser/233.70 Safari/534.6 TouchPad/1.0"</span>,</div><div class="line"><span class="string">"Nokia N97"</span>:<span class="string">"User-Agent: Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaN97-1/20.0.019; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/525 (KHTML, like Gecko) BrowserNG/7.1.18124"</span>,</div><div class="line"><span class="string">"Windows Phone Mango"</span>:<span class="string">"User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; HTC; Titan)"</span>,</div><div class="line"><span class="string">"UC"</span>:<span class="string">"User-Agent: UCWEB7.0.2.37/28/999"</span>,</div><div class="line"><span class="string">"UC standard"</span>:<span class="string">"User-Agent: NOKIA5700/ UCWEB7.0.2.37/28/999"</span>,</div><div class="line"><span class="string">"UCOpenwave"</span>:<span class="string">"User-Agent: Openwave/ UCWEB7.0.2.37/28/999"</span>,</div><div class="line"><span class="string">"UC Opera"</span>:<span class="string">"User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="顺便说说re"><a href="#顺便说说re" class="headerlink" title="顺便说说re"></a>顺便说说re</h3><p>说道这里，总结一下re的几个常用 方法，以免忘了：</p>
+<ol>
+<li><code>re.complie(pattern,flags=0)</code></li>
+<li><code>re.search(string,[pos,[endpos]])</code>从头到尾匹配到就返回</li>
+<li><code>re.match(string[,pos[,endpos]])</code>只匹配头部，不符合就返回None</li>
+<li><code>re.findall(string[,pos[,endpos]])</code>任意匹配，返回列表</li>
+<li><code>re.finditer(string[,pos[,endpos]])</code>和上面一样，返回一个迭代器，针对大范围的。</li>
+</ol>
+<h1 id="BeautifulSoup解析器"><a href="#BeautifulSoup解析器" class="headerlink" title="BeautifulSoup解析器"></a>BeautifulSoup解析器</h1><p>正如其名字一样，一碗美丽的汤~~~</p>
+<p><code>beautifulsoup</code>支持很多解析器，我用的是<code>lxml</code>(安装需要c环境，可以直接下载wheel模块后本地安装)</p>
+<p><code>Scrapy</code>使用<code>Xpath</code>当过滤器，在网页中过滤数据。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_091253.png" alt=""></p>
+<p><a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#beautifulsoup" target="_blank" rel="noopener">4.40文档</a></p>
+<p><strong>bs4接受一个文件句柄或者字符串，以及上述的”网页”。</strong>默认情况下,Beautiful Soup会将当前文档作为HTML格式解析，如果是xml，需要指定’xml’。</p>
+<p>bs4会把输入的内容编码成<code>unicode</code>，它会主动猜测文件编码。也提供了两个关键字参数帮助它猜测。</p>
+<p>Beautiful Soup选择最合适的解析器来解析这段文档,如果手动指定解析器那么Beautiful Soup会选择指定的解析器来解析文档。（暂时全指定为’lxml’）</p>
+<p>编程中常用<code>prettify</code>来让html文件格式化输出。。</p>
+<p>Beautiful Soup将复杂HTML文档转换成一个复杂的树形结构,每个节点都是Python对象,所有对象可以归纳为4种: <code>Tag</code> （标签）, <code>NavigableString</code>（字符串） , <code>BeautifulSoup</code> , <code>Comment</code> （注释）。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_091512.png" alt=""></p>
+<h3 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h3><ol>
+<li><p>每个标签有自己的名字，可以通过 <code>.name</code> 来获取。</p>
+</li>
+<li><p>tag <code>&lt;b class=&quot;boldest&quot;&gt;</code> 有一个 “class” 的属性,值为 “boldest” 。 tag的属性的操作方法与字典相同，比如<code>tag[&#39;class&#39;]</code>，如果没有这个value会返回<code>keyerror</code>，用<code>tag.get(&#39;class&#39;)</code>就会返回None。</p>
+<p><code>tag.attrs</code>会返回所有属性的字典。</p>
+</li>
+<li><p>多值属性会返回一个<code>list</code>。</p>
+</li>
+</ol>
+<h3 id="NavigableString"><a href="#NavigableString" class="headerlink" title="NavigableString"></a>NavigableString</h3><p>Beautiful Soup用 <code>NavigableString</code> 类来包装tag中的字符串。</p>
+<p>通过 <code>unicode()</code> 方法可以直接将 <code>NavigableString</code> 对象转换成Unicode字符串。</p>
+<h3 id="Comment"><a href="#Comment" class="headerlink" title="Comment"></a>Comment</h3><p>对应的就是html中注释信息。</p>
+<p><strong><code>.string</code>属性可以返回字符串，可以根据类型判断是<code>NavigableString</code>还是<code>Comment</code>。</strong></p>
+<h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_102352.png" alt=""></p>
+<h4 id="下行遍历"><a href="#下行遍历" class="headerlink" title="下行遍历"></a>下行遍历</h4><p>可以通过三种方法:</p>
+<ul>
+<li><code>contents</code>返回子节点的列表</li>
+<li><code>children</code>返回子节点的生成器</li>
+<li><code>descendants</code>返回递归子节点的生成器，前面两个只是直接子节点</li>
+</ul>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_093813.png" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div></pre></td><td class="code"><pre><div class="line"># -*- coding:utf-8 -*-</div><div class="line"># -*- by prime -*-</div><div class="line"></div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import requests</div><div class="line"></div><div class="line">url='http://python123.io/ws/demo.html'</div><div class="line"></div><div class="line">r=requests.get(url)</div><div class="line">demo=r.text</div><div class="line"></div><div class="line"># print(demo)</div><div class="line"></div><div class="line">bsobj=BeautifulSoup(demo,'lxml')</div><div class="line"></div><div class="line">print(bsobj.prettify())</div><div class="line"></div><div class="line">print('-'*100)</div><div class="line"></div><div class="line"># print(bsobj.head.contents)</div><div class="line"></div><div class="line">L=bsobj.body.contents</div><div class="line">for x in L:</div><div class="line">    print(x)</div><div class="line">    print('*'*50)</div><div class="line"></div><div class="line">print('一共',len(L),'个标签')</div><div class="line">print('-'*100)</div><div class="line"></div><div class="line">for child in bsobj.body.children:</div><div class="line">    print(child)</div><div class="line">    print('*' * 50)</div><div class="line"></div><div class="line">for child in bsobj.body.descendants:</div><div class="line">    print(child)</div><div class="line">    print('*' * 50)</div><div class="line">    </div><div class="line"></div><div class="line">    </div><div class="line">输入如下：    </div><div class="line">&lt;html&gt;</div><div class="line"> &lt;head&gt;</div><div class="line">  &lt;title&gt;</div><div class="line">   This is a python demo page</div><div class="line">  &lt;/title&gt;</div><div class="line"> &lt;/head&gt;</div><div class="line"> &lt;body&gt;</div><div class="line">  &lt;p class="title"&gt;</div><div class="line">   &lt;b&gt;</div><div class="line">    The demo python introduces several python courses.</div><div class="line">   &lt;/b&gt;</div><div class="line">  &lt;/p&gt;</div><div class="line">  &lt;p class="course"&gt;</div><div class="line">   Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">   &lt;a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1"&gt;</div><div class="line">    Basic Python</div><div class="line">   &lt;/a&gt;</div><div class="line">   and</div><div class="line">   &lt;a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2"&gt;</div><div class="line">    Advanced Python</div><div class="line">   &lt;/a&gt;</div><div class="line">   .</div><div class="line">  &lt;/p&gt;</div><div class="line"> &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line">----------------------------------------------------------------------------------------------------</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="title"&gt;&lt;b&gt;The demo python introduces several python courses.&lt;/b&gt;&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="course"&gt;Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">&lt;a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1"&gt;Basic Python&lt;/a&gt; and &lt;a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2"&gt;Advanced Python&lt;/a&gt;.&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">一共 5 个标签</div><div class="line">----------------------------------------------------------------------------------------------------</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="title"&gt;&lt;b&gt;The demo python introduces several python courses.&lt;/b&gt;&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="course"&gt;Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">&lt;a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1"&gt;Basic Python&lt;/a&gt; and &lt;a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2"&gt;Advanced Python&lt;/a&gt;.&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="title"&gt;&lt;b&gt;The demo python introduces several python courses.&lt;/b&gt;&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line">&lt;b&gt;The demo python introduces several python courses.&lt;/b&gt;</div><div class="line">**************************************************</div><div class="line">The demo python introduces several python courses.</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="course"&gt;Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">&lt;a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1"&gt;Basic Python&lt;/a&gt; and &lt;a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2"&gt;Advanced Python&lt;/a&gt;.&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line">Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1"&gt;Basic Python&lt;/a&gt;</div><div class="line">**************************************************</div><div class="line">Basic Python</div><div class="line">**************************************************</div><div class="line"> and </div><div class="line">**************************************************</div><div class="line">&lt;a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2"&gt;Advanced Python&lt;/a&gt;</div><div class="line">**************************************************</div><div class="line">Advanced Python</div><div class="line">**************************************************</div><div class="line">.</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div></pre></td></tr></table></figure>
+<p>可以看到，<strong>子孙中是有空行等元素的。</strong></p>
+<h4 id="上行遍历"><a href="#上行遍历" class="headerlink" title="上行遍历"></a>上行遍历</h4><p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_095405.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># -*- by prime -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">url=<span class="string">'http://python123.io/ws/demo.html'</span></div><div class="line"></div><div class="line">r=requests.get(url)</div><div class="line">demo=r.text</div><div class="line"></div><div class="line"><span class="comment"># print(demo)</span></div><div class="line"></div><div class="line">bsobj=BeautifulSoup(demo,<span class="string">'lxml'</span>)</div><div class="line"></div><div class="line">print(bsobj.prettify())</div><div class="line"></div><div class="line">print(<span class="string">'-'</span>*<span class="number">100</span>)</div><div class="line"></div><div class="line"><span class="comment"># print(bsobj.head.contents)</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> parent <span class="keyword">in</span> bsobj.a.parents:</div><div class="line">    <span class="keyword">if</span> parent <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">        print(parent)</div><div class="line">        print(<span class="string">'type is'</span>,type(parent))</div><div class="line">        print(<span class="string">'*'</span>*<span class="number">50</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(parent.name)</div><div class="line">        print(<span class="string">'type is'</span>, type(parent))</div><div class="line">        print(<span class="string">'-'</span>*<span class="number">60</span>)</div></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span></div><div class="line">   This is a python demo page</div><div class="line">  <span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">b</span>&gt;</span></div><div class="line">    The demo python introduces several python courses.</div><div class="line">   <span class="tag">&lt;/<span class="name">b</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"course"</span>&gt;</span></div><div class="line">   Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py1"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-268001"</span> <span class="attr">id</span>=<span class="string">"link1"</span>&gt;</span></div><div class="line">    Basic Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   and</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py2"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-1001870001"</span> <span class="attr">id</span>=<span class="string">"link2"</span>&gt;</span></div><div class="line">    Advanced Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   .</div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line">----------------------------------------------------------------------------------------------------</div><div class="line">p</div><div class="line">type is <span class="tag">&lt;<span class="name">class</span> '<span class="attr">bs4.element.Tag</span>'&gt;</span></div><div class="line">------------------------------------------------------------</div><div class="line">body</div><div class="line">type is <span class="tag">&lt;<span class="name">class</span> '<span class="attr">bs4.element.Tag</span>'&gt;</span></div><div class="line">------------------------------------------------------------</div><div class="line">html</div><div class="line">type is <span class="tag">&lt;<span class="name">class</span> '<span class="attr">bs4.element.Tag</span>'&gt;</span></div><div class="line">------------------------------------------------------------</div><div class="line">[document]</div><div class="line">type is <span class="tag">&lt;<span class="name">class</span> '<span class="attr">bs4.BeautifulSoup</span>'&gt;</span></div><div class="line">------------------------------------------------------------</div></pre></td></tr></table></figure>
+<p>特别说明一下几点：</p>
+<ol>
+<li><code>BeautifulSoup</code> 对象的 <code>.parent</code> 是None</li>
+<li>文档的顶层节点比如<html>的父节点是 <code>BeautifulSoup</code> 对象本身</html></li>
+</ol>
+<h4 id="平行遍历"><a href="#平行遍历" class="headerlink" title="平行遍历"></a>平行遍历</h4><p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_101212.png" alt=""></p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_101049.png" alt=""></p>
+<p>注意结点的子孙和兄弟可能是NavigableString类型，需要判断。**</p>
+<p>看如下情况：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span></div><div class="line">   This is a python demo page</div><div class="line">  <span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">b</span>&gt;</span></div><div class="line">    The demo python introduces several python courses.</div><div class="line">   <span class="tag">&lt;/<span class="name">b</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"course"</span>&gt;</span></div><div class="line">   Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py1"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-268001"</span> <span class="attr">id</span>=<span class="string">"link1"</span>&gt;</span></div><div class="line">    Basic Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   and</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py2"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-1001870001"</span> <span class="attr">id</span>=<span class="string">"link2"</span>&gt;</span></div><div class="line">    Advanced Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   .</div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>当我使用如下代码时，返回结果如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(bsobj.a.next_sibling)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and</div></pre></td></tr></table></figure>
+<p>第一个a标签的下一个是字符串and！！！</p>
+<p>如下代码遍历兄弟结点：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> sibling <span class="keyword">in</span> bsobj.a.next_siblings:</div><div class="line">    print(sibling)</div><div class="line">print(<span class="string">'*'</span>*<span class="number">50</span>)</div><div class="line"><span class="keyword">for</span> sibling <span class="keyword">in</span> bsobj.a.previous_siblings:</div><div class="line">    print(sibling)</div></pre></td></tr></table></figure>
+<p>结果如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span></div><div class="line">   This is a python demo page</div><div class="line">  <span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">b</span>&gt;</span></div><div class="line">    The demo python introduces several python courses.</div><div class="line">   <span class="tag">&lt;/<span class="name">b</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"course"</span>&gt;</span></div><div class="line">   Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py1"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-268001"</span> <span class="attr">id</span>=<span class="string">"link1"</span>&gt;</span></div><div class="line">    Basic Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   and</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py2"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-1001870001"</span> <span class="attr">id</span>=<span class="string">"link2"</span>&gt;</span></div><div class="line">    Advanced Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   .</div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">以上是源文件，以下是结果。再次强调字符串也算结点。。。。</div><div class="line"> and </div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py2"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-1001870001"</span> <span class="attr">id</span>=<span class="string">"link2"</span>&gt;</span>Advanced Python<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">.</div><div class="line">**************************************************</div><div class="line">Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div></pre></td></tr></table></figure>
+<h3 id="find-all"><a href="#find-all" class="headerlink" title="find_all"></a>find_all</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111048.png" alt=""></p>
+<p>这个函数太常用了，以至于可以简写为以下情况：</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111206.png" alt=""></p>
+<p>这里，soup是一个bs4的对象。<code>&lt;tag&gt;</code>表示一个标签。</p>
+<p>find家族的其它方法。</p>
+<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111004.png" alt=""></p>
+<p>#Numpy</p>
+<p>标准安装的Python中用列表(list)保存一组值，可以用来当作数组使用，不过由于列表的元素可以是任何对象，因此列表中所保存的是对象的指针。这样为了保存一个简单的[1,2,3]，需要有3个指针和三个整数对象。对于数值运算来说这种结构显然比较浪费内存和CPU计算时间。</p>
+<p>此外Python还提供了一个array模块，array对象和列表不同，它直接保存数值，和C语言的一维数组比较类似。但是由于它不支持多维，也没有各种运算函数，因此也不适合做数值运算。</p>
+<h2 id="创建矩阵"><a href="#创建矩阵" class="headerlink" title="创建矩阵"></a>创建矩阵</h2><ol>
+<li><p>首先，可以直接接受python的序列，如果序列本身进行了嵌套就是多维数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line">c = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],[<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>], [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]])</div><div class="line"></div><div class="line">print(c.shape)</div><div class="line"></div><div class="line">c.shape=<span class="number">4</span>,<span class="number">3</span></div><div class="line"></div><div class="line">print(c)</div></pre></td></tr></table></figure>
+<p>如上，其中<code>shape</code>返回一个元组表示各维度的大小，可以重新对其复制，其可以改变数组的形状，但是内存中保存位置不变。</p>
+</li>
+<li><p>显然，上面那种麻烦。</p>
+<p>可以用一个循环生成，<code>arange</code>函数，和内建的python<code>range</code>函数一样，不过不要求是整数了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">np.linspace(start, stop, num=<span class="number">50</span>, endpoint=<span class="keyword">True</span>, retstep=<span class="keyword">False</span>, dtype=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<p><code>linspace</code>函数是对给定范围进行均分，关键字参数<code>endpoint</code>指定是否包含结尾的元素。</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.ones((<span class="number">3</span>, <span class="number">3</span>)) <span class="comment">#矩阵填充1 reminder: (3, 3) is a tuple</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a</div><div class="line">array([[ <span class="number">1.</span>,  <span class="number">1.</span>,  <span class="number">1.</span>],</div><div class="line">       [ <span class="number">1.</span>,  <span class="number">1.</span>,  <span class="number">1.</span>],</div><div class="line">       [ <span class="number">1.</span>,  <span class="number">1.</span>,  <span class="number">1.</span>]])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.zeros((<span class="number">2</span>, <span class="number">2</span>))<span class="comment">#填充0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b</div><div class="line">array([[ <span class="number">0.</span>,  <span class="number">0.</span>],</div><div class="line">       [ <span class="number">0.</span>,  <span class="number">0.</span>]])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c = np.eye(<span class="number">3</span>)<span class="comment">#单位矩阵</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c</div><div class="line">array([[ <span class="number">1.</span>,  <span class="number">0.</span>,  <span class="number">0.</span>],</div><div class="line">       [ <span class="number">0.</span>,  <span class="number">1.</span>,  <span class="number">0.</span>],</div><div class="line">       [ <span class="number">0.</span>,  <span class="number">0.</span>,  <span class="number">1.</span>]])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d = np.diag(np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])) <span class="comment">#对角矩阵</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>d</div><div class="line">array([[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>]])</div></pre></td></tr></table></figure>
+<p>传入的是元组时，就是多维的。只有一个数组就是一维的，注意参数<code>(2,)</code>和<code>2</code>等价。还有一个函数<code>empty</code>，其不对元素进行初始化。</p>
+</li>
+</ol>
+<h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><p>默认上述函数(ones等)创建时，若不指定类型，都是<code>float64</code>。</p>
+<p>可以手动指定如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>c = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], dtype=float)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c.dtype</div><div class="line">dtype(<span class="string">'float64'</span>)</div></pre></td></tr></table></figure>
+<p>之所以划分不同类型，是为了能充分利用内存。平时所见到的<code>2.</code>表示就是浮点类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a.dtype</div><div class="line">dtype(<span class="string">'int64'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.array([<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b.dtype</div><div class="line">dtype(<span class="string">'float64'</span>)</div></pre></td></tr></table></figure>
+<p>除此之外还有<strong>布尔类型、复数类型以及字符串</strong>。</p>
+<p>其中，字符串有点特殊：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">20</span>]: f = np.array([<span class="string">'Bonjour'</span>, <span class="string">'Hello'</span>, <span class="string">'Hallo'</span>,])</div><div class="line"></div><div class="line">In [<span class="number">21</span>]: f.dtype</div><div class="line">Out[<span class="number">21</span>]: dtype(<span class="string">'&lt;U7'</span>)</div></pre></td></tr></table></figure>
+<h2 id="索引和分片"><a href="#索引和分片" class="headerlink" title="索引和分片"></a>索引和分片</h2><p>索引不必多说，<strong>一维数组和python内建语法一致，当多维时，传入元组即可！</strong><u>虽然我们经常在Python中用圆括号将组元括起来，但是其实组元的语法定义只需要用逗号隔开即可，例如 x,y=y,x 就是用组元交换变量值的一个例子。但是如果函数有多个参数，必须用括号括起来了，不然解释器不知道你的参数是一个元组还是两个参数。</u></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.diag(np.arange(<span class="number">3</span>))</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a</div><div class="line">array([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>]])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">1</span>, <span class="number">1</span>]</div><div class="line"><span class="number">1</span></div></pre></td></tr></table></figure>
+<p><strong>切片也和内建语法一致！三个参数都可以省略，但是:不能省</strong></p>
+<p><img src="http://www.scipy-lectures.org/_images/numpy_indexing.png" alt=""></p>
+<hr>
+<p>特别说明：</p>
+<p><strong>python标准的分片操作是copy，但是在这里是指向同一块内存的。</strong>所以想拷贝就用以下函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numpy.copy(a, order=<span class="string">'K'</span>)</div></pre></td></tr></table></figure>
+<p>返回一个ndarray。</p>
+<hr>
+<p>高级索引：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">28</span>]: a=np.arange(<span class="number">0</span>,<span class="number">10</span>)</div><div class="line"></div><div class="line">In [<span class="number">29</span>]: a[a%<span class="number">3</span>==<span class="number">0</span>]=<span class="number">-1</span></div><div class="line"></div><div class="line">In [<span class="number">30</span>]: a</div><div class="line">Out[<span class="number">30</span>]: array([<span class="number">-1</span>,  <span class="number">1</span>,  <span class="number">2</span>, <span class="number">-1</span>,  <span class="number">4</span>,  <span class="number">5</span>, <span class="number">-1</span>,  <span class="number">7</span>,  <span class="number">8</span>, <span class="number">-1</span>])</div><div class="line">In [<span class="number">31</span>]: a[[<span class="number">0</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">9</span>]]=<span class="number">0</span></div><div class="line"></div><div class="line">In [<span class="number">32</span>]: a</div><div class="line">Out[<span class="number">32</span>]: array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">0</span>])</div></pre></td></tr></table></figure>
+<p>如上，可以利用一个布尔表达式（比如上面的选择3的倍数或0）或者用一个数组来充当<strong>掩码</strong>的角色，进行索引。同样，它们也是指向同一块内存。</p>
+<p>同样，用于充当掩码的数组也可以是多维的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; a = np.arange(<span class="number">10</span>)</div><div class="line">&gt;&gt;&gt; idx = np.<span class="built_in">array</span>([[<span class="number">3</span>, <span class="number">4</span>], [<span class="number">9</span>, <span class="number">7</span>]])</div><div class="line">&gt;&gt;&gt; idx.shape</div><div class="line">(<span class="number">2</span>, <span class="number">2</span>)</div><div class="line">&gt;&gt;&gt; a[idx]</div><div class="line"><span class="built_in">array</span>([[<span class="number">3</span>, <span class="number">4</span>],</div><div class="line">       [<span class="number">9</span>, <span class="number">7</span>]])</div></pre></td></tr></table></figure>
+<p><img src="http://www.scipy-lectures.org/_images/numpy_fancy_indexing.png" alt=""></p>
+<h2 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h2><h3 id="与标量"><a href="#与标量" class="headerlink" title="与标量"></a>与标量</h3><p>和标量计算很简单，就是每个元素分别和标量运算即可。</p>
+<h3 id="与向量"><a href="#与向量" class="headerlink" title="与向量"></a>与向量</h3><p>向量之间运算就是各个元素分别运算。<strong>特别注意，即使都是矩阵，也不是矩阵运算！</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">10</span>]: c=np.ones((<span class="number">2</span>,<span class="number">2</span>))</div><div class="line"></div><div class="line">In [<span class="number">11</span>]: c*c</div><div class="line">Out[<span class="number">11</span>]:</div><div class="line">array([[ <span class="number">1.</span>,  <span class="number">1.</span>],</div><div class="line">       [ <span class="number">1.</span>,  <span class="number">1.</span>]])</div><div class="line"></div><div class="line">In [<span class="number">12</span>]: c.dot(c)</div><div class="line">Out[<span class="number">12</span>]:</div><div class="line">array([[ <span class="number">2.</span>,  <span class="number">2.</span>],</div><div class="line">       [ <span class="number">2.</span>,  <span class="number">2.</span>]])</div></pre></td></tr></table></figure>
+<ol>
+<li><p>比较</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.array([<span class="number">4</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">4</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a == b</div><div class="line">array([<span class="keyword">False</span>,  <span class="keyword">True</span>, <span class="keyword">False</span>,  <span class="keyword">True</span>], dtype=bool)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a &gt; b</div><div class="line">array([<span class="keyword">False</span>, <span class="keyword">False</span>,  <span class="keyword">True</span>, <span class="keyword">False</span>], dtype=bool)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.array([<span class="number">4</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">4</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.array_equal(a, b)</div><div class="line"><span class="keyword">False</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.array_equal(a, c)</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑运算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], dtype=bool)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.array([<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>], dtype=bool)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.logical_or(a, b)</div><div class="line"></div><div class="line">array([ <span class="keyword">True</span>,  <span class="keyword">True</span>,  <span class="keyword">True</span>, <span class="keyword">False</span>], dtype=bool)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.logical_and(a, b)</div><div class="line"></div><div class="line">array([ <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>, <span class="keyword">False</span>], dtype=bool)</div></pre></td></tr></table></figure>
+</li>
+<li><p>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.arange(<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.sin(a)</div><div class="line"></div><div class="line">array([ <span class="number">0.</span>        ,  <span class="number">0.84147098</span>,  <span class="number">0.90929743</span>,  <span class="number">0.14112001</span>, <span class="number">-0.7568025</span> ])</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.log(a)</div><div class="line"></div><div class="line">array([       -inf,  <span class="number">0.</span>        ,  <span class="number">0.69314718</span>,  <span class="number">1.09861229</span>,  <span class="number">1.38629436</span>])</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.exp(a)</div><div class="line"></div><div class="line">array([  <span class="number">1.</span>        ,   <span class="number">2.71828183</span>,   <span class="number">7.3890561</span> ,  <span class="number">20.08553692</span>,  <span class="number">54.59815003</span>])</div></pre></td></tr></table></figure>
+</li>
+<li><p>转置</p>
+<p>直接用<code>.T</code>即可</p>
+</li>
+<li><p>求和</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.sum(x)</div><div class="line"></div><div class="line"><span class="number">10</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>x.sum()</div><div class="line"></div><div class="line"><span class="number">10</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>极值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.array([<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>x.min()</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>x.max()</div><div class="line"><span class="number">3</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>x.argmin()  <span class="comment"># index of minimum</span></div><div class="line"><span class="number">0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>x.argmax()  <span class="comment"># index of maximum</span></div><div class="line"><span class="number">1</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>统计</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">5</span>, <span class="number">6</span>, <span class="number">1</span>]])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>x.mean()</div><div class="line"><span class="number">1.75</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.median(x)</div><div class="line"><span class="number">1.5</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.median(y, axis=<span class="number">-1</span>) <span class="comment"># last axis</span></div><div class="line">array([ <span class="number">2.</span>,  <span class="number">5.</span>])</div></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.zeros((<span class="number">100</span>, <span class="number">100</span>))</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.any(a != <span class="number">0</span>)</div><div class="line"><span class="keyword">False</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>np.all(a == a)</div><div class="line"><span class="keyword">True</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.array([<span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c = np.array([<span class="number">6</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">5</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>((a &lt;= b) &amp; (b &lt;= c)).all()<span class="comment">#((a &lt;= b) &amp; (b &lt;= c))的结果是一个bool数组，all就是检测是否全是True。any类似</span></div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
+<p>​</p>
+<p>​</p>
+<p>​</p>
+<p>​</p>
+<p>​</p>
+<p>​</p>
+<p>​</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/16/python语法/" rel="next" title="python语法">
+                <i class="fa fa-chevron-left"></i> python语法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/26/Multiclass-logistic-regression/" rel="prev" title="Multiclass_logistic_regression">
+                Multiclass_logistic_regression <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自带性能分析工具"><span class="nav-number">1.</span> <span class="nav-text">自带性能分析工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小例子——爬取大学排名"><span class="nav-number">1.1.</span> <span class="nav-text">小例子——爬取大学排名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#urlib模块"><span class="nav-number">2.</span> <span class="nav-text">urlib模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#urlib-request"><span class="nav-number">2.1.</span> <span class="nav-text">urlib.request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#urlopen"><span class="nav-number">2.1.1.</span> <span class="nav-text">urlopen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Request"><span class="nav-number">2.1.2.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺便说说re"><span class="nav-number">2.1.3.</span> <span class="nav-text">顺便说说re</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BeautifulSoup解析器"><span class="nav-number">3.</span> <span class="nav-text">BeautifulSoup解析器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tag"><span class="nav-number">3.0.1.</span> <span class="nav-text">tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NavigableString"><span class="nav-number">3.0.2.</span> <span class="nav-text">NavigableString</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Comment"><span class="nav-number">3.0.3.</span> <span class="nav-text">Comment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历"><span class="nav-number">3.0.4.</span> <span class="nav-text">遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下行遍历"><span class="nav-number">3.0.4.1.</span> <span class="nav-text">下行遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上行遍历"><span class="nav-number">3.0.4.2.</span> <span class="nav-text">上行遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#平行遍历"><span class="nav-number">3.0.4.3.</span> <span class="nav-text">平行遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find-all"><span class="nav-number">3.0.5.</span> <span class="nav-text">find_all</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建矩阵"><span class="nav-number">3.1.</span> <span class="nav-text">创建矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">3.2.</span> <span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引和分片"><span class="nav-number">3.3.</span> <span class="nav-text">索引和分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算"><span class="nav-number">3.4.</span> <span class="nav-text">计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#与标量"><span class="nav-number">3.4.1.</span> <span class="nav-text">与标量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与向量"><span class="nav-number">3.4.2.</span> <span class="nav-text">与向量</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

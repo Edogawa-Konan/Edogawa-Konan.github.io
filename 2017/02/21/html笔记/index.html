@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/12.ico?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="HTML," />
+
+
+<meta name="description" content="戳我速度看模板 戳我完整学习">
+<meta name="keywords" content="HTML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识html">
+<meta property="og:url" content="https://www.prime666.com/2017/02/21/html笔记/index.html">
+<meta property="og:site_name" content="Prime&#39;s Blog">
+<meta property="og:description" content="戳我速度看模板 戳我完整学习">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-02-21T02:54:14.433Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初识html">
+<meta name="twitter:description" content="戳我速度看模板 戳我完整学习">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.prime666.com/2017/02/21/html笔记/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>初识html | Prime's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Prime's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">弱菜的进化~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/02/21/html笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Prime">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar/misaka.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Prime's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">初识html</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-21T00:00:00+08:00">2017-02-21</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://prime666.com/2017/02/21/html%E7%AC%94%E8%AE%B0/#模板" target="_blank" rel="noopener">戳我速度看模板</a></p>
+<p><a href="http://www.w3school.com.cn/html/html_quick.asp" target="_blank" rel="noopener">戳我完整学习</a><br><a id="more"></a></p>
+<h2>初识html杂记</h2>
+
+<pre><code>&lt;html&gt; 与 &lt;/html&gt; 之间的文本描述网页
+&lt;body&gt; 与 &lt;/body&gt; 之间的文本是可见的页面内容
+&lt;h1&gt; 与 &lt;/h1&gt; 之间的文本被显示为标题，1~6.
+&lt;p&gt; 与 &lt;/p&gt; 之间的文本被显示为段落
+</code></pre><p>HTML 链接是通过 <code>&lt;a&gt;</code> 标签进行定义的。比如：<br><code>&lt;a href=&quot;http://www.w3school.com.cn&quot;&gt;This is a link&lt;/a&gt;</code><br>也可以用一种称为anchor（锚）的手法：</p>
+<pre><code>&lt;a name=&quot;anchor&quot;&gt;&lt;/a&gt;
+&lt;a href=&quot;http:\\www.prime666.com#anchor&quot; target=&quot;_blank&quot;&gt;跳转至我的博客&lt;/a&gt;
+</code></pre><p>也可以把图片作为链接，只要嵌套标签即可：</p>
+<pre><code>&lt;a href=&quot;http:\\www.prime666.com&quot;&gt;
+    &lt;img src=&quot;/images/1.jpg&quot; width=&quot;360&quot; height=&quot;200&quot; border=&quot;1&quot;/&gt;
+&lt;/a&gt;
+</code></pre><ul>
+<li>HTML 元素以开始标签起始</li>
+<li>HTML 元素以结束标签终止</li>
+<li>元素的内容是开始标签与结束标签之间的内容</li>
+<li>某些 HTML 元素具有空内容（empty content）</li>
+<li>空元素在开始标签中进行关闭（以开始标签的结束而结束）例如\<br></li>
+<li>大多数 HTML 元素可拥有属性。</li>
+<li>HTML 标签对大小写不敏感：<code>&lt;P&gt;</code> 等同于<code>&lt;p&gt;</code>。许多网站都使用大写的 HTML 标签。</li>
+<li>属性值应该始终被包括在引号内。双引号是最常用的，不过使用单引号也没有问题。<br>在某些个别的情况下，比如属性值本身就含有双引号，那么您必须使用单引号。</li>
+<li><p>style标签位于head标签中，用于定义标题段落样式。示例：</p>
+<pre><code>&lt;head&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+h1 {color:red}
+p {color:blue}
+&lt;/style&gt;
+&lt;/head&gt;
+</code></pre><p>  其中type 属性是必需的，定义 style 元素的内容。唯一可能的值是 “text/css”。</p>
+</li>
+<li><p><code>&lt;title&gt;</code> 标签定义文档的标题。title元素在所有HTML/XHTML文档中都是必需的。</p>
+</li>
+<li><code>&lt;base&gt;</code> 标签为页面上的所有链接规定默认地址或默认目标（target）</li>
+<li><p><code>&lt;meta&gt;</code> 标签提供关于 HTML 文档的元数据。元数据不会显示在页面上，但是对于机器是可读的。\<meta> 标签始终位于 head 元素中。元数据可用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他 web 服务。</p>
+<pre><code>&lt;meta http-equiv=&quot;Refresh&quot; content=&quot;5;url=http://www.w3school.com.cn&quot; /&gt;
+5s后跳转到另一个网页。
+</code></pre></li>
+<li><code>&lt;script&gt;</code> 标签用于定义客户端脚本，比如 JavaScript。</li>
+<li><code>&lt;link&gt;</code> 标签定义文档与外部资源之间的关系。</li>
+</ul>
+<hr>
+<p>分割线O(∩_∩)O</p>
+<hr>
+<p><a name="模板"></a></p>
+<h2>下面是常用的模板：</h2>
+
+<p>Physical Styles：</p>
+<pre><code>&lt;b&gt;This text is bold&lt;/b&gt;
+&lt;i&gt;This text is italic&lt;/i&gt;
+</code></pre><p>Logical Styles：</p>
+<pre><code>&lt;em&gt;This text is emphasized&lt;/em&gt;
+&lt;strong&gt;This text is strong&lt;/strong&gt;
+&lt;code&gt;This is some computer code&lt;/code&gt;
+</code></pre><p>Links, Anchors, and Image Elements：</p>
+<pre><code>&lt;a href=&quot;http://www.example.com/&quot;&gt;This is a Link&lt;/a
+&lt;a href=&quot;http://www.example.com/&quot;&gt;&lt;img src=&quot;URL&quot;
+alt=&quot;Alternate Text&quot;&gt;&lt;/a&gt;
+&lt;a href=&quot;mailto:webmaster@example.com&quot;&gt;Send e-mail&lt;/a&gt;
+&lt;a name=&quot;tips&quot;&gt;Useful Tips Section&lt;/a&gt;
+&lt;a href=&quot;#tips&quot;&gt;Jump to the Useful Tips Section&lt;/a&gt;
+</code></pre><p>Unordered list：</p>
+<pre><code>&lt;ul&gt;       &lt;!-- type属性可取值disc、square、circle对应不同标号 --&gt;
+&lt;li&gt;First item&lt;/li&gt;
+&lt;li&gt;Next item&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>Ordered list：</p>
+<pre><code>&lt;ol&gt;         &lt;!-- ol标签内可加type属性,可取值 A a i I对应不同标号--&gt;
+&lt;li&gt;First item&lt;/li&gt;
+&lt;li&gt;Next item&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ol&gt;    定义有序列表。
+&lt;ul&gt;    定义无序列表。
+&lt;li&gt;    定义列表项。
+&lt;dl&gt;    定义自定义列表。
+&lt;dt&gt;    定义自定义列表的项目。
+&lt;dd&gt;    定义自定义列表项目的描述。
+列表当然可以嵌套！
+</code></pre><p>Definition list：</p>
+<pre><code>&lt;dl&gt;
+&lt;dt&gt;First term&lt;/dt&gt;
+&lt;dd&gt;Definition&lt;/dd&gt;
+&lt;dt&gt;Next term&lt;/dt&gt;
+&lt;dd&gt;Definition&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre><p>Tables：<br><a href="http://www.w3school.com.cn/html/html_tables.asp" target="_blank" rel="noopener">了解详情戳我</a></p>
+<pre><code>&lt;table&gt;    定义表格
+&lt;caption&gt;    定义表格标题。
+&lt;th&gt;    定义表格的表头。
+&lt;tr&gt;    定义表格的行。
+&lt;td&gt;    定义表格单元。
+&lt;thead&gt;    定义表格的页眉。
+&lt;tbody&gt;    定义表格的主体。
+&lt;tfoot&gt;    定义表格的页脚。
+&lt;col&gt;    定义用于表格列的属性。
+&lt;colgroup&gt;    定义表格列的组。
+
+&lt;table border=&quot;1&quot;&gt;
+&lt;tr&gt;
+  &lt;th&gt;someheader&lt;/th&gt;
+  &lt;th&gt;someheader&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;sometext&lt;/td&gt;
+  &lt;td&gt;sometext&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</code></pre><p>Frames：通过使用框架，你可以在同一个浏览器窗口中显示不止一个页面。<br><a href="http://www.w3school.com.cn/html/html_frames.asp" target="_blank" rel="noopener">了解详情</a></p>
+<pre><code>框架结构标签（&lt;frameset&gt;）
+框架结构标签（&lt;frameset&gt;）定义如何将窗口分割为框架
+每个 frameset 定义了一系列行或列
+rows/columns 的值规定了每行或每列占据屏幕的面积
+noresize=&quot;noresize&quot;可以禁止拖放
+
+&lt;frameset cols=&quot;25%,75%&quot;&gt;
+  &lt;frame src=&quot;page1.htm&quot;&gt;
+  &lt;frame src=&quot;page2.htm&quot;&gt;
+&lt;/frameset&gt;
+</code></pre><p>iframe 用于在网页内显示网页————内联框架</p>
+<pre><code>&lt;iframe src=&quot;url&quot; width=&quot;200&quot; height=&quot;200&quot;&gt;&lt;/iframe&gt;
+height 和 width 属性用于规定 iframe 的高度和宽度。
+属性值的默认单位是像素，但也可以用百分比来设定（比如 &quot;80%&quot;）。
+frameborder 属性规定是否显示 iframe 周围的边框。设置属性值为 &quot;0&quot; 就可以移除边框。
+</code></pre><p>其它：</p>
+<pre><code>&lt;!-- This is a comment --&gt; 注释
+&lt;blockquote&gt; 引用
+Text quoted from some source.
+&lt;/blockquote&gt;
+&lt;address&gt; 作者联系方式
+Address 1&lt;br&gt;
+Address 2&lt;br&gt;
+City&lt;br&gt;
+&lt;/address&gt;
+</code></pre>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTML/" rel="tag"># HTML</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/18/偏函数/" rel="next" title="偏函数">
+                <i class="fa fa-chevron-left"></i> 偏函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/22/枚举类和metaclass/" rel="prev" title="枚举类和metaclass">
+                枚举类和metaclass <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/avatar/misaka.jpg"
+                alt="Prime" />
+            
+              <p class="site-author-name" itemprop="name">Prime</p>
+              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">初识html杂记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">下面是常用的模板：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
