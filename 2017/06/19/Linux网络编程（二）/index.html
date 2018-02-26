@@ -1,95 +1,26 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    
+
+    
+
+    
 
 
 
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="utf-8">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+    
+    <title>Linux网络编程（二） | Prime&#39;s Blog | 弱菜的进化~</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
     
     
-    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Linux," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon/12.ico?v=5.1.1" />
-
-
-
-
-
-
-<meta name="description" content="原始套接字编程以及linux进程信号机制。">
+    <meta name="keywords" content="Linux">
+    <meta name="description" content="原始套接字编程以及linux进程信号机制。">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux网络编程（二）">
@@ -103,284 +34,165 @@
 <meta name="twitter:title" content="Linux网络编程（二）">
 <meta name="twitter:description" content="原始套接字编程以及linux进程信号机制。">
 <meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com//linux%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/2017-06-19_224119.png">
+    
+    <link rel="shortcut icon" href="/favicon/12.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://www.prime666.com/2017/06/19/Linux网络编程（二）/"/>
-
-
-
-
-
-  <title>Linux网络编程（二） | Prime's Blog</title>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- custom head -->
+    
 
 </head>
 
+<body>
+    <div id="loading" class="active"></div>
 
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <a href="https://github.com/KannaKamuy"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Prime's Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Prime</h5>
+          <a href="mailto:yuanma2017@outlook.com" title="yuanma2017@outlook.com" class="mail">yuanma2017@outlook.com</a>
+        </hgroup>
+      </div>
     </div>
-      
-        <p class="site-subtitle">弱菜的进化~</p>
-      
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Neutral-network" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
   </div>
+</aside>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Linux网络编程（二）</div>
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
+    </div>
+</header>
+<header class="content-header post-header">
 
-      
-    </ul>
-  
-
-  
-</nav>
+    <div class="container fade-scale">
+        <h1 class="title">Linux网络编程（二）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-06-19T02:07:09.000Z" itemprop="datePublished" class="page-time">
+  2017-06-19
+</time>
 
 
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/编程/">编程</a></li></ul>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
             
+        </h5>
+    </div>
 
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
+</header>
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/19/Linux网络编程（二）/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Prime">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/avatar/misaka.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Prime's Blog">
-    </span>
-
+<div class="container body-wrap">
     
-      <header class="post-header">
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#原始套接字"><span class="post-toc-number">1.</span> <span class="post-toc-text">原始套接字</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">创建</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Linux进程与信号机制"><span class="post-toc-number">2.</span> <span class="post-toc-text">Linux进程与信号机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Linux进程"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Linux进程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Linux进程结构"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">Linux进程结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建子进程"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">创建子进程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建新进程"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">创建新进程</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#信号机制"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">信号机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#概述"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常用信号"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">常用信号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#kill"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">kill</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#raise"><span class="post-toc-number">2.2.4.</span> <span class="post-toc-text">raise</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#alarm"><span class="post-toc-number">2.2.5.</span> <span class="post-toc-text">alarm</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#abort"><span class="post-toc-number">2.2.6.</span> <span class="post-toc-text">abort</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#发送信号"><span class="post-toc-number">2.2.7.</span> <span class="post-toc-text">发送信号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#接受信号"><span class="post-toc-number">2.2.8.</span> <span class="post-toc-text">接受信号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#sigaction"><span class="post-toc-number">2.2.9.</span> <span class="post-toc-text">sigaction</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#signal"><span class="post-toc-number">2.2.10.</span> <span class="post-toc-text">signal</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#进程终止与僵尸进程"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">进程终止与僵尸进程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#exit"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">exit</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#wait-amp-amp-waitpid"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">wait&amp;&amp;waitpid</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#理论知识"><span class="post-toc-number">2.3.3.</span> <span class="post-toc-text">理论知识</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#清除僵尸进程"><span class="post-toc-number">2.3.4.</span> <span class="post-toc-text">清除僵尸进程</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#守护进程"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">守护进程</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">Linux网络编程（二）</h1>
-        
 
+<article id="post-Linux网络编程（二）"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Linux网络编程（二）</h1>
         <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T10:07:09+08:00">
-                2017-06-19
-              </time>
-            
+            <time class="post-time" title="2017-06-19 10:07:09" datetime="2017-06-19T02:07:09.000Z"  itemprop="datePublished">2017-06-19</time>
 
             
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/编程/">编程</a></li></ul>
+
+
 
             
-          </span>
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv">热度
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>℃
-            </span>
-          
-
-          
-
-          
 
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>原始套接字编程以及linux进程信号机制。</p>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>原始套接字编程以及linux进程信号机制。</p>
 <a id="more"></a>
 <h1 id="原始套接字"><a href="#原始套接字" class="headerlink" title="原始套接字"></a>原始套接字</h1><p>前面的socket都是TCp或 UDP的，TCP和UDP Socket对TCP和UDP协议做了封装，简化了编程接口，但失去了对IP数据包操作的灵活性。原始socket直接针对IP数据包编程，具有更强的灵活性，能够访问ICMP和IGMP数据包，也可以编写基于IP协议的高层协议。</p>
 <h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span>          </span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(<span class="keyword">int</span> domain, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol)</span></span>;</div></pre></td></tr></table></figure>
@@ -415,7 +227,13 @@
 <li>代码段使用和父进程相同的代码段</li>
 <li>父进程的数据段和堆栈段被复制（copy-on-write）给子进程</li>
 </ul>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//linux%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/2017-06-19_224119.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//linux%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/2017-06-19_224119.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h3 id="创建新进程"><a href="#创建新进程" class="headerlink" title="创建新进程"></a>创建新进程</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="keyword">extern</span> <span class="keyword">char</span> **environ;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execl</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">const</span> <span class="keyword">char</span> *arg, ...<span class="comment">/* (char  *) NULL */</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execlp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *file, <span class="keyword">const</span> <span class="keyword">char</span> *arg, ...<span class="comment">/* (char  *) NULL */</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execle</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">const</span> <span class="keyword">char</span> *arg, ...<span class="comment">/*, (char *) NULL, char * const envp[] */</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execv</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">char</span> *<span class="keyword">const</span> argv[])</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execvp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *file, <span class="keyword">char</span> *<span class="keyword">const</span> argv[])</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">execvpe</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *file, <span class="keyword">char</span> *<span class="keyword">const</span> argv[],<span class="keyword">char</span> *<span class="keyword">const</span> envp[])</span></span>;</div></pre></td></tr></table></figure>
 <p>exec族函数会用新进程代替原有进程，系统会从新的进程运行。具体为：代码段替换为新的代码段，废弃原进程的数据段和堆栈段，创建新的数据段和堆栈段，但进程号保留。</p>
 <p>参数意义在于，在当前系统的可执行路径中根据指定的文件名<code>path</code>，找到合适的可执行文件，并用它取代调用进程的内容；如果是<code>file</code>，就看是否含有<code>/</code>，是就试做路径，找到相应文件，否则就从<code>PATH</code>环境变量中找到指定文件。</p>
@@ -576,483 +394,268 @@
 <h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h2><p>如何让一个用户进程变成守护进程：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">daemon_init</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">struct</span> sigaction act;</div><div class="line">	<span class="keyword">int</span> i,maxfd,fd_rd,fd_wr;</div><div class="line">	<span class="comment">//1.调用fork，然后父进程退出，子进程继续运行</span></div><div class="line">	<span class="keyword">if</span>(fork()!=<span class="number">0</span>)</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	<span class="comment">//2.调用setsid创建新的session</span></div><div class="line">	<span class="keyword">if</span>(setsid()&lt;<span class="number">0</span>)</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	<span class="comment">//3.忽略信号SIGHUP，再次调用fork，然后父进程（session的头进程）退出 </span></div><div class="line">	act.sa_handler=SIG_IGN;</div><div class="line">	sigemptyset(&amp;act.sa_mask);<span class="comment">//清空</span></div><div class="line">	act.sa_flags=<span class="number">0</span>;</div><div class="line">	<span class="keyword">if</span>(sigaction(SIGHUP,&amp;act,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"sigaction error."</span>);</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);                                           </div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span>(fork()!=<span class="number">0</span>)</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	<span class="comment">//4.调用函数chdir（“/”），使进程不使用任何目录 </span></div><div class="line">	chdir(<span class="string">"/"</span>);</div><div class="line">	<span class="comment">//5.调用函数unmask（0），使进程对任何写的内容有权限 </span></div><div class="line">	umask(<span class="number">0</span>);</div><div class="line">	<span class="comment">//6.关闭所有打开的文件描述符 </span></div><div class="line">	maxfd=sysconf(_SC_OPEN_MAX);<span class="comment">//返回系统最大的文件描述符</span></div><div class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;NOFILE;i++)</div><div class="line">		close(i);</div><div class="line">	<span class="comment">//7.为标准输入（0），标准输出（1），标准错误输出（2）打开新的文件描述符 </span></div><div class="line">	 </div><div class="line">	fd_rd=open(<span class="string">"/dev/null"</span>,O_RDONLY);</div><div class="line">	fd_wr=open(<span class="string">"/root/daemon.log"</span>,O_WRONLY);</div><div class="line">	dup(fd_rd);</div><div class="line">	dup(fd_wr);</div><div class="line">	dup(fd_wr);</div><div class="line">	</div><div class="line">	<span class="comment">//8.处理信号SIGCLD，避免守护进程的子进程成为僵尸进程</span></div><div class="line">	signal(SIGCHLD, SIG_IGN);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
-      
-    </div>
+        </div>
 
-    <div>
-      
-        <div>
+        <blockquote class="post-copyright">
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    <div class="content">
+        
+<span class="post-time">
+    最終更新：<time datetime="2017-06-21T14:09:07.192Z" itemprop="dateUpdated">2017-06-21 22:09:07</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/06/19/Linux网络编程（二）/" target="_blank" rel="external">https://www.prime666.com/2017/06/19/Linux网络编程（二）/</a>
+        
+    </div>
     
-</div>
-      
-    </div>
-
-    <div>
-      
-        
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>觉得写的不错？求打赏！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/ali.jpg" alt="Prime Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/06/19/Linux网络编程（一）/" rel="next" title="Linux网络编程（一）">
-                <i class="fa fa-chevron-left"></i> Linux网络编程（一）
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/20/Linux网络编程（三）/" rel="prev" title="Linux网络编程（三）">
-                Linux网络编程（三） <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
+    <footer>
+        <a href="https://www.prime666.com">
+            <img src="/img/avatar.jpg" alt="Prime">
+            Prime
+        </a>
     </footer>
-  </article>
+</blockquote>
+
+        
 
 
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
 
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
+            
+<div class="page-share-wrap">
     
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
-    
-  </div>
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.prime666.com/2017/06/19/Linux网络编程（二）/&title=《Linux网络编程（二）》 — Prime's Blog&pic=https://www.prime666.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.prime666.com/2017/06/19/Linux网络编程（二）/&title=《Linux网络编程（二）》 — Prime's Blog&source=原始套接字编程以及linux进程信号机制。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.prime666.com/2017/06/19/Linux网络编程（二）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux网络编程（二）》 — Prime's Blog&url=https://www.prime666.com/2017/06/19/Linux网络编程（二）/&via=https://www.prime666.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.prime666.com/2017/06/19/Linux网络编程（二）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
 
 
         </div>
-        
-          
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/06/20/Linux网络编程（三）/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux网络编程（三）</h4>
+      </a>
     </div>
-  </div>
+  
 
-  <aside id="sidebar" class="sidebar">
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/06/19/Linux网络编程（一）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux网络编程（一）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
     
-    <div class="sidebar-inner">
 
-      
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/avatar/misaka.jpg"
-               alt="Prime" />
-          <p class="site-author-name" itemprop="name">Prime</p>
-           
-              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
-          
-        </div>
-        <nav class="site-state motion-element">
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">58</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
 
-        </nav>
 
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
         
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
 
 
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
+        <p>
             
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原始套接字"><span class="nav-number">1.</span> <span class="nav-text">原始套接字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建"><span class="nav-number">1.1.</span> <span class="nav-text">创建</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux进程与信号机制"><span class="nav-number">2.</span> <span class="nav-text">Linux进程与信号机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux进程"><span class="nav-number">2.1.</span> <span class="nav-text">Linux进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux进程结构"><span class="nav-number">2.1.1.</span> <span class="nav-text">Linux进程结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建子进程"><span class="nav-number">2.1.2.</span> <span class="nav-text">创建子进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建新进程"><span class="nav-number">2.1.3.</span> <span class="nav-text">创建新进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号机制"><span class="nav-number">2.2.</span> <span class="nav-text">信号机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">2.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用信号"><span class="nav-number">2.2.2.</span> <span class="nav-text">常用信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kill"><span class="nav-number">2.2.3.</span> <span class="nav-text">kill</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#raise"><span class="nav-number">2.2.4.</span> <span class="nav-text">raise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alarm"><span class="nav-number">2.2.5.</span> <span class="nav-text">alarm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#abort"><span class="nav-number">2.2.6.</span> <span class="nav-text">abort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送信号"><span class="nav-number">2.2.7.</span> <span class="nav-text">发送信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接受信号"><span class="nav-number">2.2.8.</span> <span class="nav-text">接受信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sigaction"><span class="nav-number">2.2.9.</span> <span class="nav-text">sigaction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#signal"><span class="nav-number">2.2.10.</span> <span class="nav-text">signal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程终止与僵尸进程"><span class="nav-number">2.3.</span> <span class="nav-text">进程终止与僵尸进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exit"><span class="nav-number">2.3.1.</span> <span class="nav-text">exit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wait-amp-amp-waitpid"><span class="nav-number">2.3.2.</span> <span class="nav-text">wait&amp;&amp;waitpid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理论知识"><span class="nav-number">2.3.3.</span> <span class="nav-text">理论知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清除僵尸进程"><span class="nav-number">2.3.4.</span> <span class="nav-text">清除僵尸进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#守护进程"><span class="nav-number">2.4.</span> <span class="nav-text">守护进程</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
     </div>
-  </aside>
+    <div class="bottom">
+        <p><span>Prime &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
 
-
-        
-      </div>
     </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.prime666.com/2017/06/19/Linux网络编程（二）/&title=《Linux网络编程（二）》 — Prime's Blog&pic=https://www.prime666.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.prime666.com/2017/06/19/Linux网络编程（二）/&title=《Linux网络编程（二）》 — Prime's Blog&source=原始套接字编程以及linux进程信号机制。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.prime666.com/2017/06/19/Linux网络编程（二）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux网络编程（二）》 — Prime's Blog&url=https://www.prime666.com/2017/06/19/Linux网络编程（二）/&via=https://www.prime666.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.prime666.com/2017/06/19/Linux网络编程（二）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.prime666.com/2017/06/19/Linux网络编程（二）/" alt="微信分享二维码">
 </div>
 
 
-        
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-  
-    <span class="site-uv">
-      您是第
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      个小伙伴
-    </span>
-  
 
-  
-    <span class="site-pv">
-      本站总浏览
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
 </script>
 
-
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
 
 
-  
-
-  
-
-
-  
-<div id="hexo-helper-live2d">
-  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
 </div>
-<style>
-  #live2dcanvas{
-    position: fixed;
-    width: 150px;
-    height: 300px;
-    opacity:0.7;
-    right: 0px;
-    z-index: 999;
-    pointer-events: none;
-    bottom: -20px;
-  }
-</style>
-<script type="text/javascript" src="/live2d/device.min.js"></script>
-<script type="text/javascript">
-const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
-(function(){
-  if((typeof(device) != 'undefined') && (device.mobile())){
-    document.getElementById("live2dcanvas").style.width = '75px';
-    document.getElementById("live2dcanvas").style.height = '150px';
-  }else
-    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
-  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/z16.model.json", 0.5);});
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
 })();
 </script>
+
+
 
 </body>
 </html>
-
-
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>

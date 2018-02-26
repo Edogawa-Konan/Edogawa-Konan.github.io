@@ -1,95 +1,26 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    
+
+    
+
+    
 
 
 
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="utf-8">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+    
+    <title>神经网络汇总 | Prime&#39;s Blog | 弱菜的进化~</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
     
     
-    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Machine Learn," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon/12.ico?v=5.1.1" />
-
-
-
-
-
-
-<meta name="description" content="暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。">
+    <meta name="keywords" content="Machine Learn">
+    <meta name="description" content="暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。">
 <meta name="keywords" content="Machine Learn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="神经网络汇总">
@@ -98,8 +29,6 @@
 <meta property="og:description" content="暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/00a41aa6575886baef4193d943fa609b49534272">
-<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6">
-<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/69b9832ae727dd93d743ed1daf1f7940ebc16f43">
 <meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/480px-Logistic-curve.svg.png">
@@ -119,284 +48,165 @@
 <meta name="twitter:title" content="神经网络汇总">
 <meta name="twitter:description" content="暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。">
 <meta name="twitter:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/00a41aa6575886baef4193d943fa609b49534272">
+    
+    <link rel="shortcut icon" href="/favicon/12.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://www.prime666.com/2017/07/31/神经网络汇总/"/>
-
-
-
-
-
-  <title>神经网络汇总 | Prime's Blog</title>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- custom head -->
+    
 
 </head>
 
+<body>
+    <div id="loading" class="active"></div>
 
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <a href="https://github.com/KannaKamuy"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Prime's Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Prime</h5>
+          <a href="mailto:yuanma2017@outlook.com" title="yuanma2017@outlook.com" class="mail">yuanma2017@outlook.com</a>
+        </hgroup>
+      </div>
     </div>
-      
-        <p class="site-subtitle">弱菜的进化~</p>
-      
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Neutral-network" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
   </div>
+</aside>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">神经网络汇总</div>
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
+    </div>
+</header>
+<header class="content-header post-header">
 
-      
-    </ul>
-  
-
-  
-</nav>
+    <div class="container fade-scale">
+        <h1 class="title">神经网络汇总</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-31T12:38:28.000Z" itemprop="datePublished" class="page-time">
+  2017-07-31
+</time>
 
 
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/编程/">编程</a></li></ul>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
             
+        </h5>
+    </div>
 
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
+</header>
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/07/31/神经网络汇总/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Prime">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/avatar/misaka.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Prime's Blog">
-    </span>
-
+<div class="container body-wrap">
     
-      <header class="post-header">
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#神经网络"><span class="post-toc-number">1.</span> <span class="post-toc-text">神经网络</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#环境搭建"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">环境搭建</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#神经网络概述"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">神经网络概述</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#感知器"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">感知器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#S型神经元"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">S型神经元</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#神经网络的基本架构"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">神经网络的基本架构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用梯度下降算法进行学习"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">使用梯度下降算法进行学习</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反向传播算法如何工作"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">反向传播算法如何工作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Hadamard乘积-odot"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">Hadamard乘积$\odot$</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#反向传播的四个方程"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">反向传播的四个方程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#证明上面的四个方程"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">证明上面的四个方程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#反向传播"><span class="post-toc-number">1.3.4.</span> <span class="post-toc-text">反向传播</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#改进神经网络之交叉熵"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">改进神经网络之交叉熵</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#交叉熵代价函数"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">交叉熵代价函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#交叉熵代价函数的推导"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">交叉熵代价函数的推导</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#交叉熵的含义"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">交叉熵的含义</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#改进神经网络之柔性最大值"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">改进神经网络之柔性最大值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#改进神经网络之规范化"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">改进神经网络之规范化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#过度拟合"><span class="post-toc-number">1.6.1.</span> <span class="post-toc-text">过度拟合</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#L2规范化"><span class="post-toc-number">1.6.2.</span> <span class="post-toc-text">L2规范化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何将梯度下降应用于L2规范化的网络"><span class="post-toc-number">1.6.3.</span> <span class="post-toc-text">如何将梯度下降应用于L2规范化的网络</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#其它规范化的手段"><span class="post-toc-number">1.6.4.</span> <span class="post-toc-text">其它规范化的手段</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#L1规范化"><span class="post-toc-number">1.6.4.1.</span> <span class="post-toc-text">L1规范化</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#齐权-Dropout"><span class="post-toc-number">1.6.4.2.</span> <span class="post-toc-text">齐权(Dropout)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#人为扩充训练集"><span class="post-toc-number">1.6.4.3.</span> <span class="post-toc-text">人为扩充训练集</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#改进神经网络之权重初始化"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">改进神经网络之权重初始化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#深层神经网络很难训练"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">深层神经网络很难训练</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#卷积神经网络"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">卷积神经网络</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#针对mnist问题"><span class="post-toc-number">1.9.1.</span> <span class="post-toc-text">针对mnist问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#受限玻尔兹曼机（Restricted-Boltzmann-Machine，RBM）"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">受限玻尔兹曼机（Restricted Boltzmann Machine，RBM）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重构"><span class="post-toc-number">1.10.1.</span> <span class="post-toc-text">重构</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#鸣谢"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">鸣谢</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">神经网络汇总</h1>
-        
 
+<article id="post-神经网络汇总"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">神经网络汇总</h1>
         <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-31T20:38:28+08:00">
-                2017-07-31
-              </time>
-            
+            <time class="post-time" title="2017-07-31 20:38:28" datetime="2017-07-31T12:38:28.000Z"  itemprop="datePublished">2017-07-31</time>
 
             
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/编程/">编程</a></li></ul>
+
+
 
             
-          </span>
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv">热度
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>℃
-            </span>
-          
-
-          
-
-          
 
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。</p>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。</p>
 <a id="more"></a>
 <h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><p>说明：本文是学习神经网络的笔记，<a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener">英文原文</a>，本文内容均由我从原书中提炼而来，并对其中每个结论进行了数学证明（过于高深的问题未解决，只限于高等数学范畴）。</p>
 <p>作者：马源@prime        </p>
@@ -429,13 +239,35 @@
 <hr>
 <p>补充一下theano的介绍，其是一个科学计算的库，可以让python拥有与手写的c几乎相同的效率！同时，它可利用GPU进行加速，从而胜过C+CPU！theano把计算机代数系统( computer algebra system (CAS))与优化编译器相结合，因此，对于大多数数学计算操作，可以生成最优的c代码。</p>
 <h2 id="神经网络概述"><a href="#神经网络概述" class="headerlink" title="神经网络概述"></a>神经网络概述</h2><h3 id="感知器"><a href="#感知器" class="headerlink" title="感知器"></a>感知器</h3><p>感知器（英语：Perceptron）是Frank Rosenblatt在1957年就职于Cornell航空实验室（Cornell Aeronautical Laboratory）时所发明的一种人工神经网络。它可以被视为一种最简单形式的<strong>前馈神经网络</strong>，是一种<strong>二元线性分类器</strong>。</p>
-<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/00a41aa6575886baef4193d943fa609b49534272" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/00a41aa6575886baef4193d943fa609b49534272" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>感知器使用特征向量来表示的前馈神经网络，把矩阵上的输入x（实数值向量）映射到输出值 f(x)上（一个二元的值）。</p>
-<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6" alt="w">是实数的表式权重的向量，<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/69b9832ae727dd93d743ed1daf1f7940ebc16f43" alt="w\cdot x">是点积。<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" alt="b">是偏置，一个不依赖于任何输入值的常数。偏置可以认为是激励函数的偏移量，或者给神经元一个基础活跃等级。</p>
-<p>其基本结构如下图</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f11423fbb2e967f986e36804a8ae4271734917c3" alt="w](https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6)是实数的表式权重的向量，![wcdot x](https://wikimedia.org/api/rest_v1/media/math/render/svg/69b9832ae727dd93d743ed1daf1f7940ebc16f43)是点积。![b" title="">
+                </div>
+                <div class="image-caption">w](https://wikimedia.org/api/rest_v1/media/math/render/svg/88b1e0c8e1be5ebe69d18a8010676fa42d7961e6)是实数的表式权重的向量，![wcdot x](https://wikimedia.org/api/rest_v1/media/math/render/svg/69b9832ae727dd93d743ed1daf1f7940ebc16f43)是点积。![b</div>
+            </figure>是偏置，一个不依赖于任何输入值的常数。偏置可以认为是激励函数的偏移量，或者给神经元一个基础活跃等级。<br><br>其基本结构如下图<br><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h3 id="S型神经元"><a href="#S型神经元" class="headerlink" title="S型神经元"></a>S型神经元</h3><p>其基本结构和上述感知器类似，只不过，输出不再是0和1，而是$\sigma (\vec w \vec x +b)$。此处的$\sigma$被称为S型函数(sigmoid function)。其表达式为：<br>$$<br>\sigma (z)=\frac {1} {1+e^{-z}}<br>$$<br>该函数图像如下：</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/480px-Logistic-curve.svg.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/480px-Logistic-curve.svg.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>其又被称作<strong>逻辑函数</strong>。</p>
 <p>其实，S型神经元可以理解为一个“平滑”的感知器，其平滑意为着权重和偏置的微小改变，会从神经元输出产生一个微小的变化。</p>
 <h3 id="神经网络的基本架构"><a href="#神经网络的基本架构" class="headerlink" title="神经网络的基本架构"></a>神经网络的基本架构</h3><p>网络中最左边的输入层，其中的神经元被称作<strong>输入神经元</strong>。最右边的即输出层包含<strong>输出神经元。</strong>中间层被称作隐藏层。</p>
@@ -495,9 +327,21 @@
 <h2 id="改进神经网络之交叉熵"><a href="#改进神经网络之交叉熵" class="headerlink" title="改进神经网络之交叉熵"></a>改进神经网络之交叉熵</h2><h3 id="交叉熵代价函数"><a href="#交叉熵代价函数" class="headerlink" title="交叉熵代价函数"></a>交叉熵代价函数</h3><p>通常人在已经知道犯错误的情况下会加速学习修正错误，但是上面的神经网络在明显出错的时候学习速率反而不高！这就引发了问题。</p>
 <p>也就是说，偏导数$\frac {\partial C}{\partial w},\frac {\partial C}{\partial b}$过小。</p>
 <p>由此，我们先考虑一个神经元，其结构图如下：</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Ncell.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>代价函数$C=\frac {(y-a)^2}{2}$。$z=wx+b$<br>$$<br>\therefore \frac {\partial C}{\partial w}=(a-y)\sigma \prime(z)x \qquad \frac {\partial C}{\partial b}=(a-y)\sigma \prime(z)<br>$$<br>看一下sigmod函数图像，</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/480px-Logistic-curve.svg.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/480px-Logistic-curve.svg.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>显然，当z接近0或者1的时候，导数值明显比较小。</p>
 <p>所以，引入了交叉熵代价函数代替二次代价函数。<br>$$<br>C=-\frac {1}{n}\sum_x[y\ln a+(1-y)\ln (1-a)]<br>$$<br>n是训练样本总数，x是某个具体的样本。</p>
 <p>粗看这个函数，显然满足基本代价函数的要求：</p>
@@ -534,17 +378,35 @@
 <p>所以，这里使用期望为0，标准差为$\frac 1{\sqrt n}$的正态分布来初始化权重，这样$z$的图像就倾向于集中在中间。至于偏置依旧影响不大，沿用上面的初始化方式即可。</p>
 <h2 id="深层神经网络很难训练"><a href="#深层神经网络很难训练" class="headerlink" title="深层神经网络很难训练"></a>深层神经网络很难训练</h2><p>当训练深层神经网络时，会发现后面的神经元的学习速度快于前一层，或者相反，呈现一种波动性。</p>
 <p>考虑如下超简单的神经网络，</p>
-<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz37.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://neuralnetworksanddeeplearning.com/images/tikz37.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>所以，<br>$$<br>z<em>j = w</em>{j} a_{j-1}+b_j<br>$$</p>
 <p>$$<br>a_j=\sigma(z_j)<br>$$</p>
 <p>由此，根据链式法则，<br>$$<br>\begin{eqnarray}<br>\frac{\partial C}{\partial b_1} = \sigma’(z_1) \, w_2 \sigma’(z_2) \,<br> w_3 \sigma’(z_3) \, w_4 \sigma’(z_4) \, \frac{\partial C}{\partial a_4}.<br>\end{eqnarray}<br>$$<br>对于S函数，其导数在0点取最大值0.25，若使用标准方法初始化网络权重，那么一般$w_j\sigma \prime(z_j)&lt;1$，所以越往后乘的项数越多，前面的导数越小。由此，就是“消失的梯度”。反之，如果权值给的很大，那么就相反了。</p>
 <h2 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h2><p>卷积神经网络(Convolutional Neural Network, CNN)是一种前馈神经网络，它的人工神经元可以响应一部分覆盖范围内的周围单元，对于大型图像处理有出色表现。传统的神经网络都是采用全连接的方式，即输入层到隐藏层的神经元都是全部连接的，这样做将导致参数量巨大，使得网络训练耗时甚至难以训练。</p>
-<p><img src="http://i.imgur.com/PHbta3D.jpg" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://i.imgur.com/PHbta3D.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p><strong>局部感受野</strong>(local receptive fields)：如上图，左图是全连接，隐藏层每个神经元都和输入层有连接，这参数多的难以训练！右图就是局部连接，这里局部感受野就是和每个隐藏层神经元相连的那部分区域。</p>
 <p><strong>共享权重和偏置</strong>：对于隐藏层的每个神经元，其权重矩阵和偏置是共享的，也就是说每个神经元的权重矩阵和偏置都是相同的。实际上，这意味着只提取了图像的一种特征。共享权重和偏置常被称作卷积核或滤波器。如果要多提取出一些特征，可以增加多个卷积核，不同的卷积核能够得到图像的不同映射下的特征，称之为<strong>Feature Map即特征映射</strong>。</p>
 <p><strong>卷积层</strong>：上面介绍共享权重和偏置的时候，用了隐藏层这个词。其实准确说应该是卷积层。</p>
 <p><strong>混合层</strong>：混合层通常紧接着卷积层，其要做的就是简化卷积层的信息。一种常见的是最大值混合(max-pooling)，它从卷积层的输入区域中选择一个最大的激活值输出。如下图</p>
-<p><img src="http://neuralnetworksanddeeplearning.com/images/tikz47.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://neuralnetworksanddeeplearning.com/images/tikz47.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>可以把最大值混合理解为一种网络询问，是否有一个给定的特征在图像的某块区域中出现，然后丢掉具体的位置信息。这样进一步减少后面的层的参数。</p>
 <p>另一种常用的技术是<strong>L2混合(L2 pooling)</strong>。这里取区域中激活值的平方和的平方根。其是一种凝聚从卷积层输出信息的方式。</p>
 <hr>
@@ -552,7 +414,13 @@
 <p>先上数学公式，二维离散卷积<br>$$<br>f[x,y] * g[x,y] = \sum_{n<em>1=-\infty}^\infty \sum</em>{n_2=-\infty}^\infty f[n_1, n_2] \cdot g[x-n_1, y-n_2]<br>$$</p>
 <p>$$<br>\text{这是一个 3x3 的均值滤波核，也就是卷积核：} \begin{bmatrix}     1/9 &amp; 1/9 &amp; 1/9 \     1/9 &amp; 1/9 &amp; 1/9 \     1/9 &amp; 1/9 &amp; 1/9 \ \end{bmatrix} \ \text{这是被卷积图像，这里简化为一个二维 5x5 矩阵：} \begin{bmatrix}     3 &amp; 3 &amp; 3 &amp; 3 &amp; 3 \     4 &amp; 4 &amp; 4 &amp; 4 &amp; 4 \     5 &amp; 5 &amp; 5 &amp; 5 &amp; 5 \     6 &amp; 6 &amp; 6 &amp; 6 &amp; 6 \     7 &amp; 7 &amp; 7 &amp; 7 &amp; 7 \ \end{bmatrix} \<br>$$</p>
 <p>当卷积核运动到图像右下角处（卷积中心和图像对应图像第 4 行第 4 列）时，它和图像卷积的结果如下图所示：</p>
-<p><img src="http://mengqi92.github.io/2015/10/06/convolution/2d-convolution.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://mengqi92.github.io/2015/10/06/convolution/2d-convolution.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>可以看出，二维卷积在图像中的效果就是：对图像的每个像素的邻域（邻域大小就是核的大小）加权求和得到该像素点的输出值。滤波器核在这里是作为一个“权重表”来使用的。</p>
 <hr>
 <h3 id="针对mnist问题"><a href="#针对mnist问题" class="headerlink" title="针对mnist问题"></a>针对mnist问题</h3><p>在引入卷积神经网络之后，我们的网络架构是输入层+卷积层+混合层+全连接层+输出层。</p>
@@ -561,13 +429,31 @@
 <hr>
 <p>以上的大背景都是mnist问题。</p>
 <hr>
-<h2 id="受限玻尔兹曼机（Restricted-Boltzmann-Machine，RBM）"><a href="#受限玻尔兹曼机（Restricted-Boltzmann-Machine，RBM）" class="headerlink" title="受限玻尔兹曼机（Restricted Boltzmann Machine，RBM）"></a>受限玻尔兹曼机（Restricted Boltzmann Machine，RBM）</h2><p><img src="https://deeplearning4j.org/img/multiple_inputs_RBM.png" alt=""></p>
+<h2 id="受限玻尔兹曼机（Restricted-Boltzmann-Machine，RBM）"><a href="#受限玻尔兹曼机（Restricted-Boltzmann-Machine，RBM）" class="headerlink" title="受限玻尔兹曼机（Restricted Boltzmann Machine，RBM）"></a>受限玻尔兹曼机（Restricted Boltzmann Machine，RBM）</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://deeplearning4j.org/img/multiple_inputs_RBM.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>如上图是一个简单的RBM网络，<strong>层内无连接，层间全连接，显然RBM对应的图是一个二分图</strong>（层的内部不存在通信－这就是受限玻尔兹曼机被称为<em>受限</em>的原因），其第一个输入层又名可见层，第二个是隐藏层。</p>
 <p>如果这两个层属于一个深度神经网络，那么第一隐藏层的输出会成为第二隐藏层的输入，随后再通过任意数量的隐藏层，直至到达最终的分类层。</p>
-<p><img src="https://deeplearning4j.org/img/multiple_hidden_layers_RBM.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://deeplearning4j.org/img/multiple_hidden_layers_RBM.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h3 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h3><p>我们将重点关注受限玻尔兹曼机如何在无监督情况下学习重构数据（无监督指测试数据集没有作为实际基准的标签），在可见层和第一隐藏层之间进行多次正向和反向传递，而无需加大网络的深度。</p>
 <p>在重构阶段，第一隐藏层的激活值成为反向传递中的输入。这些输入值与同样的权重相乘，每两个相连的节点之间各有一个权重，就像正向传递中输入x的加权运算一样。这些乘积的和再与每个可见层的偏置相加，所得结果就是重构值，亦即原始输入的近似值。这一过程可以用下图来表示：</p>
-<p><img src="https://deeplearning4j.org/img/reconstruction_RBM.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://deeplearning4j.org/img/reconstruction_RBM.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>由于RBM权重初始值是随机决定的，重构值与原始输入之间的差别通常很大。可以将r值与输入值之差视为<strong>重构误差</strong>，此误差值随后经由反向传播来<strong>修</strong></p>
 <p><strong>RBM的权重</strong>，如此不断反复，<strong>直至误差达到最小</strong>。</p>
 <p>由此可见，RBM在正向传递中使用输入值来预测节点的激活值，亦即<strong>输入为加权的x时输出a的概率</strong>：<code>p(a|x; w)</code>。</p>
@@ -581,9 +467,21 @@
 <hr>
 <p>RBM用Kullback Leibler散度来衡量预测的概率分布与输入值的基准分布之间的距离。</p>
 <p>KL散度衡量两条曲线下方不重叠（即离散）的面积，而RBM的优化算法会<em>尝试将这些离散部分的面积最小化</em>，使共用权重在与第一隐藏层的激活值相乘后，可以得到与原始输入高度近似的结果。下图左半边是一组原始输入的概率分布曲线<em>p</em>，与之并列的是重构值的概率分布曲线<em>q</em>；右半边的图则显示了两条曲线之间的差异。</p>
-<p><img src="https://deeplearning4j.org/img/KL_divergence_RBM.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://deeplearning4j.org/img/KL_divergence_RBM.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>RBM根据权重产生的误差反复调整权重，以此学习估计原始数据的近似值。可以说权重会慢慢开始反映出输入的结构，而这种结构被编码为第一个隐藏层的激活值。整个学习过程看上去像是两条概率分布曲线在逐步重合。</p>
-<p><img src="https://deeplearning4j.org/img/KLD_update_RBM.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://deeplearning4j.org/img/KLD_update_RBM.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>最后一点：你会发现RBM有两个偏置值。隐藏的偏置值帮助RBM在正向传递中生成激活值（因为偏置设定了下限，所以无论数据有多稀疏，至少有一部分节点会被激活），而可见层的偏置则帮助RBM通过反向传递学习重构数据。</p>
 <h2 id="鸣谢"><a href="#鸣谢" class="headerlink" title="鸣谢"></a>鸣谢</h2><p>本文参考了以下博客和资料：</p>
 <p><a href="http://www.jeyzhang.com/cnn-learning-notes-1.html" target="_blank" rel="noopener">卷积神经网络(CNN)学习笔记1：基础入门</a></p>
@@ -591,514 +489,268 @@
 <p><a href="https://deeplearning4j.org/cn/restrictedboltzmannmachine" target="_blank" rel="noopener">玻尔兹曼机</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/22794772" target="_blank" rel="noopener">RBM学习笔记</a></p>
 
-      
-    </div>
+        </div>
 
-    <div>
-      
-        <div>
+        <blockquote class="post-copyright">
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    <div class="content">
+        
+<span class="post-time">
+    最終更新：<time datetime="2018-02-26T02:56:02.193Z" itemprop="dateUpdated">2018-02-26 10:56:02</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/07/31/神经网络汇总/" target="_blank" rel="external">https://www.prime666.com/2017/07/31/神经网络汇总/</a>
+        
+    </div>
     
-</div>
-      
-    </div>
-
-    <div>
-      
-        
-<div class="my_post_copyright">
-  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
-
-  <!-- JS库 sweetalert 可修改路径 -->
-  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
-  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2017/07/31/神经网络汇总/">神经网络汇总</a></p>
-  <p><span>文章作者:</span><a href="/" title="访问 Prime 的个人博客">Prime</a></p>
-  <p><span>发布时间:</span>2017年07月31日 - 20:07</p>
-  <p><span>最后更新:</span>2018年02月26日 - 10:02</p>
-  <p><span>原始链接:</span><a href="/2017/07/31/神经网络汇总/" title="神经网络汇总">https://www.prime666.com/2017/07/31/神经网络汇总/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://www.prime666.com/2017/07/31/神经网络汇总/"  aria-label="复制成功！"></i></span>
-  </p>
-  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
-</div>
-<script> 
-    var clipboard = new Clipboard('.fa-clipboard');
-    clipboard.on('success', $(function(){
-      $(".fa-clipboard").click(function(){
-        swal({   
-          title: "",   
-          text: '复制成功',   
-          html: false,
-          timer: 500,   
-          showConfirmButton: false
-        });
-      });
-    }));  
-</script>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>觉得写的不错？求打赏！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/ali.jpg" alt="Prime Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Machine-Learn/" rel="tag"># Machine Learn</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/07/25/pat（十一）/" rel="next" title="pat（十一）">
-                <i class="fa fa-chevron-left"></i> pat（十一）
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/03/pat（十二）/" rel="prev" title="pat（十二）">
-                pat（十二） <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
+    <footer>
+        <a href="https://www.prime666.com">
+            <img src="/img/avatar.jpg" alt="Prime">
+            Prime
+        </a>
     </footer>
-  </article>
+</blockquote>
+
+        
 
 
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learn/">Machine Learn</a></li></ul>
 
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
+            
+<div class="page-share-wrap">
     
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
-    
-  </div>
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.prime666.com/2017/07/31/神经网络汇总/&title=《神经网络汇总》 — Prime's Blog&pic=https://www.prime666.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.prime666.com/2017/07/31/神经网络汇总/&title=《神经网络汇总》 — Prime's Blog&source=暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.prime666.com/2017/07/31/神经网络汇总/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《神经网络汇总》 — Prime's Blog&url=https://www.prime666.com/2017/07/31/神经网络汇总/&via=https://www.prime666.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.prime666.com/2017/07/31/神经网络汇总/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
 
 
         </div>
-        
-          
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/08/03/pat（十二）/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">pat（十二）</h4>
+      </a>
     </div>
-  </div>
+  
 
-  <aside id="sidebar" class="sidebar">
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/07/25/pat（十一）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">pat（十一）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
     
-    <div class="sidebar-inner">
 
-      
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/avatar/misaka.jpg"
-               alt="Prime" />
-          <p class="site-author-name" itemprop="name">Prime</p>
-           
-              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
-          
-        </div>
-        <nav class="site-state motion-element">
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">58</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
 
-        </nav>
 
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
         
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
 
 
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
+        <p>
             
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络"><span class="nav-number">1.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">1.1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络概述"><span class="nav-number">1.2.</span> <span class="nav-text">神经网络概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#感知器"><span class="nav-number">1.2.1.</span> <span class="nav-text">感知器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S型神经元"><span class="nav-number">1.2.2.</span> <span class="nav-text">S型神经元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络的基本架构"><span class="nav-number">1.2.3.</span> <span class="nav-text">神经网络的基本架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用梯度下降算法进行学习"><span class="nav-number">1.2.4.</span> <span class="nav-text">使用梯度下降算法进行学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向传播算法如何工作"><span class="nav-number">1.3.</span> <span class="nav-text">反向传播算法如何工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadamard乘积-odot"><span class="nav-number">1.3.1.</span> <span class="nav-text">Hadamard乘积$\odot$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向传播的四个方程"><span class="nav-number">1.3.2.</span> <span class="nav-text">反向传播的四个方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明上面的四个方程"><span class="nav-number">1.3.3.</span> <span class="nav-text">证明上面的四个方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向传播"><span class="nav-number">1.3.4.</span> <span class="nav-text">反向传播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进神经网络之交叉熵"><span class="nav-number">1.4.</span> <span class="nav-text">改进神经网络之交叉熵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵代价函数"><span class="nav-number">1.4.1.</span> <span class="nav-text">交叉熵代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵代价函数的推导"><span class="nav-number">1.4.2.</span> <span class="nav-text">交叉熵代价函数的推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵的含义"><span class="nav-number">1.4.3.</span> <span class="nav-text">交叉熵的含义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进神经网络之柔性最大值"><span class="nav-number">1.5.</span> <span class="nav-text">改进神经网络之柔性最大值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进神经网络之规范化"><span class="nav-number">1.6.</span> <span class="nav-text">改进神经网络之规范化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过度拟合"><span class="nav-number">1.6.1.</span> <span class="nav-text">过度拟合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L2规范化"><span class="nav-number">1.6.2.</span> <span class="nav-text">L2规范化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何将梯度下降应用于L2规范化的网络"><span class="nav-number">1.6.3.</span> <span class="nav-text">如何将梯度下降应用于L2规范化的网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其它规范化的手段"><span class="nav-number">1.6.4.</span> <span class="nav-text">其它规范化的手段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#L1规范化"><span class="nav-number">1.6.4.1.</span> <span class="nav-text">L1规范化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#齐权-Dropout"><span class="nav-number">1.6.4.2.</span> <span class="nav-text">齐权(Dropout)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#人为扩充训练集"><span class="nav-number">1.6.4.3.</span> <span class="nav-text">人为扩充训练集</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进神经网络之权重初始化"><span class="nav-number">1.7.</span> <span class="nav-text">改进神经网络之权重初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深层神经网络很难训练"><span class="nav-number">1.8.</span> <span class="nav-text">深层神经网络很难训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">1.9.</span> <span class="nav-text">卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#针对mnist问题"><span class="nav-number">1.9.1.</span> <span class="nav-text">针对mnist问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#受限玻尔兹曼机（Restricted-Boltzmann-Machine，RBM）"><span class="nav-number">1.10.</span> <span class="nav-text">受限玻尔兹曼机（Restricted Boltzmann Machine，RBM）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重构"><span class="nav-number">1.10.1.</span> <span class="nav-text">重构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#鸣谢"><span class="nav-number">1.11.</span> <span class="nav-text">鸣谢</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
     </div>
-  </aside>
+    <div class="bottom">
+        <p><span>Prime &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
 
-
-        
-      </div>
     </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.prime666.com/2017/07/31/神经网络汇总/&title=《神经网络汇总》 — Prime's Blog&pic=https://www.prime666.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.prime666.com/2017/07/31/神经网络汇总/&title=《神经网络汇总》 — Prime's Blog&source=暑期实习之神经网络总结，包括反向传播、梯度下降以及卷积神经网络等。目的是识别图片中的手写数字。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.prime666.com/2017/07/31/神经网络汇总/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《神经网络汇总》 — Prime's Blog&url=https://www.prime666.com/2017/07/31/神经网络汇总/&via=https://www.prime666.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.prime666.com/2017/07/31/神经网络汇总/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.prime666.com/2017/07/31/神经网络汇总/" alt="微信分享二维码">
 </div>
 
 
-        
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-  
-    <span class="site-uv">
-      您是第
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      个小伙伴
-    </span>
-  
 
-  
-    <span class="site-pv">
-      本站总浏览
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
 </script>
 
-
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
 
 
-  
-
-  
-
-
-  
-<div id="hexo-helper-live2d">
-  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
 </div>
-<style>
-  #live2dcanvas{
-    position: fixed;
-    width: 150px;
-    height: 300px;
-    opacity:0.7;
-    right: 0px;
-    z-index: 999;
-    pointer-events: none;
-    bottom: -20px;
-  }
-</style>
-<script type="text/javascript" src="/live2d/device.min.js"></script>
-<script type="text/javascript">
-const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
-(function(){
-  if((typeof(device) != 'undefined') && (device.mobile())){
-    document.getElementById("live2dcanvas").style.width = '75px';
-    document.getElementById("live2dcanvas").style.height = '150px';
-  }else
-    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
-  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/z16.model.json", 0.5);});
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
 })();
 </script>
+
+
 
 </body>
 </html>
-
-
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>

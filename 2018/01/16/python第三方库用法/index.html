@@ -1,95 +1,26 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    
+
+    
+
+    
 
 
 
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="utf-8">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+    
+    <title>python第三方库用法 | Prime&#39;s Blog | 弱菜的进化~</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
     
     
-    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Python," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon/12.ico?v=5.1.1" />
-
-
-
-
-
-
-<meta name="description" content="一些第三方库用法">
+    <meta name="keywords" content="Python">
+    <meta name="description" content="一些第三方库用法">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python第三方库用法">
@@ -122,288 +53,175 @@
 <meta name="twitter:title" content="python第三方库用法">
 <meta name="twitter:description" content="一些第三方库用法">
 <meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com/2.JPG">
+    
+    <link rel="shortcut icon" href="/favicon/12.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://www.prime666.com/2018/01/16/python第三方库用法/"/>
-
-
-
-
-
-  <title>python第三方库用法 | Prime's Blog</title>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- custom head -->
+    
 
 </head>
 
+<body>
+    <div id="loading" class="active"></div>
 
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <a href="https://github.com/KannaKamuy"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Prime's Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Prime</h5>
+          <a href="mailto:yuanma2017@outlook.com" title="yuanma2017@outlook.com" class="mail">yuanma2017@outlook.com</a>
+        </hgroup>
+      </div>
     </div>
-      
-        <p class="site-subtitle">弱菜的进化~</p>
-      
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Neutral-network" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
   </div>
+</aside>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">python第三方库用法</div>
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
+    </div>
+</header>
+<header class="content-header post-header">
 
-      
-    </ul>
-  
-
-  
-</nav>
+    <div class="container fade-scale">
+        <h1 class="title">python第三方库用法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-01-16T03:11:54.000Z" itemprop="datePublished" class="page-time">
+  2018-01-16
+</time>
 
 
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/编程/">编程</a></li></ul>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
             
+        </h5>
+    </div>
 
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
+</header>
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2018/01/16/python第三方库用法/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Prime">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/avatar/misaka.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Prime's Blog">
-    </span>
-
+<div class="container body-wrap">
     
-      <header class="post-header">
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#自带性能分析工具"><span class="post-toc-number">1.</span> <span class="post-toc-text">自带性能分析工具</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小例子——爬取大学排名"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">小例子——爬取大学排名</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#urlib模块"><span class="post-toc-number">2.</span> <span class="post-toc-text">urlib模块</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#urlib-request"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">urlib.request</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#urlopen"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">urlopen</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Request"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">Request</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#顺便说说re"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">顺便说说re</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#BeautifulSoup解析器"><span class="post-toc-number">3.</span> <span class="post-toc-text">BeautifulSoup解析器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#tag"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">tag</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#NavigableString"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">NavigableString</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Comment"><span class="post-toc-number">3.0.3.</span> <span class="post-toc-text">Comment</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#遍历"><span class="post-toc-number">3.0.4.</span> <span class="post-toc-text">遍历</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#下行遍历"><span class="post-toc-number">3.0.4.1.</span> <span class="post-toc-text">下行遍历</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#上行遍历"><span class="post-toc-number">3.0.4.2.</span> <span class="post-toc-text">上行遍历</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#平行遍历"><span class="post-toc-number">3.0.4.3.</span> <span class="post-toc-text">平行遍历</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#find-all"><span class="post-toc-number">3.0.5.</span> <span class="post-toc-text">find_all</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建矩阵"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">创建矩阵</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本类型"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">基本类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#索引和分片"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">索引和分片</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#计算"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">计算</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#与标量"><span class="post-toc-number">3.4.1.</span> <span class="post-toc-text">与标量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#与向量"><span class="post-toc-number">3.4.2.</span> <span class="post-toc-text">与向量</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">python第三方库用法</h1>
-        
 
+<article id="post-python第三方库用法"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">python第三方库用法</h1>
         <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-16T11:11:54+08:00">
-                2018-01-16
-              </time>
-            
+            <time class="post-time" title="2018-01-16 11:11:54" datetime="2018-01-16T03:11:54.000Z"  itemprop="datePublished">2018-01-16</time>
 
             
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/编程/">编程</a></li></ul>
+
+
 
             
-          </span>
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv">热度
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>℃
-            </span>
-          
-
-          
-
-          
 
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>一些第三方库用法</p>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>一些第三方库用法</p>
 <a id="more"></a>
 <h1 id="自带性能分析工具"><a href="#自带性能分析工具" class="headerlink" title="自带性能分析工具"></a>自带性能分析工具</h1><p>##cProfile</p>
 <p>cProfile是Python解释器默认的性能分析器，它只测量CPU时间而不去关心内存等信息。</p>
-<p>​<br><img src="http://on7mhq4kh.bkt.clouddn.com/2.JPG" alt="haha"></p>
+<p>​<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2.JPG" alt="haha" title="">
+                </div>
+                <div class="image-caption">haha</div>
+            </figure></p>
 <p>其中，第一列表示有 39986次函数调用，其中23340次原生调用（不涉及递归）。</p>
 <p>下面是具体的细节：</p>
 <ul>
@@ -426,17 +244,53 @@
 <p>##Stats类</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">pstats.Stats(*filenames <span class="keyword">or</span> profile, stream=sys.stdout)</div><div class="line"><span class="comment">#构造函数，可以接受Profile类型的参数或者其生成文件的文件名</span></div><div class="line">strip_dirs()</div><div class="line"><span class="comment">#删除报告中所有函数文件名的路径信息。如果两个项目文件名函数名行数相同，就会合并。</span></div><div class="line">dump_stats(filename)</div><div class="line"><span class="comment">#生成文件</span></div><div class="line">sort_stats(*keys)</div><div class="line"><span class="comment">#根据参数进行排序，多个参数就先按第一个排，相同的再按第二个排</span></div><div class="line"><span class="string">'''</span></div><div class="line">'calls'	call count</div><div class="line">'cumulative'	cumulative time</div><div class="line">'cumtime'	cumulative time</div><div class="line">'file'	file name</div><div class="line">'filename'	file name</div><div class="line">'module'	file name</div><div class="line">'ncalls'	call count</div><div class="line">'pcalls'	primitive call count</div><div class="line">'line'	line number</div><div class="line">'name'	function name</div><div class="line">'nfl'	name/file/line</div><div class="line">'stdname'	standard name</div><div class="line">'time'	internal time</div><div class="line">'tottime'	internal time</div><div class="line">'''</div><div class="line">print_stats(*restrictions)</div><div class="line"><span class="comment">#把信息打印到stdout，里面的可选参数用于体现打印结果的形式，可以是整数、小数和字符串</span></div><div class="line"><span class="comment">#整数：限制打印的行数</span></div><div class="line"><span class="comment">#小数（0.0~1.0）：表示按总行数的的百分比打印（一些行不打印）</span></div><div class="line"><span class="comment">#字符串：正则，用于匹配stdname</span></div><div class="line">print_callers(*restrictions)</div><div class="line"><span class="comment">#规则和上面一样，显示调用关系（右边的调用左边的）</span></div></pre></td></tr></table></figure>
 <p>#requests库基本概念</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/14.JPG" alt=""></p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/15.JPG" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/14.JPG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/15.JPG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>如上图，基本的requests的库的操作实质上只有一个<code>request</code>函数，其它函数都是对此函数的二次封装，它们都对应http协议的基本操作</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/17.JPG" alt=""></p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/18.JPG" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/17.JPG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/18.JPG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>另外，requests库也提供了一些异常用于debug。</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/16.JPG" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/16.JPG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>通用代码模式：</p>
 <p>requests模块的基本操作返回的是<code>Response</code>对象，它支持以下基本属性：</p>
 <p><img src="http://on7mhq4kh.bkt.clouddn.com/19.JPG" alt=""></p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/20.JPG" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/20.JPG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span>:</div><div class="line">    html=requests.request(<span class="string">'Head'</span>,URL,timeout=<span class="number">3</span>)</div><div class="line">    html.raise_for_status()<span class="comment">#判断返回类型是不是200，否则引起HTTPerror异常</span></div><div class="line">    html.encoding=html.apparent_encoding<span class="comment">#解决编码问题，前者只通过头部判断编码。</span></div><div class="line"></div><div class="line">    print(html.status_code)</div><div class="line">    print(html.encoding)</div><div class="line">    print(html.apparent_encoding)</div><div class="line">    print(html.text)</div><div class="line">    print(html.headers)</div><div class="line">    print(html.content)</div><div class="line"><span class="keyword">except</span> requests.HTTPError <span class="keyword">as</span> e:</div><div class="line">    print(e.msg)</div></pre></td></tr></table></figure>
 <p>注意，Response对象之中包含有request对象，看以下代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">URL=<span class="string">'https://item.jd.com/2967929.html'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        html=requests.request(<span class="string">'Get'</span>,URL,timeout=<span class="number">3</span>)</div><div class="line">        html.raise_for_status()<span class="comment">#判断返回类型是不是200，否则引起HTTPerror异常</span></div><div class="line">        html.encoding=html.apparent_encoding<span class="comment">#解决编码问题，前者只通过头部判断编码。</span></div><div class="line"></div><div class="line">        print(html.request.headers)</div><div class="line">        print(html.request.url)</div><div class="line">        print(html.headers)</div><div class="line"></div><div class="line">    <span class="keyword">except</span> requests.HTTPError <span class="keyword">as</span> e:</div><div class="line">        print(e.msg)</div><div class="line">        </div><div class="line"><span class="comment">#输出如下，可以看到request的head和response的head还是完全不同的。</span></div><div class="line"><span class="comment">#head可以理解为元数据。。</span></div><div class="line">&#123;<span class="string">'Connection'</span>: <span class="string">'keep-alive'</span>, <span class="string">'Accept'</span>: <span class="string">'*/*'</span>, <span class="string">'User-Agent'</span>: <span class="string">'python-requests/2.13.0'</span>, <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate'</span>&#125;</div><div class="line">https://item.jd.com/<span class="number">2967929.</span>html</div><div class="line">&#123;<span class="string">'Last-Modified'</span>: <span class="string">'Sat, 01 Apr 2017 14:45:15 GMT'</span>, <span class="string">'Date'</span>: <span class="string">'Sat, 01 Apr 2017 14:45:39 GMT'</span>, <span class="string">'Connection'</span>: <span class="string">'keep-alive'</span>, <span class="string">'hh'</span>: <span class="string">'1-1'</span>, <span class="string">'ser'</span>: <span class="string">'3.83'</span>, <span class="string">'Server'</span>: <span class="string">'JDWS/2.0'</span>, <span class="string">'Transfer-Encoding'</span>: <span class="string">'chunked'</span>, <span class="string">'Content-Encoding'</span>: <span class="string">'gzip'</span>, <span class="string">'Expires'</span>: <span class="string">'Sat, 01 Apr 2017 14:46:15 GMT'</span>, <span class="string">'Age'</span>: <span class="string">'0'</span>, <span class="string">'Cache-Control'</span>: <span class="string">'max-age=60'</span>, <span class="string">'Content-Type'</span>: <span class="string">'text/html; charset=gbk'</span>, <span class="string">'Via'</span>: <span class="string">'BJ-H-NX-110(HIT), http/1.1 BJ-CT-2-JCS-47 ( [cSsSfU])'</span>, <span class="string">'Vary'</span>: <span class="string">'Accept-Encoding'</span>&#125;</div></pre></td></tr></table></figure>
@@ -474,7 +328,13 @@
 <h1 id="BeautifulSoup解析器"><a href="#BeautifulSoup解析器" class="headerlink" title="BeautifulSoup解析器"></a>BeautifulSoup解析器</h1><p>正如其名字一样，一碗美丽的汤~~~</p>
 <p><code>beautifulsoup</code>支持很多解析器，我用的是<code>lxml</code>(安装需要c环境，可以直接下载wheel模块后本地安装)</p>
 <p><code>Scrapy</code>使用<code>Xpath</code>当过滤器，在网页中过滤数据。</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_091253.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_091253.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p><a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#beautifulsoup" target="_blank" rel="noopener">4.40文档</a></p>
 <p><strong>bs4接受一个文件句柄或者字符串，以及上述的”网页”。</strong>默认情况下,Beautiful Soup会将当前文档作为HTML格式解析，如果是xml，需要指定’xml’。</p>
 <p>bs4会把输入的内容编码成<code>unicode</code>，它会主动猜测文件编码。也提供了两个关键字参数帮助它猜测。</p>
@@ -495,17 +355,35 @@
 <p>通过 <code>unicode()</code> 方法可以直接将 <code>NavigableString</code> 对象转换成Unicode字符串。</p>
 <h3 id="Comment"><a href="#Comment" class="headerlink" title="Comment"></a>Comment</h3><p>对应的就是html中注释信息。</p>
 <p><strong><code>.string</code>属性可以返回字符串，可以根据类型判断是<code>NavigableString</code>还是<code>Comment</code>。</strong></p>
-<h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_102352.png" alt=""></p>
+<h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_102352.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h4 id="下行遍历"><a href="#下行遍历" class="headerlink" title="下行遍历"></a>下行遍历</h4><p>可以通过三种方法:</p>
 <ul>
 <li><code>contents</code>返回子节点的列表</li>
 <li><code>children</code>返回子节点的生成器</li>
 <li><code>descendants</code>返回递归子节点的生成器，前面两个只是直接子节点</li>
 </ul>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_093813.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_093813.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div></pre></td><td class="code"><pre><div class="line"># -*- coding:utf-8 -*-</div><div class="line"># -*- by prime -*-</div><div class="line"></div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import requests</div><div class="line"></div><div class="line">url='http://python123.io/ws/demo.html'</div><div class="line"></div><div class="line">r=requests.get(url)</div><div class="line">demo=r.text</div><div class="line"></div><div class="line"># print(demo)</div><div class="line"></div><div class="line">bsobj=BeautifulSoup(demo,'lxml')</div><div class="line"></div><div class="line">print(bsobj.prettify())</div><div class="line"></div><div class="line">print('-'*100)</div><div class="line"></div><div class="line"># print(bsobj.head.contents)</div><div class="line"></div><div class="line">L=bsobj.body.contents</div><div class="line">for x in L:</div><div class="line">    print(x)</div><div class="line">    print('*'*50)</div><div class="line"></div><div class="line">print('一共',len(L),'个标签')</div><div class="line">print('-'*100)</div><div class="line"></div><div class="line">for child in bsobj.body.children:</div><div class="line">    print(child)</div><div class="line">    print('*' * 50)</div><div class="line"></div><div class="line">for child in bsobj.body.descendants:</div><div class="line">    print(child)</div><div class="line">    print('*' * 50)</div><div class="line">    </div><div class="line"></div><div class="line">    </div><div class="line">输入如下：    </div><div class="line">&lt;html&gt;</div><div class="line"> &lt;head&gt;</div><div class="line">  &lt;title&gt;</div><div class="line">   This is a python demo page</div><div class="line">  &lt;/title&gt;</div><div class="line"> &lt;/head&gt;</div><div class="line"> &lt;body&gt;</div><div class="line">  &lt;p class="title"&gt;</div><div class="line">   &lt;b&gt;</div><div class="line">    The demo python introduces several python courses.</div><div class="line">   &lt;/b&gt;</div><div class="line">  &lt;/p&gt;</div><div class="line">  &lt;p class="course"&gt;</div><div class="line">   Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">   &lt;a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1"&gt;</div><div class="line">    Basic Python</div><div class="line">   &lt;/a&gt;</div><div class="line">   and</div><div class="line">   &lt;a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2"&gt;</div><div class="line">    Advanced Python</div><div class="line">   &lt;/a&gt;</div><div class="line">   .</div><div class="line">  &lt;/p&gt;</div><div class="line"> &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line">----------------------------------------------------------------------------------------------------</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="title"&gt;&lt;b&gt;The demo python introduces several python courses.&lt;/b&gt;&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="course"&gt;Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">&lt;a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1"&gt;Basic Python&lt;/a&gt; and &lt;a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2"&gt;Advanced Python&lt;/a&gt;.&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">一共 5 个标签</div><div class="line">----------------------------------------------------------------------------------------------------</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="title"&gt;&lt;b&gt;The demo python introduces several python courses.&lt;/b&gt;&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="course"&gt;Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">&lt;a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1"&gt;Basic Python&lt;/a&gt; and &lt;a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2"&gt;Advanced Python&lt;/a&gt;.&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="title"&gt;&lt;b&gt;The demo python introduces several python courses.&lt;/b&gt;&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line">&lt;b&gt;The demo python introduces several python courses.&lt;/b&gt;</div><div class="line">**************************************************</div><div class="line">The demo python introduces several python courses.</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;p class="course"&gt;Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">&lt;a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1"&gt;Basic Python&lt;/a&gt; and &lt;a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2"&gt;Advanced Python&lt;/a&gt;.&lt;/p&gt;</div><div class="line">**************************************************</div><div class="line">Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line"></div><div class="line">**************************************************</div><div class="line">&lt;a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1"&gt;Basic Python&lt;/a&gt;</div><div class="line">**************************************************</div><div class="line">Basic Python</div><div class="line">**************************************************</div><div class="line"> and </div><div class="line">**************************************************</div><div class="line">&lt;a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2"&gt;Advanced Python&lt;/a&gt;</div><div class="line">**************************************************</div><div class="line">Advanced Python</div><div class="line">**************************************************</div><div class="line">.</div><div class="line">**************************************************</div><div class="line"></div><div class="line"></div><div class="line">**************************************************</div></pre></td></tr></table></figure>
 <p>可以看到，<strong>子孙中是有空行等元素的。</strong></p>
-<h4 id="上行遍历"><a href="#上行遍历" class="headerlink" title="上行遍历"></a>上行遍历</h4><p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_095405.png" alt=""></p>
+<h4 id="上行遍历"><a href="#上行遍历" class="headerlink" title="上行遍历"></a>上行遍历</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_095405.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># -*- by prime -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">url=<span class="string">'http://python123.io/ws/demo.html'</span></div><div class="line"></div><div class="line">r=requests.get(url)</div><div class="line">demo=r.text</div><div class="line"></div><div class="line"><span class="comment"># print(demo)</span></div><div class="line"></div><div class="line">bsobj=BeautifulSoup(demo,<span class="string">'lxml'</span>)</div><div class="line"></div><div class="line">print(bsobj.prettify())</div><div class="line"></div><div class="line">print(<span class="string">'-'</span>*<span class="number">100</span>)</div><div class="line"></div><div class="line"><span class="comment"># print(bsobj.head.contents)</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> parent <span class="keyword">in</span> bsobj.a.parents:</div><div class="line">    <span class="keyword">if</span> parent <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">        print(parent)</div><div class="line">        print(<span class="string">'type is'</span>,type(parent))</div><div class="line">        print(<span class="string">'*'</span>*<span class="number">50</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(parent.name)</div><div class="line">        print(<span class="string">'type is'</span>, type(parent))</div><div class="line">        print(<span class="string">'-'</span>*<span class="number">60</span>)</div></pre></td></tr></table></figure>
 <p>结果如下：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span></div><div class="line">   This is a python demo page</div><div class="line">  <span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">b</span>&gt;</span></div><div class="line">    The demo python introduces several python courses.</div><div class="line">   <span class="tag">&lt;/<span class="name">b</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"course"</span>&gt;</span></div><div class="line">   Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py1"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-268001"</span> <span class="attr">id</span>=<span class="string">"link1"</span>&gt;</span></div><div class="line">    Basic Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   and</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py2"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-1001870001"</span> <span class="attr">id</span>=<span class="string">"link2"</span>&gt;</span></div><div class="line">    Advanced Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   .</div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line">----------------------------------------------------------------------------------------------------</div><div class="line">p</div><div class="line">type is <span class="tag">&lt;<span class="name">class</span> '<span class="attr">bs4.element.Tag</span>'&gt;</span></div><div class="line">------------------------------------------------------------</div><div class="line">body</div><div class="line">type is <span class="tag">&lt;<span class="name">class</span> '<span class="attr">bs4.element.Tag</span>'&gt;</span></div><div class="line">------------------------------------------------------------</div><div class="line">html</div><div class="line">type is <span class="tag">&lt;<span class="name">class</span> '<span class="attr">bs4.element.Tag</span>'&gt;</span></div><div class="line">------------------------------------------------------------</div><div class="line">[document]</div><div class="line">type is <span class="tag">&lt;<span class="name">class</span> '<span class="attr">bs4.BeautifulSoup</span>'&gt;</span></div><div class="line">------------------------------------------------------------</div></pre></td></tr></table></figure>
@@ -514,8 +392,20 @@
 <li><code>BeautifulSoup</code> 对象的 <code>.parent</code> 是None</li>
 <li>文档的顶层节点比如<html>的父节点是 <code>BeautifulSoup</code> 对象本身</html></li>
 </ol>
-<h4 id="平行遍历"><a href="#平行遍历" class="headerlink" title="平行遍历"></a>平行遍历</h4><p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_101212.png" alt=""></p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_101049.png" alt=""></p>
+<h4 id="平行遍历"><a href="#平行遍历" class="headerlink" title="平行遍历"></a>平行遍历</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_101212.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_101049.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>注意结点的子孙和兄弟可能是NavigableString类型，需要判断。**</p>
 <p>看如下情况：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span></div><div class="line">   This is a python demo page</div><div class="line">  <span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">b</span>&gt;</span></div><div class="line">    The demo python introduces several python courses.</div><div class="line">   <span class="tag">&lt;/<span class="name">b</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"course"</span>&gt;</span></div><div class="line">   Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py1"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-268001"</span> <span class="attr">id</span>=<span class="string">"link1"</span>&gt;</span></div><div class="line">    Basic Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   and</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py2"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-1001870001"</span> <span class="attr">id</span>=<span class="string">"link2"</span>&gt;</span></div><div class="line">    Advanced Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   .</div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
@@ -527,12 +417,30 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> sibling <span class="keyword">in</span> bsobj.a.next_siblings:</div><div class="line">    print(sibling)</div><div class="line">print(<span class="string">'*'</span>*<span class="number">50</span>)</div><div class="line"><span class="keyword">for</span> sibling <span class="keyword">in</span> bsobj.a.previous_siblings:</div><div class="line">    print(sibling)</div></pre></td></tr></table></figure>
 <p>结果如下</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span></div><div class="line">   This is a python demo page</div><div class="line">  <span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">b</span>&gt;</span></div><div class="line">    The demo python introduces several python courses.</div><div class="line">   <span class="tag">&lt;/<span class="name">b</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"course"</span>&gt;</span></div><div class="line">   Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py1"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-268001"</span> <span class="attr">id</span>=<span class="string">"link1"</span>&gt;</span></div><div class="line">    Basic Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   and</div><div class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py2"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-1001870001"</span> <span class="attr">id</span>=<span class="string">"link2"</span>&gt;</span></div><div class="line">    Advanced Python</div><div class="line">   <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">   .</div><div class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">以上是源文件，以下是结果。再次强调字符串也算结点。。。。</div><div class="line"> and </div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"py2"</span> <span class="attr">href</span>=<span class="string">"http://www.icourse163.org/course/BIT-1001870001"</span> <span class="attr">id</span>=<span class="string">"link2"</span>&gt;</span>Advanced Python<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">.</div><div class="line">**************************************************</div><div class="line">Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:</div></pre></td></tr></table></figure>
-<h3 id="find-all"><a href="#find-all" class="headerlink" title="find_all"></a>find_all</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111048.png" alt=""></p>
+<h3 id="find-all"><a href="#find-all" class="headerlink" title="find_all"></a>find_all</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111048.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>这个函数太常用了，以至于可以简写为以下情况：</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111206.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111206.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>这里，soup是一个bs4的对象。<code>&lt;tag&gt;</code>表示一个标签。</p>
 <p>find家族的其它方法。</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111004.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2017-04-02_111004.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>#Numpy</p>
 <p>标准安装的Python中用列表(list)保存一组值，可以用来当作数组使用，不过由于列表的元素可以是任何对象，因此列表中所保存的是对象的指针。这样为了保存一个简单的[1,2,3]，需要有3个指针和三个整数对象。对于数值运算来说这种结构显然比较浪费内存和CPU计算时间。</p>
 <p>此外Python还提供了一个array模块，array对象和列表不同，它直接保存数值，和C语言的一维数组比较类似。但是由于它不支持多维，也没有各种运算函数，因此也不适合做数值运算。</p>
@@ -561,7 +469,13 @@
 <h2 id="索引和分片"><a href="#索引和分片" class="headerlink" title="索引和分片"></a>索引和分片</h2><p>索引不必多说，<strong>一维数组和python内建语法一致，当多维时，传入元组即可！</strong><u>虽然我们经常在Python中用圆括号将组元括起来，但是其实组元的语法定义只需要用逗号隔开即可，例如 x,y=y,x 就是用组元交换变量值的一个例子。但是如果函数有多个参数，必须用括号括起来了，不然解释器不知道你的参数是一个元组还是两个参数。</u></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.diag(np.arange(<span class="number">3</span>))</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a</div><div class="line">array([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>]])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">1</span>, <span class="number">1</span>]</div><div class="line"><span class="number">1</span></div></pre></td></tr></table></figure>
 <p><strong>切片也和内建语法一致！三个参数都可以省略，但是:不能省</strong></p>
-<p><img src="http://www.scipy-lectures.org/_images/numpy_indexing.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.scipy-lectures.org/_images/numpy_indexing.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <hr>
 <p>特别说明：</p>
 <p><strong>python标准的分片操作是copy，但是在这里是指向同一块内存的。</strong>所以想拷贝就用以下函数：</p>
@@ -573,7 +487,13 @@
 <p>如上，可以利用一个布尔表达式（比如上面的选择3的倍数或0）或者用一个数组来充当<strong>掩码</strong>的角色，进行索引。同样，它们也是指向同一块内存。</p>
 <p>同样，用于充当掩码的数组也可以是多维的：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; a = np.arange(<span class="number">10</span>)</div><div class="line">&gt;&gt;&gt; idx = np.<span class="built_in">array</span>([[<span class="number">3</span>, <span class="number">4</span>], [<span class="number">9</span>, <span class="number">7</span>]])</div><div class="line">&gt;&gt;&gt; idx.shape</div><div class="line">(<span class="number">2</span>, <span class="number">2</span>)</div><div class="line">&gt;&gt;&gt; a[idx]</div><div class="line"><span class="built_in">array</span>([[<span class="number">3</span>, <span class="number">4</span>],</div><div class="line">       [<span class="number">9</span>, <span class="number">7</span>]])</div></pre></td></tr></table></figure>
-<p><img src="http://www.scipy-lectures.org/_images/numpy_fancy_indexing.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.scipy-lectures.org/_images/numpy_fancy_indexing.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h2 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h2><h3 id="与标量"><a href="#与标量" class="headerlink" title="与标量"></a>与标量</h3><p>和标量计算很简单，就是每个元素分别和标量运算即可。</p>
 <h3 id="与向量"><a href="#与向量" class="headerlink" title="与向量"></a>与向量</h3><p>向量之间运算就是各个元素分别运算。<strong>特别注意，即使都是矩阵，也不是矩阵运算！</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">10</span>]: c=np.ones((<span class="number">2</span>,<span class="number">2</span>))</div><div class="line"></div><div class="line">In [<span class="number">11</span>]: c*c</div><div class="line">Out[<span class="number">11</span>]:</div><div class="line">array([[ <span class="number">1.</span>,  <span class="number">1.</span>],</div><div class="line">       [ <span class="number">1.</span>,  <span class="number">1.</span>]])</div><div class="line"></div><div class="line">In [<span class="number">12</span>]: c.dot(c)</div><div class="line">Out[<span class="number">12</span>]:</div><div class="line">array([[ <span class="number">2.</span>,  <span class="number">2.</span>],</div><div class="line">       [ <span class="number">2.</span>,  <span class="number">2.</span>]])</div></pre></td></tr></table></figure>
@@ -612,514 +532,268 @@
 </li>
 </ol>
 
-      
-    </div>
+        </div>
 
-    <div>
-      
-        <div>
+        <blockquote class="post-copyright">
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    <div class="content">
+        
+<span class="post-time">
+    最終更新：<time datetime="2018-01-16T03:19:22.443Z" itemprop="dateUpdated">2018-01-16 11:19:22</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2018/01/16/python第三方库用法/" target="_blank" rel="external">https://www.prime666.com/2018/01/16/python第三方库用法/</a>
+        
+    </div>
     
-</div>
-      
-    </div>
-
-    <div>
-      
-        
-<div class="my_post_copyright">
-  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
-
-  <!-- JS库 sweetalert 可修改路径 -->
-  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
-  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2018/01/16/python第三方库用法/">python第三方库用法</a></p>
-  <p><span>文章作者:</span><a href="/" title="访问 Prime 的个人博客">Prime</a></p>
-  <p><span>发布时间:</span>2018年01月16日 - 11:01</p>
-  <p><span>最后更新:</span>2018年01月16日 - 11:01</p>
-  <p><span>原始链接:</span><a href="/2018/01/16/python第三方库用法/" title="python第三方库用法">https://www.prime666.com/2018/01/16/python第三方库用法/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://www.prime666.com/2018/01/16/python第三方库用法/"  aria-label="复制成功！"></i></span>
-  </p>
-  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
-</div>
-<script> 
-    var clipboard = new Clipboard('.fa-clipboard');
-    clipboard.on('success', $(function(){
-      $(".fa-clipboard").click(function(){
-        swal({   
-          title: "",   
-          text: '复制成功',   
-          html: false,
-          timer: 500,   
-          showConfirmButton: false
-        });
-      });
-    }));  
-</script>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>觉得写的不错？求打赏！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/ali.jpg" alt="Prime Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Python/" rel="tag"># Python</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/01/16/python语法/" rel="next" title="python语法">
-                <i class="fa fa-chevron-left"></i> python语法
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/26/Multiclass-logistic-regression/" rel="prev" title="Multiclass_logistic_regression">
-                Multiclass_logistic_regression <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
+    <footer>
+        <a href="https://www.prime666.com">
+            <img src="/img/avatar.jpg" alt="Prime">
+            Prime
+        </a>
     </footer>
-  </article>
+</blockquote>
+
+        
 
 
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
+            
+<div class="page-share-wrap">
     
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
-    
-  </div>
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.prime666.com/2018/01/16/python第三方库用法/&title=《python第三方库用法》 — Prime's Blog&pic=https://www.prime666.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.prime666.com/2018/01/16/python第三方库用法/&title=《python第三方库用法》 — Prime's Blog&source=一些第三方库用法" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.prime666.com/2018/01/16/python第三方库用法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python第三方库用法》 — Prime's Blog&url=https://www.prime666.com/2018/01/16/python第三方库用法/&via=https://www.prime666.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.prime666.com/2018/01/16/python第三方库用法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
 
 
         </div>
-        
-          
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/02/26/Multiclass-logistic-regression/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Multiclass_logistic_regression</h4>
+      </a>
     </div>
-  </div>
+  
 
-  <aside id="sidebar" class="sidebar">
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/01/16/python语法/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">python语法</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
     
-    <div class="sidebar-inner">
 
-      
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/avatar/misaka.jpg"
-               alt="Prime" />
-          <p class="site-author-name" itemprop="name">Prime</p>
-           
-              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
-          
-        </div>
-        <nav class="site-state motion-element">
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">58</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
 
-        </nav>
 
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
         
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
 
 
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
+        <p>
             
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自带性能分析工具"><span class="nav-number">1.</span> <span class="nav-text">自带性能分析工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小例子——爬取大学排名"><span class="nav-number">1.1.</span> <span class="nav-text">小例子——爬取大学排名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#urlib模块"><span class="nav-number">2.</span> <span class="nav-text">urlib模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#urlib-request"><span class="nav-number">2.1.</span> <span class="nav-text">urlib.request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#urlopen"><span class="nav-number">2.1.1.</span> <span class="nav-text">urlopen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Request"><span class="nav-number">2.1.2.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺便说说re"><span class="nav-number">2.1.3.</span> <span class="nav-text">顺便说说re</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BeautifulSoup解析器"><span class="nav-number">3.</span> <span class="nav-text">BeautifulSoup解析器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tag"><span class="nav-number">3.0.1.</span> <span class="nav-text">tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NavigableString"><span class="nav-number">3.0.2.</span> <span class="nav-text">NavigableString</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Comment"><span class="nav-number">3.0.3.</span> <span class="nav-text">Comment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历"><span class="nav-number">3.0.4.</span> <span class="nav-text">遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下行遍历"><span class="nav-number">3.0.4.1.</span> <span class="nav-text">下行遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上行遍历"><span class="nav-number">3.0.4.2.</span> <span class="nav-text">上行遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#平行遍历"><span class="nav-number">3.0.4.3.</span> <span class="nav-text">平行遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find-all"><span class="nav-number">3.0.5.</span> <span class="nav-text">find_all</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建矩阵"><span class="nav-number">3.1.</span> <span class="nav-text">创建矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">3.2.</span> <span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引和分片"><span class="nav-number">3.3.</span> <span class="nav-text">索引和分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算"><span class="nav-number">3.4.</span> <span class="nav-text">计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#与标量"><span class="nav-number">3.4.1.</span> <span class="nav-text">与标量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与向量"><span class="nav-number">3.4.2.</span> <span class="nav-text">与向量</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
     </div>
-  </aside>
+    <div class="bottom">
+        <p><span>Prime &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
 
-
-        
-      </div>
     </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.prime666.com/2018/01/16/python第三方库用法/&title=《python第三方库用法》 — Prime's Blog&pic=https://www.prime666.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.prime666.com/2018/01/16/python第三方库用法/&title=《python第三方库用法》 — Prime's Blog&source=一些第三方库用法" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.prime666.com/2018/01/16/python第三方库用法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python第三方库用法》 — Prime's Blog&url=https://www.prime666.com/2018/01/16/python第三方库用法/&via=https://www.prime666.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.prime666.com/2018/01/16/python第三方库用法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.prime666.com/2018/01/16/python第三方库用法/" alt="微信分享二维码">
 </div>
 
 
-        
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-  
-    <span class="site-uv">
-      您是第
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      个小伙伴
-    </span>
-  
 
-  
-    <span class="site-pv">
-      本站总浏览
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
 </script>
 
-
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
 
 
-  
-
-  
-
-
-  
-<div id="hexo-helper-live2d">
-  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
 </div>
-<style>
-  #live2dcanvas{
-    position: fixed;
-    width: 150px;
-    height: 300px;
-    opacity:0.7;
-    right: 0px;
-    z-index: 999;
-    pointer-events: none;
-    bottom: -20px;
-  }
-</style>
-<script type="text/javascript" src="/live2d/device.min.js"></script>
-<script type="text/javascript">
-const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
-(function(){
-  if((typeof(device) != 'undefined') && (device.mobile())){
-    document.getElementById("live2dcanvas").style.width = '75px';
-    document.getElementById("live2dcanvas").style.height = '150px';
-  }else
-    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
-  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/z16.model.json", 0.5);});
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
 })();
 </script>
+
+
 
 </body>
 </html>
-
-
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>

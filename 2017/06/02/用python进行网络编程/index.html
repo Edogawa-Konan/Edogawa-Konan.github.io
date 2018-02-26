@@ -1,95 +1,26 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    
+
+    
+
+    
 
 
 
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="utf-8">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+    
+    <title>用python进行网络编程 | Prime&#39;s Blog | 弱菜的进化~</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
     
     
-    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Python," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon/12.ico?v=5.1.1" />
-
-
-
-
-
-
-<meta name="description" content="一些用Python实现的网络小程序。">
+    <meta name="keywords" content="Python">
+    <meta name="description" content="一些用Python实现的网络小程序。">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用python进行网络编程">
@@ -119,284 +50,165 @@
 <meta name="twitter:title" content="用python进行网络编程">
 <meta name="twitter:description" content="一些用Python实现的网络小程序。">
 <meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_195752.png">
+    
+    <link rel="shortcut icon" href="/favicon/12.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://www.prime666.com/2017/06/02/用python进行网络编程/"/>
-
-
-
-
-
-  <title>用python进行网络编程 | Prime's Blog</title>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- custom head -->
+    
 
 </head>
 
+<body>
+    <div id="loading" class="active"></div>
 
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <a href="https://github.com/KannaKamuy"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Prime's Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Prime</h5>
+          <a href="mailto:yuanma2017@outlook.com" title="yuanma2017@outlook.com" class="mail">yuanma2017@outlook.com</a>
+        </hgroup>
+      </div>
     </div>
-      
-        <p class="site-subtitle">弱菜的进化~</p>
-      
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Neutral-network" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
   </div>
+</aside>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">用python进行网络编程</div>
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
+    </div>
+</header>
+<header class="content-header post-header">
 
-      
-    </ul>
-  
-
-  
-</nav>
+    <div class="container fade-scale">
+        <h1 class="title">用python进行网络编程</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-06-02T12:09:27.000Z" itemprop="datePublished" class="page-time">
+  2017-06-02
+</time>
 
 
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/编程/">编程</a></li></ul>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
             
+        </h5>
+    </div>
 
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
+</header>
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/02/用python进行网络编程/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Prime">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/avatar/misaka.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Prime's Blog">
-    </span>
-
+<div class="container body-wrap">
     
-      <header class="post-header">
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#网络小程序——python"><span class="post-toc-number">1.</span> <span class="post-toc-text">网络小程序——python</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#编写www客户机"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">编写www客户机</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#题目要求"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">题目要求</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设计思路"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">设计思路</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现代码"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">实现代码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#程序运行"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">程序运行</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#编写FTP客户端"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">编写FTP客户端</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#题目要求-1"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">题目要求</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设计思路-1"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">设计思路</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现代码-1"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">实现代码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#程序运行-1"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">程序运行</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现POP客户端"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">实现POP客户端</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#题目要求-2"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">题目要求</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设计思路-2"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">设计思路</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码实现"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">代码实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#程序运行-2"><span class="post-toc-number">1.3.4.</span> <span class="post-toc-text">程序运行</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#主机扫描程序（即Ping）"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">主机扫描程序（即Ping）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#题目要求-3"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">题目要求</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设计思路-3"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">设计思路</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码实现-1"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">代码实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#程序运行-3"><span class="post-toc-number">1.4.4.</span> <span class="post-toc-text">程序运行</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#端口扫描"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">端口扫描</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#题目要求-4"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">题目要求</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设计思路-4"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">设计思路</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码实现-2"><span class="post-toc-number">1.5.3.</span> <span class="post-toc-text">代码实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#程序运行-4"><span class="post-toc-number">1.5.4.</span> <span class="post-toc-text">程序运行</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">用python进行网络编程</h1>
-        
 
+<article id="post-用python进行网络编程"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">用python进行网络编程</h1>
         <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-02T20:09:27+08:00">
-                2017-06-02
-              </time>
-            
+            <time class="post-time" title="2017-06-02 20:09:27" datetime="2017-06-02T12:09:27.000Z"  itemprop="datePublished">2017-06-02</time>
 
             
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/编程/">编程</a></li></ul>
+
+
 
             
-          </span>
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv">热度
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>℃
-            </span>
-          
-
-          
-
-          
 
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>一些用Python实现的网络小程序。</p>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>一些用Python实现的网络小程序。</p>
 <a id="more"></a>
 <h1 id="网络小程序——python"><a href="#网络小程序——python" class="headerlink" title="网络小程序——python"></a>网络小程序——python</h1><p>源码见我的<a href="https://github.com/mayuan1210/code_in_school/tree/master/network" target="_blank" rel="noopener">github</a>，实现过程为python3.52，并没有使用任何现有的第三方库，全是用的基础socket编程。</p>
 <h2 id="编写www客户机"><a href="#编写www客户机" class="headerlink" title="编写www客户机"></a>编写www客户机</h2><h3 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h3><blockquote>
@@ -410,7 +222,13 @@
 </ol>
 <h3 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># -*- by prime -*-</span></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">client</span><span class="params">(url)</span>:</span></div><div class="line">    sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</div><div class="line">    sock.connect((url,<span class="number">80</span>))</div><div class="line">   <span class="comment">#以上建立基本socket连接，http端口80</span></div><div class="line">    request_text=<span class="string">b'GET / HTTP/1.1\r\nHost:'</span>+url.encode(<span class="string">'utf-8'</span>)+<span class="string">b'\r\nConnection: close\r\n\r\n'</span></div><div class="line">    <span class="comment">#以上就是GET的请求头，发送这个请求头，服务器就会给出应有的响应。</span></div><div class="line">    </div><div class="line">    sock.sendall(request_text)</div><div class="line">   </div><div class="line">    data=[]</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>: <span class="comment">#读取数据</span></div><div class="line">        more=sock.recv(<span class="number">4096</span>)</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> more:</div><div class="line">            <span class="keyword">break</span></div><div class="line">        data.append(more)</div><div class="line">    sock.close()</div><div class="line">    reply=<span class="string">b''</span>.join(data)<span class="comment">#最终结果字符串</span></div><div class="line">    reply =reply.decode(<span class="string">'utf-8'</span>)</div><div class="line">    headers,body=reply.split(<span class="string">'\r\n\r\n'</span>,<span class="number">1</span>)</div><div class="line">    <span class="keyword">return</span> headers,body</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    res=client(<span class="string">'www.sina.com.cn'</span>)</div><div class="line">    <span class="comment"># res=client('www.baidu.com')</span></div><div class="line">    print(res[<span class="number">0</span>])</div><div class="line">    print(res[<span class="number">1</span>])</div></pre></td></tr></table></figure>
 <p>代码如上，第一次实验思路是很简单的。关键就是<strong>根据http协议发送请求头</strong>，然后就等着收取服务器数据了。</p>
-<h3 id="程序运行"><a href="#程序运行" class="headerlink" title="程序运行"></a>程序运行</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_195752.png" alt="2017-05-19_195752"></p>
+<h3 id="程序运行"><a href="#程序运行" class="headerlink" title="程序运行"></a>程序运行</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_195752.png" alt="2017-05-19_195752" title="">
+                </div>
+                <div class="image-caption">2017-05-19_195752</div>
+            </figure>
 <h2 id="编写FTP客户端"><a href="#编写FTP客户端" class="headerlink" title="编写FTP客户端"></a>编写FTP客户端</h2><h3 id="题目要求-1"><a href="#题目要求-1" class="headerlink" title="题目要求"></a>题目要求</h3><blockquote>
 <p>要求实现的程序为图形化界面，可以输入FTP服务的相关信息(包括IP地址、用户名与密码)，输出交互过程中的FTP命令与响应信息，以及从FTP服务器获得的文件(或目录)列表</p>
 <p>要求实现USER、PASS、PASV、LIST与QUIT命令。点击“Connect”按钮，实现USER与PASS命令；点击“List”按钮，实现PASV 与LIST命令；点击“Quit”按钮，实现QUIT命令</p>
@@ -430,17 +248,53 @@
 </ol>
 <p><strong>这里欲实现FTP客户端，显然必须有服务器，所以我首先搭建了一个本地FTP服务器。利用了免费的服务器端FileZilla Server Interface。</strong></p>
 <p>服务器后台如下：（现在我还没用客户端连接，所以没什么内容）</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_200511.png" alt="2017-05-19_200511"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_200511.png" alt="2017-05-19_200511" title="">
+                </div>
+                <div class="image-caption">2017-05-19_200511</div>
+            </figure>
 <p>为了证明我服务器搭建正常，用浏览器查看当前服务器根目录文件如下:（我用了一个本地的tftp文件夹）</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_200651.png" alt="2017-05-19_200651"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_200651.png" alt="2017-05-19_200651" title="">
+                </div>
+                <div class="image-caption">2017-05-19_200651</div>
+            </figure>
 <h3 id="实现代码-1"><a href="#实现代码-1" class="headerlink" title="实现代码"></a>实现代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># -*- by prime -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FTP</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,address)</span>:</span></div><div class="line">        self.sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</div><div class="line">        self.sock.connect((address,<span class="number">21</span>))</div><div class="line">        self.file=self.sock.makefile(<span class="string">'r'</span>,encoding=<span class="string">'utf-8'</span>)</div><div class="line">        self.maxline=<span class="number">8192</span></div><div class="line">        print(self.getwelcome())</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(self,name,password)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.sendcmd(<span class="string">'USER %s'</span>%name)+<span class="string">'\r\n'</span>+self.sendcmd(<span class="string">'PASS %s'</span>%password)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">List</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.PASV(<span class="string">'LIST'</span>)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Quit</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.PASV(<span class="string">'QUIT'</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getsingelline</span><span class="params">(self)</span>:</span> <span class="comment">#从服务器读取一行，去除\r\n</span></div><div class="line">        line=self.file.readline(<span class="number">8192</span>+<span class="number">1</span>)</div><div class="line">        <span class="keyword">if</span> line[<span class="number">-2</span>:]==<span class="string">'\r\n'</span>:</div><div class="line">            line=line[:<span class="number">-2</span>]</div><div class="line">        <span class="keyword">if</span> line[<span class="number">-1</span>:] <span class="keyword">in</span> (<span class="string">'\r'</span>,<span class="string">'\n'</span>):</div><div class="line">            line=line[:<span class="number">-1</span>]</div><div class="line">        <span class="keyword">return</span> line</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sendcmd</span><span class="params">(self,cmd)</span>:</span> <span class="comment">#发送命令,返回得到的响应信息</span></div><div class="line">        cmd+=<span class="string">'\r\n'</span></div><div class="line">        self.sock.sendall(cmd.encode())</div><div class="line">        <span class="keyword">return</span> self.getresponse()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getwelcome</span><span class="params">(self)</span>:</span> <span class="comment">#获取服务器的欢迎信息</span></div><div class="line">        <span class="keyword">return</span> self.getresponse()</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getmultiline</span><span class="params">(self)</span>:</span> <span class="comment">#从服务器读取多行，用\n分割</span></div><div class="line">        line=self.getsingelline()</div><div class="line">        <span class="keyword">if</span> line[<span class="number">3</span>:<span class="number">4</span>]==<span class="string">'-'</span>:</div><div class="line">            code=line[:<span class="number">3</span>]</div><div class="line">            <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">                nextline=self.getsingelline()</div><div class="line">                line+=<span class="string">'\n'</span>+nextline</div><div class="line">                <span class="keyword">if</span> nextline[:<span class="number">3</span>]==code <span class="keyword">and</span> nextline[<span class="number">3</span>:<span class="number">4</span>]!=<span class="string">'-'</span>:</div><div class="line">                    <span class="keyword">break</span></div><div class="line">        <span class="keyword">return</span> line</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getresponse</span><span class="params">(self)</span>:</span> <span class="comment">#返回从服务器获取的响应,这个只是针对于21端口即命令通道</span></div><div class="line">        <span class="keyword">return</span> self.getmultiline()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parsePASV</span><span class="params">(self,response)</span>:</span> <span class="comment">#从服务器响应中取出pasv的ip和端口号</span></div><div class="line">        <span class="keyword">if</span> response[:<span class="number">3</span>]!=<span class="string">'227'</span>:<span class="comment">#服务器没有做好准备</span></div><div class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">'服务器尚未进入被动模式，无法切换'</span>)</div><div class="line">        <span class="keyword">import</span> re</div><div class="line">        pattern=re.compile(<span class="string">r'(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)'</span>,re.ASCII)</div><div class="line">        tmp=pattern.search(response) <span class="comment">#match是只从头部匹配，因而这里用search</span></div><div class="line">        numbers=tmp.groups()</div><div class="line">        host=<span class="string">'.'</span>.join(numbers[:<span class="number">4</span>])</div><div class="line">        port=(int(numbers[<span class="number">4</span>])&lt;&lt;<span class="number">8</span>)+int(numbers[<span class="number">5</span>])</div><div class="line">        <span class="keyword">return</span> host,port</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">PASV</span><span class="params">(self,cmd)</span>:</span> <span class="comment">#返回被动模式传输的数据,这是数据通道</span></div><div class="line">        address,port=self.parsePASV(self.sendcmd(<span class="string">'PASV'</span>))</div><div class="line">        print(<span class="string">'现在进入PASV模式,欲连接的地址&#123;&#125;端口&#123;&#125;'</span>.format(address,port))</div><div class="line">        self.sendcmd(<span class="string">'TYPE A'</span>) <span class="comment">#以ascll模式进行数据传输</span></div><div class="line">        <span class="keyword">with</span> socket.socket(socket.AF_INET,socket.SOCK_STREAM) <span class="keyword">as</span> so,so.makefile(<span class="string">'r'</span>,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">            so.connect((address,port))</div><div class="line">            print(<span class="string">'现在已连接&#123;&#125;'</span>.format(so.getpeername()))</div><div class="line">            msg = self.sendcmd(cmd)</div><div class="line">            print(msg)</div><div class="line">            <span class="keyword">if</span> cmd==<span class="string">'QUIT'</span>:</div><div class="line">                <span class="keyword">return</span> ([],msg)</div><div class="line">            data_res=[]</div><div class="line">            <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">                line=f.readline(self.maxline+<span class="number">1</span>)</div><div class="line">                <span class="keyword">if</span> <span class="keyword">not</span> line:</div><div class="line">                    <span class="keyword">break</span></div><div class="line">                <span class="keyword">if</span> line[<span class="number">-2</span>:] == <span class="string">'\r\n'</span>:</div><div class="line">                    line = line[:<span class="number">-2</span>]</div><div class="line">                <span class="keyword">elif</span> line[<span class="number">-1</span>:] == <span class="string">'\n'</span>:</div><div class="line">                    line = line[:<span class="number">-1</span>]</div><div class="line">                print(line)</div><div class="line">                data_res.append(line)</div><div class="line">        <span class="keyword">return</span> (data_res,self.getresponse()) <span class="comment">#返回数据通道和命令通道的响应值</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    client=FTP(<span class="string">'192.168.229.1'</span>)</div><div class="line">    client.login(<span class="string">'prime'</span>,<span class="string">'123'</span>)</div><div class="line">    print(client.Quit())</div></pre></td></tr></table></figure>
 <p><strong>这里和第一次实验套路一样，都是从建立套接字，发送命令到接受响应。不同的是，第一次只用一个套接字即可，但是FTP分为命令端口和数据端口，这里命令端口是21，数据端口是20000（自己在服务器设置的）。程序中当发送PASV命令后，命令通道会发送服务器的另一个地址，客户端主动连接，这就是数据通道，LIST命令的结果是从数据通道返回的！这个过程也就是传说中的被动模式了。</strong></p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_201322.png" alt="2017-05-19_201322"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_201322.png" alt="2017-05-19_201322" title="">
+                </div>
+                <div class="image-caption">2017-05-19_201322</div>
+            </figure>
 <h3 id="程序运行-1"><a href="#程序运行-1" class="headerlink" title="程序运行"></a>程序运行</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_201400.png" alt="2017-05-19_201400"></p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_201422.png" alt="2017-05-19_201422"></p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_201433.png" alt="2017-05-19_201433"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_201422.png" alt="2017-05-19_201422" title="">
+                </div>
+                <div class="image-caption">2017-05-19_201422</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_201433.png" alt="2017-05-19_201433" title="">
+                </div>
+                <div class="image-caption">2017-05-19_201433</div>
+            </figure>
 <p>最后两张是客户端后台和服务器端后台日志，一目了然。</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_201442.png" alt="2017-05-19_201442"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_201442.png" alt="2017-05-19_201442" title="">
+                </div>
+                <div class="image-caption">2017-05-19_201442</div>
+            </figure>
 <p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_201631.png" alt="2017-05-19_201631"></p>
 <hr>
 <h2 id="实现POP客户端"><a href="#实现POP客户端" class="headerlink" title="实现POP客户端"></a>实现POP客户端</h2><h3 id="题目要求-2"><a href="#题目要求-2" class="headerlink" title="题目要求"></a>题目要求</h3><blockquote>
@@ -461,11 +315,35 @@
 <p><strong>这道题最令人无语之处就是编码，邮件每当经过一个服务器，就会加上一个头部，于是就很冗余，况且编码问题也是很麻烦，无奈，这里我用了email模块解析邮件内容，注意email和网络无关，这不能算作弊O(∩_∩)O哈！</strong></p>
 <h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># -*- by prime -*-</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">from</span> email.parser <span class="keyword">import</span> Parser</div><div class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> decode_header</div><div class="line"><span class="keyword">from</span> email.utils <span class="keyword">import</span> parseaddr,parsedate</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">CR=<span class="string">b'\r'</span></div><div class="line">LF=<span class="string">b'\n'</span></div><div class="line">CRLF=CR+LF</div><div class="line"></div><div class="line">_maxline=<span class="number">2048</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">POP</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,hostname,port=<span class="number">110</span>)</span>:</span></div><div class="line">        self.host=hostname</div><div class="line">        self.port=port</div><div class="line">        self.sock=socket.create_connection((self.host,self.port))</div><div class="line">        self.file=self.sock.makefile(<span class="string">'rb'</span>)</div><div class="line">        self.welcome=self._getlines()[<span class="number">0</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_getresp</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_getlines</span><span class="params">(self)</span>:</span> <span class="comment">#从服务器读取一行信息，全局最耗时的担当</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        :return: 返回（信息，长度），信息是只保留LF</div><div class="line">        '''</div><div class="line">        line=self.file.readline(_maxline+<span class="number">1</span>)  <span class="comment"># ..LF</span></div><div class="line">        octets=len(line) <span class="comment">#有几个字节?</span></div><div class="line">        <span class="keyword">if</span> line[:<span class="number">-2</span>]==CRLF: <span class="comment"># ...CRLF</span></div><div class="line">            <span class="keyword">return</span> line[:<span class="number">-2</span>],octets</div><div class="line">        <span class="keyword">if</span> line[:<span class="number">1</span>]==CR: <span class="comment">#CR..LF</span></div><div class="line">            <span class="keyword">return</span> line[<span class="number">1</span>:<span class="number">-1</span>],octets</div><div class="line">        <span class="keyword">return</span> line[:<span class="number">-1</span>],octets <span class="comment"># ...LF</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_getmultilines</span><span class="params">(self)</span>:</span>  <span class="comment">#返回['response', ['mesg_num octets', ...], octets].</span></div><div class="line">        resp=self._getlines()[<span class="number">0</span>]</div><div class="line">        List=[]; octets=<span class="number">0</span></div><div class="line">        line,num=self._getlines()</div><div class="line">        <span class="keyword">while</span> line !=<span class="string">b'.\r'</span>:</div><div class="line">            <span class="keyword">if</span> line.startswith(<span class="string">b'..'</span>):</div><div class="line">                num = num - <span class="number">1</span></div><div class="line">                line = line[<span class="number">1</span>:]</div><div class="line">            octets+=num</div><div class="line">            List.append(line)</div><div class="line">            <span class="comment"># print(line)</span></div><div class="line">            line, num = self._getlines()</div><div class="line">        <span class="comment"># t=b'\r\n'.join(List).decode('gbk')</span></div><div class="line">        <span class="keyword">return</span> (resp, List, octets)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_sendcmd</span><span class="params">(self,cmd)</span>:</span> <span class="comment">#把命令cmd发送到服务器,然后返回响应</span></div><div class="line">        cmd=bytes(cmd,encoding=<span class="string">'utf-8'</span>)</div><div class="line">        self.sock.sendall(cmd+CRLF)</div><div class="line">        <span class="keyword">return</span> self._getlines()[<span class="number">0</span>].decode()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_sendlongcmd</span><span class="params">(self,cmd)</span>:</span></div><div class="line">        cmd = bytes(cmd, encoding=<span class="string">'utf-8'</span>)</div><div class="line">        self.sock.sendall(cmd + CRLF)</div><div class="line">        <span class="keyword">return</span> self._getmultilines()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">STAT</span><span class="params">(self)</span>:</span> <span class="comment">#返回邮箱的状态 (信件总数,信件大小)</span></div><div class="line">        source=self._sendcmd(<span class="string">'STAT'</span>)</div><div class="line">        tmp=source.split()</div><div class="line">        <span class="keyword">return</span> (int(tmp[<span class="number">1</span>]),int(tmp[<span class="number">2</span>]))</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">USER</span><span class="params">(self,user)</span>:</span></div><div class="line">        <span class="keyword">return</span> self._sendcmd(<span class="string">'USER &#123;&#125;'</span>.format(user))</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">PASS</span><span class="params">(self,password)</span>:</span></div><div class="line">        <span class="keyword">return</span> self._sendcmd(<span class="string">'PASS &#123;&#125;'</span>.format(password))</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">LIST</span><span class="params">(self)</span>:</span> <span class="comment">#列出信件列表</span></div><div class="line">        <span class="keyword">return</span> self._sendlongcmd(<span class="string">'LIST'</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">RETR</span><span class="params">(self,index)</span>:</span> <span class="comment">#下载信件</span></div><div class="line">        <span class="keyword">return</span> self._sendlongcmd(<span class="string">'RETR &#123;&#125;'</span>.format(index))</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">QUIT</span><span class="params">(self)</span>:</span>  <span class="comment">#关闭并退出</span></div><div class="line">        res=self._sendcmd(<span class="string">'QUIT'</span>)</div><div class="line">        self.sock.close()</div><div class="line">        <span class="keyword">return</span> res</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">decode_to_str</span><span class="params">(s)</span>:</span></div><div class="line">    data,charset=decode_header(s)[<span class="number">0</span>]  <span class="comment">#返回[(字符串，编码符号)]</span></div><div class="line">    <span class="keyword">if</span> charset:</div><div class="line">        data.decode(charset)</div><div class="line">    <span class="keyword">return</span> data</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_mail</span><span class="params">(msg)</span>:</span> <span class="comment">#用于打印邮件</span></div><div class="line">    <span class="keyword">for</span> header <span class="keyword">in</span> (<span class="string">'From'</span>,<span class="string">'To'</span>,<span class="string">'Date'</span>,<span class="string">'Subject'</span>):</div><div class="line">        value=msg.get(header,<span class="string">''</span>)</div><div class="line">        <span class="keyword">if</span> value:</div><div class="line">            <span class="keyword">if</span> header==<span class="string">'Subject'</span>:</div><div class="line">                value=decode_to_str(value)</div><div class="line">            <span class="keyword">elif</span> header==<span class="string">'Date'</span>:</div><div class="line">                value=parsedate(value)[:<span class="number">6</span>] <span class="comment">#解析时间字段，返回9-tuple</span></div><div class="line">            <span class="keyword">else</span> :</div><div class="line">                realname,mailaddr=parseaddr(value) <span class="comment">#解析地址，必须是包含地址的域，比如To或Cc，返回元组（真实姓名，邮箱地址）</span></div><div class="line">                value=<span class="string">"&#123;&#125;"</span>.format(mailaddr)</div><div class="line">            print(header + <span class="string">' : '</span>,value)</div><div class="line">            </div><div class="line">    <span class="keyword">if</span> (msg.is_multipart()):</div><div class="line">        <span class="comment">#Return True if the message’s payload is a list of sub-Message objects, otherwise return False.</span></div><div class="line"></div><div class="line">        parts = msg.get_payload() <span class="comment">#此时parts是一个message的列表</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        Return the current payload, which will be a list of Message objects when is_multipart() is True,</div><div class="line">         or a string when is_multipart() is False.</div><div class="line">        默认参数i=None, decode=False，第一个表示列表索引；第二个表示是否解码，当然只能对非multipart有效</div><div class="line">        '''</div><div class="line">        <span class="keyword">for</span> n, part <span class="keyword">in</span> enumerate(parts):</div><div class="line">            print(<span class="string">'part %s'</span> % n)</div><div class="line">            print_mail(part) <span class="comment">#递归打印文本信息</span></div><div class="line">           </div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        content_type = msg.get_content_type()  <span class="comment">#Return the message’s content type.类型强制为小写的mime类型</span></div><div class="line">        <span class="keyword">if</span> content_type == <span class="string">'text/plain'</span> <span class="keyword">or</span> content_type == <span class="string">'text/html'</span>:  <span class="comment">#这些都是mime类型</span></div><div class="line">            content = msg.get_payload(decode=<span class="keyword">True</span>)</div><div class="line">            charset = guess_charset(msg)</div><div class="line">            <span class="keyword">if</span> charset:</div><div class="line">                content = content.decode(charset)</div><div class="line">            print(<span class="string">'Text: %s'</span> % content)</div><div class="line">           </div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            print(<span class="string">'Attachment: %s'</span> % content_type)</div><div class="line">          </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">guess_charset</span><span class="params">(msg)</span>:</span></div><div class="line">    charset = msg.get_charset() <span class="comment">#Return the Charset instance associated with the message’s payload.</span></div><div class="line">    <span class="keyword">if</span> charset <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">        content_type = msg.get(<span class="string">'Content-Type'</span>, <span class="string">''</span>).lower()</div><div class="line">        pos = content_type.find(<span class="string">'charset='</span>) <span class="comment">#找到下标</span></div><div class="line">        <span class="keyword">if</span> pos &gt;= <span class="number">0</span>:</div><div class="line">            charset = content_type[pos + <span class="number">8</span>:].strip() <span class="comment">#取出编码。</span></div><div class="line">        <span class="string">'''</span></div><div class="line">         strip([chars])：</div><div class="line">        #Return a copy of the string with the leading and trailing characters removed.</div><div class="line">        # The chars argument is a string specifying the set of characters to be removed</div><div class="line">        #Characters are removed from the leading end until reaching a string character that is not</div><div class="line">        # contained in the set of characters in chars. A similar action takes place on the trailing end.</div><div class="line">        默认去除空格</div><div class="line">        '''</div><div class="line">    <span class="keyword">return</span> charset</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    p=POP(<span class="string">'pop.163.com'</span>)</div><div class="line">    print(p.welcome)</div><div class="line">    print(p.USER(<span class="string">'13173370316@163.com'</span>))</div><div class="line">    print(p.PASS(<span class="string">'my951210'</span>))</div><div class="line">    print(p.STAT())</div><div class="line">    print(<span class="string">b'\n'</span>.join(p.LIST()[<span class="number">1</span>]).decode(<span class="string">'gb18030'</span>))</div><div class="line">    tmp=p.RETR(<span class="string">'11'</span>)</div><div class="line">    text=Parser().parsestr(<span class="string">b''</span>.join(tmp[<span class="number">1</span>]).decode())</div><div class="line">    print_mail(text)</div><div class="line">    print(p.QUIT())</div></pre></td></tr></table></figure>
 <h3 id="程序运行-2"><a href="#程序运行-2" class="headerlink" title="程序运行"></a>程序运行</h3><p>首先，看一下我网易的邮箱。</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_202534.png" alt="2017-05-19_202534"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_202534.png" alt="2017-05-19_202534" title="">
+                </div>
+                <div class="image-caption">2017-05-19_202534</div>
+            </figure>
 <p>为了方便测试，我特地用了别的邮箱发了一封邮件。</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_202633.png" alt="2017-05-19_202633"></p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_202649.png" alt="2017-05-19_202649"></p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_202705.png" alt="2017-05-19_202705"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_202633.png" alt="2017-05-19_202633" title="">
+                </div>
+                <div class="image-caption">2017-05-19_202633</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_202649.png" alt="2017-05-19_202649" title="">
+                </div>
+                <div class="image-caption">2017-05-19_202649</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-05-19_202705.png" alt="2017-05-19_202705" title="">
+                </div>
+                <div class="image-caption">2017-05-19_202705</div>
+            </figure>
 <hr>
 <h2 id="主机扫描程序（即Ping）"><a href="#主机扫描程序（即Ping）" class="headerlink" title="主机扫描程序（即Ping）"></a>主机扫描程序（即Ping）</h2><h3 id="题目要求-3"><a href="#题目要求-3" class="headerlink" title="题目要求"></a>题目要求</h3><blockquote>
 <p>编写一个网络主机扫描程序，具体要求如下:<br>要求实现的程序为图形化界面，可以输入扫描的目的主机的IP地址，输出目的主机的状态(Open或Close)<br>要求扫描支持ICMP协议的单台目的主机。点击“Scan”按钮，实现对目的主机的扫描过程 </p>
@@ -481,11 +359,23 @@
 </ol>
 <p>ICMP详细介绍参考<a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#ICMP_datagram_structure" target="_blank" rel="noopener">Wikipedia</a></p>
 <p>这里截图如下：</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-06-02_193614.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-06-02_193614.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p><strong>题目本质上就是实现Ping命令，所以我们需要填充类型码为0表示回送请求，code也是0。校验和部分需要特殊的算法，这里就不再重复了，代码中注释很清晰。头部的剩余部分无所谓了，我填充了当前的时间戳，这样收到回复之时用现在时间戳-报文中的时间戳就是传输时间了。</strong></p>
 <h3 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># -*- by prime -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> struct</div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> select</div><div class="line"></div><div class="line">ICMP_ECHO_REQUEST=<span class="number">8</span>  <span class="comment">#ping的icmp报文类型编码</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ping</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,host_name,timeout=<span class="number">2</span>,times=<span class="number">4</span>)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        :param host_name: 主机名</div><div class="line">        :param timeout: 单次最大超时时间</div><div class="line">        :param times: 发送几次响应</div><div class="line">        '''</div><div class="line">        self.host=host_name</div><div class="line">        self.sock=socket.socket(socket.AF_INET,socket.SOCK_RAW,socket.getprotobyname(<span class="string">'icmp'</span>)) <span class="comment">#创建icmp的原始套接字</span></div><div class="line">        self.timeout=timeout</div><div class="line">        self.times=times</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check_sum</span><span class="params">(self,source)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        :param source: 待计算的字符串</div><div class="line">        :return: 校验和</div><div class="line">        以16bit（2个字节）为一组，并将所有组相加（二进制求和）</div><div class="line">        若高16bit不为0，则将高16bit与低16bit反复相加，直到高16bit的值为0，从而获得一个只有16bit长度的值</div><div class="line">        将此16bit值进行按位求反操作，将所得值替换到校验和字段</div><div class="line">        '''</div><div class="line">        length=len(source)//<span class="number">2</span>*<span class="number">2</span> <span class="comment">#求长度的偶数值，即有多少个32位组</span></div><div class="line">        res=<span class="number">0</span></div><div class="line">        count=<span class="number">0</span></div><div class="line">        <span class="keyword">while</span> count&lt;length:</div><div class="line">            val=source[count+<span class="number">1</span>]*<span class="number">256</span>+source[count]</div><div class="line">            res+=val</div><div class="line">            res&amp;=<span class="number">0xffffffff</span> <span class="comment">#二进制加法，高位丢弃，只留32位</span></div><div class="line">            count+=<span class="number">2</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span> count&lt;len(source): <span class="comment">#长度为奇数，有单独的一个字符</span></div><div class="line">            res+=ord(source[<span class="number">-1</span>])</div><div class="line">            res&amp;=<span class="number">0xffffffff</span></div><div class="line">        <span class="comment">#把32bit转换成16bit的校验和</span></div><div class="line">        res=(res&gt;&gt;<span class="number">16</span>)+(res&amp;<span class="number">0xffff</span>) <span class="comment">#将高16位和低16位相加</span></div><div class="line">        res+=(res&gt;&gt;<span class="number">16</span>)  <span class="comment">#将上述过程的进位再次加到低位</span></div><div class="line">        res=~res</div><div class="line">        res=res &amp; <span class="number">0xffff</span></div><div class="line">        res=res&gt;&gt;<span class="number">8</span>|(res&lt;&lt;<span class="number">8</span>&amp;<span class="number">0xFF00</span>) <span class="comment">#高八位低八位互换</span></div><div class="line">        <span class="keyword">return</span> res</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send_ping</span><span class="params">(self,ID)</span>:</span> <span class="comment">#伪造数据包</span></div><div class="line">        my_checksum=<span class="number">0</span></div><div class="line">        <span class="comment">#b:signed char, h:short 2, H:unsigned short 2 小写有符号，大写无符号</span></div><div class="line">        header=struct.pack(<span class="string">'bbHHh'</span>,ICMP_ECHO_REQUEST,<span class="number">0</span>,my_checksum,ID,<span class="number">1</span>) <span class="comment">#对应icmp报文头部的8个字节 1 1 2 2 2</span></div><div class="line">        bytes_in_float=struct.calcsize(<span class="string">'d'</span>)    <span class="comment">#8位</span></div><div class="line">        data = (<span class="number">192</span> - bytes_in_float) * <span class="string">b"A"</span>   <span class="comment">#正文瞎填充</span></div><div class="line">        data=struct.pack(<span class="string">'d'</span>,time.time())+data <span class="comment">#正文加入8bit,表示发送时的时间,time.time()返回浮点数，表示累计秒数</span></div><div class="line">        my_checksum=self.check_sum(header+data)</div><div class="line">        header = struct.pack(<span class="string">"bbHHh"</span>, ICMP_ECHO_REQUEST, <span class="number">0</span>, socket.htons(my_checksum), ID, <span class="number">1</span>)</div><div class="line">        packet=header+data <span class="comment">#要发送的包包</span></div><div class="line">        self.sock.sendto(packet,(self.host,<span class="number">1</span>))</div><div class="line">        print(<span class="string">'已经发送给&#123;&#125;,发送的数据包的校验和:&#123;&#125;'</span>.format(self.host,my_checksum))</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_receive</span><span class="params">(self,ID)</span>:</span> <span class="comment">#返回得到响应的用时，或者None表示超时未收到连接</span></div><div class="line">        what_ready = select.select([self.sock], [], [], self.timeout)  <span class="comment"># 超时时间单位s</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        select.select(rlist, wlist, xlist[, timeout])</div><div class="line">        wait until ready for read / write / exceptional condition</div><div class="line">        The return value is a triple of lists of objects that are ready: subsets of the first three arguments.</div><div class="line">         When the time-out is reached without a file descriptor becoming ready, three empty lists are returned.</div><div class="line">        '''</div><div class="line">        <span class="keyword">if</span> what_ready[<span class="number">0</span>] == []:<span class="comment">#表明timeout了，程序返回即可</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">        rec_packet, addr = self.sock.recvfrom(<span class="number">1024</span>)<span class="comment"># The return value is a pair (message, address)</span></div><div class="line">        icmp_header = rec_packet[<span class="number">20</span>: <span class="number">28</span>] <span class="comment">#8bit的报文头部</span></div><div class="line">        ip_type, code, checksum, packet_ID, sequence = struct.unpack(<span class="string">"bbHHh"</span>, icmp_header)</div><div class="line">        print(<span class="string">'ICMP响应报文头部信息————ICMP类型:&#123;&#125;,代码:&#123;&#125;,校验和:&#123;&#125;,id:&#123;&#125;,序号:&#123;&#125;'</span>.format(ip_type,code,checksum,packet_ID,sequence))</div><div class="line"></div><div class="line">        <span class="keyword">if</span> packet_ID == ID <span class="keyword">and</span> ip_type==<span class="number">0</span>:</div><div class="line">            bytes_In_double = struct.calcsize(<span class="string">"d"</span>)</div><div class="line">            time_sent = struct.unpack(<span class="string">"d"</span>, rec_packet[<span class="number">28</span>:<span class="number">28</span> + bytes_In_double])[<span class="number">0</span>]  <span class="comment">#把发送时候添加的时间取出来</span></div><div class="line">            <span class="keyword">return</span> time.time()-time_sent</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ping</span><span class="params">(self)</span>:</span></div><div class="line">        ID=os.getpid()&amp;<span class="number">0xFFFF</span> <span class="comment">#把进程id当做报文id</span></div><div class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> range(self.times):</div><div class="line">            self.send_ping(ID)</div><div class="line">            delay=self.get_receive(ID)</div><div class="line">            <span class="keyword">if</span> delay:</div><div class="line">                print(<span class="string">'用时&#123;&#125;秒收到响应'</span>.format(delay))</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                print(<span class="string">'&#123;&#125;秒内未收到回复，站点可能关闭'</span>.format(self.timeout))</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    t=Ping(<span class="string">'www.baidu.com'</span>)</div><div class="line">    t.ping()</div></pre></td></tr></table></figure>
 <h3 id="程序运行-3"><a href="#程序运行-3" class="headerlink" title="程序运行"></a>程序运行</h3><p>运行截图如下:</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-06-02_194750.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//ICMP/2017-06-02_194750.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h2 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h2><h3 id="题目要求-4"><a href="#题目要求-4" class="headerlink" title="题目要求"></a>题目要求</h3><blockquote>
 <p>通过TCP协议以及UDP协议，判断端口是否开启</p>
 </blockquote>
@@ -504,486 +394,277 @@
 <p><strong>最后一次实验比较简单，实现无非就是tcp去尝试connect，连上就是开启中；udp就是发送个报文，等着收响应信息。但是，对于后者好多服务器不会响应udp报文，处于安全考虑，它们甚至ICMP报文都不会回复，所以udp端口扫描程序这里实现的效果并不好。</strong></p>
 <h3 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># -*- by prime -*-</span></div><div class="line"></div><div class="line"><span class="comment">#用tcp的connect做端口扫描</span></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ProcessPoolExecutor</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan</span><span class="params">(address)</span>:</span></div><div class="line">    <span class="keyword">with</span> socket.socket(socket.AF_INET,socket.SOCK_STREAM) <span class="keyword">as</span> s:</div><div class="line">        <span class="comment"># s.settimeout(1) #设置超时时间，不设置就是阻塞模式，否则就是非阻塞模式，超时未响应会引发socket.timeout异常</span></div><div class="line">        <span class="keyword">if</span> s.connect_ex((address[<span class="number">0</span>],address[<span class="number">1</span>]))==<span class="number">0</span>: <span class="comment">#和connect一样，不过连接失败不会引发异常而是返回一个指示器，为0表示连接成功</span></div><div class="line">            print(<span class="string">'port &#123;&#125; open'</span>.format(address[<span class="number">1</span>]))</div><div class="line">            <span class="keyword">return</span> <span class="string">'port &#123;&#125; open'</span>.format(address[<span class="number">1</span>])</div><div class="line">        <span class="comment"># else:</span></div><div class="line">        <span class="comment">#     print('port &#123;&#125; close'.format(address[1]))</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">tcp_scan</span><span class="params">(host)</span>:</span></div><div class="line">    p=ProcessPoolExecutor(max_workers=<span class="number">8</span>)</div><div class="line">    p.map(scan,[(host,port) <span class="keyword">for</span> port <span class="keyword">in</span> [<span class="number">53</span>,<span class="number">80</span>,<span class="number">8080</span>,<span class="number">3128</span>,<span class="number">8081</span>,<span class="number">9080</span>,<span class="number">1080</span>,<span class="number">21</span>,<span class="number">23</span>,<span class="number">443</span>,<span class="number">69</span>,<span class="number">22</span>,<span class="number">25</span>,<span class="number">110</span>,<span class="number">7001</span>,<span class="number">9090</span>,<span class="number">3389</span>,<span class="number">1521</span>,<span class="number">1158</span>,<span class="number">2100</span>,<span class="number">1433</span>]],chunksize=<span class="number">100</span>) <span class="comment">#把任务分块提交</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    tcp_scan(<span class="string">'127.0.0.1'</span>)</div></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># -*- by prime -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">import</span> struct</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">udp_scan</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,hostname,timeout=<span class="number">3</span>)</span>:</span></div><div class="line">        self.host=hostname</div><div class="line">        self.sock=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)</div><div class="line">        self.sock.settimeout(timeout)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">scan</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">for</span> port <span class="keyword">in</span> [<span class="number">53</span>]:</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                self.sock.sendto(<span class="string">b""</span>,(socket.gethostbyname(self.host),port))</div><div class="line">                self.sock.recvfrom(<span class="number">256</span>)</div><div class="line">            <span class="keyword">except</span> socket.timeout:</div><div class="line">                print(<span class="string">'端口&#123;&#125;没有回复udp报文'</span>.format(port))</div><div class="line">                self.icmp_receive(port)</div><div class="line">                <span class="keyword">continue</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">icmp_receive</span><span class="params">(self,port)</span>:</span></div><div class="line">        icmp=socket.socket(socket.AF_INET,socket.SOCK_RAW,socket.IPPROTO_ICMP)</div><div class="line">        icmp.settimeout(<span class="number">5</span>)</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            recPacket, addr = icmp.recvfrom(<span class="number">256</span>)</div><div class="line">        <span class="keyword">except</span>:</div><div class="line">            print(<span class="string">'端口&#123;&#125;没有回复ICMP报文'</span>.format(port))</div><div class="line">            <span class="keyword">return</span></div><div class="line">        icmpHeader = recPacket[<span class="number">20</span>:<span class="number">28</span>]  <span class="comment">#IP数据包头部20个字节</span></div><div class="line">        head_type, code, checksum, packetID, sequence = struct.unpack(<span class="string">"bbHHh"</span>, icmpHeader)</div><div class="line">        print(<span class="string">'ICMP报文类型:&#123;&#125;,返回代码:&#123;&#125;'</span>.format(head_type,code))</div><div class="line">        icmp.close()</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    t=udp_scan(<span class="string">'www.baidu.com'</span>)</div><div class="line">    t.scan()</div></pre></td></tr></table></figure>
-<h3 id="程序运行-4"><a href="#程序运行-4" class="headerlink" title="程序运行"></a>程序运行</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-06-02_195713.png" alt=""></p>
+<h3 id="程序运行-4"><a href="#程序运行-4" class="headerlink" title="程序运行"></a>程序运行</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com/2017-06-02_195713.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p><img src="http://on7mhq4kh.bkt.clouddn.com/2017-06-02_195808.png" alt=""></p>
 
-      
-    </div>
+        </div>
 
-    <div>
-      
-        <div>
+        <blockquote class="post-copyright">
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    <div class="content">
+        
+<span class="post-time">
+    最終更新：<time datetime="2017-06-02T12:11:00.767Z" itemprop="dateUpdated">2017-06-02 20:11:00</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/06/02/用python进行网络编程/" target="_blank" rel="external">https://www.prime666.com/2017/06/02/用python进行网络编程/</a>
+        
+    </div>
     
-</div>
-      
-    </div>
-
-    <div>
-      
-        
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>觉得写的不错？求打赏！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/ali.jpg" alt="Prime Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Python/" rel="tag"># Python</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/06/01/proc文件系统/" rel="next" title="proc文件系统">
-                <i class="fa fa-chevron-left"></i> proc文件系统
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/03/定时器/" rel="prev" title="定时器&&tasklet&&工作队列">
-                定时器&&tasklet&&工作队列 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
+    <footer>
+        <a href="https://www.prime666.com">
+            <img src="/img/avatar.jpg" alt="Prime">
+            Prime
+        </a>
     </footer>
-  </article>
+</blockquote>
+
+        
 
 
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
+            
+<div class="page-share-wrap">
     
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
-    
-  </div>
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.prime666.com/2017/06/02/用python进行网络编程/&title=《用python进行网络编程》 — Prime's Blog&pic=https://www.prime666.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.prime666.com/2017/06/02/用python进行网络编程/&title=《用python进行网络编程》 — Prime's Blog&source=一些用Python实现的网络小程序。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.prime666.com/2017/06/02/用python进行网络编程/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《用python进行网络编程》 — Prime's Blog&url=https://www.prime666.com/2017/06/02/用python进行网络编程/&via=https://www.prime666.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.prime666.com/2017/06/02/用python进行网络编程/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
 
 
         </div>
-        
-          
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/06/03/定时器/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">定时器&amp;&amp;tasklet&amp;&amp;工作队列</h4>
+      </a>
     </div>
-  </div>
+  
 
-  <aside id="sidebar" class="sidebar">
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/06/01/proc文件系统/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">proc文件系统</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
     
-    <div class="sidebar-inner">
 
-      
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/avatar/misaka.jpg"
-               alt="Prime" />
-          <p class="site-author-name" itemprop="name">Prime</p>
-           
-              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
-          
-        </div>
-        <nav class="site-state motion-element">
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">58</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
 
-        </nav>
 
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
         
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
 
 
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
+        <p>
             
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#网络小程序——python"><span class="nav-number">1.</span> <span class="nav-text">网络小程序——python</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编写www客户机"><span class="nav-number">1.1.</span> <span class="nav-text">编写www客户机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目要求"><span class="nav-number">1.1.1.</span> <span class="nav-text">题目要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计思路"><span class="nav-number">1.1.2.</span> <span class="nav-text">设计思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现代码"><span class="nav-number">1.1.3.</span> <span class="nav-text">实现代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序运行"><span class="nav-number">1.1.4.</span> <span class="nav-text">程序运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写FTP客户端"><span class="nav-number">1.2.</span> <span class="nav-text">编写FTP客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目要求-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">题目要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计思路-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">设计思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现代码-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">实现代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序运行-1"><span class="nav-number">1.2.4.</span> <span class="nav-text">程序运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现POP客户端"><span class="nav-number">1.3.</span> <span class="nav-text">实现POP客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目要求-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">题目要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计思路-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">设计思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">1.3.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序运行-2"><span class="nav-number">1.3.4.</span> <span class="nav-text">程序运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主机扫描程序（即Ping）"><span class="nav-number">1.4.</span> <span class="nav-text">主机扫描程序（即Ping）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目要求-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">题目要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计思路-3"><span class="nav-number">1.4.2.</span> <span class="nav-text">设计思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-1"><span class="nav-number">1.4.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序运行-3"><span class="nav-number">1.4.4.</span> <span class="nav-text">程序运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#端口扫描"><span class="nav-number">1.5.</span> <span class="nav-text">端口扫描</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目要求-4"><span class="nav-number">1.5.1.</span> <span class="nav-text">题目要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计思路-4"><span class="nav-number">1.5.2.</span> <span class="nav-text">设计思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-2"><span class="nav-number">1.5.3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序运行-4"><span class="nav-number">1.5.4.</span> <span class="nav-text">程序运行</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
     </div>
-  </aside>
+    <div class="bottom">
+        <p><span>Prime &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
 
-
-        
-      </div>
     </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.prime666.com/2017/06/02/用python进行网络编程/&title=《用python进行网络编程》 — Prime's Blog&pic=https://www.prime666.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.prime666.com/2017/06/02/用python进行网络编程/&title=《用python进行网络编程》 — Prime's Blog&source=一些用Python实现的网络小程序。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.prime666.com/2017/06/02/用python进行网络编程/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《用python进行网络编程》 — Prime's Blog&url=https://www.prime666.com/2017/06/02/用python进行网络编程/&via=https://www.prime666.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.prime666.com/2017/06/02/用python进行网络编程/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.prime666.com/2017/06/02/用python进行网络编程/" alt="微信分享二维码">
 </div>
 
 
-        
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-  
-    <span class="site-uv">
-      您是第
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      个小伙伴
-    </span>
-  
 
-  
-    <span class="site-pv">
-      本站总浏览
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
 </script>
 
-
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
 
 
-  
-
-  
-
-
-  
-<div id="hexo-helper-live2d">
-  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
 </div>
-<style>
-  #live2dcanvas{
-    position: fixed;
-    width: 150px;
-    height: 300px;
-    opacity:0.7;
-    right: 0px;
-    z-index: 999;
-    pointer-events: none;
-    bottom: -20px;
-  }
-</style>
-<script type="text/javascript" src="/live2d/device.min.js"></script>
-<script type="text/javascript">
-const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
-(function(){
-  if((typeof(device) != 'undefined') && (device.mobile())){
-    document.getElementById("live2dcanvas").style.width = '75px';
-    document.getElementById("live2dcanvas").style.height = '150px';
-  }else
-    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
-  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/z16.model.json", 0.5);});
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
 })();
 </script>
+
+
 
 </body>
 </html>
-
-
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>

@@ -1,95 +1,26 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    
+
+    
+
+    
 
 
 
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="utf-8">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+    
+    <title>GFS | Prime&#39;s Blog | 弱菜的进化~</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
     
     
-    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="大数据," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon/12.ico?v=5.1.1" />
-
-
-
-
-
-
-<meta name="description" content="读GFS论文，笔记">
+    <meta name="keywords" content="大数据">
+    <meta name="description" content="读GFS论文，笔记">
 <meta name="keywords" content="大数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GFS">
@@ -104,284 +35,165 @@
 <meta name="twitter:title" content="GFS">
 <meta name="twitter:description" content="读GFS论文，笔记">
 <meta name="twitter:image" content="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E6%95%B0%E6%8D%AE/2017-06-27_102307.png">
+    
+    <link rel="shortcut icon" href="/favicon/12.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://www.prime666.com/2017/06/27/GFS/"/>
-
-
-
-
-
-  <title>GFS | Prime's Blog</title>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- custom head -->
+    
 
 </head>
 
+<body>
+    <div id="loading" class="active"></div>
 
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <a href="https://github.com/KannaKamuy"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Prime's Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Prime</h5>
+          <a href="mailto:yuanma2017@outlook.com" title="yuanma2017@outlook.com" class="mail">yuanma2017@outlook.com</a>
+        </hgroup>
+      </div>
     </div>
-      
-        <p class="site-subtitle">弱菜的进化~</p>
-      
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Neutral-network" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
   </div>
+</aside>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">GFS</div>
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
+    </div>
+</header>
+<header class="content-header post-header">
 
-      
-    </ul>
-  
-
-  
-</nav>
+    <div class="container fade-scale">
+        <h1 class="title">GFS</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-06-27T01:25:57.000Z" itemprop="datePublished" class="page-time">
+  2017-06-27
+</time>
 
 
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/读书笔记/">读书笔记</a></li></ul>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
             
+        </h5>
+    </div>
 
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
+</header>
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://www.prime666.com/2017/06/27/GFS/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Prime">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/avatar/misaka.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Prime's Blog">
-    </span>
-
+<div class="container body-wrap">
     
-      <header class="post-header">
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#GFS"><span class="post-toc-number">1.</span> <span class="post-toc-text">GFS</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简介"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设计概述"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">设计概述</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#假设"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">假设</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#接口"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">接口</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#架构"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">架构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#单一主结点"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">单一主结点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#块大小"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">块大小</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#元数据"><span class="post-toc-number">1.2.6.</span> <span class="post-toc-text">元数据</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一致性模型"><span class="post-toc-number">1.2.7.</span> <span class="post-toc-text">一致性模型</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#系统交互"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">系统交互</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#租约Leases机制"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">租约Leases机制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据流"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">数据流</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原子的记录追加"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">原子的记录追加</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#快照"><span class="post-toc-number">1.3.4.</span> <span class="post-toc-text">快照</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#master结点的操作"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">master结点的操作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#名称空间管理和锁"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">名称空间管理和锁</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#副本的位置"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">副本的位置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建、复制、负载均衡"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">创建、复制、负载均衡</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#垃圾回收"><span class="post-toc-number">1.4.4.</span> <span class="post-toc-text">垃圾回收</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#版本检测"><span class="post-toc-number">1.4.5.</span> <span class="post-toc-text">版本检测</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#容错和诊断"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">容错和诊断</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#高可用性"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">高可用性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据完整性"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">数据完整性</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">总结</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">GFS</h1>
-        
 
+<article id="post-GFS"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">GFS</h1>
         <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T09:25:57+08:00">
-                2017-06-27
-              </time>
-            
+            <time class="post-time" title="2017-06-27 09:25:57" datetime="2017-06-27T01:25:57.000Z"  itemprop="datePublished">2017-06-27</time>
 
             
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/读书笔记/">读书笔记</a></li></ul>
+
+
 
             
-          </span>
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv">热度
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>℃
-            </span>
-          
-
-          
-
-          
 
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>读GFS论文，笔记</p>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>读GFS论文，笔记</p>
 <a id="more"></a>
 <h1 id="GFS"><a href="#GFS" class="headerlink" title="GFS"></a>GFS</h1><p>本文翻译自<a href="http://www.cse.buffalo.edu/faculty/tkosar/cse710_spring14/papers/gpfs.pdf" target="_blank" rel="noopener">谷歌学术的一篇文章</a>，未逐字逐句翻译，很多细节忽略了，只是把大体框架记录了下来，如果对某一点实现细节感兴趣，请读原文。</p>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
@@ -399,7 +211,13 @@
 <li>高度稳定的带宽比低延迟更重要。我们的目标程序绝大部分要求能够高速率的、大批量的处理数据，极少有程序对单一的读写操作有严格的响应时间要求。</li>
 </ul>
 <h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>尽管GFS没有实现POSIX的标准，但是提供了相似的接口。除了常见的操作外，额外提供了<strong>快照和记录追加</strong>操作。“快照”以低代价创建一个文件或者一个目录树的副本，而“记录追加”可以允许多个客户端并发追加一个文件，同时保证每个客户端的追加操作都是原子性的。</p>
-<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E6%95%B0%E6%8D%AE/2017-06-27_102307.png" alt=""></p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E6%95%B0%E6%8D%AE/2017-06-27_102307.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>一个GFS集群包括一个master结点和多个chunkserver结点，它被多个client访问。所有的这些都是商业的linux系统，运行着用户级的服务进程。文件被分为固定的块(chunk)，当每个块被创建时，master分配一个不可变的、全局唯一的64位块句柄（chunk handle）。chunkserver以linux文件的形式在本地存储这些chunk，通过chunk handle和byte range来读写它们。为了可靠性，默认每个chunk被备份在了多个chunkserver上，通常是3份。不过用户也可以自己制定备份 的级别。</p>
 <p>Master 节点管理所有的文件系统元数据。这些元数据包括名字空间、访问控制信息、文件和 Chunk 的映射信息、以及当前 Chunk 的位置信息。Master 节点还管理着系统范围内的活动，比如，Chunk 租用管理 4 、孤儿 Chunk 5 的回收、以及 Chunk 在 Chunk 服务器之间的迁移。Master 节点使用心跳信息（HeartBeat）周期地和每个 Chunk服务器通讯，发送指令到各个 Chunk 服务器并接收 Chunk 服务器的状态信息。</p>
 <p>客户端从master那里获取元数据，真正的数据是直接去和chunkserver交互的。无论是client还是chunkserver都不进行缓存，对于前者一般要么以流的形式读取一个大文件，要么工作集太大不能被缓存（不过缓存了元数据）；后者不需要是因为linux文件系统会负责缓存经常访问的文件的。</p>
@@ -435,7 +253,13 @@
 <p>操作日志包含了关键的元数据变更历史记录。这对 GFS 非常重要。这不仅仅是因为操作日志是元数据<strong>唯一的持久化存储记录</strong>，它也作为判断同步操作顺序的逻辑时间基线。文件和 Chunk，连同它们的版本，都由它们创建的逻辑时间唯一的、永久的标识。正是由于日志如此重要，我们会把日志复制到多台远程机器，并且只有把相应的日志记录写入到本地以及远程机器的硬盘后，才会响应客户端的操作请求。Master 服务器在灾难恢复时，通过重演操作日志把文件系统恢复到最近的状态。为了加速恢复的过程，通常在日志增长到一定程度后就对系统做一次checkpoint，将所有的状态数据写入一个 Checkpoint 文件。</p>
 <h3 id="一致性模型"><a href="#一致性模型" class="headerlink" title="一致性模型"></a>一致性模型</h3><p>GFS 支持一个宽松的一致性模型，这个模型能够很好的支撑我们的高度分布的应用，同时还保持了相对简单且容易实现的优点。</p>
 <h2 id="系统交互"><a href="#系统交互" class="headerlink" title="系统交互"></a>系统交互</h2><h3 id="租约Leases机制"><a href="#租约Leases机制" class="headerlink" title="租约Leases机制"></a>租约Leases机制</h3><p>使用租约（lease）机制来保持多个副本间变更顺序的一致性，Master 节点为 Chunk的一个副本建立一个租约，我们把这个副本叫做主 Chunk。设计租约机制的目的是为了最小化 Master 节点的管理负担。</p>
-<p><img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E6%95%B0%E6%8D%AE/2017-06-28_211939.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://on7mhq4kh.bkt.clouddn.com//%E5%A4%A7%E6%95%B0%E6%8D%AE/2017-06-28_211939.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>由上图可知，租约机制实现了数据流和控制流的解耦（decouple）。副本在主chunk的控制下，保证和主chunk操作顺序一致。</p>
 <h3 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h3><p>为了提高网络效率，我们采取了把数据流和控制流分开的措施。为了尽可能的避免出现网络瓶颈和高延迟的链接，每台机器都尽量的在网络拓扑中选择一台还没有接收到数据的、离自己最近的机器作为目标推送数据。（如上图粗线所示，数据流动不是client直接发给主chunk，而是按距离排序，为了最大化利用网络 ，数据被放入缓存区中，然后client发送命令再写入。）</p>
 <h3 id="原子的记录追加"><a href="#原子的记录追加" class="headerlink" title="原子的记录追加"></a>原子的记录追加</h3><p>GFS 提供了一种原子的数据追加操作–记录追加（record append），传统的写是指定偏移量写入数据，但是如果并发写的话，会产生来自多个客户端的数据片段，它们不是顺序的。而追加操作不需要客户端提供偏移量，只要数据给我，GFS会给出偏移量，这类似于在 Unix 操作系统编程环境中，对以 O_APPEND 模式打开的文件。</p>
@@ -457,483 +281,268 @@
 <p>我们系统通过持续监控，复制关键数据，快速和自动恢复提供灾难冗余。Chunk 复制使得我们可以对Chunk 服务器的失效进行容错。高频率的组件失效要求系统具备在线修复机制，能够周期性的、透明的修复损坏的数据，也能够第一时间重新建立丢失的副本。此外，我们使用 Checksum 在磁盘或者 IDE 子系统级别检测数据损坏，在这样磁盘数量惊人的大系统中，损坏率是相当高的。</p>
 <p>我们的设计保证了在有大量的并发读写操作时能够提供很高的合计吞吐量。我们通过分离控制流和数据流来实现这个目标，控制流在 Master 服务器处理，而数据流在 Chunk 服务器和客户端处理。当一般的操作涉及到 Master 服务器时，由于 GFS 选择的 Chunk 尺寸较大(alex 注：从而减小了元数据的大小)，以及通过 Chunk Lease 将控制权限移交给主副本，这些措施将 Master 服务器的负担降到最低。这使得一个简单、中心的 Master不会成为成为瓶颈。我们相信我们对网络协议栈的优化可以提升当前对于每客户端的写入吞吐量限制。</p>
 
-      
-    </div>
+        </div>
 
-    <div>
-      
-        <div>
+        <blockquote class="post-copyright">
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    <div class="content">
+        
+<span class="post-time">
+    最終更新：<time datetime="2017-06-28T14:52:57.909Z" itemprop="dateUpdated">2017-06-28 22:52:57</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/06/27/GFS/" target="_blank" rel="external">https://www.prime666.com/2017/06/27/GFS/</a>
+        
+    </div>
     
-</div>
-      
-    </div>
-
-    <div>
-      
-        
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>觉得写的不错？求打赏！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/ali.jpg" alt="Prime Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/大数据/" rel="tag"># 大数据</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/06/26/pat（六）/" rel="next" title="pat（六）">
-                <i class="fa fa-chevron-left"></i> pat（六）
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/27/树状数组/" rel="prev" title="树状数组">
-                树状数组 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
+    <footer>
+        <a href="https://www.prime666.com">
+            <img src="/img/avatar.jpg" alt="Prime">
+            Prime
+        </a>
     </footer>
-  </article>
+</blockquote>
+
+        
 
 
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
 
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
+            
+<div class="page-share-wrap">
     
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTgwNC82Mzcw"></div>
-    
-  </div>
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.prime666.com/2017/06/27/GFS/&title=《GFS》 — Prime's Blog&pic=https://www.prime666.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.prime666.com/2017/06/27/GFS/&title=《GFS》 — Prime's Blog&source=读GFS论文，笔记" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.prime666.com/2017/06/27/GFS/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《GFS》 — Prime's Blog&url=https://www.prime666.com/2017/06/27/GFS/&via=https://www.prime666.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.prime666.com/2017/06/27/GFS/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
 
 
         </div>
-        
-          
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/06/27/树状数组/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">树状数组</h4>
+      </a>
     </div>
-  </div>
+  
 
-  <aside id="sidebar" class="sidebar">
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/06/26/pat（六）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">pat（六）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
     
-    <div class="sidebar-inner">
 
-      
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/avatar/misaka.jpg"
-               alt="Prime" />
-          <p class="site-author-name" itemprop="name">Prime</p>
-           
-              <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
-          
-        </div>
-        <nav class="site-state motion-element">
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">58</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
 
-        </nav>
 
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
         
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
 
 
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
+        <p>
             
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GFS"><span class="nav-number">1.</span> <span class="nav-text">GFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计概述"><span class="nav-number">1.2.</span> <span class="nav-text">设计概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#假设"><span class="nav-number">1.2.1.</span> <span class="nav-text">假设</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口"><span class="nav-number">1.2.2.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构"><span class="nav-number">1.2.3.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单一主结点"><span class="nav-number">1.2.4.</span> <span class="nav-text">单一主结点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#块大小"><span class="nav-number">1.2.5.</span> <span class="nav-text">块大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元数据"><span class="nav-number">1.2.6.</span> <span class="nav-text">元数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性模型"><span class="nav-number">1.2.7.</span> <span class="nav-text">一致性模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统交互"><span class="nav-number">1.3.</span> <span class="nav-text">系统交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#租约Leases机制"><span class="nav-number">1.3.1.</span> <span class="nav-text">租约Leases机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据流"><span class="nav-number">1.3.2.</span> <span class="nav-text">数据流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原子的记录追加"><span class="nav-number">1.3.3.</span> <span class="nav-text">原子的记录追加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快照"><span class="nav-number">1.3.4.</span> <span class="nav-text">快照</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#master结点的操作"><span class="nav-number">1.4.</span> <span class="nav-text">master结点的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名称空间管理和锁"><span class="nav-number">1.4.1.</span> <span class="nav-text">名称空间管理和锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#副本的位置"><span class="nav-number">1.4.2.</span> <span class="nav-text">副本的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建、复制、负载均衡"><span class="nav-number">1.4.3.</span> <span class="nav-text">创建、复制、负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾回收"><span class="nav-number">1.4.4.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本检测"><span class="nav-number">1.4.5.</span> <span class="nav-text">版本检测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容错和诊断"><span class="nav-number">1.5.</span> <span class="nav-text">容错和诊断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高可用性"><span class="nav-number">1.5.1.</span> <span class="nav-text">高可用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据完整性"><span class="nav-number">1.5.2.</span> <span class="nav-text">数据完整性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
     </div>
-  </aside>
+    <div class="bottom">
+        <p><span>Prime &copy; 2015 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
 
-
-        
-      </div>
     </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Prime</span>
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.prime666.com/2017/06/27/GFS/&title=《GFS》 — Prime's Blog&pic=https://www.prime666.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.prime666.com/2017/06/27/GFS/&title=《GFS》 — Prime's Blog&source=读GFS论文，笔记" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.prime666.com/2017/06/27/GFS/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《GFS》 — Prime's Blog&url=https://www.prime666.com/2017/06/27/GFS/&via=https://www.prime666.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.prime666.com/2017/06/27/GFS/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.prime666.com/2017/06/27/GFS/" alt="微信分享二维码">
 </div>
 
 
-        
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-  
-    <span class="site-uv">
-      您是第
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      个小伙伴
-    </span>
-  
 
-  
-    <span class="site-pv">
-      本站总浏览
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
 </script>
 
-
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
 
 
-  
-
-  
-
-
-  
-<div id="hexo-helper-live2d">
-  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
 </div>
-<style>
-  #live2dcanvas{
-    position: fixed;
-    width: 150px;
-    height: 300px;
-    opacity:0.7;
-    right: 0px;
-    z-index: 999;
-    pointer-events: none;
-    bottom: -20px;
-  }
-</style>
-<script type="text/javascript" src="/live2d/device.min.js"></script>
-<script type="text/javascript">
-const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
-(function(){
-  if((typeof(device) != 'undefined') && (device.mobile())){
-    document.getElementById("live2dcanvas").style.width = '75px';
-    document.getElementById("live2dcanvas").style.height = '150px';
-  }else
-    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
-  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/z16.model.json", 0.5);});
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
 })();
 </script>
+
+
 
 </body>
 </html>
-
-
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>

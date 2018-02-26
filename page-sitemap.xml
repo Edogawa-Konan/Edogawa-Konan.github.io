@@ -7,6 +7,20 @@
     </url>
     
     <url>
+        <loc>https://www.prime666.com/tags/</loc>
+        <lastmod>2018-02-26T10:55:59.468Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://www.prime666.com/categories/</loc>
+        <lastmod>2018-02-26T10:55:42.723Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>https://www.prime666.com/AI/</loc>
         <lastmod>2018-01-16T03:31:15.208Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -28,13 +42,6 @@
     </url>
     
     <url>
-        <loc>https://www.prime666.com/tags/</loc>
-        <lastmod>2017-05-29T01:30:15.885Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
         <loc>https://www.prime666.com/weblog/</loc>
         <lastmod>2017-05-29T01:30:15.885Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -44,13 +51,6 @@
     <url>
         <loc>https://www.prime666.com/guestbook/</loc>
         <lastmod>2017-05-29T01:30:15.882Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>https://www.prime666.com/categories/</loc>
-        <lastmod>2017-05-29T01:30:15.881Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
